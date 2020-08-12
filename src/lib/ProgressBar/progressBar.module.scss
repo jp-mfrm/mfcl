@@ -1,0 +1,26 @@
+@import '../variables';
+
+.root {
+  background-color: $gray-3;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+  height: 6px;
+
+  @media screen and (min-width: $mobile) {
+    width: 317px;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
+}
+
+.bar {
+  background-color: $red;
+  border-radius: 3px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  transform-origin: left;
+}

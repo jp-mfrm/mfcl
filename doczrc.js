@@ -1,5 +1,3 @@
-/* TODO: delete scheduler npm package on next update */
-
 const colors = {
   white: '#FFFFFF',
   grayUltraLight: '#F9FAFB',
@@ -176,8 +174,9 @@ export default {
   dest: './docz_dest',
   src: './src',
   port: 4000,
+  typescript: true,
   themeConfig: {
-    showPlaygroundEditor: false,
+    showPlaygroundEditor: true,
     initialColorMode: 'dark',
     codemirrorTheme: 'material',
     colors: {
@@ -190,7 +189,7 @@ export default {
     /** Styles */
     styles: {
       body: {
-        fontFamily: "Roboto, 'Source Sans Pro', Helvetica, sans-serif",
+        fontFamily: "'Rubik', 'Arial', sans-serif",
       },
     },
   },

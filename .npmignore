@@ -1,0 +1,17 @@
+coverage
+src
+plop-templates
+__tests__
+.babelrc
+.eslintrc.json
+.eslintignore
+.prettierrc
+.prettierignore
+.editorconfig
+.babelrc
+.nvmrc
+.stylelintrc
+doczrc.js
+gatsby-node.js
+plopfile.js
+rollup.config.js

@@ -1,4 +1,4 @@
-dist/*.js
-.docz/*.js
-node_modules/*.js
-public/*.js
+dist
+.docz
+node_modules
+public

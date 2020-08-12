@@ -5,12 +5,9 @@
 
 # testing
 /coverage
-/cypress/screenshots
-/cypress/videos
 
 # production
 /dist
-/public
 /docz_dest
 
 # misc

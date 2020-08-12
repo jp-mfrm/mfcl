@@ -1,0 +1,79 @@
+@import '../variables';
+
+.alert {
+  align-items: center;
+  border-radius: 5px;
+  display: flex;
+  font-size: 16px;
+  margin-bottom: 1rem;
+  padding: 5px 22px 5px 10px;
+  position: relative;
+
+  @media (max-width: $desktop) {
+    display: block;
+  }
+
+  svg {
+    vertical-align: middle;
+  }
+}
+
+.alert-error {
+  background-color: #fde5e6;
+  border: 1px solid #ff8674;
+  color: $gray-11;
+}
+
+.alert-info {
+  background-color: rgba($blue, 0.13);
+  border: 1px solid rgba($blue, 0.58);
+  color: $gray-11;
+}
+
+.alert-success {
+  background-color: rgba($green, 0.13);
+  border: 1px solid rgba($green, 0.58);
+  color: $gray-11;
+}
+
+.alertInside {
+  display: inline-block;
+  width: 100%;
+}
+
+.children {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.67;
+  margin-top: 2px;
+  text-align: center;
+}
+
+.close {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: $transparent;
+  border: 0;
+  color: $inherit;
+  cursor: pointer;
+  float: right;
+  font-size: 25px;
+  height: 100%;
+  line-height: 1;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 22px;
+
+  .close-icon {
+    position: absolute;
+    right: 10px;
+    top: 3px;
+  }
+
+  &:hover {
+    opacity: 0.5;
+  }
+}
