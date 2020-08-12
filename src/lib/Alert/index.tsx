@@ -5,7 +5,7 @@ import Fade from '../Fade'
 
 import styles from './alert.module.scss'
 
-type Props = {
+export interface Props {
   /** Children to be in the Alert body */
   children?: ReactNode
   className?: string

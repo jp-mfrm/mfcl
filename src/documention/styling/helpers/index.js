@@ -1,4 +1,3 @@
-import Colors from './Colors';
-import Headings from './Headings';
+import Colors from './Colors'
 
-export { Colors, Headings };
+export { Colors }

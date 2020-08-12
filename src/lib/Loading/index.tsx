@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 
 import styles from './loading.module.scss'
 
-type Props = {
+export interface Props {
   className?: string
   color?: string
   size?: string

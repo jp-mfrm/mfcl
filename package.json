@@ -14,7 +14,7 @@
     "dev": "yarn start",
     "lint": "eslint ./src",
     "plop": "plop",
-    "start": "docz dev",
+    "start": "docz dev -o",
     "stylelint": "stylelint ./src",
     "test": "cross-env CI=1 react-scripts test --env=jest-environment-jsdom-sixteen",
     "test:coverage": "yarn test --coverage --watchAll=false",

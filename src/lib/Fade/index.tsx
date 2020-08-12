@@ -2,7 +2,7 @@
 import React from 'react'
 import Transition from 'react-transition-group/Transition'
 
-type Props = {
+export interface Props {
   /** Controls if the fade is currently showing or not (default: true) */
   in?: boolean
   /** All of these match react-transition-group/Transition props */

@@ -2,7 +2,7 @@ import React, { memo, FunctionComponent } from 'react'
 import clsx from 'clsx'
 import styles from './progressBar.module.scss'
 
-type Props = {
+export interface Props {
   className?: string
   innerRef?: any
   max?: number

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useLayoutEffect, useState, useRef, memo } from 'react'
 
-type Props = {
+export interface Props {
   src: string
   [rest: string]: unknown
 }

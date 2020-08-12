@@ -3,7 +3,7 @@
 import React, { memo } from 'react'
 import styles from './checkbox.module.scss'
 
-type Props = {
+export interface Props {
   handleClick: () => void
   title: string
   checked?: boolean

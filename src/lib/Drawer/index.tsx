@@ -6,7 +6,7 @@ import Fade from '../Fade'
 
 import styles from './drawer.module.scss'
 
-type Props = {
+export interface Props {
   /** Show a backdrop */
   backdrop?: boolean
   backdropClassName?: string

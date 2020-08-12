@@ -3,7 +3,7 @@ import clsx from 'clsx'
 
 import styles from './select.module.scss'
 
-type Props = {
+export interface Props {
   children: React.ReactNode
   className?: string
   innerRef?: any

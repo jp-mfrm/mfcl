@@ -5,7 +5,7 @@ import DropdownItem, { Option } from './DropdownItem'
 
 import styles from './dropdown.module.scss'
 
-type Props = {
+export interface Props {
   /* Dropdown options */
   options: Option[]
   /* Open or close dropdown. For controlled effect */

@@ -9,7 +9,7 @@ export interface Option {
   disabled?: boolean
 }
 
-type Props = {
+export interface Props {
   isActive: boolean
   onItemClick: Function
   option: Option

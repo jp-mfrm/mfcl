@@ -8,7 +8,7 @@ interface ChildProps {
   [props: string]: unknown
 }
 
-type Props = {
+export interface Props {
   children?: ReactNode | string
   isOpen?: boolean
   appear?: boolean
