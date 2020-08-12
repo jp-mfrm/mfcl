@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "extends": ["airbnb", "plugin:prettier/recommended", "prettier/react"],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "rules": {
+    "no-unused-expressions": ["error", { "allowTaggedTemplates": true }],
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/destructuring-assignment": "off",
+    "react/sort-prop-types": [1, {
+      "callbacksLast": false,
+      "ignoreCase": true,
+      "requiredFirst": true
+    }]
+  }
+}

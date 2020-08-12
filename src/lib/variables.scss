@@ -1,0 +1,45 @@
+// Media breakpoints
+$large-desktop: 1500px;
+$small-desktop: 1199px;
+$large-tablet: 990px;
+$tablet: 768px;
+$large-phone: 768px;
+$mobile: 481px;
+
+// pixel sizes
+$header-height: 60px;
+$footer-height: 164px;
+
+// Main Colors
+$main-green: #00CE7D;
+$main-green-hover: #00B970;
+$blue-border: #80bdff;
+$blue-accent: #389BFF;
+$blue-accent-hover: #1774F0;
+$purple-accent: #8459D4;
+$red-accent: #FE0625;
+$red-error: #AC1B25;
+$yellow:  #FFC107;
+$white: #FFFFFF;
+$three-fourths-white: rgba(#FEFEFE, 0.75);
+$half-white: rgba(#FEFEFE, 0.5);
+
+$gray-1: #F9FAFB;
+$gray-2: #F5F6F7;
+$gray-3: #E7E8EA;
+$gray-4: #DADCDF;
+$gray-5: #CED1D5;
+$gray-6: #AFB3BA;
+$gray-7: #8A8F9C;
+$gray-8: #626669;
+$gray-9: #545658;
+$gray-10: #2F3337;
+$gray-11: #22252A;
+$gray-12: #17181A;
+// dark mode
+$gray-13: #282828;
+$gray-14: #181818;
+$gray-15: #080808;
+$black: #000000;
+$transparent: transparent;
+$inherit: inherit;

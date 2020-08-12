@@ -1,0 +1,34 @@
+{
+    "plugins": [
+        "stylelint-declaration-use-variable",
+        "stylelint-order"
+    ],
+    "rules": {
+        "block-opening-brace-space-before": "always",
+        "color-named": "never",
+        "color-no-invalid-hex": true,
+        "declaration-colon-space-after": "always",
+        "declaration-empty-line-before": "never",
+        "declaration-no-important": true,
+        "indentation": 2,
+        "max-empty-lines": 1,
+        "max-nesting-depth": 4,
+        "no-duplicate-selectors": true,
+        "no-extra-semicolons": true,
+        "order/order": [
+            "custom-properties",
+            "declarations"
+        ],
+        "property-no-unknown": true,
+        "order/properties-alphabetical-order": true,
+        "rule-empty-line-before": [ "always",
+            {
+                "except": ["first-nested"],
+                "ignore": ["after-comment"]
+            }
+        ],
+        "selector-list-comma-newline-after": "always",
+        "sh-waqar/declaration-use-variable": [["/color/", "background", { ignoreValues: ["/^rgba/"] }]],
+        "unit-no-unknown": true
+    }
+}

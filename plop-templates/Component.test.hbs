@@ -1,0 +1,11 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+
+import {{componentName}} from './{{componentName}}';
+
+describe('<{{componentName}} />', () => {
+  it('Renders with wrapper class name', () => {
+    const wrapper = shallow(<{{componentName}} />);
+    expect(wrapper.hasClass('{{dash-case componentName}}-wrapper')).toBeTruthy();
+  });
+});

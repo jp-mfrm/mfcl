@@ -1,0 +1,48 @@
+---
+name: Button
+menu: Components
+route: /components-button
+---
+
+import { Playground, Props } from 'docz';
+import { Button } from '../../lib';
+import { Row } from './helpers';
+
+# Button
+
+```javascript
+import { Button } from 'mfcl';
+```
+
+## Description
+Buttons make common actions more obvious and help users more easily perform them. Buttons use labels and sometimes icons to communicate the action that will occur when the user touches them.
+
+## Properties
+
+<Props of={Button} />
+
+## Button Types
+
+<Playground>
+  <Button>Click Me</Button>
+</Playground>
+
+## Size
+
+<Playground>
+  <Button btnType="primary" size="sm">
+    Small
+  </Button>
+  <Button btnType="primary" size="md">
+    Medium
+  </Button>
+  <Button btnType="primary" size="lg">
+    Large
+  </Button>
+</Playground>
+
+## Disabled
+
+<Playground>
+  <Button size="lg" disabled btnType="primary">Disabled</Button>
+</Playground>

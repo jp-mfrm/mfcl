@@ -1,0 +1,27 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import styles from './{{camelCase componentName}}.module.scss';
+
+const {{componentName}} = ({
+  styleMode,
+}) => {
+  const darkMode = styleMode === 'dark' ? styles.dark : '';
+  const classes = `${styles['{{dash-case componentName}}-wrapper']} ${darkMode}`.trim();
+
+  return (
+    <div className={classes}>
+      {{componentName}}
+    </div>
+  );
+};
+
+{{componentName}}.propTypes = {
+  styleMode: PropTypes.string,
+};
+
+{{componentName}}.defaultProps = {
+  styleMode: 'light',
+};
+
+export default {{componentName}};
