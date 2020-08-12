@@ -23,7 +23,7 @@ export interface Props {
   isOpen?: boolean
   onClose?: Function | null
   position?: 'top' | 'bottom' | 'right' | 'left'
-  [x: string]: unknown // ...rest property
+  [rest: string]: unknown
 }
 
 const defaultStyles = {

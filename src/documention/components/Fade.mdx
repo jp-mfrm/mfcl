@@ -1,0 +1,102 @@
+---
+name: Fade
+menu: Components
+route: /components-fade
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Row } from './helpers'
+import { Fade, Button } from '../../lib'
+
+# Fade
+
+Fade creates a smooth UI/UX for React
+
+## Install
+
+React transition group is needed for Fade
+
+```bash
+yarn add react-transition-group
+```
+
+```javascript
+import { Fade } from 'mfcl'
+```
+
+## Properties
+
+<Props of={Fade} />
+
+## Basic usage
+
+<Playground>
+  <Component
+    initialState={{
+      in: true,
+      duration: 150
+    }}
+  >
+    {({ setState, state }) => {
+      const toggle = () => setState({ in: !state.in })
+      return (
+        <>
+          <Button size="md" onClick={toggle}>
+            Click Me
+          </Button>
+          <Fade in={state.in} duration={state.duration}>
+            Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial
+            customized shopping options shut eye America's top-rated brands snoring soft ultra plush latex brand comfy
+            nap plush medium side innerspring hot bunk bed queen best prices extra firm special financing full back low
+            price guarantee size sleep expert Sterns & Foster comforters loft dreams linens twin pain memory foam
+            Tempur-pedic Beautyrest neck free delivery tulo mattress Sleepy's king Purple Bed sets pillow top malouf
+            wrap zzzzzz box spring snuggle pillow protectors bed sheets pillowcases 50% headboards encased coil bed
+          </Fade>
+        </>
+      )
+    }}
+  </Component>
+</Playground>
+
+## Callbacks
+
+<Playground>
+  <Component
+    initialState={{
+      in: true,
+      firstText: '',
+      text: ''
+    }}
+  >
+    {({ setState, state }) => {
+      const toggle = () => setState({ in: !state.in })
+      return (
+        <>
+          <p>{state.firstText}</p>
+          <p>{state.text}</p>
+          <Button size="md" onClick={toggle}>
+            Click Me
+          </Button>
+          <Fade
+            in={state.in}
+            duration={1000}
+            onEnter={() => setState({ firstText: 'Enter' })}
+            onEntering={() => setState({ text: 'Entering!' })}
+            onEntered={() => setState({ text: 'Entered!' })}
+            onExit={() => setState({ firstText: 'Exit!' })}
+            onExiting={() => setState({ text: 'Exiting!' })}
+            onExited={() => setState({ text: 'Exited!' })}
+          >
+            Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial
+            customized shopping options shut eye America's top-rated brands snoring soft ultra plush latex brand comfy
+            nap plush medium side innerspring hot bunk bed queen best prices extra firm special financing full back low
+            price guarantee size sleep expert Sterns & Foster comforters loft dreams linens twin pain memory foam
+            Tempur-pedic Beautyrest neck free delivery tulo mattress Sleepy's king Purple Bed sets pillow top malouf
+            wrap zzzzzz box spring snuggle pillow protectors bed sheets pillowcases 50% headboards encased coil bed
+          </Fade>
+        </>
+      )
+    }}
+  </Component>
+</Playground>

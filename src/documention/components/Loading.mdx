@@ -1,0 +1,73 @@
+---
+name: Loading
+menu: Components
+route: /components-loading
+---
+
+import { Playground, Props } from 'docz'
+import { Loading, Button } from '../../lib'
+import { Row } from './helpers'
+
+# Loading
+
+```javascript
+import { Loading } from 'mfcl'
+```
+
+Loaders help the user feel like things are happening
+
+## Properties
+
+- Pass down any props to the Loading Div
+  <Props of={Loading} />
+
+## Basic usage
+
+<Playground>
+  <Loading />
+</Playground>
+
+## Color
+
+- Pass in any color hex or RGB
+
+<Playground>
+  <Row>
+    <Loading color="blue" />
+    <Loading color="red" />
+    <Loading color="green" />
+  </Row>
+</Playground>
+
+## Sizes
+
+- sm, md, lg, or any pixel value
+
+<Playground>
+  <Row>
+    <Loading size="sm" />
+    <Loading size="md" />
+    <Loading size="lg" />
+    <Loading size="50px" />
+    <Loading size="10px" />
+  </Row>
+</Playground>
+
+## Can be used with a button
+
+<Playground>
+  <Button loading size="lg">
+    Submit
+  </Button>
+</Playground>
+
+## Dots
+
+<Playground>
+  <Row>
+    <Loading type="dots" size="sm" />
+    <Loading type="dots" size="md" />
+    <Loading type="dots" size="lg" />
+    <Loading type="dots" size="80px" />
+  </Row>
+</Playground>
