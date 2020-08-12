@@ -4,7 +4,7 @@
 
 #### Install package
 
-- yarn add mfcl
+`yarn add mfcl`
 
 ### 👾 Usage
 
@@ -25,7 +25,7 @@ CSS Modules
 
 ## ✨ Developer experience
 
-- `yarn start` or `yarn dev` - Starts the documentation at http://localhost:3000/
+- `yarn start` or `yarn dev` - Starts the documentation at http://localhost:4000/
 - `yarn watch` - rollup watches any changes (not really needed)
 - `yarn build` - builds the component library
 - `yarn build:web` - builds the docs

@@ -1,20 +1,18 @@
 {
   "root": true,
-  "parser": "babel-eslint",
-  "extends": ["airbnb", "plugin:prettier/recommended", "prettier/react"],
+  "extends": ["airbnb-typescript-prettier"],
+  "rules": {
+    "react/prop-types": 0,
+    "react/destructuring-assignment": 0,
+    "react/static-property-placement": 0,
+    "react/jsx-props-no-spreading": 0,
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "@typescript-eslint/no-explicit-any": 0
+  },
   "env": {
     "browser": true,
     "jest": true
-  },
-  "rules": {
-    "no-unused-expressions": ["error", { "allowTaggedTemplates": true }],
-    "import/prefer-default-export": "off",
-    "import/no-extraneous-dependencies": "off",
-    "react/destructuring-assignment": "off",
-    "react/sort-prop-types": [1, {
-      "callbacksLast": false,
-      "ignoreCase": true,
-      "requiredFirst": true
-    }]
   }
 }

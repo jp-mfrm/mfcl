@@ -1,27 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 
 import styles from './{{camelCase componentName}}.module.scss';
 
-const {{componentName}} = ({
-  styleMode,
-}) => {
-  const darkMode = styleMode === 'dark' ? styles.dark : '';
-  const classes = `${styles['{{dash-case componentName}}-wrapper']} ${darkMode}`.trim();
+interface Props {
+  [rest: string]: unknown; // ...rest property
+};
 
+const {{componentName}}: FunctionComponent<Props> = ({
+  ...rest
+}) => {
   return (
-    <div className={classes}>
+    <div className={styles['{{dash-case componentName}}-wrapper']} {...rest}>
       {{componentName}}
     </div>
   );
-};
-
-{{componentName}}.propTypes = {
-  styleMode: PropTypes.string,
-};
-
-{{componentName}}.defaultProps = {
-  styleMode: 'light',
 };
 
 export default {{componentName}};
