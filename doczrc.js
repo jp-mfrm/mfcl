@@ -168,7 +168,7 @@ const dark = {
 }
 
 export default {
-  title: 'MFCL',
+  title: 'Mattress Firm Component Library',
   description: 'React Component Library for UI consistency between repositories',
   dest: './docz_dest',
   src: './src',

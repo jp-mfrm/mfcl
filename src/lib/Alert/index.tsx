@@ -13,7 +13,7 @@ export interface Props {
   /** Include Collapse transition */
   collapse?: boolean
   /** Alert Color type */
-  color?: 'error' | 'info' | 'success'
+  color?: 'error'
   /** Transition duration passed to Fade */
   duration?: number
   /** Include Fade transition */
