@@ -9,11 +9,12 @@
     "node": ">=12.18.0"
   },
   "scripts": {
+    "prebuild": "npm run lint:fix && npm run lint && npm run test:coverage",
     "prepublishOnly": "npm run build",
     "build": "rollup -c && node ./scripts/buildDist",
     "build:web": "docz build",
     "dev": "yarn start",
-    "lint": "eslint ./src",
+    "lint": "eslint --fix ./src",
     "plop": "plop",
     "start": "docz dev -o",
     "stylelint": "stylelint ./src",
