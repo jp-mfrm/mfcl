@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import Transition from 'react-transition-group/Transition'
 import clsx from 'clsx'
 import Fade from '../Fade'
+import isClient from '../utils/isClient'
 
 import styles from './drawer.module.scss'
 
@@ -72,7 +73,7 @@ const Drawer: React.FunctionComponent<Props> = ({
   headerClassName = '',
   ...rest
 }) => {
-  const [isSafari] = useState(() => /^((?!chrome|android).)*safari/i.test(navigator.userAgent))
+  const [isSafari] = useState(() => (isClient ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent) : false))
   const [isShowing, setIsShowing] = useState(isOpen)
 
   const drawerClassName = clsx(styles['drawer-wrapper'], styles[position], className)
