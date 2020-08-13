@@ -19,10 +19,6 @@ import { MyComponent } from 'mfcl'
 
 - Note - webpack should automatically treeshake the components not used.
 
-## 💅 Style management
-
-CSS Modules
-
 ## ✨ Developer experience
 
 - `yarn start` or `yarn dev` - Starts the documentation at http://localhost:4000/
@@ -30,6 +26,11 @@ CSS Modules
 - `yarn build` - builds the component library
 - `yarn build:web` - builds the docs
 - `yarn test` - runs any tests
+- `yarn plop` - see below
+
+## 💅 Style management
+
+CSS Modules
 
 ### Docz
 
