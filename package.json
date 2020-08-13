@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": false,
   "description": "React Component Library for UI consistency between repositories",
-  "main": "./dist/index.cjs.js",
+  "main": "./dist/index.js",
+  "typings": "./dist/lib/index.d.ts",
   "engines": {
     "node": ">=12.18.0"
   },
   "scripts": {
+    "prepublishOnly": "npm run build",
     "build": "rollup -c && node ./scripts/buildDist",
     "build:web": "docz build",
     "dev": "yarn start",
