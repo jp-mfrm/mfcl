@@ -22,11 +22,11 @@ import { Dropdown } from 'mfcl'
 ## Basic usage
 
 <Playground>
-  <Component initialState={{ value: '1' }}>
+  <Component initialState={{ value: { name: '1', value: '1' } }}>
     {({ setState, state }) => (
       <Row>
         <Dropdown
-          onChange={(option, e) => setState({ value: option.name })}
+          onChange={(option) => setState({ value: option })}
           options={[
             { name: '1', value: '1' },
             { name: '2', value: '2' },
@@ -47,11 +47,11 @@ import { Dropdown } from 'mfcl'
 ## Customizable Children
 
 <Playground>
-  <Component initialState={{ value: 0 }}>
+  <Component initialState={{ value: { name: 'Set as Preferred', value: 0 } }}>
     {({ setState, state }) => (
       <Row>
         <Dropdown
-          onChange={(option, e) => setState({ value: option.name })}
+          onChange={(option) => setState({ value: option })}
           options={[
             { name: 'Set as Preferred', value: 0, disabled: true },
             { name: 'Remove', value: 1 },
@@ -75,12 +75,12 @@ import { Dropdown } from 'mfcl'
 ## Controlled Dropdown
 
 <Playground>
-  <Component initialState={{ value: 'ALL', isOpen: false }}>
+  <Component initialState={{ value: { name: '1', value: '1' }, isOpen: false }}>
     {({ setState, state }) => (
       <Row>
         <Dropdown
           open={state.isOpen}
-          onChange={(option, e) => setState({ value: option.value })}
+          onChange={(option) => setState({ value: option })}
           options={[
             { name: '1', value: '1' },
             { name: '2', value: '2' },

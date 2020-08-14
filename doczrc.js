@@ -1,14 +1,14 @@
 const colors = {
   white: '#FFFFFF',
   grayUltraLight: '#F9FAFB',
-  grayExtraLight: '#F5F6F7',
+  grayExtraLight: '#F8F8F8',
   grayLight: '#CED1D5',
-  gray: '#8A8F9C',
-  grayDark: '#2F3337',
+  gray: '#B3B5B7',
+  grayDark: '#626366',
   grayExtraDark: '#080808',
-  dark: '#17181A',
+  dark: '#2d2926',
   skyBlue: '#1FB6FF',
-  blue: '#389BFF',
+  blue: '#0094FF',
   background: '#080808',
   border: '#545658',
   negative: '#FE0625'
@@ -175,7 +175,6 @@ export default {
   typescript: true,
   themeConfig: {
     showPlaygroundEditor: true,
-    initialColorMode: 'dark',
     codemirrorTheme: 'material',
     colors: {
       light: {
@@ -183,7 +182,6 @@ export default {
       },
       dark
     },
-    mode: 'dark',
     /** Styles */
     styles: {
       body: {
