@@ -170,9 +170,7 @@ const dark = {
 export default {
   title: 'Mattress Firm Component Library',
   description: 'React Component Library for UI consistency between repositories',
-  base: './mfcl/', // base path for website (if using github pages)
   dest: './docs',
-  src: './src',
   port: 4000,
   typescript: true,
   themeConfig: {
