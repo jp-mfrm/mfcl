@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "name": "mfcl",
+  "alias": ["mfcl.vercel.app"],
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "public" }
+    }
+  ]
+}
