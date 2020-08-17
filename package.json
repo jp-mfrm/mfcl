@@ -74,6 +74,7 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/documentation/**",
+      "!src/lib/utils/**",
       "!src/lib/index.ts",
       "!src/lib/declaration.d.ts",
       "!src/react-app-env.d.ts",
