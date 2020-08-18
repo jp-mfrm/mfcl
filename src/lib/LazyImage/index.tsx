@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useLayoutEffect, useState, useRef, memo } from 'react'
+import React, { useEffect, useState, useRef, memo } from 'react'
 
 export interface Props {
   src: string
@@ -10,7 +10,7 @@ const LazyImage: React.FunctionComponent<Props> = ({ src, ...rest }) => {
   const [stateSrc, setStateSrc] = useState('') // you could set a fallback image here
   const firstUpdate = useRef(true)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (firstUpdate.current) {
       firstUpdate.current = false
       return
