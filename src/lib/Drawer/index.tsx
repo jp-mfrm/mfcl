@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Transition from 'react-transition-group/Transition'
 import clsx from 'clsx'
 import Fade from '../Fade'
@@ -101,12 +101,6 @@ const Drawer: React.FunctionComponent<Props> = ({
     }
   }
 
-  useLayoutEffect(() => {
-    if (closeBtnRef.current !== null && isOpen) {
-      closeBtnRef.current.focus()
-    }
-  })
-
   useEffect(() => {
     if (firstUpdate.current) {
       firstUpdate.current = false
@@ -121,6 +115,10 @@ const Drawer: React.FunctionComponent<Props> = ({
       if (isSafari) {
         document.body.style.top = `${-window.pageYOffset}px`
         document.body.style.position = 'fixed'
+      }
+
+      if (closeBtnRef.current !== null) {
+        closeBtnRef.current.focus()
       }
     } else {
       document.body.style.overflow = ''
@@ -177,11 +175,10 @@ const Drawer: React.FunctionComponent<Props> = ({
         {(state) => (
           // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
           <div
-            className={clsx(styles.drawer, drawerClassName)}
+            className={drawerClassName}
             style={positions[position][state]}
             role="dialog"
             aria-modal="true"
-            {...rest}
             ref={modalRef}
             onKeyDown={handleKeys}
           >
