@@ -208,13 +208,24 @@ const Rating: FunctionComponent<Props> = ({
     }
   }
 
-  const handleClear = (event: any) => {
+  const handleSameStarClick = (event: any) => {
     // Ignore keyboard events
     // https://github.com/facebook/react/issues/7407
     if (event.clientX === 0 && event.clientY === 0) {
       return
     }
 
+    handleClear(event)
+  }
+
+  const handleSameStarKey = (event: any) => {
+    const key = event.keyCode || event.which
+    if (key === 13) {
+      handleClear(event)
+    }
+  }
+
+  const handleClear = (event: any) => {
     setState({
       hover: -1,
       focus: -1
@@ -296,7 +307,8 @@ const Rating: FunctionComponent<Props> = ({
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
-          onClick={handleClear}
+          onClick={handleSameStarClick}
+          onKeyPress={handleSameStarKey}
           disabled={disabled}
           value={state.value}
           id={id}
