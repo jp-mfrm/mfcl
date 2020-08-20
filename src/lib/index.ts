@@ -9,5 +9,7 @@ import LazyImage from './LazyImage'
 import Loading from './Loading'
 import ProgressBar from './ProgressBar'
 import Select from './Select'
+import Modal from './Modal';
 
-export { Alert, Button, Checkbox, Collapse, Drawer, Dropdown, Fade, LazyImage, Loading, ProgressBar, Select }
+export {
+  Modal, Alert, Button, Checkbox, Collapse, Drawer, Dropdown, Fade, LazyImage, Loading, ProgressBar, Select }

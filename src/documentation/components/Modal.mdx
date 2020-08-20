@@ -1,0 +1,41 @@
+---
+name: Modal
+menu: Components
+route: /components-modal
+---
+
+import { Playground, Props } from 'docz';
+import Component from "react-component-component";
+import { Modal, Button } from '../../lib';
+
+# Modal
+
+```javascript
+import { Modal } from 'mfcl';
+```
+
+## Description
+TODO add description here
+
+## Properties
+
+<Props of={Modal} />
+
+## Basic Usage
+
+<Playground>
+  <Component initialState={{ isOpen: false }}>
+    {({ setState, state }) => {
+      return (
+        <div>
+          <Modal header="Basic Modal" isOpen={state.isOpen} onClose={(isOpen) => setState({ isOpen: false })}>
+         test
+          </Modal>
+          <Button btnType="primary" onClick={() => setState({ isOpen: !state.isOpen })} size="lg">
+            {state.isOpen ? 'Close' : 'Open'} me
+          </Button>
+        </div>
+      )
+    }}
+  </Component>
+</Playground>
