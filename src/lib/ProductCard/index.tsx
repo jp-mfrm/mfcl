@@ -1,5 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react'
-import LazyImage from '../LazyImage'
+import React, { FunctionComponent } from 'react'
 import clsx from 'clsx'
 
 import styles from './productCard.module.scss'
