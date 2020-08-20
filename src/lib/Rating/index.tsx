@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react'
+import React, { ReactNode, FunctionComponent, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import Star from './Star'
@@ -40,82 +40,71 @@ function defaultLabelText(value: number) {
 
 interface Props {
   /**
-   * @ignore
-   */
-  className: string
-  /**
-   * The default value. Use when the component is not controlled.
-   */
-  defaultValue: number
-  /**
-   * If `true`, the rating will be disabled.
-   */
-  disabled: boolean
-  /**
-   * The label read when the rating input is empty.
-   */
-  emptyLabelText: ReactNode
-  /**
-   * Accepts a function which returns a string value that provides a user-friendly name for the current value of the rating.
-   *
-   * For localization purposes, you can use the provided [translations](/guides/localization/).
-   *
-   * @param {number} value The rating label's value to format.
-   * @returns {string}
-   */
-  getLabelText: Function
-  /**
-   * Maximum rating.
-   */
-  max: number
-  /**
    * The name attribute of the radio `input` elements.
    * If `readOnly` is false, the prop is required,
    * this input name`should be unique within the parent form.
    */
   name: String
   /**
+   * The rating value.
+   */
+  value: number
+  className?: string
+  /**
+   * The default value. Use when the component is not controlled.
+   */
+  defaultValue?: number
+  /**
+   * If `true`, the rating will be disabled.
+   */
+  disabled?: boolean
+  /**
+   * The label read when the rating input is empty.
+   */
+  emptyLabelText?: ReactNode
+  /**
+   * Accepts a function which returns a string value that provides a user-friendly name for the current value of the rating.
+   *
+   * @param {number} value The rating label's value to format.
+   * @returns {string}
+   */
+  getLabelText?: Function
+  /**
+   * Maximum rating.
+   */
+  max?: number
+  /**
    * Callback fired when the value changes.
    *
    * @param {object} event The event source of the callback.
    * @param {number} value The new value.
    */
-  onChange: Function
+  onChange?: Function
   /**
    * Callback function that is fired when the hover state changes.
    *
    * @param {object} event The event source of the callback.
    * @param {number} value The new value.
    */
-  onChangeActive: Function
-  /**
-   * @ignore
-   */
-  onMouseLeave: Function
-  /**
-   * @ignore
-   */
-  onMouseMove: Function
+  onChangeActive?: Function
+  onMouseLeave?: Function
+  onMouseMove?: Function
   /**
    * The minimum increment value change allowed. Should be above 0.1
    */
-  precision: number
+  precision?: number
   /**
    * Removes all hover effects and pointer events.
    */
-  readOnly: boolean
+  readOnly?: boolean
   /**
    * The size of the rating.
    */
-  size: 'lg' | 'md' | 'sm'
-  /**
-   * The rating value.
-   */
-  value: number
+  size?: 'lg' | 'md' | 'sm'
 }
 
 const Rating: FunctionComponent<Props> = ({
-  className,
+  className = '',
   defaultValue = null,
   disabled = false,
   emptyLabelText = 'Empty',
@@ -140,7 +129,7 @@ const Rating: FunctionComponent<Props> = ({
   })
 
   const valueRounded = roundValueToPrecision(valueDerived, precision)
-  const [{ hover, focus }, setState] = React.useState({
+  const [{ hover, focus }, setState] = useState({
     hover: -1,
     focus: -1
   })
@@ -154,9 +143,9 @@ const Rating: FunctionComponent<Props> = ({
   }
 
   const { isFocusVisibleRef, onBlur: handleBlurVisible, onFocus: handleFocusVisible } = useIsFocusVisible()
-  const [focusVisible, setFocusVisible] = React.useState(false)
+  const [focusVisible, setFocusVisible] = useState(false)
 
-  const rootRef = React.useRef()
+  const rootRef = useRef()
 
   const handleMouseMove = (event: any) => {
     if (onMouseMove) {
@@ -164,6 +153,7 @@ const Rating: FunctionComponent<Props> = ({
     }
 
     const rootNode = rootRef.current
+
     if (!rootNode) {
       return
     }
@@ -323,6 +313,8 @@ const Rating: FunctionComponent<Props> = ({
     <span
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      // @ts-ignore
+      ref={rootRef}
       className={clsx(
         styles.root,
         {
