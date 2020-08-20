@@ -1,5 +1,4 @@
 import React, { ReactNode, FunctionComponent, useState, useRef } from 'react'
-import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import Star from './Star'
 import styles from './rating.module.scss'
@@ -48,7 +47,7 @@ interface Props {
   /**
    * The rating value.
    */
-  value: number
+  value?: number | null
   className?: string
   /**
    * The default value. Use when the component is not controlled.
@@ -282,7 +281,9 @@ const Rating: FunctionComponent<Props> = ({
       <span
         className={clsx(styles.icon, {
           [styles.iconEmpty]: !state.filled,
-          [styles.iconActive]: state.active
+          [styles.iconActive]: state.active,
+          [styles.iconHover]: state.hover,
+          [styles.iconFocus]: state.focus
         })}
       >
         <Star />

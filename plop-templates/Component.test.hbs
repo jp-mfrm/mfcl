@@ -9,6 +9,6 @@ describe('{{componentName}} Component', () => {
   const { container } = render(
     <{{componentName}} className="test-class-name">Click Me</{{componentName}}>,
   );
-  expect(container.querySelector('{{dash-case componentName}}-wrapper')?.classList).toContain('test-class-name')
+  expect(container.querySelector('.{{dash-case componentName}}-wrapper')?.classList).toContain('test-class-name')
   })
 });
