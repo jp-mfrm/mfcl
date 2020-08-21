@@ -82,22 +82,7 @@ const AccordionItem: FunctionComponent<Props> = ({
   }
 
   return (
-    <div
-      className={clsx(styles['accordionItem'], open && styles['open'])}
-      role="button"
-      ref={labelRef}
-      tabIndex={0}
-      onClick={() => {
-        setOpen(!open)
-      }}
-      onKeyDown={handleKeys}
-      onFocus={() => {
-        setFocus(index)
-      }}
-      onBlur={() => {
-        setFocus(-1)
-      }}
-    >
+    <div className={clsx(styles['accordionItem'], open && styles['open'])}>
       <div
         className={lineStyles}
         aria-expanded={open}
@@ -105,6 +90,18 @@ const AccordionItem: FunctionComponent<Props> = ({
         tabIndex={0}
         id={labelId}
         style={titleStyles}
+        role="button"
+        ref={labelRef}
+        onClick={() => {
+          setOpen(!open)
+        }}
+        onKeyDown={handleKeys}
+        onFocus={() => {
+          setFocus(index)
+        }}
+        onBlur={() => {
+          setFocus(-1)
+        }}
       >
         {icon && <div className={styles.icon}>{icon}</div>}
         <div className={centerStyles}>
