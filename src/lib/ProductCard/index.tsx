@@ -7,6 +7,7 @@ import styles from './productCard.module.scss'
 interface Props {
   brand: string
   brandImg: string
+  className?: string
   productImg: string
   title: string
   size: string
@@ -15,7 +16,6 @@ interface Props {
   rating: number
   reviews: number
   matchPercentage: number
-  width: string
   [rest: string]: unknown // ...rest property
 }
 
@@ -30,6 +30,7 @@ const ProductCard: FunctionComponent<Props> = ({
   rating,
   reviews,
   matchPercentage,
+  className,
   ...rest
 }) => {
   let productPrice = discountedPrice ? discountedPrice : price
@@ -40,7 +41,7 @@ const ProductCard: FunctionComponent<Props> = ({
   }
 
   return (
-    <div className={styles['tile-container']} {...rest}>
+    <div className={(styles['product-card-container'], className)} {...rest}>
       <div className={styles.contentRow}>
         <div className={styles['product-image']}>
           <span className={styles['match-banner']}>{matchPercentage}% Match</span>
