@@ -54,14 +54,6 @@
   }
 }
 .accordionItem {
-  // Add styles for Focus per UX
-  // border: solid 1px transparent;
-  // border-bottom: 1px solid #d8d8d8;
-
-  // &:focus {
-  //   border: solid 1px gray;
-  // }
-
   border-bottom: 1px solid #d8d8d8;
 
   .line {
@@ -140,6 +132,7 @@
     transition-property: opacity, transform;
     transition-delay: 0.6s;
     padding-bottom: 12px;
+    padding-top: 9px;
   }
   .content.alignedContent {
     margin-left: 17.65%;
