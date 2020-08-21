@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react'
+import Rating from '../Rating'
 import clsx from 'clsx'
 
 import styles from './productCard.module.scss'
@@ -11,7 +12,7 @@ interface Props {
   size: string
   discountedPrice: number
   price: number
-  rating?: number
+  rating: number
   reviews: number
   matchPercentage: number
   width: string
@@ -51,8 +52,7 @@ const ProductCard: FunctionComponent<Props> = ({
               <img src={brandImg} />
             </span>
             <div className={styles['rating-row']}>
-              {/*TODO add Rating component to Product Card */}
-              {/* <Rating average={rating} stars={5} width={60} /> */}
+              <Rating name="product-rating" value={rating} readOnly size="sm" />
               <p className={styles.reviews}>
                 <small className={styles['average-rating']}>{rating}/5</small> <small>({reviews})</small>
               </p>
