@@ -51,6 +51,7 @@ const ProductCard: FunctionComponent<Props> = ({
               <img src={brandImg} />
             </span>
             <div className={styles['rating-row']}>
+              {/*TODO add Rating component to Product Card */}
               {/* <Rating average={rating} stars={5} width={60} /> */}
               <p className={styles.reviews}>
                 <small className={styles['average-rating']}>{rating}/5</small> <small>({reviews})</small>
