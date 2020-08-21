@@ -29,9 +29,9 @@ Accordion Component can be used to display a list of collapsable content panels 
     {({ setState, state }) => (
       <Accordion
           items={
-            [{title: "Example title", content: "Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen"
+            [{title: "Example title", id: "example_title", content: "Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen"
            },
-            {title: "Another Title", content: <div style={{border: "2px solid pink", paddingTop: "20px", paddingLeft:"20px"}}>Other types of content: <span style={{display: "inline-block", paddingLeft:"15px"}}> <Checkbox title="Checkbox" /></span></div>}]
+            {title: "Another Title", id: "another_title", content: <div style={{border: "2px solid pink", paddingTop: "20px", paddingLeft:"20px"}}>Other types of content: <span style={{display: "inline-block", paddingLeft:"15px"}}> <Checkbox title="Checkbox" /></span></div>}]
             }
       />
       
@@ -61,7 +61,7 @@ Accordion Component can be used to display a list of collapsable content panels 
           <path d="M0 0H62.4V62.4H0z" transform="translate(-6.24 -21.8)" />
         </g>
       </g>
-    </svg>, title: "Title 1", content: "Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen"
+    </svg>, title: "Title 1", id: "title1",content: "Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen"
            },
             {icon:    <svg width={32} height={32} viewBox="0 0 50 25">
       <defs>
@@ -73,7 +73,7 @@ Accordion Component can be used to display a list of collapsable content panels 
       <g fill="none" fillRule="evenodd" transform="translate(-20 -30)">
         <use fill={'#000'} fillRule="nonzero" xlinkHref="#plush_path_a" />
       </g>
-    </svg>, title: "Title 2", content: "Less interesting content"}]
+    </svg>, title: "Title 2", id: "title2", content: "Less interesting content"}]
             }
       />
       
@@ -89,9 +89,9 @@ Accordion Component can be used to display a list of collapsable content panels 
     {({ setState, state }) => (
       <Accordion
           items={
-            [{preview: "title 1 Description", title: "Title 1", content: "Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen"
+            [{preview: "title 1 Description", title: "Title 1", id: "title1", content: "Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen"
            },
-            {preview: "more description", title: "Title 2", content: "Less interesting content"}]
+            {preview: "more description", title: "Title 2", id: "title2", content: "Less interesting content"}]
             }
       />
       
@@ -108,7 +108,7 @@ Accordion Component can be used to display a list of collapsable content panels 
       <Accordion
           items={
             [
-              {initialOpen: true, title: "Product Description", content: <div>Features:<br/>
+              {initialOpen: true, title: "Product Description", id: "productDescription", content: <div>Features:<br/>
 Infused Charcoal Helps Regulate Your Temperature and Deflect Moisture
 Conforming Foam That Cradle Every Curve and Support Every Toss or Turn
 Support Foam Provides Additional Support and Everlasting Durability<br/><br/>
@@ -119,8 +119,49 @@ Plush<br/><br/>
 Mattress Height:<br/>
 8"</div>
             },
-             {title: "Questions & Answers", content:"Questions and Answers here" },
-             {title: "Reviews", content: <div>Be the first to review <span style={{textDecoration: "underline"}}>here</span> </div>}
+             {title: "Questions & Answers", id: "questionAnswer",content:"Questions and Answers here" },
+             {title: "Reviews", id: "reviews",content: <div>Be the first to review <span style={{textDecoration: "underline"}}>here</span> </div>}
+            ]
+            }
+      />
+      
+    )}
+  </Component>
+</Playground>
+
+
+## With Hidden Preview Text
+
+<Playground>
+  <Component initialState={{}}>
+    {({ setState, state }) => (
+      <Accordion
+          hidePreview={true}
+          items={
+            [{preview: "Example1, Example2", title: "Title 1", id: "title1", content: <div>Example1<br/>Text text text<br/><br/>Example2<br/>Text text text text</div> ,icon:    <svg width={32} height={32} viewBox="0 0 50 25">
+      <defs>
+        <path
+          id="plush_path_a"
+          d="M56.98 31.042c-2.136-.04-4.259.335-6.25 1.104-1.828.7-3.775 1.032-5.73.979-1.939.026-3.864-.328-5.667-1.042-1.992-.769-4.115-1.144-6.25-1.104-2.135-.04-4.258.334-6.25 1.104-1.8.69-3.718 1.023-5.645.98-.576 0-1.042.466-1.042 1.041s.466 1.042 1.041 1.042c2.135.036 4.257-.34 6.25-1.104 1.793-.694 3.704-1.027 5.625-.98 1.95-.007 3.883.368 5.688 1.105 1.992.77 4.115 1.145 6.25 1.104 2.135.04 4.258-.335 6.25-1.104 1.807-.692 3.732-1.024 5.667-.98 1.927-.043 3.845.29 5.645.98 1.994.765 4.116 1.14 6.25 1.104.576 0 1.042-.467 1.042-1.042s-.466-1.041-1.041-1.041c-1.887-.016-3.754-.39-5.5-1.105-2.024-.754-4.175-1.108-6.334-1.041zm11.978 6.25H21.042c-.576 0-1.042.466-1.042 1.041V48.75c0 .575.466 1.042 1.042 1.042h1.041v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h41.666v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h1.041c.576 0 1.042-.467 1.042-1.042V38.333c0-.575-.466-1.041-1.042-1.041zM22.083 47.708v-8.333h45.834v8.333H22.083z"
+        />
+      </defs>
+      <g fill="none" fillRule="evenodd" transform="translate(-20 -30)">
+        <use fill={'#000'} fillRule="nonzero" xlinkHref="#plush_path_a" />
+      </g>
+    </svg>
+           },
+            {preview: "Example1, Example2", title: "Title 2", id: "title2", content: <div>Example1<br/>Text text text<br/><br/>Example2<br/>Text text text text</div> ,icon:    <svg width={32} height={32} viewBox="0 0 50 25">
+      <defs>
+        <path
+          id="plush_path_a"
+          d="M56.98 31.042c-2.136-.04-4.259.335-6.25 1.104-1.828.7-3.775 1.032-5.73.979-1.939.026-3.864-.328-5.667-1.042-1.992-.769-4.115-1.144-6.25-1.104-2.135-.04-4.258.334-6.25 1.104-1.8.69-3.718 1.023-5.645.98-.576 0-1.042.466-1.042 1.041s.466 1.042 1.041 1.042c2.135.036 4.257-.34 6.25-1.104 1.793-.694 3.704-1.027 5.625-.98 1.95-.007 3.883.368 5.688 1.105 1.992.77 4.115 1.145 6.25 1.104 2.135.04 4.258-.335 6.25-1.104 1.807-.692 3.732-1.024 5.667-.98 1.927-.043 3.845.29 5.645.98 1.994.765 4.116 1.14 6.25 1.104.576 0 1.042-.467 1.042-1.042s-.466-1.041-1.041-1.041c-1.887-.016-3.754-.39-5.5-1.105-2.024-.754-4.175-1.108-6.334-1.041zm11.978 6.25H21.042c-.576 0-1.042.466-1.042 1.041V48.75c0 .575.466 1.042 1.042 1.042h1.041v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h41.666v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h1.041c.576 0 1.042-.467 1.042-1.042V38.333c0-.575-.466-1.041-1.042-1.041zM22.083 47.708v-8.333h45.834v8.333H22.083z"
+        />
+      </defs>
+      <g fill="none" fillRule="evenodd" transform="translate(-20 -30)">
+        <use fill={'#000'} fillRule="nonzero" xlinkHref="#plush_path_a" />
+      </g>
+    </svg>
+           }
             ]
             }
       />
