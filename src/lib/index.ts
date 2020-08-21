@@ -9,7 +9,21 @@ import LazyImage from './LazyImage'
 import Loading from './Loading'
 import ProgressBar from './ProgressBar'
 import Select from './Select'
-import ProductCard from './ProductCard';
+import Rating from './Rating'
+import ProductCard from './ProductCard'
 
 export {
-  ProductCard, Alert, Button, Checkbox, Collapse, Drawer, Dropdown, Fade, LazyImage, Loading, ProgressBar, Select }
+  Rating,
+  Alert,
+  Button,
+  Checkbox,
+  Collapse,
+  Drawer,
+  Dropdown,
+  Fade,
+  LazyImage,
+  Loading,
+  ProgressBar,
+  Select,
+  ProductCard
+}

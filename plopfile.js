@@ -43,7 +43,7 @@ module.exports = (plop) => {
         type: 'modify',
         path: 'src/CHANGELOG.mdx',
         pattern: '# Changelog',
-        template: '# Changelog\n\n#### [v. TODO]\n\n- Init `<{{componentName}}/>`\n\n_TODO_'
+        template: '# Changelog\n\n#### [v. TODO]\n\n- Init {{componentName}} Component\n\n_TODO_'
       })
       actions.push({
         type: 'modify',

@@ -1,6 +1,6 @@
 {
   "name": "mfcl",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "private": false,
   "description": "React Component Library for UI consistency between repositories",
   "main": "./dist/index.js",
@@ -20,6 +20,7 @@
     "start": "docz dev -o",
     "stylelint": "stylelint ./src",
     "test": "cross-env CI=1 react-scripts test --env=jest-environment-jsdom-sixteen",
+    "test:watch": "yarn test --watch",
     "test:coverage": "yarn test --coverage --watchAll=false",
     "watch": "rollup -c -w"
   },
@@ -74,6 +75,7 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/documentation/**",
+      "!src/lib/utils/**",
       "!src/lib/index.ts",
       "!src/lib/declaration.d.ts",
       "!src/react-app-env.d.ts",
