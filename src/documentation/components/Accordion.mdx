@@ -8,6 +8,7 @@ import { Playground, Props } from 'docz';
 import Component from "react-component-component";
 import { Accordion } from '../../lib';
 import { Checkbox } from '../../lib';
+import {Alert} from '../../lib';
 
 # Accordion
 
@@ -25,13 +26,16 @@ Accordion Component can be used to display a list of collapsable content panels 
 ## Basic Usage
 
 <Playground>
-  <Component initialState={{}}>
+  <Component initialState={{error: false}}>
     {({ setState, state }) => (
       <Accordion
           items={
             [{title: "Example title", id: "example_title", content: "Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen"
            },
-            {title: "Another Title", id: "another_title", content: <div style={{border: "2px solid pink", paddingTop: "20px", paddingLeft:"20px"}}>Other types of content: <span style={{display: "inline-block", paddingLeft:"15px"}}> <Checkbox title="Checkbox" /></span></div>}]
+            {title: "Another Title", id: "another_title", content: <div style={{padding:"20px"}}>Other content: <span style={{display: "inline-block", paddingLeft:"15px"}}> <img style={{height: "500px"}} src="https://i.guim.co.uk/img/media/20098ae982d6b3ba4d70ede3ef9b8f79ab1205ce/0_0_969_1005/master/969.jpg?width=620&quality=85&auto=format&fit=max&s=2a2baf6cf8f918ef763bb105f98f4cc0" /> <Checkbox title="Don't click" handleClick={ () => {setState({error:!state.error})} } />  </span>
+            <Alert color="error" isOpen={state.error}>おい！何してんの?! (ꐦಠ益ಠ)</Alert>
+      </div>
+      }]
             }
       />
       
