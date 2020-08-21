@@ -28,11 +28,9 @@ TODO add description here
     {({ setState, state }) => {
       return (
         <div>
-          <Modal header="Basic Modal" isOpen={state.isOpen} onClose={(isOpen) => setState({ isOpen: false })}>
-         test
-          </Modal>
+          <Modal header="Basic Modal" isOpen={state.isOpen} onClose={(isOpen) => setState({ isOpen: false })} />
           <Button btnType="primary" onClick={() => setState({ isOpen: !state.isOpen })} size="lg">
-            {state.isOpen ? 'Close' : 'Open'} me
+            Open Modal
           </Button>
         </div>
       )

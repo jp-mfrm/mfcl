@@ -118,6 +118,8 @@ const Drawer: React.FunctionComponent<Props> = ({
       }
 
       if (closeBtnRef.current !== null) {
+        console.log('focus')
+        console.log(closeBtnRef.current)
         closeBtnRef.current.focus()
       }
     } else {

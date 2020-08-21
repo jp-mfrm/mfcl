@@ -1,4 +1,5 @@
 @import '../variables';
+@import '../utils/mixins/closeX';
 
 .modal-wrapper {
     display: none;
@@ -8,7 +9,7 @@
     }
 
   .modal-overlay {
-    z-index: 1;
+    z-index: 1000;
     background: rgba(0, 0, 0, 0.6);
     position: fixed;
     top: 0;
@@ -20,12 +21,16 @@
   .modal {
       display: block;
       background: white;
-      border: 1px solid hotpink;
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 2;
+      z-index: 1001;
+      padding: 20px;
+  }
+
+  .close {
+    @include closeX();
   }
 
 }
