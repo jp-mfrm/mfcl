@@ -9,7 +9,21 @@ import LazyImage from './LazyImage'
 import Loading from './Loading'
 import ProgressBar from './ProgressBar'
 import Select from './Select'
-import Rating from './Rating';
+import Rating from './Rating'
+import Accordion from './Accordion'
 
 export {
-  Rating, Alert, Button, Checkbox, Collapse, Drawer, Dropdown, Fade, LazyImage, Loading, ProgressBar, Select }
+  Accordion,
+  Rating,
+  Alert,
+  Button,
+  Checkbox,
+  Collapse,
+  Drawer,
+  Dropdown,
+  Fade,
+  LazyImage,
+  Loading,
+  ProgressBar,
+  Select
+}
