@@ -111,6 +111,11 @@
   color: $gray-11;
   margin-bottom: 0;
   padding-left: 15px;
+
+  @media screen and (min-width: $tablet) {
+    padding-left: 0;
+    margin-bottom: 15px;
+  }
 }
 
 .discounted-price {
