@@ -32,6 +32,7 @@ const ProductCard: FunctionComponent<Props> = ({
   ...rest
 }) => {
   let productPrice = discountedPrice ? discountedPrice : price
+  let productMatch = matchPercentage && <span className={styles['match-banner']}>{matchPercentage}% Match</span>
 
   let productDiscount
   if (discountedPrice) {
@@ -42,7 +43,7 @@ const ProductCard: FunctionComponent<Props> = ({
     <div className={styles['product-card-container']} {...rest}>
       <div className={styles.contentRow}>
         <div className={styles['product-image']}>
-          <span className={styles['match-banner']}>{matchPercentage}% Match</span>
+          {productMatch}
           <img src={productImg} />
         </div>
         <div className={styles['details-container']}>
