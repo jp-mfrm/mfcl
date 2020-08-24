@@ -66,11 +66,11 @@ const Accordion: FunctionComponent<Props> = ({
       setFocus(ids[ids.length - 1])
     }
   }
-  const sharedAccordionItemProps = {
+  const accordionItemProps = {
     focused,
     setIndex,
-    focus,
-    setFocus
+    setFocus,
+    hidePreview
   }
 
   return (
@@ -78,7 +78,7 @@ const Accordion: FunctionComponent<Props> = ({
       {children
         ? Children.map(children, (child, index) => {
             if (isValidElement(child)) {
-              return cloneElement(child, { index, ...sharedAccordionItemProps })
+              return cloneElement(child, { index, ...accordionItemProps })
             }
           })
         : items?.map((item, index) => {
@@ -86,11 +86,8 @@ const Accordion: FunctionComponent<Props> = ({
               <AccordionItem
                 {...item}
                 id={item.id || index.toString()}
-                setFocus={setFocus}
-                setIndex={setIndex}
                 index={index}
-                focused={focused}
-                hidePreview={hidePreview}
+                {...accordionItemProps}
                 titleStyles={titleStyles}
                 contentStyles={contentStyles}
               />
