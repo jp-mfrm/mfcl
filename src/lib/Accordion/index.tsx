@@ -17,18 +17,28 @@ interface AccordionItem {
   id?: string
   preview?: string
   icon?: string | ReactNode
+  /* Option to have accordionItem already open */
   initialOpen?: boolean
+  /* Function to be called when accordionItem is opened */
   onOpen?: Function
+  /* Function to be called when accordionItem is closed */
   onClose?: Function
 }
 
 type Props = {
+  /* class to pass to the accordion wrapper */
   accordionClass?: string
+  /* Option to hide preview text of AccordionItem on it's open state */
   hidePreview?: boolean
+  /* list of AccordionItems to be rendered */
   items?: AccordionItem[]
+  /* styles to pass to each section title wrapper */
   titleStyles?: CSSProperties
+  /* styles to pass to each section content wrapper */
   contentStyles?: CSSProperties
+  /* width of the Accordion */
   width?: string
+  /* Optional children to use instead of items prop */
   children?: ReactNode | null
 }
 
