@@ -86,6 +86,7 @@ const Accordion: FunctionComponent<Props> = ({
         : items?.map((item, index) => {
             return (
               <AccordionItem
+                key={index}
                 {...item}
                 id={item.id || index.toString()}
                 index={index}
