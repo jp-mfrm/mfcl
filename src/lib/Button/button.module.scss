@@ -13,7 +13,6 @@
   text-align: center;
   text-transform: capitalize;
   transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
-  width: 173px;
 
   &:disabled {
     cursor: not-allowed !important; // stylelint-disable-line
@@ -26,20 +25,21 @@
   }
 
   &.sm {
-    font-size: 12px;
+    font-size: 14px;
     height: 30px;
-    padding: 0 15px;
+    padding: 0px 20px;
   }
 
   &.md {
     font-size: 14px;
     height: 34px;
-    padding: 0 15px;
+    padding: 0 30px;
   }
 
   &.lg {
     font-size: 16px;
     height: 44px;
+    padding: 0 60px;
   }
 
   &.rounded {
