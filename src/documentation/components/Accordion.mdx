@@ -6,9 +6,7 @@ route: /components-accordion
 
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
-import { Accordion } from '../../lib'
-import { Checkbox } from '../../lib'
-import { Alert } from '../../lib'
+import { Accordion, Checkbox, Alert, AccordionItem } from '../../lib'
 
 # Accordion
 
@@ -70,195 +68,189 @@ Accordion Component can be used to display a list of collapsable content panels 
 ## With Optional Icon
 
 <Playground>
-  <Component initialState={{}}>
-    {({ setState, state }) => (
-      <Accordion
-        items={[
-          {
-            icon: (
-              <svg width={32} height={32} viewBox="0 0 50 22">
-                <defs>
-                  <path
-                    id="firm_path_a"
-                    d="M1.04.04h47.84c.574 0 1.04.466 1.04 1.04 0 .574-.466 1.04-1.04 1.04H1.04C.466 2.12 0 1.654 0 1.08 0 .506.466.04 1.04.04zM48.88 4.2H1.04C.466 4.2 0 4.666 0 5.24v10.4c0 .574.466 1.04 1.04 1.04h1.04v4.16c0 .574.466 1.04 1.04 1.04.574 0 1.04-.466 1.04-1.04v-4.16h41.6v4.16c0 .574.466 1.04 1.04 1.04.574 0 1.04-.466 1.04-1.04v-4.16h1.04c.574 0 1.04-.466 1.04-1.04V5.24c0-.574-.466-1.04-1.04-1.04zM2.08 14.6V6.28h45.76v8.32H2.08z"
-                  />
-                </defs>
-                <g fill="none" fillRule="evenodd">
-                  <mask id="firm_path_b" fill="#fff">
-                    <use xlinkHref="#firm_path_a" />
-                  </mask>
-                  <g fill={'#000'} mask="url(#firm_path_b)">
-                    <path d="M0 0H62.4V62.4H0z" transform="translate(-6.24 -21.8)" />
-                  </g>
-                </g>
-              </svg>
-            ),
-            title: 'Title 1',
-            id: 'title1',
-            content:
-              'Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen'
-          },
-          {
-            icon: (
-              <svg width={32} height={32} viewBox="0 0 50 25">
-                <defs>
-                  <path
-                    id="plush_path_a"
-                    d="M56.98 31.042c-2.136-.04-4.259.335-6.25 1.104-1.828.7-3.775 1.032-5.73.979-1.939.026-3.864-.328-5.667-1.042-1.992-.769-4.115-1.144-6.25-1.104-2.135-.04-4.258.334-6.25 1.104-1.8.69-3.718 1.023-5.645.98-.576 0-1.042.466-1.042 1.041s.466 1.042 1.041 1.042c2.135.036 4.257-.34 6.25-1.104 1.793-.694 3.704-1.027 5.625-.98 1.95-.007 3.883.368 5.688 1.105 1.992.77 4.115 1.145 6.25 1.104 2.135.04 4.258-.335 6.25-1.104 1.807-.692 3.732-1.024 5.667-.98 1.927-.043 3.845.29 5.645.98 1.994.765 4.116 1.14 6.25 1.104.576 0 1.042-.467 1.042-1.042s-.466-1.041-1.041-1.041c-1.887-.016-3.754-.39-5.5-1.105-2.024-.754-4.175-1.108-6.334-1.041zm11.978 6.25H21.042c-.576 0-1.042.466-1.042 1.041V48.75c0 .575.466 1.042 1.042 1.042h1.041v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h41.666v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h1.041c.576 0 1.042-.467 1.042-1.042V38.333c0-.575-.466-1.041-1.042-1.041zM22.083 47.708v-8.333h45.834v8.333H22.083z"
-                  />
-                </defs>
-                <g fill="none" fillRule="evenodd" transform="translate(-20 -30)">
-                  <use fill={'#000'} fillRule="nonzero" xlinkHref="#plush_path_a" />
-                </g>
-              </svg>
-            ),
-            title: 'Title 2',
-            id: 'title2',
-            content: 'Less interesting content'
-          }
-        ]}
-      />
-    )}
-  </Component>
+  <Accordion
+    items={[
+      {
+        icon: (
+          <svg width={32} height={32} viewBox="0 0 50 22">
+            <defs>
+              <path
+                id="firm_path_a"
+                d="M1.04.04h47.84c.574 0 1.04.466 1.04 1.04 0 .574-.466 1.04-1.04 1.04H1.04C.466 2.12 0 1.654 0 1.08 0 .506.466.04 1.04.04zM48.88 4.2H1.04C.466 4.2 0 4.666 0 5.24v10.4c0 .574.466 1.04 1.04 1.04h1.04v4.16c0 .574.466 1.04 1.04 1.04.574 0 1.04-.466 1.04-1.04v-4.16h41.6v4.16c0 .574.466 1.04 1.04 1.04.574 0 1.04-.466 1.04-1.04v-4.16h1.04c.574 0 1.04-.466 1.04-1.04V5.24c0-.574-.466-1.04-1.04-1.04zM2.08 14.6V6.28h45.76v8.32H2.08z"
+              />
+            </defs>
+            <g fill="none" fillRule="evenodd">
+              <mask id="firm_path_b" fill="#fff">
+                <use xlinkHref="#firm_path_a" />
+              </mask>
+              <g fill={'#000'} mask="url(#firm_path_b)">
+                <path d="M0 0H62.4V62.4H0z" transform="translate(-6.24 -21.8)" />
+              </g>
+            </g>
+          </svg>
+        ),
+        title: 'Title 1',
+        id: 'title1',
+        content:
+          'Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen'
+      },
+      {
+        icon: (
+          <svg width={32} height={32} viewBox="0 0 50 25">
+            <defs>
+              <path
+                id="plush_path_a"
+                d="M56.98 31.042c-2.136-.04-4.259.335-6.25 1.104-1.828.7-3.775 1.032-5.73.979-1.939.026-3.864-.328-5.667-1.042-1.992-.769-4.115-1.144-6.25-1.104-2.135-.04-4.258.334-6.25 1.104-1.8.69-3.718 1.023-5.645.98-.576 0-1.042.466-1.042 1.041s.466 1.042 1.041 1.042c2.135.036 4.257-.34 6.25-1.104 1.793-.694 3.704-1.027 5.625-.98 1.95-.007 3.883.368 5.688 1.105 1.992.77 4.115 1.145 6.25 1.104 2.135.04 4.258-.335 6.25-1.104 1.807-.692 3.732-1.024 5.667-.98 1.927-.043 3.845.29 5.645.98 1.994.765 4.116 1.14 6.25 1.104.576 0 1.042-.467 1.042-1.042s-.466-1.041-1.041-1.041c-1.887-.016-3.754-.39-5.5-1.105-2.024-.754-4.175-1.108-6.334-1.041zm11.978 6.25H21.042c-.576 0-1.042.466-1.042 1.041V48.75c0 .575.466 1.042 1.042 1.042h1.041v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h41.666v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h1.041c.576 0 1.042-.467 1.042-1.042V38.333c0-.575-.466-1.041-1.042-1.041zM22.083 47.708v-8.333h45.834v8.333H22.083z"
+              />
+            </defs>
+            <g fill="none" fillRule="evenodd" transform="translate(-20 -30)">
+              <use fill={'#000'} fillRule="nonzero" xlinkHref="#plush_path_a" />
+            </g>
+          </svg>
+        ),
+        title: 'Title 2',
+        id: 'title2',
+        content: 'Less interesting content'
+      }
+    ]}
+  />
 </Playground>
 
 ## With Preview Text
 
 <Playground>
-  <Component initialState={{}}>
-    {({ setState, state }) => (
-      <Accordion
-        items={[
-          {
-            preview: 'title 1 Description',
-            title: 'Title 1',
-            id: 'title1',
-            content:
-              'Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen'
-          },
-          { preview: 'more description', title: 'Title 2', id: 'title2', content: 'Less interesting content' }
-        ]}
-      />
-    )}
-  </Component>
+  <Accordion
+    items={[
+      {
+        preview: 'title 1 Description',
+        title: 'Title 1',
+        id: 'title1',
+        content:
+          'Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen'
+      },
+      { preview: 'more description', title: 'Title 2', id: 'title2', content: 'Less interesting content' }
+    ]}
+  />
 </Playground>
 
 ## With Set Initial Open
 
 <Playground>
-  <Component initialState={{}}>
-    {({ setState, state }) => (
-      <Accordion
-        items={[
-          {
-            initialOpen: true,
-            title: 'Product Description',
-            id: 'productDescription',
-            content: (
-              <div>
-                Features:
-                <br />
-                Infused Charcoal Helps Regulate Your Temperature and Deflect Moisture Conforming Foam That Cradle Every
-                Curve and Support Every Toss or Turn Support Foam Provides Additional Support and Everlasting Durability
-                <br />
-                <br />
-                Comfort Type:
-                <br />
-                Plush
-                <br />
-                <br />
-                Mattress Height:
-                <br />
-                8"
-              </div>
-            )
-          },
-          { title: 'Questions & Answers', id: 'questionAnswer', content: 'Questions and Answers here' },
-          {
-            title: 'Reviews',
-            id: 'reviews',
-            content: (
-              <div>
-                Be the first to review <span style={{ textDecoration: 'underline' }}>here</span>{' '}
-              </div>
-            )
-          }
-        ]}
-      />
-    )}
-  </Component>
+  <Accordion
+    items={[
+      {
+        initialOpen: true,
+        title: 'Product Description',
+        id: 'productDescription',
+        content: (
+          <div>
+            Features:
+            <br />
+            Infused Charcoal Helps Regulate Your Temperature and Deflect Moisture Conforming Foam That Cradle Every
+            Curve and Support Every Toss or Turn Support Foam Provides Additional Support and Everlasting Durability
+            <br />
+            <br />
+            Comfort Type:
+            <br />
+            Plush
+            <br />
+            <br />
+            Mattress Height:
+            <br />
+            8"
+          </div>
+        )
+      },
+      { title: 'Questions & Answers', id: 'questionAnswer', content: 'Questions and Answers here' },
+      {
+        title: 'Reviews',
+        id: 'reviews',
+        content: (
+          <div>
+            Be the first to review <span style={{ textDecoration: 'underline' }}>here</span>{' '}
+          </div>
+        )
+      }
+    ]}
+  />
 </Playground>
 
 ## With Hidden Preview Text
 
 <Playground>
-  <Component initialState={{}}>
-    {({ setState, state }) => (
-      <Accordion
-        hidePreview={true}
-        items={[
-          {
-            preview: 'Example1, Example2',
-            title: 'Title 1',
-            id: 'title1',
-            content: (
-              <div>
-                Example1
-                <br />
-                Text text text
-                <br />
-                <br />
-                Example2
-                <br />
-                Text text text text
-              </div>
-            ),
-            icon: (
-              <svg width={32} height={32} viewBox="0 0 50 25">
-                <defs>
-                  <path
-                    id="plush_path_a"
-                    d="M56.98 31.042c-2.136-.04-4.259.335-6.25 1.104-1.828.7-3.775 1.032-5.73.979-1.939.026-3.864-.328-5.667-1.042-1.992-.769-4.115-1.144-6.25-1.104-2.135-.04-4.258.334-6.25 1.104-1.8.69-3.718 1.023-5.645.98-.576 0-1.042.466-1.042 1.041s.466 1.042 1.041 1.042c2.135.036 4.257-.34 6.25-1.104 1.793-.694 3.704-1.027 5.625-.98 1.95-.007 3.883.368 5.688 1.105 1.992.77 4.115 1.145 6.25 1.104 2.135.04 4.258-.335 6.25-1.104 1.807-.692 3.732-1.024 5.667-.98 1.927-.043 3.845.29 5.645.98 1.994.765 4.116 1.14 6.25 1.104.576 0 1.042-.467 1.042-1.042s-.466-1.041-1.041-1.041c-1.887-.016-3.754-.39-5.5-1.105-2.024-.754-4.175-1.108-6.334-1.041zm11.978 6.25H21.042c-.576 0-1.042.466-1.042 1.041V48.75c0 .575.466 1.042 1.042 1.042h1.041v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h41.666v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h1.041c.576 0 1.042-.467 1.042-1.042V38.333c0-.575-.466-1.041-1.042-1.041zM22.083 47.708v-8.333h45.834v8.333H22.083z"
-                  />
-                </defs>
-                <g fill="none" fillRule="evenodd" transform="translate(-20 -30)">
-                  <use fill={'#000'} fillRule="nonzero" xlinkHref="#plush_path_a" />
-                </g>
-              </svg>
-            )
-          },
-          {
-            preview: 'Example1, Example2',
-            title: 'Title 2',
-            id: 'title2',
-            content: (
-              <div>
-                Example1
-                <br />
-                Text text text
-                <br />
-                <br />
-                Example2
-                <br />
-                Text text text text
-              </div>
-            ),
-            icon: (
-              <svg width={32} height={32} viewBox="0 0 50 25">
-                <defs>
-                  <path
-                    id="plush_path_a"
-                    d="M56.98 31.042c-2.136-.04-4.259.335-6.25 1.104-1.828.7-3.775 1.032-5.73.979-1.939.026-3.864-.328-5.667-1.042-1.992-.769-4.115-1.144-6.25-1.104-2.135-.04-4.258.334-6.25 1.104-1.8.69-3.718 1.023-5.645.98-.576 0-1.042.466-1.042 1.041s.466 1.042 1.041 1.042c2.135.036 4.257-.34 6.25-1.104 1.793-.694 3.704-1.027 5.625-.98 1.95-.007 3.883.368 5.688 1.105 1.992.77 4.115 1.145 6.25 1.104 2.135.04 4.258-.335 6.25-1.104 1.807-.692 3.732-1.024 5.667-.98 1.927-.043 3.845.29 5.645.98 1.994.765 4.116 1.14 6.25 1.104.576 0 1.042-.467 1.042-1.042s-.466-1.041-1.041-1.041c-1.887-.016-3.754-.39-5.5-1.105-2.024-.754-4.175-1.108-6.334-1.041zm11.978 6.25H21.042c-.576 0-1.042.466-1.042 1.041V48.75c0 .575.466 1.042 1.042 1.042h1.041v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h41.666v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h1.041c.576 0 1.042-.467 1.042-1.042V38.333c0-.575-.466-1.041-1.042-1.041zM22.083 47.708v-8.333h45.834v8.333H22.083z"
-                  />
-                </defs>
-                <g fill="none" fillRule="evenodd" transform="translate(-20 -30)">
-                  <use fill={'#000'} fillRule="nonzero" xlinkHref="#plush_path_a" />
-                </g>
-              </svg>
-            )
-          }
-        ]}
-      />
-    )}
-  </Component>
+  <Accordion
+    hidePreview={true}
+    items={[
+      {
+        preview: 'Example1, Example2',
+        title: 'Title 1',
+        id: 'title1',
+        content: (
+          <div>
+            Example1
+            <br />
+            Text text text
+            <br />
+            <br />
+            Example2
+            <br />
+            Text text text text
+          </div>
+        ),
+        icon: (
+          <svg width={32} height={32} viewBox="0 0 50 25">
+            <defs>
+              <path
+                id="plush_path_a"
+                d="M56.98 31.042c-2.136-.04-4.259.335-6.25 1.104-1.828.7-3.775 1.032-5.73.979-1.939.026-3.864-.328-5.667-1.042-1.992-.769-4.115-1.144-6.25-1.104-2.135-.04-4.258.334-6.25 1.104-1.8.69-3.718 1.023-5.645.98-.576 0-1.042.466-1.042 1.041s.466 1.042 1.041 1.042c2.135.036 4.257-.34 6.25-1.104 1.793-.694 3.704-1.027 5.625-.98 1.95-.007 3.883.368 5.688 1.105 1.992.77 4.115 1.145 6.25 1.104 2.135.04 4.258-.335 6.25-1.104 1.807-.692 3.732-1.024 5.667-.98 1.927-.043 3.845.29 5.645.98 1.994.765 4.116 1.14 6.25 1.104.576 0 1.042-.467 1.042-1.042s-.466-1.041-1.041-1.041c-1.887-.016-3.754-.39-5.5-1.105-2.024-.754-4.175-1.108-6.334-1.041zm11.978 6.25H21.042c-.576 0-1.042.466-1.042 1.041V48.75c0 .575.466 1.042 1.042 1.042h1.041v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h41.666v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h1.041c.576 0 1.042-.467 1.042-1.042V38.333c0-.575-.466-1.041-1.042-1.041zM22.083 47.708v-8.333h45.834v8.333H22.083z"
+              />
+            </defs>
+            <g fill="none" fillRule="evenodd" transform="translate(-20 -30)">
+              <use fill={'#000'} fillRule="nonzero" xlinkHref="#plush_path_a" />
+            </g>
+          </svg>
+        )
+      },
+      {
+        preview: 'Example1, Example2',
+        title: 'Title 2',
+        id: 'title2',
+        content: (
+          <div>
+            Example1
+            <br />
+            Text text text
+            <br />
+            <br />
+            Example2
+            <br />
+            Text text text text
+          </div>
+        ),
+        icon: (
+          <svg width={32} height={32} viewBox="0 0 50 25">
+            <defs>
+              <path
+                id="plush_path_a"
+                d="M56.98 31.042c-2.136-.04-4.259.335-6.25 1.104-1.828.7-3.775 1.032-5.73.979-1.939.026-3.864-.328-5.667-1.042-1.992-.769-4.115-1.144-6.25-1.104-2.135-.04-4.258.334-6.25 1.104-1.8.69-3.718 1.023-5.645.98-.576 0-1.042.466-1.042 1.041s.466 1.042 1.041 1.042c2.135.036 4.257-.34 6.25-1.104 1.793-.694 3.704-1.027 5.625-.98 1.95-.007 3.883.368 5.688 1.105 1.992.77 4.115 1.145 6.25 1.104 2.135.04 4.258-.335 6.25-1.104 1.807-.692 3.732-1.024 5.667-.98 1.927-.043 3.845.29 5.645.98 1.994.765 4.116 1.14 6.25 1.104.576 0 1.042-.467 1.042-1.042s-.466-1.041-1.041-1.041c-1.887-.016-3.754-.39-5.5-1.105-2.024-.754-4.175-1.108-6.334-1.041zm11.978 6.25H21.042c-.576 0-1.042.466-1.042 1.041V48.75c0 .575.466 1.042 1.042 1.042h1.041v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h41.666v4.166c0 .576.467 1.042 1.042 1.042s1.042-.466 1.042-1.042v-4.166h1.041c.576 0 1.042-.467 1.042-1.042V38.333c0-.575-.466-1.041-1.042-1.041zM22.083 47.708v-8.333h45.834v8.333H22.083z"
+              />
+            </defs>
+            <g fill="none" fillRule="evenodd" transform="translate(-20 -30)">
+              <use fill={'#000'} fillRule="nonzero" xlinkHref="#plush_path_a" />
+            </g>
+          </svg>
+        )
+      }
+    ]}
+  />
+</Playground>
+
+## Using AccordionItem Children
+
+<Playground>
+  <Accordion> 
+    <AccordionItem title={"Test"} id={"test_1"} content={"Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep"}/>
+    <AccordionItem title={"Test 2"} id={"test_2"} content={"Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand"}/>
+  </Accordion>
+
 </Playground>
