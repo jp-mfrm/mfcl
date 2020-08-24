@@ -18,6 +18,8 @@ interface AccordionItem {
   preview?: string
   icon?: string | ReactNode
   initialOpen?: boolean
+  onOpen?: Function
+  onClose?: Function
 }
 
 type Props = {
@@ -27,7 +29,7 @@ type Props = {
   titleStyles?: CSSProperties
   contentStyles?: CSSProperties
   width?: string
-  children: ReactNode | null
+  children?: ReactNode | null
 }
 
 const Accordion: FunctionComponent<Props> = ({

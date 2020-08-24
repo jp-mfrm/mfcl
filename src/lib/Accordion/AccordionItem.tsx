@@ -10,12 +10,14 @@ type Props = {
   icon?: string | ReactNode
   id: string
   focused?: number
-  setFocus: Function
-  setIndex: Function
+  setFocus?: Function
+  setIndex?: Function
   index?: number
-  titleStyles: CSSProperties
-  contentStyles: CSSProperties
+  titleStyles?: CSSProperties
+  contentStyles?: CSSProperties
   initialOpen?: boolean
+  onOpen?: Function
+  onClose?: Function
 }
 
 const AccordionItem: FunctionComponent<Props> = ({
@@ -26,12 +28,14 @@ const AccordionItem: FunctionComponent<Props> = ({
   id = '',
   index,
   focused,
-  setFocus,
-  setIndex,
+  setFocus = () => {},
+  setIndex = () => {},
   hidePreview = false,
-  titleStyles,
-  contentStyles,
-  initialOpen = false
+  titleStyles = {},
+  contentStyles = {},
+  initialOpen = false,
+  onOpen = () => {},
+  onClose = () => {}
 }) => {
   const labelId = `label-${id}`
   const sectionId = `section-${id}`
@@ -51,6 +55,15 @@ const AccordionItem: FunctionComponent<Props> = ({
     setOpen(initialOpen)
   }, [])
 
+  const handleClick = () => {
+    if (open) {
+      onClose()
+    } else {
+      onOpen()
+    }
+    setOpen(!open)
+  }
+
   const withPreviewStyle = preview ? styles['withPreview'] : ''
   const hidePreviewStyle = hidePreview ? styles['hidePreview'] : ''
 
@@ -63,7 +76,7 @@ const AccordionItem: FunctionComponent<Props> = ({
     switch (e.key) {
       case ' ':
       case 'Enter':
-        setOpen(!open)
+        handleClick()
         break
       case 'ArrowDown':
         setIndex('next')
@@ -92,9 +105,7 @@ const AccordionItem: FunctionComponent<Props> = ({
         style={titleStyles}
         role="button"
         ref={labelRef}
-        onClick={() => {
-          setOpen(!open)
-        }}
+        onClick={handleClick}
         onKeyDown={handleKeys}
         onFocus={() => {
           setFocus(index)
@@ -102,6 +113,7 @@ const AccordionItem: FunctionComponent<Props> = ({
         onBlur={() => {
           setFocus(-1)
         }}
+        data-testid="accordion-title"
       >
         {icon && <div className={styles.icon}>{icon}</div>}
         <div className={centerStyles}>
@@ -111,7 +123,14 @@ const AccordionItem: FunctionComponent<Props> = ({
         <span className={styles.openIcon} />
       </div>
       <div className={styles.inner}>
-        <div className={innerConentStyles} role="region" aria-labelledby={labelId} id={sectionId} style={contentStyles}>
+        <div
+          className={innerConentStyles}
+          role="region"
+          aria-labelledby={labelId}
+          id={sectionId}
+          style={contentStyles}
+          data-testid="accordion-content"
+        >
           <div className={styles.innerContent}>{content}</div>
         </div>
       </div>
