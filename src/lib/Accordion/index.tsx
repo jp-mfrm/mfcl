@@ -1,4 +1,12 @@
-import React, { FunctionComponent, useState, ReactNode, CSSProperties } from 'react'
+import React, {
+  FunctionComponent,
+  useState,
+  ReactNode,
+  CSSProperties,
+  Children,
+  isValidElement,
+  cloneElement
+} from 'react'
 import clsx from 'clsx'
 import styles from './accordion.module.scss'
 import AccordionItem from './AccordionItem'
@@ -19,6 +27,7 @@ type Props = {
   titleStyles?: CSSProperties
   contentStyles?: CSSProperties
   width?: string
+  children: ReactNode | null
 }
 
 const Accordion: FunctionComponent<Props> = ({
@@ -27,13 +36,18 @@ const Accordion: FunctionComponent<Props> = ({
   hidePreview = false,
   titleStyles = {},
   contentStyles = {},
-  width = 'auto'
+  width = 'auto',
+  children
 }) => {
-  const ids = items.map((_item, index) => index)
+  const ids = children ? Children.map(children, (child, index) => index) : items.map((_item, index) => index)
 
   const [focused, setFocus] = useState(-1)
 
   function setIndex(goTo: string) {
+    if (!ids) {
+      return
+    }
+
     if (goTo === 'prev') {
       if (focused == 0) {
         setFocus(ids[ids.length - 1])
@@ -52,24 +66,36 @@ const Accordion: FunctionComponent<Props> = ({
       setFocus(ids[ids.length - 1])
     }
   }
+  const sharedAccordionItemProps = {
+    focused,
+    setIndex,
+    focus,
+    setFocus
+  }
 
   return (
     <div className={clsx(styles['accordionList'], accordionClass)} style={{ width }}>
-      {items?.map((item, index) => {
-        return (
-          <AccordionItem
-            {...item}
-            setFocus={setFocus}
-            setIndex={setIndex}
-            index={index}
-            focused={focused}
-            id={item.id || index.toString()}
-            hidePreview={hidePreview}
-            titleStyles={titleStyles}
-            contentStyles={contentStyles}
-          />
-        )
-      })}
+      {children
+        ? Children.map(children, (child, index) => {
+            if (isValidElement(child)) {
+              return cloneElement(child, { index, ...sharedAccordionItemProps })
+            }
+          })
+        : items?.map((item, index) => {
+            return (
+              <AccordionItem
+                {...item}
+                id={item.id || index.toString()}
+                setFocus={setFocus}
+                setIndex={setIndex}
+                index={index}
+                focused={focused}
+                hidePreview={hidePreview}
+                titleStyles={titleStyles}
+                contentStyles={contentStyles}
+              />
+            )
+          })}
     </div>
   )
 }
