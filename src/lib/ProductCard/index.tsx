@@ -5,7 +5,6 @@ import clsx from 'clsx'
 import styles from './productCard.module.scss'
 
 interface Props {
-  brand: string
   brandImg: string
   productImg: string
   title: string
@@ -13,6 +12,7 @@ interface Props {
   price: number
   rating: number
   reviews: number
+  brand?: string
   matchPercentage?: number
   discountedPrice?: number
   [rest: string]: unknown // ...rest property
@@ -52,9 +52,10 @@ const ProductCard: FunctionComponent<Props> = ({
               <img src={brandImg} />
             </span>
             <div className={styles['rating-row']}>
-              <Rating name="product-rating" value={rating} readOnly size="sm" />
+              <Rating data-testid="star-rating" name="product-rating" value={rating} readOnly size="sm" />
               <p className={styles.reviews}>
-                <small className={styles['average-rating']}>{rating}/5</small> <small>({reviews})</small>
+                <small className={styles['average-rating']}>{rating}/5</small>{' '}
+                <small data-testid="review-count">({reviews})</small>
               </p>
             </div>
           </div>
