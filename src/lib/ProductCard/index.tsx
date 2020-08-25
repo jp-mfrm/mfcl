@@ -10,11 +10,11 @@ interface Props {
   productImg: string
   title: string
   size: string
-  discountedPrice?: number
   price: number
   rating: number
   reviews: number
   matchPercentage?: number
+  discountedPrice?: number
   [rest: string]: unknown // ...rest property
 }
 
@@ -63,7 +63,7 @@ const ProductCard: FunctionComponent<Props> = ({
       </div>
       <div className={styles['price-container']}>
         <span className={styles.placeholder} />
-        <div>
+        <div data-testid="price-container-prices">
           <p className={clsx(styles['original-price'], discountedPrice && styles['discounted-price'])}>
             {size} <span className={styles.divider}>|</span> &#36;{productPrice}
           </p>
