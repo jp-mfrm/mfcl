@@ -10,6 +10,7 @@ import Loading from './Loading'
 import ProgressBar from './ProgressBar'
 import Select from './Select'
 import Rating from './Rating'
+import ProductCard from './ProductCard'
 import Accordion from './Accordion'
 import AccordionItem from './Accordion/AccordionItem'
 
@@ -27,5 +28,6 @@ export {
   LazyImage,
   Loading,
   ProgressBar,
-  Select
+  Select,
+  ProductCard
 }
