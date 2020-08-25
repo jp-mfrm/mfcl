@@ -17,6 +17,14 @@ describe('Button Component', () => {
     rerender(<Button btnType="link">Click Me</Button>);
     expect(getByRole('button').classList.contains('primary')).toEqual(false);
     expect(getByRole('button').classList).toContain('link');
+
+    rerender(<Button btnType="secondary">Click Me</Button>);
+    expect(getByRole('button').classList.contains('primary')).toEqual(false);
+    expect(getByRole('button').classList).toContain('secondary');
+
+    rerender(<Button btnType="tertiary">Click Me</Button>);
+    expect(getByRole('button').classList.contains('primary')).toEqual(false);
+    expect(getByRole('button').classList).toContain('tertiary');
   });
 
   it('should render the className prop correctly', () => {
