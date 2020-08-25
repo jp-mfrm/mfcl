@@ -39,6 +39,6 @@ describe('ProductCard Component', () => {
   it('should render the ratings correctly', () => {
     let userRating = 4
     const { container } = render(<ProductCard {...defaultProps} rating={userRating} />)
-    expect(container.querySelector('.average-rating')?.firstChild).toHaveLength(userRating)
+    expect(container.querySelector('.average-rating')?.textContent).toBe('4/5')
   })
 })
