@@ -9,7 +9,6 @@ const defaultProps = {
   productImg: '',
   title: '',
   size: '',
-  discountedPrice: 0,
   price: 0,
   rating: 1,
   reviews: 1
