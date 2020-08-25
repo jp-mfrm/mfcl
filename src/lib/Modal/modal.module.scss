@@ -27,6 +27,9 @@
       transform: translate(-50%, -50%);
       z-index: 1001;
       padding: 20px;
+      max-height: 80vh;
+      overflow: auto;
+      width: 50%;
   }
 
   .close {
