@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef, FunctionComponent } fr
 import clsx from 'clsx'
 import styles from './modal.module.scss';
 import Portal from '../utils/portal';
+import isClient from '../utils/isClient'
 import trapFocus from '../utils/trapFocus'
 
 interface Props {
@@ -16,7 +17,9 @@ const Modal: FunctionComponent<Props> = ({
   onClose = null,
   ...rest
 }) => {
+  const [isSafari] = useState(() => (isClient ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent) : false))
   const [isShowing, setIsShowing] = useState(isOpen)
+  
   const modalRef: any = useRef<HTMLDivElement>(null)
   const closeBtnRef = useRef<HTMLButtonElement>(null)
   const firstUpdate = useRef(true)
@@ -28,6 +31,13 @@ const Modal: FunctionComponent<Props> = ({
     }
     if (isOpen) {
       setIsShowing(true);
+      document.body.style.overflow = 'hidden'
+
+      // safari doesn't respect overflows on body/html. You need to set the position to fixed
+      if (isSafari) {
+        document.body.style.top = `${-window.pageYOffset}px`
+        document.body.style.position = 'fixed'
+      } 
 
       if (closeBtnRef.current !== null) {
         closeBtnRef.current.focus()
