@@ -10,7 +10,7 @@ interface Props {
   productImg: string
   title: string
   size: string
-  discountedPrice: number
+  discountedPrice?: number
   price: number
   rating: number
   reviews: number
