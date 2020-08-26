@@ -1,3 +1,5 @@
+import Accordion from './Accordion'
+import AccordionItem from './Accordion/AccordionItem'
 import Alert from './Alert'
 import Button from './Button'
 import Checkbox from './Checkbox'
@@ -5,21 +7,19 @@ import Collapse from './Collapse'
 import Drawer from './Drawer'
 import Dropdown from './Dropdown'
 import Fade from './Fade'
+import Flag from './Flag'
 import LazyImage from './LazyImage'
 import Loading from './Loading'
-import ProgressBar from './ProgressBar'
-import Select from './Select'
-import Rating from './Rating'
+import Price from './Price'
 import ProductCard from './ProductCard'
-import Accordion from './Accordion'
-import AccordionItem from './Accordion/AccordionItem'
-import Tooltip from './Tooltip';
+import ProgressBar from './ProgressBar'
+import Rating from './Rating'
+import Select from './Select'
+import Tooltip from './Tooltip'
 
 export {
-  Tooltip,
   Accordion,
   AccordionItem,
-  Rating,
   Alert,
   Button,
   Checkbox,
@@ -27,9 +27,13 @@ export {
   Drawer,
   Dropdown,
   Fade,
+  Flag,
   LazyImage,
   Loading,
+  Price,
   ProgressBar,
+  ProductCard,
+  Rating,
   Select,
-  ProductCard
+  Tooltip
 }
