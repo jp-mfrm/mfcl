@@ -1,0 +1,39 @@
+@import '../variables';
+
+.input-wrapper {
+  
+}
+
+.input {
+    border-radius: 25px;
+    border: solid 1px $gray-5;
+    padding: 10px 20px;
+    
+    font-family: $r-regular;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    color: #323030;
+    cursor: pointer;
+}
+
+.input::placeholder {
+    color: $gray-8;
+}
+
+.input.bg-transparent {
+    background-color: transparent;
+}
+.input.bg-white {
+    background-color: $white;
+}
+
+.input:focus {
+    border-radius: 25px;
+    border: solid 1px $gray-5; 
+    box-shadow: 0;
+    outline: 0 none;
+}

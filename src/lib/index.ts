@@ -16,7 +16,10 @@ import AccordionItem from './Accordion/AccordionItem'
 import Price from './Price';
 import Flag from './Flag';
 
+import Input from './Input';
+
 export {
+  Input,
   Flag,
   Price,
   Accordion,
