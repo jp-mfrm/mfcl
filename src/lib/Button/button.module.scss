@@ -1,7 +1,5 @@
 @import '../variables';
 
-// secondary #2d2926
-
 .btn {
   border-radius: 25px;
   border: none;
@@ -15,28 +13,33 @@
   text-align: center;
   text-transform: capitalize;
   transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
-  width: 173px;
 
   &:disabled {
     cursor: not-allowed !important; // stylelint-disable-line
-    opacity: 0.5 !important; // stylelint-disable-line
+  }
+
+  &:disabled:not(.link) {
+    background-color: $gray-1 !important;
+    color: $gray-5 !important;
+    border: solid 1px $gray-3 !important;
   }
 
   &.sm {
-    font-size: 12px;
+    font-size: 14px;
     height: 30px;
-    padding: 0 15px;
+    padding: 0px 20px;
   }
 
   &.md {
     font-size: 14px;
     height: 34px;
-    padding: 0 15px;
+    padding: 0 30px;
   }
 
   &.lg {
     font-size: 16px;
     height: 44px;
+    padding: 0 60px;
   }
 
   &.rounded {
@@ -53,37 +56,63 @@
   border: solid 1px $red;
   color: $white;
 
-  &:hover {
-    background-color: darken($red, 5%);
+  &:hover, &:active {
+    background-color: $dark-red;
+    color: $white;
+    border: solid 1px $dark-red;
   }
+}
 
-  &:active {
-    background-color: darken($red, 10%);
+.secondary {
+  background-color: $white;
+  border: solid 1px $red;
+  color: $red;
+
+  &:hover, &:active  {
+    background-color: $dark-red;
+    color: $white;
+    border: solid 1px $dark-red;
+  }
+}
+
+.tertiary {
+  background-color: $white;
+  border: solid 1px $gray-3;
+  color: $gray-11;
+
+  &:hover, &:active  {
+    background-color: $white;
+    color: $gray-11;
+    border: solid 1px $gray-8;
   }
 }
 
 .link {
   background: none;
   border-radius: 0px;
-  color: $gray-8;
-  font-weight: normal;
+  color: $red;
+  font-weight: 600;
   height: initial !important;
-  line-height: 16px;
+  line-height: 1.13;
+  font-size: 16px;
   padding: initial !important;
   width: initial;
   text-transform: initial;
-  text-decoration: underline;
+  text-decoration: none;
 
   &:hover {
-    color: darken($gray-8, 5%);
+    color: $dark-red;
   }
 
   &:active {
-    color: darken($gray-8, 10%);
+    color: $dark-red;
   }
 
   &.dark {
     color: $white;
+  }
+  &:disabled { 
+    color: $gray-5 !important;
   }
 }
 

@@ -6,7 +6,7 @@ import Loading from '../Loading'
 import styles from './button.module.scss'
 
 export interface Props {
-  btnType?: 'primary' | 'link'
+  btnType?: 'primary' | 'link' | 'secondary' | 'tertiary'
   children?: ReactNode
   className?: string
   /**
