@@ -6,7 +6,7 @@ const Portal = ({children}) => {
   // @ts-ignore
   const mount = document.createElement('div', {id: 'portal-react'});
   // @ts-ignore
-  const el = document.createElement("div", {id: 'testing123'});
+  const el = document.createElement("div");
   const firstUpdate = useRef(true)
   // @ts-ignore
   useEffect(() => {
