@@ -30,10 +30,19 @@
       max-height: 80vh;
       overflow: auto;
       width: 50%;
+
+      h1 {
+        margin-top: 0;
+      }
   }
 
   .close {
     @include closeX();
+
+    span {
+      position: relative;
+      top: -1px;
+    }
   }
 
 }

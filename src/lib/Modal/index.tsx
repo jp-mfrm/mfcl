@@ -15,7 +15,6 @@ interface Props {
   children?: React.ReactNode
   [rest: string]: unknown // ...rest property
 }
-let timeout: ReturnType<typeof setTimeout>
 
 const Modal: FunctionComponent<Props> = ({
   header = '',
@@ -31,22 +30,15 @@ const Modal: FunctionComponent<Props> = ({
   const modalRef: any = useRef<HTMLDivElement>(null)
   const closeBtnRef = useRef<HTMLButtonElement>(null)
   const firstUpdate = useRef(true)
-  let mount
-  let el
-  useEffect(() => {
-    console.log('use effect in the modal')
-    // @ts-ignore
-    mount = document.createElement('div', { id: 'portal-react' })
-    // @ts-ignore
-    el = document.createElement('div')
+  // @ts-ignore
+  const el = document.createElement("div", {id: 'modalEl'});
 
+  useEffect(() => {
     if (firstUpdate.current) {
-      console.log('first update')
       firstUpdate.current = false
       return
     }
     if (isOpen) {
-      console.log('second udpate')
       setIsShowing(true)
       document.body.style.overflow = 'hidden'
 
@@ -71,8 +63,6 @@ const Modal: FunctionComponent<Props> = ({
         window.scrollTo(0, offsetY || 0)
       }
     }
-    console.log(mount)
-    console.log(el)
   }, [isOpen, isShowing])
 
   const hideModal = () => {
@@ -83,7 +73,6 @@ const Modal: FunctionComponent<Props> = ({
   }
 
   const handleKeys = (e: any) => {
-    console.log('handle keys')
     const key = e.keyCode || e.which
 
     switch (key) {
@@ -103,7 +92,7 @@ const Modal: FunctionComponent<Props> = ({
   }
 
   return (
-    <Portal>
+    <Portal el={el}>
       <div className={clsx(styles['modal-wrapper'], isShowing && styles['active'])}>
         <Fade
           className={styles['modal-overlay']}
@@ -114,20 +103,18 @@ const Modal: FunctionComponent<Props> = ({
         />
         <Transition in={isShowing} timeout={duration} {...rest}>
           <div
-            className={`${styles['modal']} ${isShowing ? 'active' : ''}`}
+            className={clsx(styles['modal'], isShowing && styles['active'])}
             role="dialog"
-            id="dialog1"
-            aria-labelledby="dialog1_label"
             aria-modal="true"
             onKeyDown={handleKeys}
             ref={modalRef}
             {...rest}
           >
-            <div className={styles['modal-header']}>
+            <div>
               <button
                 type="button"
                 onClick={hideModal}
-                className={styles.close}
+                className={styles['close']}
                 aria-label="Close Modal"
                 ref={closeBtnRef}
               >
