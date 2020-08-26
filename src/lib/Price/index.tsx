@@ -1,39 +1,51 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
 import clsx from 'clsx'
 import styles from './price.module.scss';
 
 interface Props {
-  price: string | number
+  price: number
   divider?: boolean
   text?: string
   discount?: boolean
-  discountedPrice?: string
+  discountPrice?: number
   className?: string
   [rest: string]: unknown; // ...rest property
 };
 
 const Price: FunctionComponent<Props> = ({
-  price, 
-  discountedPrice,
+  price,
+  discountPrice,
   text,
   divider = false,
   discount = false,
   className,
   ...rest
 }) => {
-  let productPrice = discountedPrice ? discountedPrice : price
+
+
+  const formatPrice = useCallback((n: number) => {
+    if(price) {
+      let p = new Intl.NumberFormat('en-US', { 
+        style: 'currency',
+        currency: 'USD',}).format(n)
+  
+        return p
+    }
+  }, [price, discountPrice])
+
+  let productPrice = discountPrice ? formatPrice(discountPrice) : formatPrice(price)
   let productText = text && <>{text} {divider && <span>|</span>}</>
 
   let productDiscount
-  if (discountedPrice) {
-    productDiscount = <p className={styles['price-cut']}>&#36;{price}</p>
+  if (discountPrice) {
+    productDiscount = <p className={styles['price-cut']}>{formatPrice(price)}</p>
   }
 
   return (
     <div className={clsx(styles['price-wrapper'], className && className)} {...rest}>
       <div data-testid="price-container-prices">
-        <p className={clsx(styles['original-price'], discountedPrice && styles['discounted-price'], discount && styles.discount)}>
-          {productText} &#36;{productPrice}
+        <p className={clsx(styles['original-price'], discountPrice && styles['discounted-price'], discount && styles.discount)}>
+          {productText} {productPrice}
         </p>
         {productDiscount}
       </div>

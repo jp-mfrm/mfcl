@@ -59,7 +59,7 @@ const ProductCard: FunctionComponent<Props> = ({
       </div>
       <div className={styles['price-container']}>
         <span className={styles.placeholder} />
-         {/* <Price price={1200}/> */}
+         
       </div>
     </div>
   )
