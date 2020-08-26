@@ -12,8 +12,10 @@ import Select from './Select'
 import Rating from './Rating'
 import Accordion from './Accordion'
 import AccordionItem from './Accordion/AccordionItem'
+import Flag from './Flag';
 
 export {
+  Flag,
   Accordion,
   AccordionItem,
   Rating,
