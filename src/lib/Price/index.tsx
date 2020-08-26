@@ -3,10 +3,11 @@ import clsx from 'clsx'
 import styles from './price.module.scss';
 
 interface Props {
-  price: number
+  price: string | number
   divider?: boolean
   text?: string
-  discountedPrice?: number
+  discount?: boolean
+  discountedPrice?: string
   className?: string
   [rest: string]: unknown; // ...rest property
 };
@@ -15,7 +16,8 @@ const Price: FunctionComponent<Props> = ({
   price, 
   discountedPrice,
   text,
-  divider,
+  divider = false,
+  discount = false,
   className,
   ...rest
 }) => {
@@ -30,7 +32,7 @@ const Price: FunctionComponent<Props> = ({
   return (
     <div className={clsx(styles['price-wrapper'], className && className)} {...rest}>
       <div data-testid="price-container-prices">
-        <p className={clsx(styles['original-price'], discountedPrice && styles['discounted-price'])}>
+        <p className={clsx(styles['original-price'], discountedPrice && styles['discounted-price'], discount && styles.discount)}>
           {productText} &#36;{productPrice}
         </p>
         {productDiscount}
