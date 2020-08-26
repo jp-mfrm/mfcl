@@ -15,7 +15,7 @@ interface Props {
   reviews: number
   brand?: string
   matchPercentage?: number
-  discountedPrice?: number
+  discountPrice?: number
   [rest: string]: unknown // ...rest property
 }
 
@@ -25,7 +25,7 @@ const ProductCard: FunctionComponent<Props> = ({
   productImg,
   title,
   size,
-  discountedPrice,
+  discountPrice,
   price,
   rating,
   reviews,
@@ -59,7 +59,7 @@ const ProductCard: FunctionComponent<Props> = ({
       </div>
       <div className={styles['price-container']}>
         <span className={styles.placeholder} />
-         <Price text='Wumbo' divider price={2400} discountPrice={1435.99}/>
+         <Price data-testid='price' text='Wumbo' divider price={price} discountPrice={discountPrice}/>
       </div>
     </div>
   )

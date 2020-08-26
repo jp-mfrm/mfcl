@@ -15,15 +15,7 @@ const defaultProps = {
 }
 
 describe('ProductCard Component', () => {
-  it('should render the discounted price', () => {
-    const { container } = render(<ProductCard {...defaultProps} discountedPrice={200} />)
-    expect(container.querySelector('.discounted-price')?.classList).toBeTruthy()
-  })
-
-  it('should render the price', () => {
-    const { container } = render(<ProductCard {...defaultProps} price={100} />)
-    expect(container.querySelector('.price-container > div > p')?.classList).toContain('original-price')
-  })
+  
 
   it('should render the match percentage correctly', () => {
     const { container } = render(<ProductCard {...defaultProps} matchPercentage={80} />)
@@ -33,12 +25,6 @@ describe('ProductCard Component', () => {
   it('should render the title prop correctly', () => {
     const { getByText } = render(<ProductCard {...defaultProps} title={'text'} />)
     expect(getByText('text')).toBeInTheDocument
-  })
-
-  it('should render the size prop correctly', () => {
-    let mattressSize = 'wumbo'
-    const { container } = render(<ProductCard {...defaultProps} size={mattressSize} />)
-    expect(container.querySelector('.original-price')?.textContent).toContain(mattressSize)
   })
 
   it('should render the overall rating correctly', () => {

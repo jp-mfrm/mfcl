@@ -37,11 +37,11 @@ Allows a price markdown below the discount price
 </Playground>
 
 ### Optional Props
-A price can be discounted without the price markdown below it by adding the optional Discount prop. This also works with the Text and Divider prop.
+A price can be discounted without the price markdown below it by adding the optional Discount prop. This also works with the Text and Divider prop. The content can also be center alinged by using the Center prop.
 
 <Playground>
   <Price discount price={3500} />
   <Price text='Queen For' discount price={3500} />
   <Price text='Queen' divider discount price={3500} />
-  <Price text='Queen' divider discountPrice={1400} price={3500} />
+  <Price center text='Queen' divider discountPrice={1400} price={3500} />
 </Playground>
