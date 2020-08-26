@@ -1,0 +1,34 @@
+---
+name: Price
+menu: Components
+route: /components-price
+---
+
+import { Playground, Props } from 'docz';
+import Component from "react-component-component";
+import { Price } from '../../lib';
+
+# Price
+
+```javascript
+import { Price } from 'mfcl';
+```
+
+## Description
+TODO add description here
+
+## Properties
+
+<Props of={Price} />
+
+## Basic Usage
+
+<Playground>
+  <Component initialState={{}}>
+    {({ setState, state }) => (
+      <Price text='Wumbo' price={2000} divider = {false}>
+      
+      </Price>
+    )}
+  </Component>
+</Playground>

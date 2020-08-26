@@ -13,8 +13,10 @@ import Rating from './Rating'
 import ProductCard from './ProductCard'
 import Accordion from './Accordion'
 import AccordionItem from './Accordion/AccordionItem'
+import Price from './Price';
 
 export {
+  Price,
   Accordion,
   AccordionItem,
   Rating,
