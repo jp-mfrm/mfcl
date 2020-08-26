@@ -31,7 +31,7 @@ const Modal: FunctionComponent<Props> = ({
   const closeBtnRef = useRef<HTMLButtonElement>(null)
   const firstUpdate = useRef(true)
   // @ts-ignore
-  const el = document.createElement("div", {id: 'modalEl'});
+  const el = document.createElement("div");
 
   useEffect(() => {
     if (firstUpdate.current) {
