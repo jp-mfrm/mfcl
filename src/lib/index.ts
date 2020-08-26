@@ -7,9 +7,29 @@ import Dropdown from './Dropdown'
 import Fade from './Fade'
 import LazyImage from './LazyImage'
 import Loading from './Loading'
+import Modal from './Modal'
 import ProgressBar from './ProgressBar'
 import Select from './Select'
-import Modal from './Modal';
+import Rating from './Rating'
+import ProductCard from './ProductCard'
+import Accordion from './Accordion'
+import AccordionItem from './Accordion/AccordionItem'
 
 export {
-  Modal, Alert, Button, Checkbox, Collapse, Drawer, Dropdown, Fade, LazyImage, Loading, ProgressBar, Select }
+  Accordion,
+  AccordionItem,
+  Rating,
+  Alert,
+  Button,
+  Checkbox,
+  Collapse,
+  Drawer,
+  Dropdown,
+  Fade,
+  LazyImage,
+  Loading,
+  Modal,
+  ProgressBar,
+  Select,
+  ProductCard
+}
