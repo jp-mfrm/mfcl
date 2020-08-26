@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef, FunctionComponent } from 'react'
 import clsx from 'clsx'
 import styles from './modal.module.scss'
-import Portal from '../Portal/portal'
+import Portal from '../Portal'
 import isClient from '../utils/isClient'
 import trapFocus from '../utils/trapFocus'
 import Transition from 'react-transition-group/Transition'
@@ -30,8 +30,6 @@ const Modal: FunctionComponent<Props> = ({
   const modalRef: any = useRef<HTMLDivElement>(null)
   const closeBtnRef = useRef<HTMLButtonElement>(null)
   const firstUpdate = useRef(true)
-  // @ts-ignore
-  const el = document.createElement("div");
 
   useEffect(() => {
     if (firstUpdate.current) {
@@ -92,7 +90,7 @@ const Modal: FunctionComponent<Props> = ({
   }
 
   return (
-    <Portal el={el}>
+    <Portal>
       <div className={clsx(styles['modal-wrapper'], isShowing && styles['active'])}>
         <Fade
           className={styles['modal-overlay']}
