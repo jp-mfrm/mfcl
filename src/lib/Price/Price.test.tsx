@@ -23,7 +23,7 @@ describe('Price Component', () => {
   })
 
   it('should render the price', () => {
-    const { getByTestId, container } = render(<Price price={price}/>)
+    const { getByTestId } = render(<Price price={price}/>)
     expect(getByTestId('price-container-prices').querySelector('p')?.classList).toContain('original-price')
   })
 
