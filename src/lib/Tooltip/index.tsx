@@ -2,7 +2,7 @@
 import React, { useState, useEffect, ReactNode, FunctionComponent } from 'react'
 import clsx from 'clsx'
 import useDimensions from '../utils/useDimensions'
-// import Portal from '../Portal'
+import Portal from '../Portal'
 import Arrow from './Arrow'
 import TipContainer from './TipContainer'
 
@@ -25,11 +25,6 @@ export interface Props {
   offset?: number
   onClose?: Function | null
   onOpen?: Function | null
-  /**
-   * Sometimes the inherited styles get in the way of the tooltip content. Use the
-   * portal prop for these situations.
-   */
-  portal?: boolean
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
   tipContainerClassName?: string
   [rest: string]: unknown
@@ -49,7 +44,6 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     hover,
     onOpen,
     onClose,
-    portal,
     position,
     tipContainerClassName,
     isOpen,
@@ -160,9 +154,8 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       ref={wrapperRef}
       {...rest}
     >
-      {/* {portal ? <Portal>{tooltipContent}</Portal> : tooltipContent} */}
-      {tooltipContent}
       {trigger}
+      <Portal>{tooltipContent}</Portal>
     </div>
   )
 }
@@ -179,7 +172,6 @@ Tooltip.defaultProps = {
   isOpen: false,
   onClose: null,
   onOpen: null,
-  portal: false,
   position: 'top',
   tipContainerClassName: '',
   offset: 0
