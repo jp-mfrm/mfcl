@@ -6,6 +6,7 @@ interface Props {
   price: number
   divider?: boolean
   text?: string
+  center?: boolean
   discount?: boolean
   discountPrice?: number
   className?: string
@@ -16,13 +17,12 @@ const Price: FunctionComponent<Props> = ({
   price,
   discountPrice,
   text,
+  center = false,
   divider = false,
   discount = false,
   className,
   ...rest
 }) => {
-
-
   const formatPrice = useCallback((n: number) => {
     if(price) {
       let p = new Intl.NumberFormat('en-US', { 
@@ -42,7 +42,7 @@ const Price: FunctionComponent<Props> = ({
   }
 
   return (
-    <div className={clsx(styles['price-wrapper'], className && className)} {...rest}>
+    <div className={clsx(styles['price-wrapper'], center && styles.center, className && className)} {...rest}>
       <div data-testid="price-container-prices">
         <p className={clsx(styles['original-price'], discountPrice && styles['discounted-price'], discount && styles.discount)}>
           {productText} {productPrice}
