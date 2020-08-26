@@ -3,13 +3,13 @@ import { render } from '@testing-library/react'
 
 import Tooltip from './index'
 
-const content = <div className="content">content here</div>
+const trigger = <div className="trigger">trigger here</div>
 const children = <div className="children">children here</div>
 
 describe('Tooltip Component', () => {
   it('renders a className', () => {
     const { container } = render(
-      <Tooltip content={content} className="test-class-name">
+      <Tooltip trigger={trigger} className="test-class-name">
         {children}
       </Tooltip>
     )
@@ -19,7 +19,7 @@ describe('Tooltip Component', () => {
   // it('should fade in with a duration, delay, and easing prop', () => {
   //   const wrapper = mount(
   //     <Tooltip
-  //       content={content}
+  //       trigger={trigger}
   //       duration={300}
   //       delay={100}
   //       easing="ease"
@@ -42,12 +42,12 @@ describe('Tooltip Component', () => {
 
   // it('should not render arrow when false and vice versa', () => {
   //   const arrow = mount(
-  //     <Tooltip content={content} arrow arrowClassName="arrow">
+  //     <Tooltip trigger={trigger} arrow arrowClassName="arrow">
   //       {children}
   //     </Tooltip>,
   //   );
   //   const noArrow = mount(
-  //     <Tooltip content={content} arrow={false} arrowClassName="arrow2">
+  //     <Tooltip trigger={trigger} arrow={false} arrowClassName="arrow2">
   //       {children}
   //     </Tooltip>,
   //   );
@@ -59,7 +59,7 @@ describe('Tooltip Component', () => {
   // it('should render the backgroundColor prop', () => {
   //   const wrapper = mount(
   //     <Tooltip
-  //       content={content}
+  //       trigger={trigger}
   //       position="top"
   //       tipContainerClassName="tip"
   //       arrowClassName="arrow"
@@ -82,7 +82,7 @@ describe('Tooltip Component', () => {
   // it('should render positions on arrow and tipContainer', () => {
   //   const wrapper = mount(
   //     <Tooltip
-  //       content={content}
+  //       trigger={trigger}
   //       tipContainerClassName="tip"
   //       arrowClassName="arrow"
   //       position="top"
@@ -166,7 +166,7 @@ describe('Tooltip Component', () => {
   // it('should render positions when active', () => {
   //   const wrapper = mount(
   //     <Tooltip
-  //       content={content}
+  //       trigger={trigger}
   //       className="tooltip"
   //       tipContainerClassName="tip"
   //       arrowClassName="arrow"
@@ -258,7 +258,7 @@ describe('Tooltip Component', () => {
 
   // it('should hover when true', () => {
   //   const wrapper = shallow(
-  //     <Tooltip content={content} hover className="tooltip">
+  //     <Tooltip trigger={trigger} hover className="tooltip">
   //       {children}
   //     </Tooltip>,
   //   );
@@ -279,7 +279,7 @@ describe('Tooltip Component', () => {
 
   // it('should not hover when false', () => {
   //   const wrapper = shallow(
-  //     <Tooltip content={content} hover={false} className="tooltip">
+  //     <Tooltip trigger={trigger} hover={false} className="tooltip">
   //       {children}
   //     </Tooltip>,
   //   );
@@ -303,7 +303,7 @@ describe('Tooltip Component', () => {
   //   };
 
   //   const wrapper = shallow(
-  //     <Tooltip content={content} hover={false} className="tooltip" {...props}>
+  //     <Tooltip trigger={trigger} hover={false} className="tooltip" {...props}>
   //       {children}
   //     </Tooltip>,
   //   );

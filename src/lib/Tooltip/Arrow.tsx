@@ -11,7 +11,7 @@ export interface Props {
   duration?: number
   easing?: string
   isShowing?: boolean
-  offset?: string
+  offset?: number
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
 }
 
@@ -191,27 +191,28 @@ const Arrow: FunctionComponent<Props> = ({
   }
 
   const getOffset = () => {
-    if (offset !== '0px') {
+    if (offset !== 0) {
+      const offsetPixels = `${offset}px`
       switch (position) {
         case 'top':
-          return { marginBottom: offset }
+          return { marginBottom: offsetPixels }
         case 'top-left':
-          return { marginBottom: offset }
+          return { marginBottom: offsetPixels }
         case 'top-right':
-          return { marginBottom: offset, marginLeft: offset }
+          return { marginBottom: offsetPixels, marginLeft: offsetPixels }
         case 'bottom':
           // @ts-ignore
-          return { marginTop: parseInt(offset, 10) - 30 }
+          return { marginTop: `${offset - 30}px` }
         case 'bottom-left':
           // @ts-ignore
-          return { marginTop: parseInt(offset, 10) - 30 }
+          return { marginTop: `${offset - 30}px` }
         case 'bottom-right':
           // @ts-ignore
-          return { marginTop: parseInt(offset, 10) - 30, marginLeft: offset }
+          return { marginTop: `${offset - 30}px`, marginLeft: offsetPixels }
         case 'left':
-          return { marginRight: offset }
+          return { marginRight: offsetPixels }
         case 'right':
-          return { marginLeft: offset }
+          return { marginLeft: offsetPixels }
         default:
           return {}
       }

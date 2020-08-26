@@ -11,7 +11,7 @@ export interface Props {
   duration?: number
   easing?: string
   isShowing?: boolean
-  offset?: string
+  offset?: number
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
   tipContainerClassName?: string
 }
@@ -286,24 +286,25 @@ const TipContainer: FunctionComponent<Props> = ({
   }
 
   const getOffset = () => {
-    if (offset !== '0px') {
+    if (offset !== 0) {
+      const offsetPixels = `${offset}px`
       switch (position) {
         case 'top':
-          return { marginBottom: offset }
+          return { marginBottom: offsetPixels }
         case 'top-left':
-          return { marginBottom: offset, marginRight: offset }
+          return { marginBottom: offsetPixels, marginRight: offsetPixels }
         case 'top-right':
-          return { marginBottom: offset, marginLeft: offset }
+          return { marginBottom: offsetPixels, marginLeft: offsetPixels }
         case 'bottom':
-          return { marginTop: offset }
+          return { marginTop: offsetPixels }
         case 'bottom-left':
-          return { marginTop: offset, marginRight: offset }
+          return { marginTop: offsetPixels, marginRight: offsetPixels }
         case 'bottom-right':
-          return { marginTop: offset, marginLeft: offset }
+          return { marginTop: offsetPixels, marginLeft: offsetPixels }
         case 'left':
-          return { marginRight: offset }
+          return { marginRight: offsetPixels }
         case 'right':
-          return { marginLeft: offset }
+          return { marginLeft: offsetPixels }
         default:
           return {}
       }
@@ -313,6 +314,7 @@ const TipContainer: FunctionComponent<Props> = ({
 
   return (
     <div
+      role="tooltip"
       className={clsx(styles['tip-container'], tipContainerClassName)}
       style={{
         ...getBaseStyle(),

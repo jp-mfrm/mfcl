@@ -2,17 +2,17 @@
 import React, { useState, useEffect, ReactNode, FunctionComponent } from 'react'
 import clsx from 'clsx'
 import useDimensions from '../utils/useDimensions'
-import Portal from '../Portal'
+// import Portal from '../Portal'
 import Arrow from './Arrow'
 import TipContainer from './TipContainer'
 
 import styles from './tooltip.module.scss'
 
 export interface Props {
-  /** The display for the user to hover/click on */
-  children: ReactNode
   /** Content elements inside the tooltip container */
-  content: string | ReactNode
+  children: ReactNode
+  /** The display for the user to hover/click on */
+  trigger: string | ReactNode
   arrow?: boolean
   arrowClassName?: string
   backgroundColor?: string
@@ -22,9 +22,14 @@ export interface Props {
   easing?: string
   hover?: boolean
   isOpen?: boolean
-  offset?: string
+  offset?: number
   onClose?: Function | null
   onOpen?: Function | null
+  /**
+   * Sometimes the inherited styles get in the way of the tooltip content. Use the
+   * portal prop for these situations.
+   */
+  portal?: boolean
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
   tipContainerClassName?: string
   [rest: string]: unknown
@@ -37,13 +42,14 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     backgroundColor,
     children,
     className,
-    content,
+    trigger,
     duration,
     delay,
     easing,
     hover,
     onOpen,
     onClose,
+    portal,
     position,
     tipContainerClassName,
     isOpen,
@@ -62,10 +68,22 @@ const Tooltip: FunctionComponent<Props> = (props) => {
 
   const assignOutsideTouchHandler = () => {
     document.addEventListener('click', handler)
+    document.addEventListener('keypress', handleEscape)
   }
 
   const removeListeners = () => {
     document.removeEventListener('click', handler)
+    document.removeEventListener('keypress', handleEscape)
+  }
+
+  const handleEscape = (e) => {
+    switch (e.key) {
+      case 'Escape': {
+        hideTooltip()
+        removeListeners()
+        break
+      }
+    }
   }
 
   const handler = (e) => {
@@ -101,6 +119,37 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     assignOutsideTouchHandler()
   }
 
+  const tooltipContent = (
+    <>
+      {arrow && (
+        <Arrow
+          arrowClassName={arrowClassName}
+          backgroundColor={backgroundColor}
+          delay={delay}
+          dimensions={dimensions}
+          duration={duration}
+          easing={easing}
+          isShowing={isShowing}
+          offset={offset}
+          position={position}
+        />
+      )}
+      <TipContainer
+        backgroundColor={backgroundColor}
+        delay={delay}
+        dimensions={dimensions}
+        duration={duration}
+        easing={easing}
+        isShowing={isShowing}
+        offset={offset}
+        position={position}
+        tipContainerClassName={tipContainerClassName}
+      >
+        {children}
+      </TipContainer>
+    </>
+  )
+
   return (
     <div
       className={clsx(styles['tooltip-wrapper'], className)}
@@ -111,25 +160,9 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       ref={wrapperRef}
       {...rest}
     >
-      <Portal>
-        {arrow && (
-          <Arrow
-            arrowClassName={arrowClassName}
-            backgroundColor={backgroundColor}
-            delay={delay}
-            dimensions={dimensions}
-            duration={duration}
-            easing={easing}
-            isShowing={isShowing}
-            offset={offset}
-            position={position}
-          />
-        )}
-        <TipContainer {...props} isShowing={isShowing} dimensions={dimensions}>
-          {content}
-        </TipContainer>
-      </Portal>
-      {children}
+      {/* {portal ? <Portal>{tooltipContent}</Portal> : tooltipContent} */}
+      {tooltipContent}
+      {trigger}
     </div>
   )
 }
@@ -146,9 +179,10 @@ Tooltip.defaultProps = {
   isOpen: false,
   onClose: null,
   onOpen: null,
+  portal: false,
   position: 'top',
   tipContainerClassName: '',
-  offset: '0px'
+  offset: 0
 }
 
 export default Tooltip
