@@ -1,0 +1,26 @@
+@import '../variables';
+.flagWrapper {
+  position: relative;
+  pointer-events: none;
+}
+.flag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+.flag.withoutContainer {
+  position: initial;
+}
+.text {
+  font-family: $r-bold;
+  padding-left: 10px;
+  padding-top: 15px;
+  color: $white;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+  max-width: 50%;
+  max-height: 50%;
+  overflow: hidden;
+}

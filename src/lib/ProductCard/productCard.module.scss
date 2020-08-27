@@ -103,44 +103,6 @@
   }
 }
 
-.original-price {
-  font-size: 16px;
-  line-height: 14.4px;
-  font-weight: bold;
-  height: 15px;
-  color: $gray-11;
-  margin-bottom: 0;
-  padding-left: 15px;
-
-  @media screen and (min-width: $tablet) {
-    padding-left: 0;
-    margin-bottom: 15px;
-  }
-}
-
-.discounted-price {
-  font-size: 16px;
-  line-height: 14.4px;
-  font-weight: bold;
-  height: 15px;
-  color: #e21a23;
-  margin-bottom: 0;
-  padding-left: 15px;
-
-  @media screen and (min-width: $mobile) {
-    padding: 0;
-  }
-}
-
-.price-cut {
-  padding-left: 15px;
-  text-decoration: line-through;
-
-  @media screen and (min-width: $mobile) {
-    padding: 0;
-  }
-}
-
 .placeholder {
   width: 136px;
   height: 32px;
@@ -148,4 +110,9 @@
   @media screen and (min-width: $mobile) {
     display: none;
   }
+}
+
+.size {
+  display: flex;
+
 }

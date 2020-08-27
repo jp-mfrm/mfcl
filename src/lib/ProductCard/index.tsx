@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import Rating from '../Rating'
+import Price from '../Price'
 import clsx from 'clsx'
 
 import styles from './productCard.module.scss'
@@ -14,7 +15,7 @@ interface Props {
   reviews: number
   brand?: string
   matchPercentage?: number
-  discountedPrice?: number
+  discountPrice?: number
   [rest: string]: unknown // ...rest property
 }
 
@@ -24,20 +25,14 @@ const ProductCard: FunctionComponent<Props> = ({
   productImg,
   title,
   size,
-  discountedPrice,
+  discountPrice,
   price,
   rating,
   reviews,
   matchPercentage,
   ...rest
 }) => {
-  let productPrice = discountedPrice ? discountedPrice : price
   let productMatch = matchPercentage && <span className={styles['match-banner']}>{matchPercentage}% Match</span>
-
-  let productDiscount
-  if (discountedPrice) {
-    productDiscount = <p className={styles['price-cut']}>&#36;{price}</p>
-  }
 
   return (
     <div className={styles['product-card-container']} {...rest}>
@@ -64,12 +59,7 @@ const ProductCard: FunctionComponent<Props> = ({
       </div>
       <div className={styles['price-container']}>
         <span className={styles.placeholder} />
-        <div data-testid="price-container-prices">
-          <p className={clsx(styles['original-price'], discountedPrice && styles['discounted-price'])}>
-            {size} <span className={styles.divider}>|</span> &#36;{productPrice}
-          </p>
-          {productDiscount}
-        </div>
+         <Price data-testid='price' text='Wumbo' divider price={price} discountPrice={discountPrice}/>
       </div>
     </div>
   )

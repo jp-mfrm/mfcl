@@ -1,0 +1,54 @@
+@import '../variables';
+
+.price-wrapper {
+    width: 188px;
+}
+
+.center {
+    text-align: center;
+}
+
+.original-price {
+    font-size: 16px;
+    line-height: 14.4px;
+    font-weight: bold;
+    height: 14px;
+    color: $gray-11;
+    margin-bottom: 0;
+    padding-left: 15px;
+  
+    @media screen and (min-width: $tablet) {
+      padding-left: 0;
+      margin-bottom: 15px;
+    }
+  }
+  
+  .discounted-price {
+    font-size: 16px;
+    line-height: 14.4px;
+    font-weight: bold;
+    height: 18px;
+    color: #e21a23;
+    margin-bottom: 0;
+    padding-left: 15px;
+  
+    @media screen and (min-width: $mobile) {
+      padding: 0;
+    }
+  }
+
+  .discount {
+    font-size: 18px;
+    font-weight: 500;
+    color: #e21a23;
+  }
+  
+  .price-cut {
+    padding-left: 15px;
+    text-decoration: line-through;
+    margin-top: 0px;
+  
+    @media screen and (min-width: $mobile) {
+      padding: 0;
+    }
+}

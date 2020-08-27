@@ -23,6 +23,8 @@ interface AccordionItem {
   onOpen?: Function
   /* Function to be called when accordionItem is closed */
   onClose?: Function
+  /* Function to be called when accordionItem is focused */
+  onFocus?: Function
 }
 
 type Props = {
