@@ -4,7 +4,6 @@ import styles from './modal.module.scss'
 import Portal from '../Portal'
 import isClient from '../utils/isClient'
 import trapFocus from '../utils/trapFocus'
-import Transition from 'react-transition-group/Transition'
 import Fade from '../Fade'
 
 interface Props {
@@ -92,39 +91,33 @@ const Modal: FunctionComponent<Props> = ({
   return (
     <Portal>
       <div className={clsx(styles['modal-wrapper'], isShowing && styles['active'])}>
-        <Fade
-          className={styles['modal-overlay']}
-          onClick={hideModal}
-          onKeyDown={handleKeys}
-          duration={duration}
-          in={isOpen}
-        />
-        <Transition in={isShowing} timeout={duration} {...rest}>
-          <div
-            className={clsx(styles['modal'], isShowing && styles['active'])}
-            role="dialog"
-            aria-modal="true"
-            onKeyDown={handleKeys}
-            ref={modalRef}
-            {...rest}
-          >
-            <div>
-              <button
-                type="button"
-                onClick={hideModal}
-                className={styles['close']}
-                aria-label="Close Modal"
-                ref={closeBtnRef}
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
+        <Fade duration={duration} in={isOpen}>
+          <div className={styles['modal-overlay']} onClick={hideModal} onKeyDown={handleKeys} />
+            <div
+              className={clsx(styles['modal'], isShowing && styles['active'])}
+              role="dialog"
+              aria-modal="true"
+              onKeyDown={handleKeys}
+              ref={modalRef}
+              {...rest}
+            >
+              <div>
+                <button
+                  type="button"
+                  onClick={hideModal}
+                  className={styles['close']}
+                  aria-label="Close Modal"
+                  ref={closeBtnRef}
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-content">
+                <h1>{header}</h1>
+                {children}
+              </div>
             </div>
-            <div className="modal-content">
-              <h1>{header}</h1>
-              {children}
-            </div>
-          </div>
-        </Transition>
+        </Fade>
       </div>
     </Portal>
   )
