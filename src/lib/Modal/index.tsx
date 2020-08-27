@@ -101,11 +101,11 @@ const Modal: FunctionComponent<Props> = ({
               ref={modalRef}
               {...rest}
             >
-              <div>
+              <div data-testid="closeBtn">
                 <button
                   type="button"
                   onClick={hideModal}
-                  className={styles['close']}
+                  className={styles.close}
                   aria-label="Close Modal"
                   ref={closeBtnRef}
                 >
