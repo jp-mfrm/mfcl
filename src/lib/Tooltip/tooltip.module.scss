@@ -9,21 +9,27 @@
 .tooltip-arrow {
   backface-visibility: hidden;
   box-sizing: border-box;
-  height: 0;
+  border-color: $gray-11;
   position: absolute;
   transform: translate3d(0, 0, 0);
   transform-origin: top;
-  width: 0;
+  width: 15px;
+  height: 15px;
+  background: #ffffff;
+  // height: 0;
+  // width: 0;
+  transform: rotate(-45deg);
   will-change: transform;
   z-index: 100;
 }
 
 .tip-container {
   backface-visibility: hidden;
-  background-color: $gray-3;
+  background-color: $white;
+  border: 1px solid $gray-11;
   border-radius: 4px;
   box-sizing: content-box;
-  color: $gray-10;
+  color: $gray-11;
   display: table;
   font-size: 20px;
   font-weight: 400;

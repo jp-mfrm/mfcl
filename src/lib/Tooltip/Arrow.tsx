@@ -5,25 +5,21 @@ import styles from './tooltip.module.scss'
 
 export interface Props {
   arrowClassName?: string
-  backgroundColor?: string
   delay?: number
   dimensions?: ClientRect
   duration?: number
   easing?: string
   isShowing?: boolean
-  offset?: number
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
 }
 
 const Arrow: FunctionComponent<Props> = ({
   arrowClassName,
-  backgroundColor,
   delay,
   dimensions,
   duration,
   easing,
   isShowing,
-  offset,
   position
 }) => {
   const getBaseStyle = () => {
@@ -46,75 +42,49 @@ const Arrow: FunctionComponent<Props> = ({
     }
   }
 
-  const getAnimationStyleByPosition = () => {
+  const getPositionStyle = () => {
     if (dimensions && dimensions.top) {
       const { top, left, height, width } = dimensions
       switch (position) {
         case 'top':
-        case 'top-right':
         case 'top-left':
+        case 'top-right':
           return {
-            enter: {
-              transform: 'translate3d(-50%, 0, 0)',
-              bottom: '100%',
-              left: left + width / 2
-            },
-            active: {
-              transform: 'translate3d(-50%, -2px, 0)'
-            }
+            bottom: '100%',
+            borderLeft: 'solid 1px',
+            borderBottom: 'solid 1px',
+            top: top + window.scrollY - 15,
+            left: left - 10 + width / 2
           }
 
         case 'bottom':
-          return {
-            enter: {
-              transform: 'translate3d(-50%, -10px, 0)',
-              bottom: 'auto',
-              left: left + width / 2,
-              top: top + window.scrollY + height
-            },
-            active: {
-              transform: 'translate3d(-50%, 1px, 0)'
-            }
-          }
         case 'bottom-left':
         case 'bottom-right':
           return {
-            enter: {
-              transform: 'translate3d(-50%, -10px, 0)',
-              bottom: 'auto',
-              left: left + width / 2,
-              top: top + window.scrollY + height
-            },
-            active: {
-              transform: 'translate3d(-50%, 0, 0)'
-            }
+            borderRight: 'solid 1px',
+            borderTop: 'solid 1px',
+            bottom: 'auto',
+            top: top + window.scrollY + height + 5,
+            left: left - 9 + width / 2
           }
 
         case 'left':
           return {
-            enter: {
-              bottom: 'auto',
-              right: '102%',
-              left: left - 13,
-              top: top + window.scrollY + 12,
-              transform: 'translate3d(10px, -50%, 0)'
-            },
-            active: {
-              transform: 'translate3d(0, -50%, 0)'
-            }
+            left: left - 26,
+            top: top + window.scrollY + 5,
+            borderRight: 'solid 1px',
+            borderBottom: 'solid 1px',
+            bottom: 'auto',
+            right: '102%'
           }
 
         case 'right':
           return {
-            enter: {
-              bottom: 'auto',
-              left: left + width + 5,
-              top: top + window.scrollY + 12,
-              transform: 'translate3d(-10px, -50%, 0)'
-            },
-            active: {
-              transform: 'translate3d(0, -50%, 0)'
-            }
+            left: left + width + 3,
+            top: top + window.scrollY + 6,
+            borderTop: 'solid 1px',
+            borderLeft: 'solid 1px',
+            bottom: 'auto'
           }
 
         default:
@@ -124,95 +94,18 @@ const Arrow: FunctionComponent<Props> = ({
     return {}
   }
 
-  const getArrowStyle = () => {
-    const fillColor = !backgroundColor || '#E7E8EA'
+  const getSpecificStyle = () => {
     if (dimensions && dimensions.top) {
-      const { top, left, height, width } = dimensions
+      const { left, width } = dimensions
       switch (position) {
-        case 'top':
-        case 'top-left':
-        case 'top-right':
-          return {
-            borderLeft: 'solid transparent 10px',
-            borderRight: 'solid transparent 10px',
-            borderTop: `solid ${fillColor} 10px`,
-            top: top + window.scrollY - 12,
-            left: left + width / 2,
-            marginBottom: 10
-          }
-
-        case 'bottom':
         case 'bottom-left':
-        case 'bottom-right':
           return {
-            borderLeft: 'solid transparent 10px',
-            borderRight: 'solid transparent 10px',
-            borderBottom: `solid ${fillColor} 10px`,
-            top: top + window.scrollY + height,
-            left: left + width / 2
+            left: left - 20 + width / 2
           }
-
-        case 'left':
-          return {
-            left: left - 13,
-            top: top + window.scrollY + 2,
-            borderTop: 'solid transparent 10px',
-            borderBottom: 'solid transparent 10px',
-            borderLeft: `solid ${fillColor} 10px`
-          }
-
-        case 'right':
-          return {
-            left: left + width + 5,
-            top: top + window.scrollY + 2,
-            borderTop: 'solid transparent 10px',
-            borderBottom: 'solid transparent 10px',
-            borderRight: `solid ${fillColor} 10px`
-          }
-
-        default:
-          return {}
-      }
-    }
-    return {}
-  }
-
-  const getAnimationStyle = () => {
-    const animationStyle = getAnimationStyleByPosition()
-
-    if (isShowing === false) {
-      return animationStyle.enter
-    }
-
-    return {
-      ...animationStyle.enter,
-      ...animationStyle.active
-    }
-  }
-
-  const getOffset = () => {
-    if (offset !== 0) {
-      const offsetPixels = `${offset}px`
-      switch (position) {
-        case 'top':
-          return { marginBottom: offsetPixels }
         case 'top-left':
-          return { marginBottom: offsetPixels }
-        case 'top-right':
-          return { marginBottom: offsetPixels, marginLeft: offsetPixels }
-        case 'bottom':
-          // @ts-ignore
-          return { marginTop: `${offset - 30}px` }
-        case 'bottom-left':
-          // @ts-ignore
-          return { marginTop: `${offset - 30}px` }
-        case 'bottom-right':
-          // @ts-ignore
-          return { marginTop: `${offset - 30}px`, marginLeft: offsetPixels }
-        case 'left':
-          return { marginRight: offsetPixels }
-        case 'right':
-          return { marginLeft: offsetPixels }
+          return {
+            left: left - 20 + width / 2
+          }
         default:
           return {}
       }
@@ -226,9 +119,8 @@ const Arrow: FunctionComponent<Props> = ({
       // @ts-ignore
       style={{
         ...getBaseStyle(),
-        ...getArrowStyle(),
-        ...getAnimationStyle(),
-        ...getOffset()
+        ...getPositionStyle(),
+        ...getSpecificStyle()
       }}
     />
   )

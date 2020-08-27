@@ -15,14 +15,12 @@ export interface Props {
   trigger: string | ReactNode
   arrow?: boolean
   arrowClassName?: string
-  backgroundColor?: string
   className?: string
   delay?: number
   duration?: number
   easing?: string
   hover?: boolean
   isOpen?: boolean
-  offset?: number
   onClose?: Function | null
   onOpen?: Function | null
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
@@ -34,7 +32,6 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   const {
     arrow,
     arrowClassName,
-    backgroundColor,
     children,
     className,
     trigger,
@@ -47,7 +44,6 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     position,
     tipContainerClassName,
     isOpen,
-    offset,
     ...rest
   } = props
   const [isShowing, setIsShowing] = useState(isOpen)
@@ -118,24 +114,20 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       {arrow && (
         <Arrow
           arrowClassName={arrowClassName}
-          backgroundColor={backgroundColor}
           delay={delay}
           dimensions={dimensions}
           duration={duration}
           easing={easing}
           isShowing={isShowing}
-          offset={offset}
           position={position}
         />
       )}
       <TipContainer
-        backgroundColor={backgroundColor}
         delay={delay}
         dimensions={dimensions}
         duration={duration}
         easing={easing}
         isShowing={isShowing}
-        offset={offset}
         position={position}
         tipContainerClassName={tipContainerClassName}
       >
@@ -163,7 +155,6 @@ const Tooltip: FunctionComponent<Props> = (props) => {
 Tooltip.defaultProps = {
   arrow: true,
   arrowClassName: '',
-  backgroundColor: '',
   className: '',
   duration: 180,
   delay: 0,
@@ -173,8 +164,7 @@ Tooltip.defaultProps = {
   onClose: null,
   onOpen: null,
   position: 'top',
-  tipContainerClassName: '',
-  offset: 0
+  tipContainerClassName: ''
 }
 
 export default Tooltip

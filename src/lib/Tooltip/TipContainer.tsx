@@ -4,27 +4,23 @@ import clsx from 'clsx'
 import styles from './tooltip.module.scss'
 
 export interface Props {
-  backgroundColor?: string
   children: ReactNode
   delay?: number
   dimensions?: ClientRect
   duration?: number
   easing?: string
   isShowing?: boolean
-  offset?: number
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
   tipContainerClassName?: string
 }
 
 const TipContainer: FunctionComponent<Props> = ({
-  backgroundColor,
   children,
   delay,
   dimensions,
   duration,
   easing,
   isShowing,
-  offset,
   position,
   tipContainerClassName
 }) => {
@@ -37,7 +33,6 @@ const TipContainer: FunctionComponent<Props> = ({
       switch (position) {
         case 'top':
           return {
-            backgroundColor,
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
@@ -48,7 +43,6 @@ const TipContainer: FunctionComponent<Props> = ({
           }
         case 'top-left':
           return {
-            backgroundColor,
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
@@ -59,7 +53,6 @@ const TipContainer: FunctionComponent<Props> = ({
           }
         case 'top-right':
           return {
-            backgroundColor,
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
@@ -70,7 +63,6 @@ const TipContainer: FunctionComponent<Props> = ({
           }
         case 'bottom':
           return {
-            backgroundColor,
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
@@ -81,7 +73,6 @@ const TipContainer: FunctionComponent<Props> = ({
           }
         case 'bottom-left':
           return {
-            backgroundColor,
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
@@ -92,7 +83,6 @@ const TipContainer: FunctionComponent<Props> = ({
           }
         case 'bottom-right':
           return {
-            backgroundColor,
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
@@ -103,7 +93,6 @@ const TipContainer: FunctionComponent<Props> = ({
           }
         case 'right':
           return {
-            backgroundColor,
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
@@ -114,7 +103,6 @@ const TipContainer: FunctionComponent<Props> = ({
           }
         case 'left':
           return {
-            backgroundColor,
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
@@ -129,7 +117,6 @@ const TipContainer: FunctionComponent<Props> = ({
       }
     }
     return {
-      backgroundColor,
       transition: `all ${duration}ms ${easing} ${delay}ms`,
       opacity,
       pointerEvents
@@ -285,41 +272,13 @@ const TipContainer: FunctionComponent<Props> = ({
     }
   }
 
-  const getOffset = () => {
-    if (offset !== 0) {
-      const offsetPixels = `${offset}px`
-      switch (position) {
-        case 'top':
-          return { marginBottom: offsetPixels }
-        case 'top-left':
-          return { marginBottom: offsetPixels, marginRight: offsetPixels }
-        case 'top-right':
-          return { marginBottom: offsetPixels, marginLeft: offsetPixels }
-        case 'bottom':
-          return { marginTop: offsetPixels }
-        case 'bottom-left':
-          return { marginTop: offsetPixels, marginRight: offsetPixels }
-        case 'bottom-right':
-          return { marginTop: offsetPixels, marginLeft: offsetPixels }
-        case 'left':
-          return { marginRight: offsetPixels }
-        case 'right':
-          return { marginLeft: offsetPixels }
-        default:
-          return {}
-      }
-    }
-    return {}
-  }
-
   return (
     <div
       role="tooltip"
       className={clsx(styles['tip-container'], tipContainerClassName)}
       style={{
         ...getBaseStyle(),
-        ...getAnimationStyle(),
-        ...getOffset()
+        ...getAnimationStyle()
       }}
     >
       <div className={styles.gap} style={getGap()} />

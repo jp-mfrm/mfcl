@@ -40,14 +40,6 @@ Tooltips help clarify what certain features do.
         <Tooltip arrow={false} hover={false} trigger={<Button style={margin}>No arrow Click</Button>} position="bottom">
           Where did my arrow go?
         </Tooltip>
-        <Tooltip
-          backgroundColor="#d63426"
-          hover={false}
-          trigger={<Button style={margin}>Background Color</Button>}
-          position="bottom"
-        >
-          Cool Color Bruh
-        </Tooltip>
       </Row>
     )
   }}
@@ -80,7 +72,6 @@ Tooltips help clarify what certain features do.
 <Playground>
   <Component
     initialState={{
-      offset: 0,
       delay: 0,
       duration: 180,
       easing: 'ease-in-out'
@@ -92,16 +83,6 @@ Tooltips help clarify what certain features do.
         <>
           <Row>
             <div>
-              <label style={marginRight}>Offset</label>
-              <input
-                placeholder="Offset"
-                name="offset"
-                type="number"
-                onChange={(e) => setState({ offset: +e.target.value })}
-                value={state.offset}
-              />
-            </div>
-            <div>
               <label style={marginRight}>Delay</label>
               <input
                 placeholder="Delay"
@@ -111,8 +92,6 @@ Tooltips help clarify what certain features do.
                 value={state.delay}
               />
             </div>
-          </Row>
-          <Row>
             <div>
               <label style={marginRight}>Duration</label>
               <input
@@ -144,7 +123,6 @@ Tooltips help clarify what certain features do.
               delay={state.delay}
               duration={state.duration}
               easing={state.easing}
-              offset={state.offset}
             >
               Customize me by changing the inputs above
             </Tooltip>
