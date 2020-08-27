@@ -15,8 +15,10 @@ import Accordion from './Accordion'
 import AccordionItem from './Accordion/AccordionItem'
 import Price from './Price';
 import Flag from './Flag';
+import Badge from './Badge';
 
 export {
+  Badge,
   Flag,
   Price,
   Accordion,
