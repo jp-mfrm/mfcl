@@ -1,8 +1,6 @@
 import React, {
-  CSSProperties,
   FunctionComponent,
-  ReactNode,
-  useCallback
+  ReactNode
 } from 'react';
 
 import Button from '../Button'

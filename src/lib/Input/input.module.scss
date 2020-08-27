@@ -19,7 +19,7 @@
     padding: 6px 0px;
     text-overflow: ellipsis;
     width: 100%;
-  
+
     @media screen and (min-width: $mobile) {
       text-align: left;
     }
@@ -75,7 +75,7 @@
     }
 
     &:disabled {
-        cursor: not-allowed;
+      cursor: not-allowed;
     }
 
     &.lg {
@@ -102,7 +102,7 @@
     font-size: 14px;
 
     & p[data-error="true"] {
-      color: $red
+      color: $red;
     }
   }
 
