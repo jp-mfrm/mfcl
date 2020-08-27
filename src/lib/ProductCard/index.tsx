@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import Rating from '../Rating'
 import Price from '../Price'
-import clsx from 'clsx'
+import Badge from '../Badge'
 
 import styles from './productCard.module.scss'
 
@@ -46,6 +46,7 @@ const ProductCard: FunctionComponent<Props> = ({
             <span className={styles['brand-logo']}>
               <img src={brandImg} />
             </span>
+            <Badge>Save $100</Badge>
             <div className={styles['rating-row']}>
               <Rating data-testid="star-rating" name="product-rating" value={rating} readOnly size="sm" />
               <p className={styles.reviews}>
@@ -59,7 +60,7 @@ const ProductCard: FunctionComponent<Props> = ({
       </div>
       <div className={styles['price-container']}>
         <span className={styles.placeholder} />
-         <Price data-testid='price' text='Wumbo' divider price={price} discountPrice={discountPrice}/>
+        <Price data-testid="price" text="Wumbo" divider price={price} discountPrice={discountPrice} />
       </div>
     </div>
   )

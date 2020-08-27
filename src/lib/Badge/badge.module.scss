@@ -1,5 +1,12 @@
 @import '../variables';
 
 .badge-wrapper {
-  
+  padding: 5px 10px;
+  background: #d63426;
+  border: 1px solid #d63426;
+  border-radius: 10px;
+  text-transform: uppercase;
+  color: $white;
+  font-size: 12px;
+  line-height: 10px;
 }

@@ -1,19 +1,22 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react'
 
-import styles from './badge.module.scss';
+import styles from './badge.module.scss'
+import clsx from 'clsx'
 
 interface Props {
-  [rest: string]: unknown; // ...rest property
-};
+  children: string
+  color?: string
+  width?: string
+  height?: string
+  [rest: string]: unknown // ...rest property
+}
 
-const Badge: FunctionComponent<Props> = ({
-  ...rest
-}) => {
+const Badge: FunctionComponent<Props> = ({ children, width, height, color, ...rest }) => {
   return (
     <div className={styles['badge-wrapper']} {...rest}>
-      Badge
+      {children}
     </div>
-  );
-};
+  )
+}
 
-export default Badge;
+export default Badge
