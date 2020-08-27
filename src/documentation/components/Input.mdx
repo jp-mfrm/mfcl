@@ -20,22 +20,12 @@ Inputs accept user entry data. Inputs use labels and sometimes icons to communic
 
 <Props of={Input} />
 
-## Placeholder text
+## Basic Usage
+An Input field can show a user is currently interacting with it through focus styling.  
+Generic attributes for input elements can be applied.
 
 <Playground>
-  <Input inputType='text' placeholder='Placeholder text'></Input>
-</Playground>
-
-## Input Types
-
-The valid options for input types are:
-
-<Playground>
-  <Input inputType='text' placeholder='text'></Input><br/>
-  <Input inputType='email' placeholder='email'></Input><br/>
-  <Input inputType='password' placeholder='password'></Input><br/>
-  <Input inputType='number' placeholder='number'></Input><br/>
-  <Input inputType='date' placeholder='date'></Input>
+  <Input type='text' label='Default' placeholder='Placeholder text' name='name' focus></Input>
 </Playground>
 
 ## Size 
@@ -43,17 +33,25 @@ The valid options for input types are:
 You can choose between small, medium and large input field sizes, the default being large.
 
 <Playground>
-  <Input inputType='text' size='sm'></Input><br/>
-  <Input inputType="text" size='md'></Input><br/>
-  <Input inputType="text" size='lg'></Input>
+  <Input type='text' size='sm'></Input><br/>
+  <Input type="text" size='md'></Input><br/>
+  <Input type="text" size='lg'></Input>
 </Playground>
 
 ## Inline Button
 
 Add an inline button with the input field.  
 Button label and form action are required. 
+Properties can also be passed to the [Button](/components-button) component.
+
 <Playground>
-  <Input inputType='number' addBtn={true} formAction="/components-input" btnLabel='Sign Up'></Input>
+  <form action='/components-flag'>
+    <Input type='number' addBtn btnLabel='Sign Up'></Input>
+  </form>
+  <br />
+  <form action='/components-flag'>
+    <Input type='number' addBtn btnLabel='Sign Up' btnProps={{btnType: 'secondary', type: 'submit'}}></Input>
+  </form>
 </Playground>
 
 ## Required or Disabled
@@ -62,16 +60,27 @@ Make input required or disabled.
 Disabled attribute cascades to inline button.
 
 <Playground>
-  <Input inputType='text' required={true} addBtn={true} btnLabel="Test Required"></Input><br/>
-  <Input inputType='text' disabled={true}></Input><br/>
-  <Input inputType='text' disabled={true} addBtn={true} btnLabel='Disabled'></Input>
+  <Input type='text' required addBtn btnLabel="Test Required"></Input><br/>
+  <Input type='text' disabled></Input><br/>
+  <Input type='text' disabled addBtn btnLabel='Disabled'></Input>
 </Playground>
 
 ## Footnote
 
-Add a small description below the input field
+Add a small description below the input field.  
+Footnotes can also be aligned.
 
 <Playground>
-  <Input inputType='text' inputFooter='This is an info message'></Input>
-</Playground>
 
+<Input type='text' addBtn inputMessage = {{
+    infoMsg: 'This is an info message',
+    alignment: 'left'}}>
+</Input><br/>
+<Input type='text' size='md' inputMessage = {{
+  successMsg: 'This is an success message'}}>
+</Input><br/>
+<Input type='text' size='sm' disabled inputMessage = {{
+  errorMsg: 'This is an error message'}}>
+</Input>
+
+</Playground>

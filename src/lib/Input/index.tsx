@@ -9,95 +9,92 @@ import Button from '../Button'
 import clsx from 'clsx'
 import styles from './input.module.scss';
 
-/* TODO: Dark mode input */
-/* TODO: successMsg - submission success message */
-/* TODO: errorMsg - submission error message */
-/* TODO: Q: Does textarea come as a variation from the Input component?  */
-/* TODO: > Should textarea be its own component?  */
-/* TODO: > How does textarea button look, does it with a button?  */
-
 export interface Props {
   /** Class to pass to the input wrapper */
-  inputType: 'text' | 'email' | 'password' | 'number' | 'date'
-  /** Class to pass to the input wrapper */
   inputClass?: string
-  /** Placeholder of the Input */
-  placeholder: string
-  /** Form Action from button submission */
-  formAction: string
+  /** Field and label name */
+  name?: string
+  /** Label for input field */
+  label?: string | ReactNode
   /** Option to show/hide button */
-  addBtn: boolean
+  addBtn?: boolean
   /** Label for button */
-  btnLabel: string  
+  btnLabel?: string  
+  /** Properties to be passed to Button component */
+  btnProps?: object
   /** Size of the Input */
-  size: 'lg' | 'md' | 'sm'
-  /** Makes the input field required */
-  required: boolean
+  size?: 'lg' | 'md' | 'sm'
   /** Makes the input field disabled */
-  disabled: boolean
-  /** Message to appear below the input field */
-  inputFooter?: string
+  disabled?: boolean
+  /** Apply focused styling */
+  focus?: boolean
+  /** Apply error styling */
+  error?: boolean
   /** Success/Error message for input submission  */ 
-  inputMessage?: { successMsg: string, errorMsg: string }
-  [rest: string]: unknown; // WIP...rest property
-};
-
-// (WIP) 
-function formSubmit(event: { target: { validity: { valid: any; }; }[]; }) {
+  inputMessage?:  
+    { infoMsg?: string,  
+      successMsg?: string,  
+      errorMsg?: string,  
+      alignment?: 'left' | 'center' | 'right'   
+    }
+  [rest: string]: unknown; // ...rest property
 };
 
 const Input: FunctionComponent<Props> = ({
-  inputType,
   inputClass,
-  placeholder = '',
-  formAction = '/',
+  name,
+  label,
   addBtn = false,
   btnLabel = 'Submit',
+  btnProps,
   size = 'lg',
-  required = false,
   disabled = false,
-  inputFooter,
-  inputMessage = {},
+  focus = false,
+  error = false,
+  inputMessage,
   ...rest
 }) => {
 
-// (WIP) 
-  const formSubmit = useCallback((event: { target: { validity: { valid: any; }; }[]; }) => {
-    console.log(event.target[0].validity.valid); 
-  }, [])
-
-  let inputField = []; 
+let inputField = []; 
 
   inputField.push(
-    <input className={clsx(styles['input'], styles[size], inputClass)} {...rest}
+    <input className={clsx(styles['input'], styles[size], focus && styles['focus'], error && styles['error'], inputClass)} {...rest}
       key="inputField"
-      type={inputType}
-      name="name"
-      required={required}
+      name={name}
       disabled={disabled}
-      placeholder={placeholder}/>
+      />
   );
   
   if(addBtn) {
-    inputField.push(<Button key="inputBtn" disabled={disabled} type="submit">{btnLabel}</Button>);
-
-    return (
-      <div className={clsx(styles['input-wrapper'])}>
-        <form action={formAction} 
-          className={clsx(styles['input-wrapper-inner'])}>
-          {inputField}
-        </form>
-        <div className={clsx(styles['input-wrapper-footer'])}>{inputFooter}</div>
-      </div>
-    )
-  } 
-
+    inputField.push(<Button key="inputBtn" disabled={disabled} {...btnProps}>{btnLabel}</Button>);
+  }
+  
   return (
     <div className={clsx(styles['input-wrapper'])}>
-      {inputField}
-      <div className={clsx(styles['input-wrapper-footer'])}>{inputFooter}</div>
-    </div>
-  );
+
+      {label && (
+        <label htmlFor={name} className={clsx(styles['label'])}>
+          {label}
+        </label>
+      )}
+
+      <div className={clsx(styles['input-wrapper-inner'])}>
+        {inputField}
+      </div>
+      
+      {(inputMessage) && (
+        <div className={clsx(styles['input-wrapper-footer'], inputMessage.alignment && styles[inputMessage.alignment])}>
+            {(inputMessage.infoMsg) && (
+              <p data-info >{inputMessage.infoMsg}</p>)}
+            
+            {(inputMessage.successMsg) && (
+              <p data-success >{inputMessage.successMsg}</p>)}
+            
+            {(inputMessage.errorMsg) && (
+              <p data-error >{inputMessage.errorMsg}</p>)}
+        </div>
+      )}
+    </div>)
 };
 
 export default Input;
