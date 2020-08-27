@@ -1,12 +1,12 @@
 import React, {
   CSSProperties,
   FunctionComponent,
-  ReactNode
+  ReactNode,
+  useCallback
 } from 'react';
 
-import clsx from 'clsx'
 import Button from '../Button'
-
+import clsx from 'clsx'
 import styles from './input.module.scss';
 
 /* TODO: Dark mode input */
@@ -21,12 +21,10 @@ export interface Props {
   inputType: 'text' | 'email' | 'password' | 'number' | 'date'
   /** Class to pass to the input wrapper */
   inputClass?: string
-  /** Styles to pass to each section title wrapper */
-  titleStyles?: CSSProperties
-  /** Styles to pass to each section content wrapper */
-  contentStyles?: CSSProperties
   /** Placeholder of the Input */
   placeholder: string
+  /** Form Action from button submission */
+  formAction: string
   /** Option to show/hide button */
   addBtn: boolean
   /** Label for button */
@@ -38,25 +36,37 @@ export interface Props {
   /** Makes the input field disabled */
   disabled: boolean
   /** Message to appear below the input field */
-  inputFooter?: string 
+  inputFooter?: string
+  /** Success/Error message for input submission  */ 
+  inputMessage?: { successMsg: string, errorMsg: string }
   [rest: string]: unknown; // WIP...rest property
+};
+
+// (WIP) 
+function formSubmit(event: { target: { validity: { valid: any; }; }[]; }) {
 };
 
 const Input: FunctionComponent<Props> = ({
   inputType,
   inputClass,
-  titleStyles,
-  contentStyles,
   placeholder = '',
+  formAction = '/',
   addBtn = false,
   btnLabel = 'Submit',
   size = 'lg',
   required = false,
   disabled = false,
   inputFooter,
+  inputMessage = {},
   ...rest
 }) => {
-  let inputField = [];
+
+// (WIP) 
+  const formSubmit = useCallback((event: { target: { validity: { valid: any; }; }[]; }) => {
+    console.log(event.target[0].validity.valid); 
+  }, [])
+
+  let inputField = []; 
 
   inputField.push(
     <input className={clsx(styles['input'], styles[size], inputClass)} {...rest}
@@ -70,13 +80,21 @@ const Input: FunctionComponent<Props> = ({
   
   if(addBtn) {
     inputField.push(<Button key="inputBtn" disabled={disabled} type="submit">{btnLabel}</Button>);
+
+    return (
+      <div className={clsx(styles['input-wrapper'])}>
+        <form action={formAction} 
+          className={clsx(styles['input-wrapper-inner'])}>
+          {inputField}
+        </form>
+        <div className={clsx(styles['input-wrapper-footer'])}>{inputFooter}</div>
+      </div>
+    )
   } 
 
   return (
     <div className={clsx(styles['input-wrapper'])}>
-      <form className={clsx(styles['input-wrapper-inner'])} {...rest}>
-        {inputField}
-      </form>
+      {inputField}
       <div className={clsx(styles['input-wrapper-footer'])}>{inputFooter}</div>
     </div>
   );
