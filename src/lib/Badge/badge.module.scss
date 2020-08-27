@@ -1,6 +1,14 @@
 @import '../variables';
 
 .badge-wrapper {
+  width: 85px;
+  height: 20px;
+  text-align: center;
+
+  a {
+    width: 85px;
+    height: 25px;
+  }
 }
 
 .badge {
@@ -14,15 +22,6 @@
   font-weight: bold;
   font-size: 12px;
   line-height: 10px;
-
-  a {
-    &:hover,
-    &:active {
-      background-color: $dark-red;
-      color: $white;
-      border: solid 1px $dark-red;
-    }
-  }
 }
 
 .whiteBadge {
@@ -32,18 +31,8 @@
   font-weight: bold;
   font-size: 12px;
   line-height: 10px;
-
-  a {
-    &:hover,
-    &:active {
-      background-color: $dark-red;
-      color: $white;
-      border: solid 1px $dark-red;
-    }
-  }
 }
 
 a {
-  height: 100%;
   text-decoration: none;
 }

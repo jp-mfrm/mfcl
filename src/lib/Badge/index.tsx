@@ -15,9 +15,11 @@ const Badge: FunctionComponent<Props> = ({ children, width, height, white, href 
 
   if (href) {
     return (
-      <a href={href} className={badgeClassName} {...rest}>
-        {children}
-      </a>
+      <div className={styles['badge-wrapper']}>
+        <a href={href} className={clsx(badgeClassName)} {...rest}>
+          {children}
+        </a>
+      </div>
     )
   }
 
