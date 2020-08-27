@@ -47,7 +47,8 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     ...rest
   } = props
   const [isShowing, setIsShowing] = useState(isOpen)
-  const [wrapperRef, dimensions] = useDimensions()
+  // @ts-ignore
+  const [wrapperRef, dimensions] = useDimensions(true, 250, {}, [isShowing])
 
   useEffect(() => {
     if (isOpen) {

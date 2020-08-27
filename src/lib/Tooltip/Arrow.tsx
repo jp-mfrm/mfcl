@@ -53,8 +53,8 @@ const Arrow: FunctionComponent<Props> = ({
             bottom: '100%',
             borderLeft: 'solid 1px',
             borderBottom: 'solid 1px',
-            top: top + window.scrollY - 15,
-            left: left - 10 + width / 2
+            top: top + window.scrollY - 19,
+            left: left - 5 + width / 2
           }
 
         case 'bottom':
@@ -64,14 +64,14 @@ const Arrow: FunctionComponent<Props> = ({
             borderRight: 'solid 1px',
             borderTop: 'solid 1px',
             bottom: 'auto',
-            top: top + window.scrollY + height + 5,
+            top: top + window.scrollY + height - 1,
             left: left - 9 + width / 2
           }
 
         case 'left':
           return {
-            left: left - 26,
-            top: top + window.scrollY + 5,
+            left: left - 21,
+            top: top + window.scrollY + 9,
             borderRight: 'solid 1px',
             borderBottom: 'solid 1px',
             bottom: 'auto',
@@ -80,8 +80,8 @@ const Arrow: FunctionComponent<Props> = ({
 
         case 'right':
           return {
-            left: left + width + 3,
-            top: top + window.scrollY + 6,
+            left: left + width + 8,
+            top: top + window.scrollY + 11,
             borderTop: 'solid 1px',
             borderLeft: 'solid 1px',
             bottom: 'auto'
@@ -113,6 +113,56 @@ const Arrow: FunctionComponent<Props> = ({
     return {}
   }
 
+  const getAnimation = () => {
+    let animation: 'active' | 'enter' = 'active'
+    if (isShowing === false) {
+      animation = 'enter'
+    }
+
+    return {
+      transform: `rotate(-45deg) ${getAnimationStyleByPosition()[animation]}`
+    }
+  }
+
+  const getAnimationStyleByPosition = () => {
+    switch (position) {
+      case 'top':
+      case 'top-right':
+      case 'top-left':
+        return {
+          enter: 'translate3d(-50%, 0, 0)',
+          active: 'translate3d(-50%, -2px, 0)'
+        }
+
+      case 'bottom':
+        return {
+          enter: 'translate3d(0%, -10px, 0)',
+          active: 'translate3d(-50%, 1px, 0)'
+        }
+      case 'bottom-left':
+      case 'bottom-right':
+        return {
+          enter: 'translate3d(0%, -10px, 0)',
+          active: 'translate3d(-50%, 0, 0)'
+        }
+
+      case 'left':
+        return {
+          enter: 'translate3d(0, -50%, 0)',
+          active: 'translate3d(0, -50%, 0)'
+        }
+
+      case 'right':
+        return {
+          enter: 'translate3d(-10px, -100%, 0)',
+          active: 'translate3d(0, -50%, 0)'
+        }
+
+      default:
+        return { enter: '', active: '' }
+    }
+  }
+
   return (
     <div
       className={clsx(styles['tooltip-arrow'], arrowClassName)}
@@ -120,7 +170,8 @@ const Arrow: FunctionComponent<Props> = ({
       style={{
         ...getBaseStyle(),
         ...getPositionStyle(),
-        ...getSpecificStyle()
+        ...getSpecificStyle(),
+        ...getAnimation()
       }}
     />
   )
