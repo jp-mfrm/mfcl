@@ -101,7 +101,7 @@ const Modal: FunctionComponent<Props> = ({
               ref={modalRef}
               {...rest}
             >
-              <div data-testid="closeBtn">
+              <div>
                 <button
                   type="button"
                   onClick={hideModal}
