@@ -20,13 +20,58 @@ Inputs accept user entry data. Inputs use labels and sometimes icons to communic
 
 <Props of={Input} />
 
+## Placeholder text
+
+<Playground>
+  <Input inputType='text' placeholder='Placeholder text'></Input>
+</Playground>
+
 ## Input Types
+
+The valid options for input types are:
+
+<Playground>
+  <Input inputType='text' placeholder='text'></Input><br/>
+  <Input inputType='email' placeholder='email'></Input><br/>
+  <Input inputType='password' placeholder='password'></Input><br/>
+  <Input inputType='number' placeholder='number'></Input><br/>
+  <Input inputType='date' placeholder='date'></Input>
+</Playground>
 
 ## Size 
 
-## Basic Usage
+You can choose between small, medium and large input field sizes, the default being large.
 
 <Playground>
-  <Input></Input>
-  <Input placeholder="Email Address"></Input>
+  <Input inputType='text' size='sm'></Input><br/>
+  <Input inputType="text" size='md'></Input><br/>
+  <Input inputType="text" size='lg'></Input>
 </Playground>
+
+## Inline Button
+
+Add an inline button with the input field.
+
+<Playground>
+  <Input inputType='number' addBtn={true} btnLabel='Sign Up'></Input>
+</Playground>
+
+## Required or Disabled
+
+Make input required or disabled  
+Disabled attribute cascades to inline button.
+
+<Playground>
+  <Input inputType='text' required={true} addBtn={true} btnLabel="Test Required"></Input><br/>
+  <Input inputType='text' disabled={true}></Input><br/>
+  <Input inputType='text' disabled={true} addBtn={true} btnLabel='Disabled'></Input>
+</Playground>
+
+## Footnote
+
+Add a small description below the input field
+
+<Playground>
+  <Input inputType='text' inputFooter='This is an info message'></Input>
+</Playground>
+

@@ -1,14 +1,20 @@
-@import '../variables';
+@import "../variables";
 
 .input-wrapper {
-  
-}
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
 
-.input {
+  &-inner {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .input {
     border-radius: 25px;
     border: solid 1px $gray-5;
     padding: 10px 20px;
-    
+
     font-family: $r-regular;
     font-size: 16px;
     font-weight: normal;
@@ -18,22 +24,49 @@
     letter-spacing: normal;
     color: #323030;
     cursor: pointer;
-}
 
-.input::placeholder {
-    color: $gray-8;
-}
+    &::placeholder {
+      color: $gray-8;
+    }
 
-.input.bg-transparent {
-    background-color: transparent;
-}
-.input.bg-white {
-    background-color: $white;
-}
+    &.bg-transparent {
+      background-color: transparent;
+    }
+    &.bg-white {
+      background-color: $white;
+    }
 
-.input:focus {
-    border-radius: 25px;
-    border: solid 1px $gray-5; 
-    box-shadow: 0;
-    outline: 0 none;
+    &:focus {
+      border-radius: 25px;
+      border: solid 1px $gray-5;
+      box-shadow: 0;
+      outline: 0 none;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+
+    &.lg {
+      width: 373px;
+    }
+
+    &.md {
+      width: 273px;
+    }
+
+    &.sm {
+      width: 173px;
+    }
+  }
+
+  button {
+    position: relative;
+    left: -35px;
+  }
+
+  &-footer {
+    text-align: center;
+    font-size: 14px;
+  }
 }
