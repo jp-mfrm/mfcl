@@ -65,7 +65,7 @@ const Arrow: FunctionComponent<Props> = ({
             borderTop: 'solid 1px',
             bottom: 'auto',
             top: top + window.scrollY + height - 1,
-            left: left - 9 + width / 2
+            left: left - 5 + width / 2
           }
 
         case 'left':
@@ -136,13 +136,13 @@ const Arrow: FunctionComponent<Props> = ({
 
       case 'bottom':
         return {
-          enter: 'translate3d(0%, -10px, 0)',
+          enter: 'translate3d(0, -10px, 0)',
           active: 'translate3d(-50%, 1px, 0)'
         }
       case 'bottom-left':
       case 'bottom-right':
         return {
-          enter: 'translate3d(0%, -10px, 0)',
+          enter: 'translate3d(0, -10px, 0)',
           active: 'translate3d(-50%, 0, 0)'
         }
 
@@ -165,6 +165,7 @@ const Arrow: FunctionComponent<Props> = ({
 
   return (
     <div
+      data-testid="arrow"
       className={clsx(styles['tooltip-arrow'], arrowClassName)}
       // @ts-ignore
       style={{

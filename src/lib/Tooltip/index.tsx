@@ -20,6 +20,8 @@ export interface Props {
   duration?: number
   easing?: string
   hover?: boolean
+  /* don't use. For testing only*/
+  initialDimensions?: any
   isOpen?: boolean
   onClose?: Function | null
   onOpen?: Function | null
@@ -34,6 +36,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     arrowClassName,
     children,
     className,
+    initialDimensions,
     trigger,
     duration,
     delay,
@@ -48,7 +51,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   } = props
   const [isShowing, setIsShowing] = useState(isOpen)
   // @ts-ignore
-  const [wrapperRef, dimensions] = useDimensions(true, 250, {}, [isShowing])
+  const [wrapperRef, dimensions] = useDimensions(true, 250, initialDimensions, [isShowing])
 
   useEffect(() => {
     if (isOpen) {
@@ -161,6 +164,7 @@ Tooltip.defaultProps = {
   delay: 0,
   easing: 'ease-in-out',
   hover: true,
+  initialDimensions: {},
   isOpen: false,
   onClose: null,
   onOpen: null,
