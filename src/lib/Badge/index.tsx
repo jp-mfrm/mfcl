@@ -5,16 +5,25 @@ import clsx from 'clsx'
 
 interface Props {
   children: string
-  white?: string
-  width?: string
-  height?: string
+  white?: boolean
+  href?: string
   [rest: string]: unknown // ...rest property
 }
 
-const Badge: FunctionComponent<Props> = ({ children, width, height, white, ...rest }) => {
+const Badge: FunctionComponent<Props> = ({ children, width, height, white, href = '', ...rest }) => {
+  const badgeClassName = clsx(styles.badge, white && styles.whiteBadge)
+
+  if (href) {
+    return (
+      <a href={href} className={badgeClassName} {...rest}>
+        {children}
+      </a>
+    )
+  }
+
   return (
     <div className={styles['badge-wrapper']} {...rest}>
-      <p className={clsx(styles.badge, white && styles.whiteBadge)}>{children}</p>
+      <p className={badgeClassName}>{children}</p>
     </div>
   )
 }
