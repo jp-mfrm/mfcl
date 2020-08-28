@@ -1,19 +1,17 @@
 @import '../variables';
 
-.badge-wrapper {
-  text-align: center;
-}
-
 .badge {
   min-width: 85px;
-  display: inline-block;
-  padding: 5px 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0px;
   border: 1px solid $red;
   border-radius: 10px;
   text-align: center;
   text-transform: uppercase;
   font-style: normal;
-  font-weight: bold;
+  font-weight: bolder;
   font-size: 12px;
   line-height: 10px;
 }
@@ -30,4 +28,12 @@
 
 .link {
   text-decoration: none;
+
+  &:hover {
+    background-color: $dark-red;
+  }
+
+  &:hover:not(.primary) {
+    color: $white;
+  }
 }

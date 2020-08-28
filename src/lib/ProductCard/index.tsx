@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import Rating from '../Rating'
 import Price from '../Price'
-import Badge from '../Badge'
 
 import styles from './productCard.module.scss'
 
@@ -46,7 +45,6 @@ const ProductCard: FunctionComponent<Props> = ({
             <span className={styles['brand-logo']}>
               <img src={brandImg} />
             </span>
-            <Badge>Save $100</Badge>
             <div className={styles['rating-row']}>
               <Rating data-testid="star-rating" name="product-rating" value={rating} readOnly size="sm" />
               <p className={styles.reviews}>
