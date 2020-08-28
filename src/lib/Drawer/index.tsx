@@ -4,7 +4,7 @@ import Transition from 'react-transition-group/Transition'
 import clsx from 'clsx'
 import Fade from '../Fade'
 import isClient from '../utils/isClient'
-
+import trapFocus from '../utils/trapFocus'
 import styles from './drawer.module.scss'
 
 export interface Props {
@@ -81,26 +81,6 @@ const Drawer: React.FunctionComponent<Props> = ({
   const modalRef: any = useRef<HTMLDivElement>(null)
   const firstUpdate = useRef(true)
 
-  const trapFocus = (e: any) => {
-    const focusableModalElements = modalRef.current.querySelectorAll(
-      'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-    )
-
-    const firstFocusableEl = focusableModalElements[0]
-    const lastFocusableEl = focusableModalElements[focusableModalElements.length - 1]
-
-    if (e.shiftKey) {
-      /* shift tab keypress */
-      if (document.activeElement === firstFocusableEl) {
-        lastFocusableEl.focus()
-        e.preventDefault()
-      }
-    } /* tab keypress */ else if (document.activeElement === lastFocusableEl) {
-      firstFocusableEl.focus()
-      e.preventDefault()
-    }
-  }
-
   useEffect(() => {
     if (firstUpdate.current) {
       firstUpdate.current = false
@@ -161,7 +141,7 @@ const Drawer: React.FunctionComponent<Props> = ({
       }
       // tab
       case 9: {
-        trapFocus(e)
+        trapFocus(e, modalRef)
         break
       }
       default:
