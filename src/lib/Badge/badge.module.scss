@@ -28,6 +28,7 @@
 
 .link {
   text-decoration: none;
+  cursor: pointer;
 
   &:hover {
     background-color: $dark-red;

@@ -19,11 +19,6 @@ describe('Badge Component', () => {
     expect(container.querySelector('.badge')?.classList).toContain('secondary')
   })
 
-  it('should render as a link', () => {
-    const { container } = render(<Badge href="/">General Kenobi</Badge>)
-    expect(container.querySelector('.badge')?.classList).toContain('link')
-  })
-
   it('should render the width prop correctly', () => {
     const { container } = render(<Badge width="200px">Howdy Partner</Badge>)
     expect(container.querySelector('.badge')?.getAttribute('style')).toContain('width: 200px')

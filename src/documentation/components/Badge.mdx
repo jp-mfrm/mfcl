@@ -7,7 +7,6 @@ route: /components-badge
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
 import { Badge } from '../../lib'
-import { Price } from '../../lib'
 
 # Badge
 
@@ -33,14 +32,16 @@ A badge can be of two types, primary and secondary.
   <Badge type="secondary">Save $100</Badge>
 </Playground>
 
-## Adding Links
+## Adding Components
 
-A link can also be provided to the badge by using the href prop.
+You can pass components to the Badge component to inherit their styles and props.
 
 <Playground>
-  <Badge href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Click Me</Badge>
+  <Badge component={'a'} href="/">
+    Click Me
+  </Badge>
   <span style={{ paddingLeft: '5px' }} />
-  <Badge href="https://www.youtube.com/watch?v=oHg5SJYRHA0" type="secondary">
+  <Badge component={'a'} href="/" type="secondary">
     Click Me
   </Badge>
 </Playground>
