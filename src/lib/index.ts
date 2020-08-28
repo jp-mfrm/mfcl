@@ -19,8 +19,10 @@ import Rating from './Rating'
 import Select from './Select'
 import Tooltip from './Tooltip'
 import Badge from './Badge'
+import Tabs from './Tabs';
 
 export {
+  Tabs,
   Accordion,
   AccordionItem,
   Alert,
