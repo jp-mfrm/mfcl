@@ -1,4 +1,4 @@
-import './global-styles.css'
+import './layout-styles.css'
 import Alert from './Alert'
 import Button from './Button'
 import Checkbox from './Checkbox'
