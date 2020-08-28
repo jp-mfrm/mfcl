@@ -1,6 +1,7 @@
 import Accordion from './Accordion'
 import AccordionItem from './Accordion/AccordionItem'
 import Alert from './Alert'
+import Badge from './Badge'
 import Button from './Button'
 import Checkbox from './Checkbox'
 import Collapse from './Collapse'
@@ -24,6 +25,7 @@ export {
   Accordion,
   AccordionItem,
   Alert,
+  Badge,
   Button,
   Checkbox,
   Collapse,

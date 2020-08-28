@@ -1,10 +1,10 @@
-import { useEffect, useRef, ReactNode, FunctionComponent, MutableRefObject } from 'react'
+import { useEffect, useRef, ReactElement, MutableRefObject } from 'react'
 import { createPortal } from 'react-dom'
 import isClient from '../utils/isClient'
 
 type HTMLElRef = MutableRefObject<HTMLElement>
 
-const Portal = ({ children = null }: { children: ReactNode | null }) => {
+const Portal = ({ children = null }: { children: ReactElement | null }) => {
   const mount = useRef(isClient ? document.createElement('div') : null) as HTMLElRef
 
   useEffect(() => {

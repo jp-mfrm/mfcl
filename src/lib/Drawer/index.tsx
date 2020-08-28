@@ -6,6 +6,7 @@ import Fade from '../Fade'
 import isClient from '../utils/isClient'
 import trapFocus from '../utils/trapFocus'
 import styles from './drawer.module.scss'
+import Portal from '../Portal'
 
 export interface Props {
   /** Show a backdrop */
@@ -150,7 +151,7 @@ const Drawer: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <>
+    <Portal>
       <Transition in={isShowing} timeout={duration} {...rest}>
         {(state) => (
           // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
@@ -189,7 +190,7 @@ const Drawer: React.FunctionComponent<Props> = ({
           opacity={0.5}
         />
       )}
-    </>
+      </Portal>
   )
 }
 
