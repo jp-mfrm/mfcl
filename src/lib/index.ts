@@ -18,6 +18,7 @@ import ProgressBar from './ProgressBar'
 import Rating from './Rating'
 import Select from './Select'
 import Tooltip from './Tooltip'
+import Badge from './Badge'
 
 export {
   Accordion,
@@ -39,5 +40,6 @@ export {
   ProductCard,
   Rating,
   Select,
-  Tooltip
+  Tooltip,
+  Badge
 }
