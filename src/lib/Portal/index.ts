@@ -1,4 +1,4 @@
-import { useEffect, useRef, ReactElement, ReactNode, FunctionComponent, MutableRefObject } from 'react'
+import { useEffect, useRef, ReactElement, MutableRefObject } from 'react'
 import { createPortal } from 'react-dom'
 import isClient from '../utils/isClient'
 
