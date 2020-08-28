@@ -8,7 +8,7 @@ interface Props {
 }
 
 const GridRow: FunctionComponent<Props> = ({ children, alignRow = '', rowStyle = {} }) => {
-  const rowClasses = clsx('row', alignRow && `${alignRow}`)
+  const rowClasses = clsx('grid-row', alignRow && `grid-row-${alignRow}`)
   return (
     <div className={rowClasses} style={rowStyle}>
       {children}

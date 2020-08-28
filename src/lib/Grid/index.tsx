@@ -21,7 +21,7 @@ const Grid: FunctionComponent<Props> = ({
   gridStyles = {},
   ...rest
 }) => {
-  const rowStyles = clsx('row', alignRows && `${alignRows}`)
+  const rowStyles = clsx('grid-row', alignRows && `grid-row-${alignRows}`)
   return (
     <div className={`${createContainer && 'container'}`} style={gridStyles}>
       <div className={createRows ? rowStyles : ''}>

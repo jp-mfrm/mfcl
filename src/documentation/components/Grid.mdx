@@ -26,7 +26,7 @@ TODO add description here
 ## Basic Usage
 
 <Playground>
-  <Grid defaultSize={1} useChildren>
+  <Grid defaultSize={1} useChildren gridStyles={{ backgroundColor: 'rgba(180, 247, 255, 0.6' }}>
     <div style={exampleStyles} />
     <div style={exampleStyles} />
     <div style={exampleStyles} />
@@ -45,7 +45,7 @@ TODO add description here
 ## Using Grid Item
 
 <Playground>
-  <Grid>
+  <Grid gridStyles={{ backgroundColor: 'rgba(180, 247, 255, 0.6' }}>
     <GridItem defaultSize={6}>{exampleItem}</GridItem>
     <GridItem defaultSize={3}>{exampleItem}</GridItem>
     <GridItem defaultSize={3}>{exampleItem}</GridItem>
@@ -58,7 +58,7 @@ TODO add description here
 ## Using Grid Row
 
 <Playground>
-  <Grid createRows={false}>
+  <Grid createRows={false} gridStyles={{ backgroundColor: 'rgba(180, 247, 255, 0.6' }}>
     <GridRow alignRow={'center'}>
       <GridItem defaultSize={2}>{exampleItem}</GridItem>
       <GridItem defaultSize={2}>{exampleItem}</GridItem>
