@@ -28,13 +28,17 @@
 }
 
 .progress-step.vertical {
-  min-height: 28px;
+  min-height: 65px;
   flex: 1 1 auto;
   text-align: inherit;
 }
 
 .outer-circle {
   min-height: 20px;
+}
+
+.outer-circle.vertical {
+  min-height: 0px;
 }
 
 .circle {

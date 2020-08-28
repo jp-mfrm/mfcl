@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 
 import Stepper from './index'
 
@@ -8,45 +8,31 @@ const stepperWords = ['Create Account', 'Issuer Info', 'Offering Info', 'Submit'
 describe('Stepper Component', () => {
   it('renders a className', () => {
     const { container } = render(<Stepper activeStep={0} className="test-class-name" steps={stepperWords} />)
-    expect(container.querySelector('.progress-tracker-wrapper')?.classList).toContain('test-class-name')
+    expect(container.querySelector('.stepper-wrapper')?.classList).toContain('test-class-name')
   })
 
-  // it('should add the color prop', () => {
-  //   const color = '#000'
-  //   const wrapper = mount(<ProgressTracker activeIndex={1} color={color} items={progressTrackerWords} />)
-  //   const circleNumber = wrapper.find('div[role="button"]')
-  //   expect(circleNumber.prop('style')).toHaveProperty('backgroundColor', color)
-  //   expect(circleNumber.prop('style')).toHaveProperty('border', `2px solid ${color}`)
-  //   const activeLi = wrapper.find('li').at(0).childAt(1)
-  //   expect(activeLi.prop('style')).toHaveProperty('backgroundColor', color)
-  // })
+  it('should add the color prop', () => {
+    const color = '#000'
+    const { container } = render(<Stepper activeStep={1} color={color} steps={stepperWords} />)
+    expect(container.querySelector('.circle')).toHaveStyle(`backgroundColor: ${color}`)
+    expect(container.querySelector('.line')).toHaveStyle(`backgroundColor: ${color}`)
+  })
 
-  // it('should not be able to click on number step that the user has not passed yet', () => {
-  //   const wrapper = mount(<ProgressTracker activeIndex={0} items={progressTrackerWords} />)
-  //   const circleNumber = wrapper.find('div[role="button"]')
-  //   expect(circleNumber.exists()).toBeFalsy()
-  // })
+  it('selects the index using selectIndex when clicked on the number circle and has passed that step', () => {
+    let activeStep = 3
+    const selectIndex = (index: number) => {
+      activeStep = index
+    }
+    const { container } = render(<Stepper activeStep={activeStep} steps={stepperWords} selectIndex={selectIndex} />)
 
-  // it('selects the index using selectIndex when clicked on the number circle and has passed that step', () => {
-  //   let activeIndex = 3
-  //   const selectIndex = (index) => {
-  //     activeIndex = index
-  //   }
-  //   const wrapper = mount(
-  //     <ProgressTracker activeIndex={activeIndex} items={progressTrackerWords} selectIndex={selectIndex} />
-  //   )
+    expect(activeStep).toBe(3)
 
-  //   expect(activeIndex).toBe(3)
+    fireEvent.click(container.querySelectorAll('.circle')[1])
+    expect(activeStep).toBe(1)
+  })
 
-  //   wrapper.find('div[role="button"]').at(1).simulate('click')
-  //   expect(activeIndex).toBe(1)
-
-  //   wrapper.find('div[role="button"]').at(0).simulate('keyPress')
-  //   expect(activeIndex).toBe(0)
-  // })
-
-  // it('should accept the vertical prop', () => {
-  //   const wrapper = mount(<ProgressTracker activeIndex={1} items={progressTrackerWords} vertical />)
-  //   expect(wrapper.prop('vertical')).toBe(true)
-  // })
+  it('should accept the vertical prop', () => {
+    const { container } = render(<Stepper activeStep={1} steps={stepperWords} vertical />)
+    expect(container.querySelector('.vertical')).toBeInTheDocument()
+  })
 })

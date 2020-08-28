@@ -19,10 +19,6 @@ interface Props {
    * Use this function to save the selected index
    */
   selectIndex?: Function
-  /**
-   * Shows the step number in the circle or not
-   */
-  showStepNumber?: boolean
   stepClass?: string
   vertical?: boolean
   [rest: string]: unknown
@@ -34,7 +30,6 @@ const Stepper: FunctionComponent<Props> = ({
   color,
   steps,
   selectIndex,
-  showStepNumber,
   stepClass,
   vertical,
   ...rest
@@ -54,7 +49,6 @@ const Stepper: FunctionComponent<Props> = ({
             index={index}
             lastIndex={lastIndex}
             selectIndex={selectIndex}
-            showStepNumber={showStepNumber}
             stepClass={stepClass}
             vertical={vertical}
           />
@@ -67,8 +61,6 @@ const Stepper: FunctionComponent<Props> = ({
 Stepper.defaultProps = {
   className: '',
   color: '#302926',
-  selectIndex: undefined,
-  showStepNumber: false,
   vertical: false
 }
 

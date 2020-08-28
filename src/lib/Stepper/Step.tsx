@@ -14,7 +14,6 @@ interface Props {
   alreadyPassed: boolean
   lastIndex: boolean
   content?: any
-  verticalClass?: string | boolean
   color?: string
   /**
    * Use this function to save the selected index
@@ -36,17 +35,13 @@ const Step: FunctionComponent<Props> = ({
   vertical
 }) => {
   const verticalClass = vertical && styles.vertical
-  const divAttributes = alreadyPassed
-    ? {
-        onClick: selectIndex ? () => selectIndex(index) : null,
-        onKeyPress: selectIndex ? () => selectIndex(index) : null,
-        role: 'button',
-        tabIndex: 0
-      }
-    : empty
   const circleNumber = (
-    <div {...divAttributes} className={clsx(styles['outer-circle'], verticalClass)}>
+    <div className={clsx(styles['outer-circle'], verticalClass)}>
       <div
+        onClick={selectIndex ? () => selectIndex(index) : undefined}
+        onKeyPress={selectIndex ? () => selectIndex(index) : undefined}
+        role="button"
+        tabIndex={0}
         style={
           activeStep ? { border: `2px solid ${color}` } : { background: color, cursor: selectIndex ? 'pointer' : '' }
         }
