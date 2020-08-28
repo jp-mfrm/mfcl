@@ -10,6 +10,7 @@ import Fade from './Fade'
 import Flag from './Flag'
 import LazyImage from './LazyImage'
 import Loading from './Loading'
+import Modal from './Modal'
 import Portal from './Portal'
 import Price from './Price'
 import ProductCard from './ProductCard'
@@ -31,6 +32,7 @@ export {
   Flag,
   LazyImage,
   Loading,
+  Modal,
   Portal,
   Price,
   ProgressBar,
