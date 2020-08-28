@@ -16,6 +16,7 @@ import ProductCard from './ProductCard'
 import ProgressBar from './ProgressBar'
 import Rating from './Rating'
 import Select from './Select'
+import Stepper from './Stepper'
 import Tooltip from './Tooltip'
 
 export {
@@ -37,5 +38,6 @@ export {
   ProductCard,
   Rating,
   Select,
+  Stepper,
   Tooltip
 }

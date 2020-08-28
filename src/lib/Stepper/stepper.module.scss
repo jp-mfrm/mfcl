@@ -1,0 +1,94 @@
+@import '../variables';
+
+.stepper-wrapper {
+  box-sizing: border-box;
+  display: flex;
+  list-style: none;
+  margin: 0px auto;
+  padding: 5px;
+  width: 100%;
+}
+
+.stepper-wrapper.vertical {
+  flex-direction: column;
+}
+
+.progress-step {
+  -webkit-box-flex: 1;
+  box-sizing: border-box;
+  display: block;
+  flex: 1 1 0%;
+  line-height: 12px;
+  margin: 0;
+  min-width: 28px;
+  padding: 0;
+  position: relative;
+  text-align: center;
+}
+
+.progress-step.vertical {
+  flex: 1 1 auto;
+  text-align: inherit;
+}
+
+.circle-number {
+  align-items: center;
+  background-color: $white;
+  border-radius: 50%;
+  bottom: 28px;
+  box-sizing: border-box;
+  display: flex;
+  font-size: 12px;
+  font-weight: bold;
+  height: 20px;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  transition: all 0.3s;
+  width: 20px;
+  z-index: 20;
+}
+
+.circle-number.vertical {
+  left: 0;
+  margin: 0;
+  position: absolute;
+  top: 10px;
+}
+
+.word {
+  box-sizing: border-box;
+  display: block;
+  font-size: 14px;
+  height: 100%;
+  line-height: initial;
+  overflow: hidden;
+  padding: 14px 9.3px;
+  text-overflow: ellipsis;
+}
+
+.word.vertical {
+  height: initial;
+  padding: 10px 0px 10px 45px;
+}
+
+.line {
+  background: $gray-4;
+  bottom: 18px;
+  box-sizing: border-box;
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  top: auto;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.line.vertical {
+  height: 100%;
+  left: 9px;
+  right: auto;
+  top: 10px;
+  width: 2px;
+}
