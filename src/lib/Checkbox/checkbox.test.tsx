@@ -4,6 +4,6 @@ import Checkbox from './index'
 
 describe('Checkbox Component', () => {
   it('should render the props correctly', () => {
-    render(<Checkbox />)
+    render(<Checkbox title="checkbox" />)
   })
 })
