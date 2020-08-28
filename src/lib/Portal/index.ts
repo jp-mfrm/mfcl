@@ -2,13 +2,11 @@ import { useEffect, useRef, ReactNode, FunctionComponent, MutableRefObject } fro
 import { createPortal } from 'react-dom'
 import isClient from '../utils/isClient'
 
-
 type HTMLElRef = MutableRefObject<HTMLElement>
-interface Props {
-  children?: ReactNode
-}
-const Portal: FunctionComponent<Props> = ({ children = null }) => {
+
+const Portal = ({ children = null }: { children: ReactNode | null }) => {
   const mount = useRef(isClient ? document.createElement('div') : null) as HTMLElRef
+
   useEffect(() => {
     if (isClient && !mount.current) {
       mount.current = document.createElement('div')
@@ -20,6 +18,12 @@ const Portal: FunctionComponent<Props> = ({ children = null }) => {
       }
     }
   }, [mount, isClient])
+
+  if (!isClient) {
+    return children
+  }
+
   return createPortal(children, mount.current)
 }
+
 export default Portal
