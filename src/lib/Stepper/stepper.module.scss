@@ -20,6 +20,7 @@
   flex: 1 1 0%;
   line-height: 12px;
   margin: 0;
+  min-height: 20px;
   min-width: 28px;
   padding: 0;
   position: relative;
@@ -27,33 +28,51 @@
 }
 
 .progress-step.vertical {
+  min-height: 28px;
   flex: 1 1 auto;
   text-align: inherit;
 }
 
-.circle-number {
-  align-items: center;
-  background-color: $white;
+.outer-circle {
+  min-height: 20px;
+}
+
+.circle {
   border-radius: 50%;
-  bottom: 28px;
+  bottom: 3px;
   box-sizing: border-box;
-  display: flex;
-  font-size: 12px;
-  font-weight: bold;
-  height: 20px;
-  justify-content: center;
+  height: 8px;
   margin: 0 auto;
   position: relative;
   transition: all 0.3s;
-  width: 20px;
+  width: 8px;
   z-index: 20;
 }
 
-.circle-number.vertical {
-  left: 0;
+.circle-active {
+  background-color: $white;
+  bottom: 10px;
+  height: 20px;
+  width: 20px;
+}
+
+.circle-label {
+  bottom: 23px;
+}
+
+.circle-active.circle-label {
+  bottom: 28px;
+}
+
+.circle.vertical {
+  left: 6px;
   margin: 0;
   position: absolute;
   top: 10px;
+}
+
+.circle-active.vertical {
+  left: 0px;
 }
 
 .word {
@@ -69,7 +88,7 @@
 
 .word.vertical {
   height: initial;
-  padding: 10px 0px 10px 45px;
+  padding: 10px 0px 10px 40px;
 }
 
 .line {

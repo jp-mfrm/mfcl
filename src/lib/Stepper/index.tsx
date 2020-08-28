@@ -47,7 +47,7 @@ const Stepper: FunctionComponent<Props> = ({
         return (
           <Step
             key={index}
-            activeStep={activeStep}
+            activeStep={activeStep === index}
             alreadyPassed={alreadyPassed}
             color={color}
             content={content}

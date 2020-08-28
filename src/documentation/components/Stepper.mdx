@@ -32,13 +32,14 @@ Steppers display progress through a sequence of logical and numbered steps. They
 ## Vertical
 
 <Playground>
-  <Stepper vertical activeStep={1} steps={[false, false, false, false]} />
+  <Stepper vertical activeStep={1} steps={[false, false, false]} />
 </Playground>
 
-## Labels, Numbers, Different Color
+## Labels, Different Color
 
 <Playground>
-  <Stepper activeStep={2} color="#d63426" showStepNumber steps={['Step One', 'Step Two', 'Step Three', 'Step Four']} />
+  <Stepper activeStep={2} color="#d63426" steps={['Step One', 'Step Two', 'Step Three', 'Step Four']} />
+  <Stepper activeStep={0} color="#d63426" steps={['Step One', 'Step Two', 'Step Three']} vertical />
 </Playground>
 
 ## Dynamic and Controlled

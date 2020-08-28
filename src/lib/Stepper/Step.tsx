@@ -9,7 +9,7 @@ interface Props {
   /**
    * Controls the current active step
    */
-  activeStep: number
+  activeStep: boolean
   index: number
   alreadyPassed: boolean
   lastIndex: boolean
@@ -20,10 +20,6 @@ interface Props {
    * Use this function to save the selected index
    */
   selectIndex?: Function
-  /**
-   * Shows the step number in the circle or not
-   */
-  showStepNumber?: boolean
   stepClass?: string
   vertical?: boolean
 }
@@ -36,7 +32,6 @@ const Step: FunctionComponent<Props> = ({
   index,
   lastIndex,
   selectIndex,
-  showStepNumber,
   stepClass,
   vertical
 }) => {
@@ -50,21 +45,18 @@ const Step: FunctionComponent<Props> = ({
       }
     : empty
   const circleNumber = (
-    <div
-      {...divAttributes}
-      style={
-        activeStep >= index
-          ? {
-              color: '#fff',
-              border: `2px solid ${color}`,
-              cursor: selectIndex ? 'pointer' : '',
-              backgroundColor: color
-            }
-          : { color: '#8a8f9c', border: '1px solid #8a8f9c' }
-      }
-      className={clsx(styles['circle-number'], verticalClass)}
-    >
-      {showStepNumber && index + 1}
+    <div {...divAttributes} className={clsx(styles['outer-circle'], verticalClass)}>
+      <div
+        style={
+          activeStep ? { border: `2px solid ${color}` } : { background: color, cursor: selectIndex ? 'pointer' : '' }
+        }
+        className={clsx(
+          styles.circle,
+          activeStep && styles['circle-active'],
+          content && styles['circle-label'],
+          verticalClass
+        )}
+      />
     </div>
   )
 
@@ -81,12 +73,7 @@ const Step: FunctionComponent<Props> = ({
           {circleNumber}
         </>
       )}
-      {!lastIndex && (
-        <div
-          style={activeStep >= index ? { backgroundColor: color } : empty}
-          className={clsx(styles.line, verticalClass)}
-        />
-      )}
+      {!lastIndex && <div style={{ backgroundColor: color }} className={clsx(styles.line, verticalClass)} />}
     </li>
   )
 }
