@@ -6,7 +6,8 @@ route: /components-stepper
 
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
-import { Stepper } from '../../lib'
+import { Stepper, Button } from '../../lib'
+import { Row } from './helpers'
 
 # Stepper
 
@@ -25,5 +26,48 @@ Steppers display progress through a sequence of logical and numbered steps. They
 ## Basic Usage
 
 <Playground>
-  <Component initialState={{}}>{({ setState, state }) => <Stepper></Stepper>}</Component>
+  <Stepper activeStep={1} steps={[false, false, false, false]} />
+</Playground>
+
+## Vertical
+
+<Playground>
+  <Stepper vertical activeStep={1} steps={[false, false, false, false]} />
+</Playground>
+
+## Labels, Numbers, Different Color
+
+<Playground>
+  <Stepper activeStep={2} color="#d63426" showStepNumber steps={['Step One', 'Step Two', 'Step Three', 'Step Four']} />
+</Playground>
+
+## Dynamic and Controlled
+
+<Playground>
+  <Component initialState={{ activeStep: 0, steps: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'] }}>
+    {({ setState, state }) => (
+      <>
+        <Stepper activeStep={state.activeStep} selectIndex={(i) => setState({ activeStep: i })} steps={state.steps} />
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <Row>
+          <Button disabled={state.activeStep === 0} onClick={() => setState({ activeStep: state.activeStep - 1 })}>
+            Previous Page
+          </Button>
+          <Button
+            disabled={state.activeStep === state.steps.length - 1}
+            onClick={() => setState({ activeStep: state.activeStep + 1 })}
+          >
+            Next Page
+          </Button>
+          <Button onClick={() => setState({ steps: [...state.steps, `Label ${state.steps.length + 1}`] })}>
+            Add Step
+          </Button>
+          <Button onClick={() => setState({ steps: state.steps.slice(0, -1), activeStep: 0 })}>Remove Step</Button>
+        </Row>
+      </>
+    )}
+  </Component>
 </Playground>

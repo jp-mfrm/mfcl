@@ -5,7 +5,7 @@ import styles from './stepper.module.scss'
 
 interface Props {
   /**
-   * Controls the current active step
+   * Index that controls the current active step
    */
   activeStep: number
   /**
@@ -46,6 +46,7 @@ const Stepper: FunctionComponent<Props> = ({
         const lastIndex = index === steps.length - 1
         return (
           <Step
+            key={index}
             activeStep={activeStep}
             alreadyPassed={alreadyPassed}
             color={color}

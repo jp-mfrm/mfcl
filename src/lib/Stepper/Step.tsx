@@ -57,7 +57,7 @@ const Step: FunctionComponent<Props> = ({
           ? {
               color: '#fff',
               border: `2px solid ${color}`,
-              cursor: 'pointer',
+              cursor: selectIndex ? 'pointer' : '',
               backgroundColor: color
             }
           : { color: '#8a8f9c', border: '1px solid #8a8f9c' }
@@ -69,7 +69,7 @@ const Step: FunctionComponent<Props> = ({
   )
 
   return (
-    <li className={clsx(styles['progress-step'], verticalClass, stepClass)} key={index}>
+    <li className={clsx(styles['progress-step'], verticalClass, stepClass)}>
       {vertical ? (
         <>
           {circleNumber}
