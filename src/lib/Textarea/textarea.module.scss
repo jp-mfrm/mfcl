@@ -3,7 +3,10 @@
 .textarea-wrapper {
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  // width: fit-content;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 
   .label {
     border-bottom: solid 1px $gray-5;
@@ -21,6 +24,8 @@
   }
 
   textarea {
+    max-width: 95%;
+    width: 100%;
     border-radius: 25px;
     border: solid 1px $gray-5;
     padding: $spacing-xs $spacing-s;

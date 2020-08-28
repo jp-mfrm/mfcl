@@ -15,14 +15,50 @@ import { Textarea } from 'mfcl';
 ```
 
 ## Description
-TODO add description here
+Textarea accepts user entry data. Textarea uses labels to communicate the textarea field that will accept data when a user submits them.
 
 ## Properties
 
 <Props of={Textarea} />
 
+<div> 
+  <span style="color:red">*</span> Also accepts all
+  <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes"> textarea attributes</a> 
+</div>
+
 ## Basic Usage
 
 <Playground>
-  <Textarea inputClass='testClass' rows={3} cols={4} customStyling={{minHeight: '30px'}}></Textarea>
+  <Textarea inputClass='myTestClass'></Textarea> <br/>
+  <Textarea defaultValue='My default value goes here'></Textarea> 
+</Playground>
+
+## Custom Styling
+
+<Playground>
+  <Textarea 
+    wrapperStyling={{
+      alignItems: 'flex-start'
+    }}
+    fieldStyling={{
+    width: '200px',
+    resize: 'none'
+  }}></Textarea>
+</Playground>
+
+## Field Variations  
+<Playground>
+
+  <Textarea focus></Textarea> <br/>
+  <Textarea error></Textarea> <br/>
+  <Textarea label="Default" name="DefaultName"></Textarea>
+</Playground>
+
+## Required or Disabled
+
+<Playground>
+
+  <Textarea disabled></Textarea> <br/>
+  <Textarea required></Textarea>
+
 </Playground>

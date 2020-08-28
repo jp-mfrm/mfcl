@@ -1,37 +1,68 @@
-import React, { FunctionComponent, ReactNode, CSSProperties } from 'react';
+import React, { CSSProperties, FunctionComponent, ReactNode } from 'react';
 
-import styles from './textarea.module.scss';
 import clsx from 'clsx';
+import styles from './textarea.module.scss';
 
 interface Props {
+  /** Class to pass to the textarea wrapper */
   inputClass?: string
-  customStyling?: CSSProperties
-  resizeable?: boolean
+  /** Syles to pass to the textarea element */
+  fieldStyling?: CSSProperties
+  /** Styles to pass to the wrapper element */
+  wrapperStyling?: CSSProperties
+  /** Apply focused styling */
   focus?: boolean
+  /** Apply error styling */
   error?: boolean
+  /** Label for textarea field */
   label?: string | ReactNode
+  /** Field and label name */
+  name?: string
   [rest: string]: unknown; // ...rest property
 };
 
 const Textarea: FunctionComponent<Props> = ({
   inputClass,
-  resizeable = true,
+  fieldStyling,
+  wrapperStyling,
   focus = false,
   error = false,
   label,
-  customStyling,
+  name,
   ...rest
 }) => {
 
-  // TODO: auto resize based on container's width and height
-  // const inputRef = React.useRef(null);
-  // const input = inputRef.current;
-  // const ownerDocument = (input) || document;
-  // const containerWindow = ownerDocument.defaultView || window;
-  // const computedStyle = containerWindow.getComputedStyle(input); 
+  const handleKeyUp = (e: any) => {
+    
+    if (e.target.value.length > 0) return;  
+
+    e.target.style.height = 'inherit';
+  }
+
+  const handleKeyDown = (e : any) => {
+
+    var scrollTop  = window.pageYOffset ||
+    (document.documentElement || document.body.parentNode || document.body).scrollTop;
+
+    // Reset field height
+    e.target.style.height = 'inherit';
+
+    // Get the computed styles for the element
+    const computed = window.getComputedStyle(e.target);
+
+    // Calculate the height
+    const height = parseInt(computed.getPropertyValue('border-top-width'), 10)
+                 + parseInt(computed.getPropertyValue('padding-top'), 10)
+                 + (e.target.scrollHeight - 20)
+                 + parseInt(computed.getPropertyValue('padding-bottom'), 10)
+                 + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
+
+    e.target.style.height = `${height}px`;
+    window.scrollTo(0, scrollTop);
+  }
 
   return (
-    <div className={clsx(styles['textarea-wrapper'])}>
+    <div className={clsx(styles['textarea-wrapper'])} style={wrapperStyling}>
       {label && (
         <label htmlFor={name} className={clsx(styles['label'])}>
           {label}
@@ -39,7 +70,10 @@ const Textarea: FunctionComponent<Props> = ({
       )}
       <textarea 
         className={clsx(inputClass, focus && styles['focus'], error && styles['error'])}
-        style={customStyling}
+        style={fieldStyling}
+        name={name}
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
         {...rest}>
       </textarea>
     </div>
