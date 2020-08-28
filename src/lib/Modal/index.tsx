@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, FunctionComponent } from 'react'
+import React, { useState, useEffect, useRef, FunctionComponent } from 'react'
 import clsx from 'clsx'
 import styles from './modal.module.scss'
 import Portal from '../Portal'

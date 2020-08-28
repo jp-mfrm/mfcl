@@ -11,6 +11,7 @@ const Portal = ({ children = null }: { children: ReactNode | null }) => {
     if (isClient && !mount.current) {
       mount.current = document.createElement('div')
     }
+
     if (mount.current) {
       document.body.appendChild(mount.current)
       return () => {

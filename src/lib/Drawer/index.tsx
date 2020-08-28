@@ -184,7 +184,7 @@ const Drawer: React.FunctionComponent<Props> = ({
           className={clsx(styles['drawer-backdrop'], isOpen && styles.backdrop, backdropClassName)}
           onClick={hideDrawer}
           onKeyDown={handleKeys}
-          duration={500}
+          duration={backdropDuration}
           in={isOpen && !!backdrop}
           opacity={0.5}
         />
