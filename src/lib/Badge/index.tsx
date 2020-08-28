@@ -1,31 +1,29 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, ReactNode } from 'react'
+import clsx from 'clsx'
 
 import styles from './badge.module.scss'
-import clsx from 'clsx'
 
 interface Props {
   children: string
-  white?: boolean
+  type?: 'primary' | 'secondary'
   href?: string
   [rest: string]: unknown // ...rest property
 }
 
-const Badge: FunctionComponent<Props> = ({ children, width, height, white, href = '', ...rest }) => {
-  const badgeClassName = clsx(styles.badge, white && styles.whiteBadge)
+const Badge: FunctionComponent<Props> = ({ children, width, height, type = 'primary', href = '', ...rest }) => {
+  const badgeClassName = clsx(styles.badge, styles[type], href && styles.link)
 
   if (href) {
     return (
-      <div className={styles['badge-wrapper']}>
-        <a href={href} className={clsx(badgeClassName)} {...rest}>
-          {children}
-        </a>
-      </div>
+      <a href={href} className={clsx(badgeClassName)} {...rest}>
+        {children}
+      </a>
     )
   }
 
   return (
-    <div className={styles['badge-wrapper']} {...rest}>
-      <p className={badgeClassName}>{children}</p>
+    <div className={badgeClassName} {...rest}>
+      {children}
     </div>
   )
 }

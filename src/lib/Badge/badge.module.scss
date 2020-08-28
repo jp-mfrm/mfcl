@@ -1,38 +1,33 @@
 @import '../variables';
 
 .badge-wrapper {
-  width: 85px;
-  height: 20px;
   text-align: center;
-
-  a {
-    width: 85px;
-    height: 25px;
-  }
 }
 
 .badge {
+  min-width: 85px;
+  display: inline-block;
   padding: 5px 10px;
-  background: $red;
   border: 1px solid $red;
   border-radius: 10px;
+  text-align: center;
   text-transform: uppercase;
-  color: $white;
   font-style: normal;
   font-weight: bold;
   font-size: 12px;
   line-height: 10px;
 }
 
-.whiteBadge {
+.primary {
+  background: $red;
+  color: $white;
+}
+
+.secondary {
   background: $white;
   color: $red;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 10px;
 }
 
-a {
+.link {
   text-decoration: none;
 }
