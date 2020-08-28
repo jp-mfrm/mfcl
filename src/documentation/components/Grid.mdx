@@ -1,0 +1,73 @@
+---
+name: Grid
+menu: Components
+route: /components-grid
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Grid, GridItem, GridRow } from '../../lib'
+import { exampleItem, exampleStyles } from './helpers/testGridData'
+
+# Grid
+
+```javascript
+import { Grid } from 'mfcl'
+```
+
+## Description
+
+TODO add description here
+
+## Properties
+
+<Props of={Grid} />
+
+## Basic Usage
+
+<Playground>
+  <Grid defaultSize={1} useChildren>
+    <div style={exampleStyles} />
+    <div style={exampleStyles} />
+    <div style={exampleStyles} />
+    <div style={exampleStyles} />
+    <div style={exampleStyles} />
+    <div style={exampleStyles} />
+    <div style={exampleStyles} />
+    <div style={exampleStyles} />
+    <div style={exampleStyles} />
+    <div style={exampleStyles} />
+    <div style={exampleStyles} />
+    <div style={exampleStyles} />
+  </Grid>
+</Playground>
+
+## Using Grid Item
+
+<Playground>
+  <Grid>
+    <GridItem defaultSize={6}>{exampleItem}</GridItem>
+    <GridItem defaultSize={3}>{exampleItem}</GridItem>
+    <GridItem defaultSize={3}>{exampleItem}</GridItem>
+    <GridItem defaultSize={3}>{exampleItem}</GridItem>
+    <GridItem defaultSize={3}>{exampleItem}</GridItem>
+    <GridItem defaultSize={6}>{exampleItem}</GridItem>
+  </Grid>
+</Playground>
+
+## Using Grid Row
+
+<Playground>
+  <Grid createRows={false}>
+    <GridRow alignRow={'center'}>
+      <GridItem defaultSize={2}>{exampleItem}</GridItem>
+      <GridItem defaultSize={2}>{exampleItem}</GridItem>
+      <GridItem defaultSize={2}>{exampleItem}</GridItem>
+    </GridRow>
+    <GridRow alignRow={'between'}>
+      <GridItem defaultSize={3}>{exampleItem}</GridItem>
+      <GridItem defaultSize={3}>{exampleItem}</GridItem>
+      <GridItem defaultSize={3}>{exampleItem}</GridItem>
+    </GridRow>
+  </Grid>
+</Playground>

@@ -1,3 +1,4 @@
+import './global-styles.css'
 import Alert from './Alert'
 import Button from './Button'
 import Checkbox from './Checkbox'
@@ -13,11 +14,17 @@ import Rating from './Rating'
 import ProductCard from './ProductCard'
 import Accordion from './Accordion'
 import AccordionItem from './Accordion/AccordionItem'
-import Price from './Price';
-import Flag from './Flag';
+import Price from './Price'
+import Grid from './Grid'
+import GridItem from './Grid/GridItem'
+import GridRow from './Grid/GridRow'
+import Flag from './Flag'
 
 export {
+  GridItem,
+  GridRow,
   Flag,
+  Grid,
   Price,
   Accordion,
   AccordionItem,
