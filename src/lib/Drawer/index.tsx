@@ -151,7 +151,6 @@ const Drawer: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <>
     <Portal>
       <Transition in={isShowing} timeout={duration} {...rest}>
         {(state) => (
@@ -192,7 +191,6 @@ const Drawer: React.FunctionComponent<Props> = ({
         />
       )}
       </Portal>
-    </>
   )
 }
 
