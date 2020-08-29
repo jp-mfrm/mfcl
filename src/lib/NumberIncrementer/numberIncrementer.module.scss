@@ -1,0 +1,20 @@
+@import '../variables';
+
+.number-incrementer-wrapper {
+  background: $white;
+  border: 1px solid $gray-11;
+  box-sizing: border-box;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+p {
+  padding: 0px 10px;
+  margin: 0;
+}
+
+button {
+  background: none;
+  border: none;
+}

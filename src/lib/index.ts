@@ -19,8 +19,10 @@ import Rating from './Rating'
 import Select from './Select'
 import Tooltip from './Tooltip'
 import Badge from './Badge'
+import NumberIncrementer from './NumberIncrementer';
 
 export {
+  NumberIncrementer,
   Accordion,
   AccordionItem,
   Alert,
