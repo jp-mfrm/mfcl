@@ -1,14 +1,14 @@
 import React, { FunctionComponent, useState, useCallback } from 'react'
+import clsx from 'clsx'
 
 import styles from './numberIncrementer.module.scss'
 
 interface Props {
-  width?: string
-  height?: string
+  className?: string
   [rest: string]: unknown // ...rest property
 }
 
-const NumberIncrementer: FunctionComponent<Props> = ({ width, height, ...rest }) => {
+const NumberIncrementer: FunctionComponent<Props> = ({ className, ...rest }) => {
   const [number, setNumber] = useState(1)
 
   const subtractNumber = useCallback(() => {
@@ -24,10 +24,14 @@ const NumberIncrementer: FunctionComponent<Props> = ({ width, height, ...rest })
   }, [number])
 
   return (
-    <div className={styles['number-incrementer-wrapper']} {...rest}>
-      <button onClick={subtractNumber}>-</button>
+    <div className={clsx(styles['number-incrementer-wrapper'], className)} {...rest}>
+      <button onClick={subtractNumber} aria-label="subtract number">
+        &#8722;
+      </button>
       <p>{number}</p>
-      <button onClick={addNumber}>+</button>
+      <button onClick={addNumber} aria-label="add number">
+        &#43;
+      </button>
     </div>
   )
 }

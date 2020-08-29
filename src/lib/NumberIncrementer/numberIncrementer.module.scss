@@ -5,8 +5,9 @@
   border: 1px solid $gray-11;
   box-sizing: border-box;
   border-radius: 5px;
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
+  display: disabled;
 }
 
 p {
@@ -17,4 +18,5 @@ p {
 button {
   background: none;
   border: none;
+  width: 20px;
 }
