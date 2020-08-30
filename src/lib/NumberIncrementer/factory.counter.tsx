@@ -1,9 +1,15 @@
-import React from 'react'
-
-export const subtractCounter = (n: number) => {
+export function createCounterSubtractFactory(n: number) {
   if (n <= 1) {
-    return n
-  } else if (n > 1) {
-    return n - 1
+    n = 0
   }
+
+  if (n > 1) {
+    n = n - 1
+  }
+
+  return n
+}
+
+export function createCounterAddFactory(n: number) {
+  return n + 1
 }
