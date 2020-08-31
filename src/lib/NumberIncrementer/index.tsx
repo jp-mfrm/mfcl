@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useCallback } from 'react'
+import React, { FunctionComponent } from 'react'
 import { createFactoryCounter } from './factory.counter'
 import clsx from 'clsx'
 import useControlled from '../utils/useControlled'
@@ -17,8 +17,8 @@ interface Props {
 }
 
 const NumberIncrementer: FunctionComponent<Props> = ({
-  name = 'Quantity',
-  label = 'Qty:',
+  name,
+  label,
   showLabel,
   onChange,
   className,
@@ -26,37 +26,40 @@ const NumberIncrementer: FunctionComponent<Props> = ({
   defaultValue = 1,
   ...rest
 }) => {
+  let inputName = name ? name : 'Quantity'
+  let labelName = label ? label : 'Qty:'
+
   const [valueDerived, setNumber] = useControlled({
     controlled: valueProp,
     defaultValue
   })
 
-  const subtractNumber = useCallback(() => {
+  const subtractNumber = () => {
     const newVal = createFactoryCounter(valueDerived, 'subtract')
     setNumber(newVal)
     if (onChange) {
       onChange(newVal)
     }
-  }, [valueDerived, onChange])
+  }
 
-  const addNumber = useCallback(() => {
+  const addNumber = () => {
     const newVal = createFactoryCounter(valueDerived, 'add')
     setNumber(newVal)
     if (onChange) {
       onChange(newVal)
     }
-  }, [valueDerived, onChange])
+  }
 
   return (
     <div className={clsx(styles['number-incrementer-wrapper'], className)} {...rest}>
-      <label className={clsx(styles.hidden, showLabel && styles['show-label'])} htmlFor={name}>
-        {label}
+      <label className={clsx(styles.hidden, showLabel && styles['show-label'])} htmlFor={inputName}>
+        {labelName}
       </label>
       <div className={styles['number-incrementer']}>
         <button onClick={subtractNumber} aria-label="Subtract Number">
           &#8722;
         </button>
-        <input type="text" readOnly value={valueDerived} name={name} />
+        <input data-testid="number" type="text" readOnly value={valueDerived} name={inputName} />
         <button onClick={addNumber} aria-label="Add Number">
           &#43;
         </button>
