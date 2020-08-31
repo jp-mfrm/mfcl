@@ -40,7 +40,7 @@ const GridItem: FunctionComponent<Props> = ({
     desktopSize && `col-lg-${desktopSize}`
   )
   return (
-    <div className={`${columnSizes} grid-column`}>
+    <div className={`${columnSizes} grid-column`} data-testid="grid-column">
       <div className="grid-item" style={{ marginBottom: rowMarginBottom, ...itemStyles }}>
         {children}
       </div>

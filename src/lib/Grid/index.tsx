@@ -47,8 +47,8 @@ const Grid: FunctionComponent<Props> = ({
 }) => {
   const rowStyles = clsx('grid-row', alignRows && `grid-row-${alignRows}`)
   return (
-    <div className={`${createContainer && 'container'}`} style={gridStyles}>
-      <div className={createRows ? rowStyles : ''}>
+    <div className={`${createContainer && 'container'}`} style={gridStyles} data-testid="grid-container">
+      <div className={createRows ? rowStyles : ''} data-testid="grid-row">
         {createGridItems
           ? Children.map(children, (child, index) => {
               if (isValidElement(child)) {
