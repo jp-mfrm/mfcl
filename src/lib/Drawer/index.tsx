@@ -188,6 +188,7 @@ const Drawer: React.FunctionComponent<Props> = ({
           duration={backdropDuration}
           in={isOpen && !!backdrop}
           opacity={0.5}
+          data-testid="backdrop"
         />
       )}
       </Portal>
