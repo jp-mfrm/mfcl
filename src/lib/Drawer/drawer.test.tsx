@@ -14,55 +14,56 @@ describe('Drawer', () => {
     jest.clearAllTimers()
   })
   it('should render children', () => {
-    const { getByTestId, container } = render(<Drawer isOpen>{children}</Drawer>)
+    const { getByTestId, getByRole } = render(<Drawer isOpen>{children}</Drawer>)
     // @ts-ignore
-    fireEvent.click(container.querySelector('.close'))
+      fireEvent.click(getByRole('dialog').querySelector('.close'))
     expect(getByTestId('yo')?.textContent).toBe('Yo')
+
   })
 
   it('should render the className prop correctly', () => {
-    const { container } = render(
+    const { getByRole } = render(
       <Drawer isOpen className="test-class-name">
         {children}
       </Drawer>
     )
-    expect(container.querySelector('.drawer-wrapper')?.classList).toContain('test-class-name')
+    expect(getByRole('dialog')?.classList).toContain('test-class-name')
   })
 
   it('should render the headerClassName prop correctly', () => {
-    const { container } = render(
+    const { getByRole } = render(
       <Drawer isOpen headerClassName="test-class-name">
         {children}
       </Drawer>
     )
-    expect(container.querySelector('.drawer-header')?.classList).toContain('test-class-name')
+    expect(getByRole('dialog').querySelector('.drawer-header')?.classList).toContain('test-class-name')
   })
 
   it('should render the bodyClassName prop correctly', () => {
-    const { container } = render(
+    const { getByRole } = render(
       <Drawer isOpen bodyClassName="test-class-name">
         {children}
       </Drawer>
     )
-    expect(container.querySelector('.drawer-body')?.classList).toContain('test-class-name')
+    expect(getByRole('dialog').querySelector('.drawer-body')?.classList).toContain('test-class-name')
   })
 
   it('should pass closeClassName down', () => {
-    const { container } = render(
+    const { getByRole } = render(
       <Drawer isOpen closeClassName="test-class-name">
         {children}
       </Drawer>
     )
-    expect(container.querySelector('.close')?.classList).toContain('test-class-name')
+    expect(getByRole('dialog').querySelector('.close')?.classList).toContain('test-class-name')
   })
 
   it('should pass backdropClassName down', () => {
-    const { container } = render(
+    const { getByTestId } = render(
       <Drawer isOpen backdropClassName="test-class-name">
         {children}
       </Drawer>
     )
-    expect(container.querySelector('.drawer-backdrop')?.classList).toContain('test-class-name')
+    expect(getByTestId('backdrop')?.classList).toContain('test-class-name')
   })
 
   it('can toggle the backdrop', () => {
@@ -71,15 +72,15 @@ describe('Drawer', () => {
   })
 
   it('should show close button if passed close', () => {
-    const { container, rerender } = render(<Drawer isOpen>{children}</Drawer>)
-    expect(container.querySelector('.close')).toBeInTheDocument()
+    const { getByRole, rerender } = render(<Drawer isOpen>{children}</Drawer>)
+    expect(getByRole('dialog').querySelector('.close')).toBeInTheDocument()
 
     rerender(
       <Drawer isOpen close={false}>
         {children}
       </Drawer>
     )
-    expect(container.querySelector('.close')).toBeNull()
+    expect(getByRole('dialog').querySelector('.close')).toBeNull()
   })
 
   it('should be empty if not isOpen', () => {
@@ -89,40 +90,40 @@ describe('Drawer', () => {
 
   it('should be dismissible by close button click', () => {
     const onClick = jest.fn()
-    const { container } = render(
+    const { getByRole } = render(
       <Drawer isOpen onClose={onClick}>
         {children}
       </Drawer>
     )
     // @ts-ignore
-    fireEvent.click(container.querySelector('.close'))
+    fireEvent.click(getByRole('dialog').querySelector('.close'))
     jest.runAllTimers()
     expect(onClick).toHaveBeenCalled()
   })
 
   it('should render different positions', () => {
-    const { container, rerender } = render(<Drawer isOpen>{children}</Drawer>)
-    expect(container.querySelector('.drawer-wrapper')?.classList).toContain('right')
+    const { getByRole, rerender } = render(<Drawer isOpen>{children}</Drawer>)
+    expect(getByRole('dialog')?.classList).toContain('right')
 
     rerender(
       <Drawer isOpen position="left">
         {children}
       </Drawer>
     )
-    expect(container.querySelector('.drawer-wrapper')?.classList).toContain('left')
+    expect(getByRole('dialog')?.classList).toContain('left')
 
     rerender(
       <Drawer isOpen position="top">
         {children}
       </Drawer>
     )
-    expect(container.querySelector('.drawer-wrapper')?.classList).toContain('top')
+    expect(getByRole('dialog')?.classList).toContain('top')
 
     rerender(
       <Drawer isOpen position="bottom">
         {children}
       </Drawer>
     )
-    expect(container.querySelector('.drawer-wrapper')?.classList).toContain('bottom')
+    expect(getByRole('dialog')?.classList).toContain('bottom')
   })
 })
