@@ -1,4 +1,4 @@
-@import "../variables";
+@import '../variables';
 
 .input-wrapper {
   display: flex;
@@ -38,7 +38,7 @@
     line-height: 1.25;
     letter-spacing: normal;
     color: #323030;
-    cursor: pointer;
+    cursor: default;
 
     &:disabled {
       border: solid 1px $gray-3;
@@ -101,7 +101,7 @@
     text-align: center;
     font-size: 14px;
 
-    & p[data-error="true"] {
+    & p[data-error='true'] {
       color: $red;
     }
   }

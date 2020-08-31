@@ -37,7 +37,7 @@ const Input: FunctionComponent<Props> = ({
   label,
   addBtn = false,
   btnLabel = 'Submit',
-  btnProps,
+  btnProps = { type: 'submit' },
   size = 'lg',
   disabled = false,
   focus = false,
