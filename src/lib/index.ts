@@ -20,6 +20,7 @@ import Rating from './Rating'
 import Select from './Select'
 import Stepper from './Stepper'
 import Tooltip from './Tooltip'
+import Textarea from './Textarea';
 
 import Input from './Input';
 
@@ -46,5 +47,6 @@ export {
   Rating,
   Select,
   Stepper,
+  Textarea,
   Tooltip
 }
