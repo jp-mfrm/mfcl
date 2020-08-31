@@ -1,0 +1,45 @@
+@import '../variables';
+
+.number-incrementer-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.number-incrementer {
+  background: $white;
+  border: 1px solid $gray-11;
+  box-sizing: border-box;
+  border-radius: 5px;
+  display: flex;
+}
+
+input {
+  padding: 12px 0px;
+  margin: 0;
+  border: none;
+  text-align: center;
+  min-width: 15px;
+  max-width: 40px;
+  font-size: 16px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.hidden {
+  position: absolute;
+  left: 99999px;
+}
+
+.show-label {
+  padding-bottom: 5px;
+  position: initial;
+  left: initial;
+}
+
+button {
+  background: none;
+  border: none;
+  width: 30px;
+}

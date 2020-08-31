@@ -12,6 +12,7 @@ import Flag from './Flag'
 import LazyImage from './LazyImage'
 import Loading from './Loading'
 import Modal from './Modal'
+import NumberIncrementer from './NumberIncrementer'
 import Portal from './Portal'
 import Price from './Price'
 import ProductCard from './ProductCard'
@@ -40,6 +41,7 @@ export {
   LazyImage,
   Loading,
   Modal,
+  NumberIncrementer,
   Portal,
   Price,
   ProgressBar,
