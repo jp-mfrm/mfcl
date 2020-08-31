@@ -99,4 +99,52 @@ describe('Accordion Component', () => {
     expect(container.querySelector('.accordionItem')?.classList).toContain('open')
     expect(testOpenCallBack).toHaveBeenCalled()
   })
+
+  it('should handle down arrow key to move focus', () => {
+    const testFocusCallBack = jest.fn()
+    const testFocusCallBack2 = jest.fn()
+    const { getAllByTestId } = render(
+      <Accordion items={[{ title: 'Title1', content: 'a', onFocus:testFocusCallBack }, { title: 'Title1', content: 'a', onFocus:testFocusCallBack2 }]} />
+    )
+    fireEvent.keyDown(getAllByTestId('accordion-title')[0], { keyCode: 40 })
+
+    fireEvent.keyDown(getAllByTestId('accordion-title')[1], { keyCode: 40 })
+    fireEvent.keyDown(getAllByTestId('accordion-title')[1], { keyCode: 40 })
+    expect(testFocusCallBack).toHaveBeenCalled()
+    expect(testFocusCallBack2).toHaveBeenCalled()
+  })
+
+  it('should handle up arrow key to move focus', () => {
+    const testFocusCallBack = jest.fn()
+    const testFocusCallBack2 = jest.fn()
+    const { getAllByTestId } = render(
+      <Accordion items={[{ title: 'Title1', content: 'a', onFocus:testFocusCallBack }, { title: 'Title1', content: 'a', onFocus:testFocusCallBack2 }]} />
+    )
+    fireEvent.keyDown(getAllByTestId('accordion-title')[0], { keyCode: 40 })
+
+    fireEvent.keyDown(getAllByTestId('accordion-title')[0], { keyCode: 38 })
+    fireEvent.keyDown(getAllByTestId('accordion-title')[1], { keyCode: 38 })
+    expect(testFocusCallBack).toHaveBeenCalled()
+    expect(testFocusCallBack2).toHaveBeenCalled()
+  })
+
+  it('should handle Home key to move focus', () => {
+    const testFocusCallBack = jest.fn()
+    const { getAllByTestId } = render(
+      <Accordion items={[{ title: 'Title1', content: 'a', onFocus:testFocusCallBack }, { title: 'Title1', content: 'a' }]} />
+    )
+    fireEvent.keyDown(getAllByTestId('accordion-title')[1], { keyCode: 40 })
+    fireEvent.keyDown(getAllByTestId('accordion-title')[1], { keyCode: 36 })
+    expect(testFocusCallBack).toHaveBeenCalled()
+  })
+
+  it('should handle End to move focus', () => {
+    const testFocusCallBack2 = jest.fn()
+    const { getAllByTestId } = render(
+      <Accordion items={[{ title: 'Title1', content: 'a' }, { title: 'Title1', content: 'a', onFocus:testFocusCallBack2 }]} />
+    )
+    fireEvent.keyDown(getAllByTestId('accordion-title')[0], { keyCode: 40 })
+    fireEvent.keyDown(getAllByTestId('accordion-title')[0], { keyCode: 35 })
+    expect(testFocusCallBack2).toHaveBeenCalled()
+  })
 })

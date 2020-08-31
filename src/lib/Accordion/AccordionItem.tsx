@@ -18,6 +18,7 @@ type Props = {
   initialOpen?: boolean
   onOpen?: Function
   onClose?: Function
+  onFocus?: Function
 }
 
 const AccordionItem: FunctionComponent<Props> = ({
@@ -35,7 +36,8 @@ const AccordionItem: FunctionComponent<Props> = ({
   contentStyles = {},
   initialOpen = false,
   onOpen = () => {},
-  onClose = () => {}
+  onClose = () => {},
+  onFocus = () => {}
 }) => {
   const labelId = `label-${id}`
   const sectionId = `section-${id}`
@@ -47,6 +49,7 @@ const AccordionItem: FunctionComponent<Props> = ({
     if (index === focused) {
       if (labelRef && labelRef.current) {
         labelRef.current.focus()
+        onFocus()
       }
     }
   }, [index, focused])

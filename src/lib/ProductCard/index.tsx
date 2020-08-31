@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import Rating from '../Rating'
 import Price from '../Price'
-import clsx from 'clsx'
 
 import styles from './productCard.module.scss'
 
@@ -59,7 +58,7 @@ const ProductCard: FunctionComponent<Props> = ({
       </div>
       <div className={styles['price-container']}>
         <span className={styles.placeholder} />
-         <Price data-testid='price' text='Wumbo' divider price={price} discountPrice={discountPrice}/>
+        <Price data-testid="price" text="Wumbo" divider price={price} discountPrice={discountPrice} />
       </div>
     </div>
   )
