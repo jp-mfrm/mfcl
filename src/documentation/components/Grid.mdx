@@ -26,6 +26,7 @@ Grid component used to deliver consistent content layouts across different scree
 ## Basic Usage
 
 <Playground>
+  {/* size is 1 (1/12 of the grid), so 12 items should be in each row */}
   <Grid defaultSize={1} createGridItems gridStyles={{ backgroundColor: 'rgba(180, 247, 255, 0.6' }}>
     <div style={exampleStyles} />
     <div style={exampleStyles} />
@@ -59,12 +60,13 @@ Grid component used to deliver consistent content layouts across different scree
 
 <Playground>
   <Grid createRows={false} gridStyles={{ backgroundColor: 'rgba(180, 247, 255, 0.6' }}>
-    <GridRow alignRow={'center'}>
+    <GridRow>
       <GridItem defaultSize={2}>{exampleItem}</GridItem>
       <GridItem defaultSize={2}>{exampleItem}</GridItem>
       <GridItem defaultSize={2}>{exampleItem}</GridItem>
     </GridRow>
-    <GridRow alignRow={'between'}>
+    {/* Items in this roll will be center aligned */}
+    <GridRow alignRow={'center'}>
       <GridItem defaultSize={3}>{exampleItem}</GridItem>
       <GridItem defaultSize={3}>{exampleItem}</GridItem>
       <GridItem defaultSize={3}>{exampleItem}</GridItem>
