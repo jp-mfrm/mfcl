@@ -59,7 +59,7 @@ const Input: FunctionComponent<Props> = ({
 
   if (addBtn) {
     inputField.push(
-      <Button key="inputBtn" disabled={disabled} {...btnProps}>
+      <Button key="inputBtn" data-input-btn disabled={disabled} {...btnProps}>
         {btnLabel}
       </Button>
     )

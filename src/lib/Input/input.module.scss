@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   width: fit-content;
+  position: relative;
 
   &-inner {
     display: flex;
@@ -26,6 +27,11 @@
   }
 
   .input {
+    max-width: 100%;
+    min-width: inherit;
+    height: 22px;
+    text-align: start;
+    margin: inherit;
     border-radius: 25px;
     border: solid 1px $gray-5;
     padding: $spacing-xs $spacing-s;
@@ -92,8 +98,12 @@
 
   button {
     position: relative;
-    left: -35px;
+    // left: -35px;
     outline: 0 none;
+    width: inherit;
+    position: absolute;
+    right: 0px;
+    height: 100%;
   }
 
   &-footer {
@@ -115,5 +125,13 @@
 
   &-footer.right {
     text-align: right;
+  }
+
+  @media screen and (max-width: $mobile) {
+    width: 100%;
+
+    button[data-input-btn] {
+      padding: 0 30px;
+    }
   }
 }
