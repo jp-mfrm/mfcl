@@ -1,6 +1,7 @@
 import React from 'react';
 import Textarea from './index';
 import { render, fireEvent } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 
 describe('Textarea Component', () => {
 
@@ -71,22 +72,36 @@ describe('Textarea Component', () => {
   });
 
   it('should properly handle keyDown and keyUp events', () => {
-    const testKeyDownCallback = jest.fn();
-    const testKeyUpCallback = jest.fn();
-
-    const { container } = render(
-      <Textarea 
-        onKeyDown={ testKeyDownCallback } 
-        onKeyUp={ testKeyUpCallback }>
-      </Textarea>
+    const mockKeyDownHandler = jest.fn();
+    const mockKeyUpHandler = jest.fn();
+    
+    const { container, rerender } = render(
+      <Textarea
+        onKeyDown={ mockKeyDownHandler }
+        onKeyUp={ mockKeyUpHandler }
+      ></Textarea>
     );
 
-    fireEvent.keyDown(container.querySelector('textarea')!, { keyCode: 17 });
-    expect(testKeyDownCallback).toHaveBeenCalledTimes(1);
-    expect(testKeyUpCallback).toHaveBeenCalledTimes(0);
+    fireEvent.keyDown(container.querySelector('textarea')!, { keyCode: 48 });
+    expect(mockKeyDownHandler).toHaveBeenCalledTimes(1);
+    expect(mockKeyUpHandler).toHaveBeenCalledTimes(0);
     
-    fireEvent.keyUp(container.querySelector('textarea')!, { keyCode: 17 });
-    expect(testKeyDownCallback).toHaveBeenCalledTimes(1);
-    expect(testKeyUpCallback).toHaveBeenCalledTimes(1);
+    fireEvent.keyUp(container.querySelector('textarea')!, { keyCode: 48 });
+    expect(mockKeyDownHandler).toHaveBeenCalledTimes(1);
+    expect(mockKeyUpHandler).toHaveBeenCalledTimes(1);
+    
+    rerender(
+      <Textarea></Textarea>
+    );
+
+    container.querySelector('textarea')!.value = 't';
+    fireEvent.keyDown(container.querySelector('textarea')!, { keyCode: 48 });
+    fireEvent.keyUp(container.querySelector('textarea')!, { keyCode: 48 });
+    expect(container.querySelector('textarea')?.style.height).toEqual('-14px');
+
+    container.querySelector('textarea')!.value = '';
+    fireEvent.keyDown(container.querySelector('textarea')!, { keyCode: 48 });
+    fireEvent.keyUp(container.querySelector('textarea')!, { keyCode: 48 });
+    expect(container.querySelector('textarea')?.style.height).toEqual('inherit');
   });
 });
