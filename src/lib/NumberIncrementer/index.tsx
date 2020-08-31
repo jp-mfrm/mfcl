@@ -12,7 +12,7 @@ interface Props {
   className?: string
   value?: number | null
   defaultValue?: number
-  onChange: Function
+  onChange?: Function
   [rest: string]: unknown // ...rest property
 }
 
@@ -26,8 +26,6 @@ const NumberIncrementer: FunctionComponent<Props> = ({
   defaultValue = 1,
   ...rest
 }) => {
-  // const [number, setNumber] = useState(defaultValue)
-
   const [valueDerived, setNumber] = useControlled({
     controlled: valueProp,
     defaultValue
@@ -44,6 +42,9 @@ const NumberIncrementer: FunctionComponent<Props> = ({
   const addNumber = useCallback(() => {
     const newVal = createFactoryCounter(valueDerived, 'add')
     setNumber(newVal)
+    if (onChange) {
+      onChange(newVal)
+    }
   }, [valueDerived, onChange])
 
   return (

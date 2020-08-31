@@ -24,6 +24,12 @@ Implements a number incrementer that increases and decreases the number displaye
 
 ## Basic Usage
 
+You can pass a name and label prop to the component. The label will be hidden unless the component is passed the showLabel prop.
+
 <Playground>
-  <NumberIncrementer />
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+    <NumberIncrementer />
+    <span style={{ padding: '5px 0' }} />
+    <NumberIncrementer showLabel />
+  </div>
 </Playground>
