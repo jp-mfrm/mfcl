@@ -16,7 +16,6 @@
   width: 15px;
   height: 15px;
   background: #ffffff;
-  will-change: transform;
   z-index: 100;
 }
 
@@ -29,7 +28,6 @@
   color: $gray-11;
   display: table;
   font-size: 20px;
-  font-weight: 400;
   line-height: 30px;
   margin-top: 25px;
   padding: 0.5em 1em;
@@ -37,7 +35,6 @@
   transform: translate3d(0, 0, 0);
   transform-origin: top;
   white-space: nowrap;
-  will-change: transform;
   z-index: 99;
 }
 

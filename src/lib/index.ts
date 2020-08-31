@@ -21,6 +21,9 @@ import Rating from './Rating'
 import Select from './Select'
 import Stepper from './Stepper'
 import Tooltip from './Tooltip'
+import Textarea from './Textarea';
+
+import Input from './Input';
 
 export {
   Accordion,
@@ -34,6 +37,7 @@ export {
   Dropdown,
   Fade,
   Flag,
+  Input,
   LazyImage,
   Loading,
   Modal,
@@ -45,5 +49,6 @@ export {
   Rating,
   Select,
   Stepper,
+  Textarea,
   Tooltip
 }
