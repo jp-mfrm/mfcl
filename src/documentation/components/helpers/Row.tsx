@@ -2,14 +2,15 @@ import React, { ReactNode, FunctionComponent } from 'react'
 
 interface Props {
   children: ReactNode
+  justifyContent?: string
 }
 
-const Row: FunctionComponent<Props> = ({ children }) => (
+const Row: FunctionComponent<Props> = ({ children, justifyContent = 'space-around' }) => (
   <div
     style={{
       alignItems: 'center',
       display: 'flex',
-      justifyContent: 'space-around',
+      justifyContent,
       flexWrap: 'wrap',
       width: '100%'
     }}
