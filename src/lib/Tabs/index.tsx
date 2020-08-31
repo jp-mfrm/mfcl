@@ -1,19 +1,18 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, isValidElement } from 'react'
+import styles from './tabs.module.scss'
+import TabList from './TabList';
+export interface Props {
+  items: []
+  [rest: string]: unknown // ...rest property
+}
 
-import styles from './tabs.module.scss';
-
-interface Props {
-  [rest: string]: unknown; // ...rest property
-};
-
-const Tabs: FunctionComponent<Props> = ({
-  ...rest
-}) => {
+const Tabs: FunctionComponent<Props> = ({ items, children, ...rest }) => {
   return (
     <div className={styles['tabs-wrapper']} {...rest}>
-      Tabs
-    </div>
-  );
-};
+        <TabList items={items} /> 
 
-export default Tabs;
+    </div>
+  )
+}
+
+export default Tabs

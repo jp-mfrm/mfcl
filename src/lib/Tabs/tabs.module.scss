@@ -1,5 +1,13 @@
 @import '../variables';
 
-.tabs-wrapper {
+// .tabs-wrapper {
   
+// }
+
+.tabitem {
+  color: red;
+
+  &.active {
+    color: green;
+  }
 }
