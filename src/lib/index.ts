@@ -1,6 +1,7 @@
 import Accordion from './Accordion'
 import AccordionItem from './Accordion/AccordionItem'
 import Alert from './Alert'
+import Badge from './Badge'
 import Button from './Button'
 import Checkbox from './Checkbox'
 import Collapse from './Collapse'
@@ -11,21 +12,21 @@ import Flag from './Flag'
 import LazyImage from './LazyImage'
 import Loading from './Loading'
 import Modal from './Modal'
+import NumberIncrementer from './NumberIncrementer'
 import Portal from './Portal'
 import Price from './Price'
 import ProductCard from './ProductCard'
 import ProgressBar from './ProgressBar'
 import Rating from './Rating'
 import Select from './Select'
+import Stepper from './Stepper'
 import Tooltip from './Tooltip'
-import Badge from './Badge'
-import NumberIncrementer from './NumberIncrementer';
 
 export {
-  NumberIncrementer,
   Accordion,
   AccordionItem,
   Alert,
+  Badge,
   Button,
   Checkbox,
   Collapse,
@@ -36,12 +37,13 @@ export {
   LazyImage,
   Loading,
   Modal,
+  NumberIncrementer,
   Portal,
   Price,
   ProgressBar,
   ProductCard,
   Rating,
   Select,
-  Tooltip,
-  Badge
+  Stepper,
+  Tooltip
 }
