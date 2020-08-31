@@ -1,10 +1,10 @@
 const colors = {
   white: '#FFFFFF',
-  grayUltraLight: '#F9FAFB',
-  grayExtraLight: '#F8F8F8',
-  grayLight: '#CED1D5',
-  gray: '#B3B5B7',
-  grayDark: '#626366',
+  grayUltraLight: '#f8f8f8',
+  grayExtraLight: '#e1e1e1',
+  grayLight: '#979797',
+  gray: '#87817d',
+  grayDark: '#545658',
   grayExtraDark: '#080808',
   dark: '#2d2926',
   skyBlue: '#1FB6FF',
@@ -192,6 +192,10 @@ export default {
   htmlContext: {
     head: {
       links: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Rubik:wght@300;500;700&display=swap'
+        },
         {
           rel: 'stylesheet',
           href: 'https://codemirror.net/theme/material.css'
