@@ -1,0 +1,74 @@
+---
+name: Stepper
+menu: Components
+route: /components-stepper
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Stepper, Button } from '../../lib'
+import { Row } from './helpers'
+
+# Stepper
+
+```javascript
+import { Stepper } from 'mfcl'
+```
+
+## Description
+
+Steppers display progress through a sequence of logical and numbered steps. They may also be used for navigation. Steppers may display a transient feedback message after a step is saved.
+
+## Properties
+
+<Props of={Stepper} />
+
+## Basic Usage
+
+<Playground>
+  <Stepper activeStep={1} steps={[false, false, false, false]} />
+</Playground>
+
+## Vertical
+
+<Playground>
+  <Stepper vertical activeStep={2} steps={[false, false, false, false]} />
+</Playground>
+
+## Labels, Different Color
+
+<Playground>
+  <Stepper activeStep={2} color="#d63426" steps={['Step One', 'Step Two', 'Step Three', 'Step Four']} />
+  <Stepper activeStep={0} color="#d63426" steps={['Step One', 'Step Two', 'Step Three', 'Step Four']} vertical />
+</Playground>
+
+## Dynamic and Controlled
+
+<Playground>
+  <Component initialState={{ activeStep: 0, steps: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'] }}>
+    {({ setState, state }) => (
+      <>
+        <Stepper activeStep={state.activeStep} selectIndex={(i) => setState({ activeStep: i })} steps={state.steps} />
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <Row>
+          <Button disabled={state.activeStep === 0} onClick={() => setState({ activeStep: state.activeStep - 1 })}>
+            Previous Page
+          </Button>
+          <Button
+            disabled={state.activeStep === state.steps.length - 1}
+            onClick={() => setState({ activeStep: state.activeStep + 1 })}
+          >
+            Next Page
+          </Button>
+          <Button onClick={() => setState({ steps: [...state.steps, `Label ${state.steps.length + 1}`] })}>
+            Add Step
+          </Button>
+          <Button onClick={() => setState({ steps: state.steps.slice(0, -1), activeStep: 0 })}>Remove Step</Button>
+        </Row>
+      </>
+    )}
+  </Component>
+</Playground>

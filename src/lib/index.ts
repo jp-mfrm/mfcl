@@ -1,6 +1,7 @@
 import Accordion from './Accordion'
 import AccordionItem from './Accordion/AccordionItem'
 import Alert from './Alert'
+import Badge from './Badge'
 import Button from './Button'
 import Checkbox from './Checkbox'
 import Collapse from './Collapse'
@@ -17,13 +18,14 @@ import ProductCard from './ProductCard'
 import ProgressBar from './ProgressBar'
 import Rating from './Rating'
 import Select from './Select'
+import Stepper from './Stepper'
 import Tooltip from './Tooltip'
-import Badge from './Badge'
 
 export {
   Accordion,
   AccordionItem,
   Alert,
+  Badge,
   Button,
   Checkbox,
   Collapse,
@@ -40,6 +42,6 @@ export {
   ProductCard,
   Rating,
   Select,
-  Tooltip,
-  Badge
+  Stepper,
+  Tooltip
 }
