@@ -3,7 +3,16 @@ import clsx from 'clsx'
 
 interface Props {
   children: React.ReactNode
+  /**
+   * Aligment for the rows.
+   * Possible values: "center", "start", "end",
+   * "around" (justify-content: space-around),
+   * or "between" (justify-content: space-between)
+   */
   alignRow?: string
+  /**
+   * Styles to set on the row container
+   */
   rowStyle?: CSSProperties
 }
 
