@@ -31,7 +31,7 @@
 
   &.dropdown-sm {
     .dropdown-header {
-      font-size: 14;
+      font-size: 14px;
       height: 44px;
     }
   }
@@ -63,7 +63,6 @@
   padding: 0 16px;
   overflow: hidden;
   white-space: nowrap;
-  width: 90%;
   z-index: 3; // for arrow click
 
   fieldset {
@@ -72,10 +71,11 @@
     bottom: 0;
     left: 0;
     margin: 0;
-    padding: 0 0 0 8px;
+    padding: 0;
     position: absolute;
     right: 0;
     top: 0;
+    width: 100%;
 
     legend {
       line-height: 0;
@@ -168,7 +168,7 @@
   position: relative;
   font-size: 14px;
   white-space: normal;
-  word-wrap: normal;
+  word-break: normal;
   color: $gray-11;
 
   &.item-active {
