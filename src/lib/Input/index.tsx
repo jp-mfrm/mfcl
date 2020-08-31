@@ -1,11 +1,8 @@
-import React, {
-  FunctionComponent,
-  ReactNode
-} from 'react';
+import React, { FunctionComponent, ReactNode } from 'react'
 
 import Button from '../Button'
 import clsx from 'clsx'
-import styles from './input.module.scss';
+import styles from './input.module.scss'
 
 export interface Props {
   /** Class to pass to the input wrapper */
@@ -17,7 +14,7 @@ export interface Props {
   /** Option to show/hide button */
   addBtn?: boolean
   /** Label for button */
-  btnLabel?: string  
+  btnLabel?: string
   /** Properties to be passed to Button component */
   btnProps?: object
   /** Size of the Input */
@@ -28,15 +25,11 @@ export interface Props {
   focus?: boolean
   /** Apply error styling */
   error?: boolean
-  /** Success/Error message for input submission  */ 
-  inputMessage?:  
-    { infoMsg?: string,  
-      successMsg?: string,  
-      errorMsg?: string,  
-      alignment?: 'left' | 'center' | 'right'   
-    }
-  [rest: string]: unknown; // ...rest property
-};
+  /** Success/Error message for input submission  */
+
+  inputMessage?: { infoMsg?: string; successMsg?: string; errorMsg?: string; alignment?: 'left' | 'center' | 'right' }
+  [rest: string]: unknown // ...rest property
+}
 
 const Input: FunctionComponent<Props> = ({
   inputClass,
@@ -52,47 +45,47 @@ const Input: FunctionComponent<Props> = ({
   inputMessage,
   ...rest
 }) => {
-
-let inputField = []; 
+  let inputField = []
 
   inputField.push(
-    <input className={clsx(styles['input'], styles[size], focus && styles['focus'], error && styles['error'], inputClass)} {...rest}
+    <input
+      className={clsx(styles['input'], styles[size], focus && styles['focus'], error && styles['error'], inputClass)}
+      {...rest}
       key="inputField"
       name={name}
       disabled={disabled}
-      />
-  );
-  
-  if(addBtn) {
-    inputField.push(<Button key="inputBtn" disabled={disabled} {...btnProps}>{btnLabel}</Button>);
+    />
+  )
+
+  if (addBtn) {
+    inputField.push(
+      <Button key="inputBtn" disabled={disabled} {...btnProps}>
+        {btnLabel}
+      </Button>
+    )
   }
-  
+
   return (
     <div className={clsx(styles['input-wrapper'])}>
-
       {label && (
         <label htmlFor={name} className={clsx(styles['label'])}>
           {label}
         </label>
       )}
 
-      <div className={clsx(styles['input-wrapper-inner'])}>
-        {inputField}
-      </div>
-      
-      {(inputMessage) && (
+      <div className={clsx(styles['input-wrapper-inner'])}>{inputField}</div>
+
+      {inputMessage && (
         <div className={clsx(styles['input-wrapper-footer'], inputMessage.alignment && styles[inputMessage.alignment])}>
-            {(inputMessage.infoMsg) && (
-              <p data-info >{inputMessage.infoMsg}</p>)}
-            
-            {(inputMessage.successMsg) && (
-              <p data-success >{inputMessage.successMsg}</p>)}
-            
-            {(inputMessage.errorMsg) && (
-              <p data-error >{inputMessage.errorMsg}</p>)}
+          {inputMessage.infoMsg && <p data-info>{inputMessage.infoMsg}</p>}
+
+          {inputMessage.successMsg && <p data-success>{inputMessage.successMsg}</p>}
+
+          {inputMessage.errorMsg && <p data-error>{inputMessage.errorMsg}</p>}
         </div>
       )}
-    </div>)
-};
+    </div>
+  )
+}
 
-export default Input;
+export default Input
