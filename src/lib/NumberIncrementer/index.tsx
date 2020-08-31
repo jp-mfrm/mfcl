@@ -12,7 +12,7 @@ interface Props {
   className?: string
   value?: number | null
   defaultValue?: number
-  onChange: () => void
+  onChange: Function
   [rest: string]: unknown // ...rest property
 }
 
@@ -26,18 +26,25 @@ const NumberIncrementer: FunctionComponent<Props> = ({
   defaultValue = 1,
   ...rest
 }) => {
-  const [valueDerived, setValueState] = useControlled({
+  // const [number, setNumber] = useState(defaultValue)
+
+  const [valueDerived, setNumber] = useControlled({
     controlled: valueProp,
     defaultValue
   })
 
   const subtractNumber = useCallback(() => {
-    setValueState(createFactoryCounter(valueDerived, 'subtract'))
-  }, [valueDerived])
+    const newVal = createFactoryCounter(valueDerived, 'subtract')
+    setNumber(newVal)
+    if (onChange) {
+      onChange(newVal)
+    }
+  }, [valueDerived, onChange])
 
   const addNumber = useCallback(() => {
-    setValueState(createFactoryCounter(valueDerived, 'add'))
-  }, [valueDerived])
+    const newVal = createFactoryCounter(valueDerived, 'add')
+    setNumber(newVal)
+  }, [valueDerived, onChange])
 
   return (
     <div className={clsx(styles['number-incrementer-wrapper'], className)} {...rest}>
@@ -45,11 +52,11 @@ const NumberIncrementer: FunctionComponent<Props> = ({
         {label}
       </label>
       <div className={styles['number-incrementer']}>
-        <button onClick={subtractNumber} onChange={subtractNumber} aria-label="Subtract Number">
+        <button onClick={subtractNumber} aria-label="Subtract Number">
           &#8722;
         </button>
         <input type="text" readOnly value={valueDerived} name={name} />
-        <button onClick={addNumber} onChange={addNumber} aria-label="Add Number">
+        <button onClick={addNumber} aria-label="Add Number">
           &#43;
         </button>
       </div>
