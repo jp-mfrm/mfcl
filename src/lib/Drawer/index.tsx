@@ -152,6 +152,7 @@ const Drawer: React.FunctionComponent<Props> = ({
 
   return (
     <Portal>
+      <>
       <Transition in={isShowing} timeout={duration} {...rest}>
         {(state) => (
           // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
@@ -191,6 +192,7 @@ const Drawer: React.FunctionComponent<Props> = ({
           data-testid="backdrop"
         />
       )}
+      </>
       </Portal>
   )
 }
