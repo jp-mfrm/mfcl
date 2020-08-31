@@ -1,0 +1,120 @@
+@import '../variables';
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+
+  &-inner {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .label {
+    border-bottom: solid 1px $gray-5;
+    display: inline-block;
+    font-size: 12px;
+    line-height: normal;
+    margin-bottom: 15px;
+    padding: 6px 0px;
+    text-overflow: ellipsis;
+    width: 100%;
+
+    @media screen and (min-width: $mobile) {
+      text-align: left;
+    }
+  }
+
+  .input {
+    border-radius: 25px;
+    border: solid 1px $gray-5;
+    padding: $spacing-xs $spacing-s;
+
+    font-family: $r-regular;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    color: #323030;
+    cursor: default;
+
+    &:disabled {
+      border: solid 1px $gray-3;
+    }
+
+    &::placeholder {
+      color: $gray-8;
+    }
+
+    &.bg-transparent {
+      background-color: transparent;
+    }
+    &.bg-white {
+      background-color: $white;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $gray-5;
+    }
+
+    &.focus:focus {
+      outline: 0;
+      border-color: $blue;
+      background-color: $white;
+      // box-shadow: 0 0 3px $blue;
+    }
+
+    &.error:not(:disabled) {
+      outline: 0;
+      border-color: $red;
+      background-color: $white;
+      // box-shadow: 0 0 3px $red;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &.lg {
+      width: 373px;
+    }
+
+    &.md {
+      width: 273px;
+    }
+
+    &.sm {
+      width: 173px;
+    }
+  }
+
+  button {
+    position: relative;
+    left: -35px;
+    outline: 0 none;
+  }
+
+  &-footer {
+    text-align: center;
+    font-size: 14px;
+
+    & p[data-error='true'] {
+      color: $red;
+    }
+  }
+
+  &-footer.left {
+    text-align: left;
+  }
+
+  &-footer.center {
+    text-align: center;
+  }
+
+  &-footer.right {
+    text-align: right;
+  }
+}

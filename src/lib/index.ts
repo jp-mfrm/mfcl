@@ -21,6 +21,8 @@ import Select from './Select'
 import Stepper from './Stepper'
 import Tooltip from './Tooltip'
 
+import Input from './Input';
+
 export {
   Accordion,
   AccordionItem,
@@ -33,6 +35,7 @@ export {
   Dropdown,
   Fade,
   Flag,
+  Input,
   LazyImage,
   Loading,
   Modal,
