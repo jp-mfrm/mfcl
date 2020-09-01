@@ -20,8 +20,12 @@ import Rating from './Rating'
 import Select from './Select'
 import Stepper from './Stepper'
 import Tooltip from './Tooltip'
+import Panel from './Panel';
+import PanelItem from './Panel/PanelItem'
 
 export {
+  Panel,
+  PanelItem,
   Accordion,
   AccordionItem,
   Alert,
