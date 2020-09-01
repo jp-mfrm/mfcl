@@ -16,6 +16,7 @@ import GridRow from './Grid/GridRow'
 import LazyImage from './LazyImage'
 import Loading from './Loading'
 import Modal from './Modal'
+import NumberIncrementer from './NumberIncrementer'
 import Portal from './Portal'
 import Price from './Price'
 import ProductCard from './ProductCard'
@@ -24,6 +25,9 @@ import Rating from './Rating'
 import Select from './Select'
 import Stepper from './Stepper'
 import Tooltip from './Tooltip'
+import Textarea from './Textarea'
+
+import Input from './Input'
 
 export {
   Accordion,
@@ -40,9 +44,11 @@ export {
   Grid,
   GridItem,
   GridRow,
+  Input,
   LazyImage,
   Loading,
   Modal,
+  NumberIncrementer,
   Portal,
   Price,
   ProgressBar,
@@ -50,5 +56,6 @@ export {
   Rating,
   Select,
   Stepper,
+  Textarea,
   Tooltip
 }
