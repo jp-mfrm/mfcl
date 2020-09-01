@@ -56,11 +56,18 @@ const NumberIncrementer: FunctionComponent<Props> = ({
         {labelName}
       </label>
       <div className={styles['number-incrementer']}>
-        <button onClick={subtractNumber} aria-label="Subtract Number">
+        <button className={styles.button} onClick={subtractNumber} aria-label="Subtract Number">
           &#8722;
         </button>
-        <input data-testid="number" type="text" readOnly value={valueDerived} name={inputName} />
-        <button onClick={addNumber} aria-label="Add Number">
+        <input
+          className={styles.input}
+          data-testid="number"
+          type="text"
+          readOnly
+          value={valueDerived}
+          name={inputName}
+        />
+        <button className={styles.button} onClick={addNumber} aria-label="Add Number">
           &#43;
         </button>
       </div>
