@@ -12,6 +12,7 @@ import Flag from './Flag'
 import LazyImage from './LazyImage'
 import Loading from './Loading'
 import Modal from './Modal'
+import NumberIncrementer from './NumberIncrementer'
 import Portal from './Portal'
 import Price from './Price'
 import ProductCard from './ProductCard'
@@ -22,6 +23,8 @@ import Stepper from './Stepper'
 import Tooltip from './Tooltip'
 import Panel from './Panel';
 import PanelItem from './Panel/PanelItem'
+import Textarea from './Textarea';
+import Input from './Input';
 
 export {
   Panel,
@@ -37,9 +40,11 @@ export {
   Dropdown,
   Fade,
   Flag,
+  Input,
   LazyImage,
   Loading,
   Modal,
+  NumberIncrementer,
   Portal,
   Price,
   ProgressBar,
@@ -47,5 +52,6 @@ export {
   Rating,
   Select,
   Stepper,
+  Textarea,
   Tooltip
 }
