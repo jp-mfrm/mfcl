@@ -11,21 +11,6 @@
     flex-direction: row;
   }
 
-  .label {
-    font-size: 16px;
-    text-overflow: ellipsis;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    color: lighten(black, 60%);
-    transition: all 0.2s ease-out;
-    background: transparent;
-
-    @media screen and (min-width: $mobile) {
-      text-align: left;
-    }
-  }
-
   .input {
     max-width: 100%;
     min-width: inherit;
@@ -105,6 +90,22 @@
 
     &.sm {
       width: 173px;
+    }
+  }
+
+  .label {
+    font-size: 16px;
+    text-overflow: ellipsis;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: lighten(black, 60%);
+    transition: all 0.2s ease-out;
+    background: transparent;
+    pointer-events: none;
+
+    @media screen and (min-width: $mobile) {
+      text-align: left;
     }
   }
 
