@@ -12,19 +12,14 @@
   }
 
   .label {
-    // border-bottom: solid 1px $gray-5;
-    // display: inline-block;
     font-size: 16px;
-    // line-height: normal;
-    // margin-bottom: 15px;
-    // padding: 6px 0px;
     text-overflow: ellipsis;
-    // width: 100%;
     position: absolute;
     top: 10px;
     left: 10px;
     color: lighten(black, 60%);
     transition: all 0.2s ease-out;
+    background: transparent;
 
     @media screen and (min-width: $mobile) {
       text-align: left;
@@ -74,23 +69,20 @@
     }
 
     &:focus + .label,
-    &.has-value + .label {
+    &.has-value + .label,
+    &:focus + button[data-input-btn] + .label,
+    &.has-value + button[data-input-btn] + .label {
       top: -10px;
       color: $blue;
       font-size: 14px;
       background: white;
+      padding: 0 3px;
     }
 
-    &.has-value:not(:focus) + label {
+    &.has-value:not(:focus) + label,
+    &.has-value:not(:focus) + button[data-input-btn] + .label {
       color: lighten(black, 60%);
     }
-
-    // &.focus:focus {
-    //   outline: 0;
-    //   border-color: $blue;
-    //   background-color: $white;
-    //   // box-shadow: 0 0 3px $blue;
-    // }
 
     &.error:not(:disabled) {
       outline: 0;
@@ -117,8 +109,6 @@
   }
 
   button {
-    position: relative;
-    // left: -35px;
     outline: 0 none;
     width: inherit;
     position: absolute;

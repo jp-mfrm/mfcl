@@ -48,23 +48,13 @@ const Input: FunctionComponent<Props> = ({
   const [hasValue, setHasValue] = useState(false)
   let inputField = []
 
-  // let hasValue
-  // const formControl = (e: string) => {
-  //   if (e.length > 0) {
-  //     hasValue = true
-  //   }
-  // }
+  const formControl = (length: number) => {
+    if (length > 0) {
+      return setHasValue(true)
+    }
 
-  const formControl = useCallback(
-    (length) => {
-      if (length > 0) {
-        return setHasValue(true)
-      }
-
-      setHasValue(false)
-    },
-    [hasValue]
-  )
+    setHasValue(false)
+  }
 
   inputField.push(
     <input
@@ -120,8 +110,10 @@ const Input: FunctionComponent<Props> = ({
 
   return (
     <div className={clsx(styles['input-wrapper'])}>
-      {inputField}
-      {inputLabel}
+      <div className={clsx(styles['input-wrapper-inner'])}>
+        {inputField}
+        {inputLabel}
+      </div>
       {validationMsg}
     </div>
   )
