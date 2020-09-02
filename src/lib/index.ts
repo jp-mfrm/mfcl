@@ -29,8 +29,10 @@ import Panel from './Panel';
 import PanelItem from './Panel/PanelItem'
 import Textarea from './Textarea';
 import Input from './Input';
+import Carousel from './Carousel';
 
 export {
+  Carousel,
   Panel,
   PanelItem,
   Accordion,
