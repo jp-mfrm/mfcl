@@ -76,8 +76,6 @@ const Input: FunctionComponent<Props> = ({
     />
   )
 
-  console.log(hasValue)
-
   if (addBtn) {
     inputField.push(
       <Button key="inputBtn" data-input-btn disabled={disabled} {...btnProps}>
