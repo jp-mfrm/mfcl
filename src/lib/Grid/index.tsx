@@ -3,6 +3,7 @@ import GridItem from './GridItem'
 import clsx from 'clsx'
 
 interface Props {
+  className?: string
   /** Child elements of the grid */
   children: React.ReactNode
   /**
@@ -37,6 +38,7 @@ interface Props {
 }
 
 const Grid: FunctionComponent<Props> = ({
+  className = '',
   createGridItems = false,
   createContainer = true,
   createRows = true,
@@ -47,7 +49,7 @@ const Grid: FunctionComponent<Props> = ({
 }) => {
   const rowStyles = clsx('grid-row', alignRows && `grid-row-${alignRows}`)
   return (
-    <div className={`${createContainer && 'container'}`} style={gridStyles} data-testid="grid-container">
+    <div className={clsx(createContainer && 'container', className)} style={gridStyles} data-testid="grid-container">
       <div className={createRows ? rowStyles : ''} data-testid="grid-row">
         {createGridItems
           ? Children.map(children, (child, index) => {

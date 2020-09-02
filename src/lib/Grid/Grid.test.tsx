@@ -10,6 +10,10 @@ describe('Grid Component', () => {
     const { getByTestId } = render(<Grid gridStyles={{ marginTop: '1px' }}>content</Grid>)
     expect(getByTestId('grid-container')).toHaveStyle('margin-top: 1px')
   })
+  it('adds the className given', () => {
+    const { getByTestId } = render(<Grid className={'test-class'}>content</Grid>)
+    expect(getByTestId('grid-container').classList).toContain('test-class')
+  })
 
   it('creates the container by default', () => {
     const { getByTestId } = render(<Grid>content</Grid>)
@@ -70,5 +74,9 @@ describe('Grid Item', () => {
   it('adds the gridItem styles', () => {
     const { container } = render(<GridItem itemStyles={{ marginTop: '1px' }}>content</GridItem>)
     expect(container.querySelector('.grid-item')).toHaveStyle('margin-top: 1px')
+  })
+  it('adds the className given', () => {
+    const { container } = render(<GridItem className={'test-class'}>content</GridItem>)
+    expect(container.querySelector('.grid-item')?.classList).toContain('test-class')
   })
 })
