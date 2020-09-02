@@ -59,6 +59,14 @@
         color: $blue;
       }
     }
+
+    @media screen and (max-width: $mobile) {
+      width: 100%;
+      min-width: inherit;
+      & div:not(.panel-item) {
+        width: 100%;
+      }
+    }
   }
 
   
