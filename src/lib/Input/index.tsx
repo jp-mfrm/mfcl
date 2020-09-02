@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { FunctionComponent, ReactNode, useCallback, useState } from 'react'
 
 import Button from '../Button'
 import clsx from 'clsx'
@@ -45,17 +45,48 @@ const Input: FunctionComponent<Props> = ({
   inputMessage,
   ...rest
 }) => {
+  const [hasValue, setHasValue] = useState(false)
   let inputField = []
+
+  // let hasValue
+  // const formControl = (e: string) => {
+  //   if (e.length > 0) {
+  //     hasValue = true
+  //   }
+  // }
+
+  const formControl = useCallback(
+    (length) => {
+      if (length > 0) {
+        return setHasValue(true)
+      }
+
+      setHasValue(false)
+    },
+    [hasValue]
+  )
 
   inputField.push(
     <input
-      className={clsx(styles['input'], styles[size], focus && styles['focus'], error && styles['error'], inputClass)}
+      className={clsx(
+        styles['input'],
+        styles[size],
+        focus && styles['focus'],
+        error && styles['error'],
+        hasValue && styles['has-value'],
+        inputClass
+      )}
       {...rest}
       key="inputField"
       name={name}
       disabled={disabled}
+      onChange={(e) => {
+        formControl(e.target.value.length)
+      }}
     />
   )
+
+  console.log(hasValue)
 
   if (addBtn) {
     inputField.push(
@@ -65,25 +96,33 @@ const Input: FunctionComponent<Props> = ({
     )
   }
 
+  let inputLabel
+  if (label) {
+    inputLabel = (
+      <label htmlFor={name} className={clsx(styles['label'])}>
+        {label}
+      </label>
+    )
+  }
+
+  let validationMsg
+  if (inputMessage) {
+    validationMsg = (
+      <div className={clsx(styles['input-wrapper-footer'], inputMessage.alignment && styles[inputMessage.alignment])}>
+        {inputMessage.infoMsg && <p data-info>{inputMessage.infoMsg}</p>}
+
+        {inputMessage.successMsg && <p data-success>{inputMessage.successMsg}</p>}
+
+        {inputMessage.errorMsg && <p data-error>{inputMessage.errorMsg}</p>}
+      </div>
+    )
+  }
+
   return (
     <div className={clsx(styles['input-wrapper'])}>
-      {label && (
-        <label htmlFor={name} className={clsx(styles['label'])}>
-          {label}
-        </label>
-      )}
-
-      <div className={clsx(styles['input-wrapper-inner'])}>{inputField}</div>
-
-      {inputMessage && (
-        <div className={clsx(styles['input-wrapper-footer'], inputMessage.alignment && styles[inputMessage.alignment])}>
-          {inputMessage.infoMsg && <p data-info>{inputMessage.infoMsg}</p>}
-
-          {inputMessage.successMsg && <p data-success>{inputMessage.successMsg}</p>}
-
-          {inputMessage.errorMsg && <p data-error>{inputMessage.errorMsg}</p>}
-        </div>
-      )}
+      {inputField}
+      {inputLabel}
+      {validationMsg}
     </div>
   )
 }
