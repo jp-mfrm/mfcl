@@ -2,6 +2,7 @@ import React, { FunctionComponent, CSSProperties } from 'react'
 import clsx from 'clsx'
 
 interface Props {
+  className?: string
   /**
    * Default column size to use on all screen sizes
    * valid sizes: 1 - 12
@@ -23,6 +24,7 @@ interface Props {
 }
 
 const GridItem: FunctionComponent<Props> = ({
+  className = '',
   defaultSize,
   desktopSize,
   tabletSize,
@@ -41,7 +43,7 @@ const GridItem: FunctionComponent<Props> = ({
   )
   return (
     <div className={`${columnSizes} grid-column`} data-testid="grid-column">
-      <div className="grid-item" style={{ marginBottom: rowMarginBottom, ...itemStyles }}>
+      <div className={clsx(className, 'grid-item')} style={{ marginBottom: rowMarginBottom, ...itemStyles }}>
         {children}
       </div>
     </div>
