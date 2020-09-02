@@ -3,9 +3,6 @@ import clsx from 'clsx'
 
 import styles from './panel.module.scss';
 
-//wrap
-//ensure mobile styling is good
-
 interface Props {
   /** Class to pass to the panel */
   panelClass?: string
