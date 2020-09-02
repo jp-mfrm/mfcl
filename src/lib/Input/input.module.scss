@@ -11,21 +11,6 @@
     flex-direction: row;
   }
 
-  .label {
-    border-bottom: solid 1px $gray-5;
-    display: inline-block;
-    font-size: 12px;
-    line-height: normal;
-    margin-bottom: 15px;
-    padding: 6px 0px;
-    text-overflow: ellipsis;
-    width: 100%;
-
-    @media screen and (min-width: $mobile) {
-      text-align: left;
-    }
-  }
-
   .input {
     max-width: 100%;
     min-width: inherit;
@@ -56,20 +41,34 @@
     &.bg-transparent {
       background-color: transparent;
     }
+
     &.bg-white {
       background-color: $white;
     }
 
     &:focus {
       outline: none;
-      border-color: $gray-5;
+      border-width: 1px;
+      border-color: lighten($black, 30%);
+      transition: all 0.2s ease-out;
     }
 
-    &.focus:focus {
-      outline: 0;
-      border-color: $blue;
-      background-color: $white;
-      // box-shadow: 0 0 3px $blue;
+    &:focus + .label,
+    &.has-value + .label,
+    &:focus + button[data-input-btn] + .label,
+    &.has-value + button[data-input-btn] + .label {
+      top: -10px;
+      left: 25px;
+      color: lighten($black, 30%);
+      font-size: 14px;
+      background: white;
+      padding-left: 2px;
+      padding-right: 4px;
+    }
+
+    &.has-value:not(:focus) + label,
+    &.has-value:not(:focus) + button[data-input-btn] + .label {
+      color: lighten(black, 60%);
     }
 
     &.error:not(:disabled) {
@@ -96,14 +95,29 @@
     }
   }
 
+  .label {
+    font-size: 16px;
+    text-overflow: ellipsis;
+    position: absolute;
+    top: 9px;
+    left: 20px;
+    color: lighten(black, 60%);
+    transition: all 0.2s ease-out;
+    background: transparent;
+    pointer-events: none;
+
+    @media screen and (min-width: $mobile) {
+      text-align: left;
+    }
+  }
+
   button {
-    position: relative;
-    // left: -35px;
     outline: 0 none;
     width: inherit;
     position: absolute;
     right: 0px;
     height: 100%;
+    // border-radius: 4px;
   }
 
   &-footer {
