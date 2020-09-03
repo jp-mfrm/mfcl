@@ -1,66 +1,135 @@
-import React, { FunctionComponent, Children, useState, isValidElement, cloneElement, useEffect, createRef, useRef, useLayoutEffect } from "react";
+import React, { Children, FunctionComponent, ReactNode, cloneElement, isValidElement, useState } from 'react'
+
 import clsx from 'clsx'
-import styles from "./carousel.module.scss";
-import useTransition from './useTransition';
+import styles from './carousel.module.scss'
 
 interface Props {
-  /** Time in milliseconds before carousel auto slides */
-  duration?: number
-  // width?: number
-  navAlign?: 'top' | 'center' | 'bottom'
-  btnAlign?: 'buttons-left' | 'buttons-center' | 'buttons-right' | 'buttons-apart'
-  [rest: string]: unknown; // ...rest property
+  /** (WIP) */
+  itemsToShow?: number
+  /** (WIP) */
+  itemsToScroll?: number
+  /** Optional children to use instead of items prop */
+  children?: ReactNode | null
+  [rest: string]: unknown // ...rest property
 }
 
-const Carousel: FunctionComponent<Props> = ({
-  children,
-  navAlign = 'center',
-  btnAlign = 'buttons-apart',
-  duration,
-  ...rest 
-}) => {
+const Carousel: FunctionComponent<Props> = ({ itemsToShow, itemsToScroll, children, ...rest }) => {
+  function getChildrenArr(children: any) {
+    const cloneEls: any = []
 
-  const unit:string = 'px';
+    Children.map(children, (child: ReactNode, index) => {
+      cloneEls.push(child)
+    })
 
-  const {
-    translate,
-    items,
-    width,
-    setAction
-  } = useTransition(children);
+    return cloneEls
+  }
 
-  const handleNext = () => setAction('next');
-  const handlePrev = () => setAction('prev');
-  
-  
+  const itemWidth = itemsToShow && itemsToShow > 1 ? 100 / itemsToShow : 100
+  const itemCount = Children.count(children)
+  const sliderWidth = itemCount * 100
+  const slideFlexBasis = (1 / itemCount) * 100
+  const [childrenArr, updateChildArr] = useState<ReactNode[]>(getChildrenArr(children))
+  const [direction, setDirection] = useState(-1)
+  const [directionHandle, setDirectionHandle] = useState<Boolean>(false)
+  const [carouselJustify, setCarouselJustify] = useState('flex-start')
+  const [slideTransform, setSlideTransform] = useState(0)
+  const [slideTransition, setSlideTransition] = useState('all 0.5s')
 
-  const slides = 
-  items.map((item, index) => {
-    return(
-      <div key={index} className={clsx(styles['carousel-wrapper-container-inner-item'])} style={{width: `${width}${unit}`}}>
-        {item}
-      </div>
-    );
-  })
+  const goLeft = () => {
+    if (direction === -1) {
+      setDirection(1)
+      if (childrenArr) {
+        // Take off first element, append to the end
+        const el = childrenArr.shift()
+        childrenArr.push(el)
+        updateChildArr(childrenArr)
+      }
+    }
 
-  const buttons = 
-  <div className={clsx(styles['carousel-wrapper-controls'])}>
-    <button className={clsx(styles['carousel-wrapper-controls-next'])} onClick={handleNext}>Next</button>
-    <button className={clsx(styles['carousel-wrapper-controls-prev'])} onClick={handlePrev}>Prev</button>
-  </div>
+    setCarouselJustify('flex-end')
+    setSlideTransform(slideFlexBasis)
+  }
 
+  const goRight = () => {
+    if (direction === 1) {
+      setDirection(-1)
+      if (childrenArr) {
+        // Take off last element, prepend to the start
+        const el = childrenArr.pop()
+        childrenArr.unshift(el)
+        updateChildArr(childrenArr)
+      }
+    }
+
+    setCarouselJustify('flex-start')
+    setSlideTransform(-slideFlexBasis)
+  }
+
+  const handleOnTransitionEnd = () => {
+    // Prevents the second slide from being rendered after initialization
+    if (!directionHandle) {
+      setDirectionHandle(true)
+      return
+    }
+
+    if (direction === 1) {
+      if (childrenArr) {
+        // Take off last element, prepend to the start
+        const el = childrenArr.pop()
+        childrenArr.unshift(el)
+
+        updateChildArr(childrenArr)
+      }
+    } else {
+      if (childrenArr) {
+        // Take off first element, append to the end
+        const el = childrenArr.shift()
+        childrenArr.push(el)
+
+        updateChildArr(childrenArr)
+      }
+    }
+
+    setSlideTransition('none')
+    setSlideTransform(0)
+    setTimeout(() => {
+      setSlideTransition('all 0.5s')
+    })
+  }
 
   return (
-    <div className={clsx(styles['carousel-wrapper'])} style={{width: `${width}${unit}`}}>
-      <div className={clsx(styles['carousel-wrapper-container'])}>
-        <div className={clsx(styles['carousel-wrapper-container-inner'])} style={{width: `${width * items.length}${unit}`, transform: `translateX(-${translate}${unit})`}}>
-          {slides}
-        </div>
+    <div className={clsx(styles['carousel-wrapper'])} style={{ justifyContent: `${carouselJustify}` }}>
+      <div
+        className={clsx(styles['carousel-wrapper-slider'])}
+        onTransitionEnd={handleOnTransitionEnd}
+        style={{
+          transform: `translate(${slideTransform}%)`,
+          transition: ` ${slideTransition}`,
+          width: `${sliderWidth}%`
+        }}
+      >
+        {childrenArr?.map((child: ReactNode, index: number) => {
+          if (isValidElement(child)) {
+            return cloneElement(child, {
+              key: index,
+              className: clsx(styles['slide']),
+              style: {
+                flexBasis: `${slideFlexBasis}%`
+              }
+            })
+          }
+        })}
       </div>
-      {buttons}
+      <div className={clsx(styles['carousel-wrapper-controls'])}>
+        <button className={clsx(styles['next'])} onClick={goRight}>
+          <i className="">Right</i>
+        </button>
+        <button className={clsx(styles['prev'])} onClick={goLeft}>
+          <i className="">Left</i>
+        </button>
+      </div>
     </div>
-  );
+  )
+}
 
-};
-
-export default Carousel;
+export default Carousel
