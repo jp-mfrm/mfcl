@@ -18,7 +18,7 @@
     margin: inherit;
     border-radius: 25px;
     border: solid 1px $gray-5;
-    padding: $spacing-xs $spacing-s;
+    padding: 15px 34px;
 
     font-family: $r-regular;
     font-size: 16px;
@@ -56,10 +56,11 @@
     &.has-value + .label,
     &:focus + button[data-input-btn] + .label,
     &.has-value + button[data-input-btn] + .label {
-      top: -10px;
-      left: 25px;
+      top: -8px;
+      left: 33px;
       color: lighten($black, 30%);
-      font-size: 14px;
+      font-size: 12px;
+      line-height: 16px;
       background: white;
       padding-left: 2px;
       padding-right: 4px;
@@ -98,8 +99,8 @@
     font-size: 16px;
     text-overflow: ellipsis;
     position: absolute;
-    top: 9px;
-    left: 20px;
+    top: 12px;
+    left: 30px;
     color: lighten(black, 60%);
     transition: all 0.2s ease-out;
     background: transparent;
