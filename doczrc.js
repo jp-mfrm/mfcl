@@ -184,6 +184,9 @@ export default {
     },
     /** Styles */
     styles: {
+      html: {
+        boxSizing: 'border-box'
+      },
       body: {
         fontFamily: "'Rubik', 'Arial', sans-serif"
       }
