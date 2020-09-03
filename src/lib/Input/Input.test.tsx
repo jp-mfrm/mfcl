@@ -93,19 +93,20 @@ describe('Input Component', () => {
     expect(container.querySelector('input')?.classList).toContain('error')
   })
 
-  it('should render the inputMessage prop and its alignment correctly', () => {
+  it('should render the inputMessage correctly', () => {
     const { container, rerender } = render(<Input type="text" inputMessage={{ infoMsg: 'Test message' }}></Input>)
     expect(container.querySelector('.input-wrapper-footer p')?.getAttribute('data-info')).toEqual('true')
 
     rerender(<Input type="text" inputMessage={{ successMsg: 'Test message' }}></Input>)
     expect(container.querySelector('.input-wrapper-footer p')?.getAttribute('data-success')).toEqual('true')
 
-    rerender(<Input type="text" inputMessage={{ errorMsg: 'Test message' }}></Input>)
+    rerender(<Input type="text" error inputMessage={{ errorMsg: 'Test message' }}></Input>)
     expect(container.querySelector('.input-wrapper-footer p')?.getAttribute('data-error')).toEqual('true')
 
     rerender(
       <Input
         type="text"
+        error
         inputMessage={{ infoMsg: 'Test message', successMsg: 'Test message', errorMsg: 'Test message' }}
       ></Input>
     )
@@ -113,14 +114,5 @@ describe('Input Component', () => {
     expect(footers[0].getAttribute('data-info')).toEqual('true')
     expect(footers[1].getAttribute('data-success')).toEqual('true')
     expect(footers[2].getAttribute('data-error')).toEqual('true')
-
-    rerender(<Input type="text" inputMessage={{ infoMsg: 'Test message', alignment: 'left' }}></Input>)
-    expect(container.querySelector('.input-wrapper-footer')?.classList).toContain('left')
-
-    rerender(<Input type="text" inputMessage={{ infoMsg: 'Test message', alignment: 'center' }}></Input>)
-    expect(container.querySelector('.input-wrapper-footer')?.classList).toContain('center')
-
-    rerender(<Input type="text" inputMessage={{ infoMsg: 'Test message', alignment: 'right' }}></Input>)
-    expect(container.querySelector('.input-wrapper-footer')?.classList).toContain('right')
   })
 })
