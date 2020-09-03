@@ -6,6 +6,8 @@ import styles from './input.module.scss'
 
 export interface Props {
   /** Class to pass to the input wrapper */
+  wrapperClass?: string
+  /** Class to pass to the input */
   inputClass?: string
   /** Field and label name */
   name?: string
@@ -26,12 +28,12 @@ export interface Props {
   /** Apply error styling */
   error?: boolean
   /** Success/Error message for input submission  */
-
-  inputMessage?: { infoMsg?: string; successMsg?: string; errorMsg?: string; alignment?: 'left' | 'center' | 'right' }
+  inputMessage?: { infoMsg?: string; successMsg?: string; errorMsg?: string }
   [rest: string]: unknown // ...rest property
 }
 
 const Input: FunctionComponent<Props> = ({
+  wrapperClass,
   inputClass,
   name,
   label,
@@ -96,18 +98,18 @@ const Input: FunctionComponent<Props> = ({
   let validationMsg
   if (inputMessage) {
     validationMsg = (
-      <div className={clsx(styles['input-wrapper-footer'], inputMessage.alignment && styles[inputMessage.alignment])}>
+      <div className={clsx(styles['input-wrapper-footer'])}>
         {inputMessage.infoMsg && <p data-info>{inputMessage.infoMsg}</p>}
 
         {inputMessage.successMsg && <p data-success>{inputMessage.successMsg}</p>}
 
-        {inputMessage.errorMsg && <p data-error>{inputMessage.errorMsg}</p>}
+        {error && inputMessage.errorMsg && <p data-error>{inputMessage.errorMsg}</p>}
       </div>
     )
   }
 
   return (
-    <div className={clsx(styles['input-wrapper'])}>
+    <div className={clsx(styles['input-wrapper'], wrapperClass)}>
       <div className={clsx(styles['input-wrapper-inner'])}>
         {inputField}
         {inputLabel}

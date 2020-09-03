@@ -14,7 +14,6 @@
   .input {
     max-width: 100%;
     min-width: inherit;
-    height: 22px;
     text-align: start;
     margin: inherit;
     border-radius: 25px;
@@ -127,18 +126,6 @@
     & p[data-error='true'] {
       color: $red;
     }
-  }
-
-  &-footer.left {
-    text-align: left;
-  }
-
-  &-footer.center {
-    text-align: center;
-  }
-
-  &-footer.right {
-    text-align: right;
   }
 
   @media screen and (max-width: $mobile) {
