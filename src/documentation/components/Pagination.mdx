@@ -4,17 +4,18 @@ menu: Components
 route: /components-pagination
 ---
 
-import { Playground, Props } from 'docz';
-import Component from "react-component-component";
-import { Pagination } from '../../lib';
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Pagination } from '../../lib'
 
 # Pagination
 
 ```javascript
-import { Pagination } from 'mfcl';
+import { Pagination } from 'mfcl'
 ```
 
 ## Description
+
 TODO add description here
 
 ## Properties
@@ -24,11 +25,5 @@ TODO add description here
 ## Basic Usage
 
 <Playground>
-  <Component initialState={{}}>
-    {({ setState, state }) => (
-      <Pagination>
-      
-      </Pagination>
-    )}
-  </Component>
+  <Pagination itemsPerPage={5} totalItems={51} />
 </Playground>
