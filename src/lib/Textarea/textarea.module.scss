@@ -1,4 +1,4 @@
-@import "../variables";
+@import '../variables';
 
 .textarea-wrapper {
   display: flex;
@@ -46,13 +46,6 @@
 
     &::placeholder {
       color: $gray-8;
-    }
-
-    &.bg-transparent {
-      background-color: transparent;
-    }
-    &.bg-white {
-      background-color: $white;
     }
 
     &:focus {
