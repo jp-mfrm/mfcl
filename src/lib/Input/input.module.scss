@@ -20,6 +20,7 @@
     border-radius: 25px;
     border: solid 1px $gray-5;
     padding: $spacing-xs $spacing-s;
+    padding: 20px;
 
     font-family: $r-regular;
     font-size: 16px;
@@ -99,12 +100,13 @@
     font-size: 16px;
     text-overflow: ellipsis;
     position: absolute;
-    top: 9px;
+    top: 9px + 9px;
     left: 20px;
     color: lighten(black, 60%);
     transition: all 0.2s ease-out;
     background: transparent;
     pointer-events: none;
+    align-items: center;
 
     @media screen and (min-width: $mobile) {
       text-align: left;
