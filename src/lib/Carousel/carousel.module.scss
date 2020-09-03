@@ -1,51 +1,60 @@
-@import '../variables';
+@import "../variables";
 
 .carousel-wrapper {
-  border: 1px solid red;
-  width: 100%;
-  height: 100vh;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
   position: relative;
-  overflow: hidden;
-  //   background: black;
+  margin: 0 auto;
 
-  & .slide {
+  &-container {
     position: relative;
-    border: 1px solid blue;
-    min-width: 100%;
-    height: 80%;
-    transition: 0.5s;
+    margin: 0 auto;
     overflow: hidden;
-  }
+    max-width: 100%;
+    width: 100%;
+    z-index: 1;
 
-  .nav-buttons {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 10%;
-    height: 80%;
-    background: none;
-    border: none;
-    outline: none;
-    transition: 0.5s;
-    &:hover {
-      cursor: pointer;
-      background: rgba(0, 0, 0, 0.35);
-      i {
-        color: whitesmoke;
+    &-inner {
+      display: flex;
+      flex-direction: row;
+
+      &-item {
+        flex: 1;
+        overflow: hidden;
+        background: grey;
+        transition: 0.5s;
+        max-width: 100%;
       }
     }
   }
 
-  & #goLeft {
-    left: 0;
-  }
-
-  & #goRight {
+  &-controls {
+    position: absolute;
+    top: 0;
     right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+  
+    * {
+      pointer-events: auto;
+    }
+
+    &-next {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%) translateX(50%);
+    }
+    
+    &-prev {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%) translateX(-50%);
+    }
   }
 }
+
+

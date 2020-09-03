@@ -1,5 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
-
+import React, { FunctionComponent } from 'react'
 import styles from './carousel.module.scss'
 
 interface Props {
@@ -7,11 +6,8 @@ interface Props {
 }
 
 const CarouselItem: FunctionComponent<Props> = ({ ...rest }) => {
-  const itemStyles = {
-    width: 100 + '%',
-    height: 'auto'
-  }
-  return <div style={itemStyles}> test </div>
+  const itemStyles = {}
+  return <div style={itemStyles} {...rest}></div>
 }
 
 export default CarouselItem

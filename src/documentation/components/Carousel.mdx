@@ -6,7 +6,7 @@ route: /components-carousel
 
 import { Playground, Props } from 'docz';
 import Component from "react-component-component";
-import { Carousel } from '../../lib';
+import { Carousel, CarouselItem } from '../../lib';
 
 # Carousel
 
@@ -24,11 +24,10 @@ TODO add description here
 ## Basic Usage
 
 <Playground>
-  <Component initialState={{}}>
-    {({ setState, state }) => (
-      <Carousel>
-      
-      </Carousel>
-    )}
-  </Component>
+  <Carousel>
+    <CarouselItem>Slide 1</CarouselItem>
+    <CarouselItem>Slide 2</CarouselItem>
+    <CarouselItem>Slide 3</CarouselItem>
+    <CarouselItem>Slide 4</CarouselItem>
+  </Carousel>
 </Playground>
