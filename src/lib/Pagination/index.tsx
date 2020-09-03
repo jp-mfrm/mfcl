@@ -9,7 +9,7 @@ interface Props {
   [rest: string]: unknown // ...rest property
 }
 
-const Pagination: FunctionComponent<Props> = ({ itemsPerPage = 5, totalItems, ...rest }) => {
+const Pagination: FunctionComponent<Props> = ({ itemsPerPage, totalItems, ...rest }) => {
   let items = Array.from(Array(51).keys())
   const numberOfPages = []
 
@@ -17,16 +17,18 @@ const Pagination: FunctionComponent<Props> = ({ itemsPerPage = 5, totalItems, ..
   const [childrenPerPage] = useState(itemsPerPage)
 
   //Change page
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber)
+  const paginate = (number: number) => setCurrentPage(number)
 
   // Get current items
   const indexOfLastPage = currentPage * childrenPerPage
   const indexOfFirstPage = indexOfLastPage - childrenPerPage
-  const currentItems = items.splice(indexOfFirstPage, indexOfLastPage)
+  const currentItems = items.slice(indexOfFirstPage, indexOfLastPage)
 
   for (let i = 1; i <= Math.ceil(totalItems / childrenPerPage); i++) {
     numberOfPages.push(i)
   }
+
+  console.log(currentItems)
 
   return (
     <div className={styles['pagination-wrapper']} {...rest}>
@@ -59,9 +61,9 @@ const TestSubject: FunctionComponent<TextProps> = ({ items }) => {
     margin: '15px 0'
   }
 
-  const panelMap = items.map((number, i) => {
+  const panelMap = items.map((number) => {
     return (
-      <div style={styles} key={i}>
+      <div style={styles} key={number}>
         {number}
       </div>
     )
