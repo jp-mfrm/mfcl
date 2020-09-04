@@ -1,4 +1,4 @@
-import { ReactNode, Children, useState, useEffect } from "react";
+import { ReactNode, Children, useState, useEffect, RefObject } from "react";
 import styles from "./carousel.module.scss";
 
 function getChildrenArr(children: ReactNode) {
@@ -16,7 +16,9 @@ export default function carouselHelper(
   itemsToShow: number,
   btnAlignment: string,
   duration: number,
-  infinite: boolean
+  infinite: boolean,
+  autoSlide: boolean,
+  slideRef: RefObject<HTMLDivElement>
 ) {
   const itemWidth = itemsToShow && itemsToShow > 1 ? 100 / itemsToShow : 100;
   const itemCount = Children.count(children);
@@ -25,14 +27,15 @@ export default function carouselHelper(
   const alignment = [styles[(btnAlignment + "").split(" ")[0]], styles[(btnAlignment + "").split(" ")[1]]];
   const [childrenArr, updateChildArr] = useState<ReactNode[]>(getChildrenArr(children));
   const [direction, setDirection] = useState(-1);
-  const [index, setIndex] = useState(1);
+  const [index, setIndex] = useState(0);
+  const [started, setStarted] = useState(duration ? true : false);
   const [directionHandle, setDirectionHandle] = useState<Boolean>(false);
   const [carouselJustify, setCarouselJustify] = useState("flex-start");
   const [slideTransform, setSlideTransform] = useState(0);
   const [slideTransition, setSlideTransition] = useState("all 0.5s");
 
   const goLeft = () => {
-    if(!infinite && index == 1)
+    if(!infinite && index == 0)
       return;
 
     if (direction === -1) {
@@ -47,15 +50,14 @@ export default function carouselHelper(
 
     setCarouselJustify("flex-end");
     setSlideTransform(slideFlexBasis);
-    // setIndex((index != 1) ? index-1 : childrenArr.length);
-    if(index != 1)
-      setIndex(index-1);
-    else
-      setIndex(childrenArr.length);
+    setIndex((index != 0) ? index-1 : childrenArr.length-1);
+
+    if(autoSlide) 
+      setStarted(!started);
   };
 
   const goRight = () => {
-    if(!infinite && index == childrenArr.length)
+    if(!infinite && index == childrenArr.length-1)
       return;
 
     if (direction === 1) {
@@ -70,11 +72,10 @@ export default function carouselHelper(
 
     setCarouselJustify("flex-start");
     setSlideTransform(-slideFlexBasis);
-    setIndex((childrenArr.length) ? index+1 : 1);
-    if(index != childrenArr.length)
-      setIndex(index+1);
-    else
-      setIndex(1);
+    setIndex((index != childrenArr.length-1) ? index+1 : 0);
+
+    if(autoSlide) 
+      setStarted(!started);
   };
 
   const handleOnTransitionEnd = () => {
@@ -109,11 +110,21 @@ export default function carouselHelper(
   };
 
   useEffect(() => {
-    if (duration) {
-      const timer = setInterval(() => goRight(), duration);
+    if(autoSlide) {
+      let timer!: NodeJS.Timeout;
+    
+      clearInterval(timer);
+      timer = setInterval(() => goRight(), duration);
+  
       return () => clearInterval(timer);
     }
-  }, [childrenArr]);
+  }, [started]);
+
+  useEffect(() => {
+    if(slideRef && slideRef.current)
+      slideRef.current.focus();
+      console.log(slideRef);
+  }, [])
 
   return {
     itemWidth,

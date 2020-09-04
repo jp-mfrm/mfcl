@@ -3,6 +3,7 @@ import React, {
   ReactNode,
   cloneElement,
   isValidElement,
+  useRef,
 } from "react";
 
 import clsx from "clsx";
@@ -10,18 +11,19 @@ import styles from "./carousel.module.scss";
 import carouselHelper from "./carouselHelper";
 
 interface Props {
-  /** (WIP) */
+  /** Sets how many slides to show */
   itemsToShow?: number;
-  /** (WIP) */
+  /** Sets how many slides to scroll per click */
   itemsToScroll?: number;
-  /** (WIP) */
+  /** Sets the transition control button alignments. Two non conflicting configurations can be combined.  
+   * 'middle' centers vertically while 'center' centers horizontally. */
   btnAlignment?: 'top' | 'middle' | 'center' | 'apart' | 'left' | 'right' | 'bottom' 
-  /** (WIP) */
-  duration?: number;
-  /** (WIP) */
+  /** Allows Carousel to be cyclical. */
   infinite?: boolean;
-  /** Optional children to use instead of items prop */
-  children?: ReactNode | null;
+  /** Enables automatic transitions. */
+  autoSlide?: boolean;
+  /** Time in milliseconds for autoSlide */
+  duration?: number;
   [rest: string]: unknown; // ...rest property
 }
 
@@ -30,9 +32,15 @@ const Carousel: FunctionComponent<Props> = ({
   itemsToScroll,
   btnAlignment = 'middle apart',
   infinite = false,
+  autoSlide = false,
   duration = 3000,
   children,
 }) => {
+
+  const slideRef = useRef<HTMLDivElement>(null);
+
+  if(autoSlide)
+    infinite = true;
 
   const {
     sliderWidth,
@@ -45,12 +53,13 @@ const Carousel: FunctionComponent<Props> = ({
     goLeft,
     goRight,
     handleOnTransitionEnd,
-  } = carouselHelper(children, itemsToShow, btnAlignment, duration, infinite);
+  } = carouselHelper(children, itemsToShow, btnAlignment, duration, infinite, autoSlide, slideRef);
 
   const slides = 
     childrenArr?.map((child: ReactNode, index: number) => {
       if (isValidElement(child)) {
         return cloneElement(child, {
+          ref: slideRef,
           key: index,
           className: clsx(styles["slide"]),
           style: {flexBasis: `${slideFlexBasis}%`},
