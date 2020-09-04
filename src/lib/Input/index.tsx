@@ -81,8 +81,4 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
   )
 })
 
-/** // TODO:
- * fix textArea
- */
-
 export default Input
