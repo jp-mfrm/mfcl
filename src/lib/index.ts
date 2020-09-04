@@ -30,11 +30,9 @@ import PanelItem from './Panel/PanelItem'
 import Textarea from './Textarea';
 import Input from './Input';
 import Carousel from './Carousel';
-import CarouselItem from './Carousel/CarouselItem';
 
 export {
   Carousel,
-  CarouselItem,
   Panel,
   PanelItem,
   Accordion,
