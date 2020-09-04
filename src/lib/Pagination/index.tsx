@@ -1,17 +1,26 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, ReactNode } from 'react'
+import Price from '../Price'
 
 import styles from './pagination.module.scss'
 
 interface Props {
-  itemsPerPage: number
-  totalItems: number
-  // paginate: Function
+  items: [] | ReactNode[]
+  itemsPerPage?: number
+  totalItems?: number
   [rest: string]: unknown // ...rest property
 }
 
-const Pagination: FunctionComponent<Props> = ({ itemsPerPage, totalItems, ...rest }) => {
-  let items = Array.from(Array(51).keys())
+const Pagination: FunctionComponent<Props> = ({ items, itemsPerPage = 6, ...rest }) => {
   const numberOfPages = []
+  let totalItems = items.length
+  let numStyles = {
+    width: '5%',
+    border: 'solid black 1px',
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '15px 0',
+    padding: '25px'
+  }
 
   const [currentPage, setCurrentPage] = useState(1)
   const [childrenPerPage] = useState(itemsPerPage)
@@ -28,11 +37,13 @@ const Pagination: FunctionComponent<Props> = ({ itemsPerPage, totalItems, ...res
     numberOfPages.push(i)
   }
 
-  console.log(currentItems)
-
   return (
     <div className={styles['pagination-wrapper']} {...rest}>
-      <TestSubject items={currentItems} />
+      <div className={styles.wrapper}>
+        {currentItems.map((num, index) => (
+          <Price price={num} key={index} style={numStyles} />
+        ))}
+      </div>
       <div>
         {numberOfPages.map((number) => (
           <button key={number} onClick={() => paginate(number)}>
@@ -45,29 +56,3 @@ const Pagination: FunctionComponent<Props> = ({ itemsPerPage, totalItems, ...res
 }
 
 export default Pagination
-
-interface TextProps {
-  items: number[]
-}
-
-const TestSubject: FunctionComponent<TextProps> = ({ items }) => {
-  let styles = {
-    width: '150px',
-    height: '150px',
-    border: 'solid black 1px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: '15px 0'
-  }
-
-  const panelMap = items.map((number) => {
-    return (
-      <div style={styles} key={number}>
-        {number}
-      </div>
-    )
-  })
-
-  return <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>{panelMap}</div>
-}

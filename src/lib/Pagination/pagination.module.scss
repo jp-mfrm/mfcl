@@ -1,5 +1,9 @@
 @import '../variables';
 
 .pagination-wrapper {
-  
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-around;
 }
