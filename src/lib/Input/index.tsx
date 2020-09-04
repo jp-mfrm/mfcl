@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useState } from 'react'
+import React, { forwardRef, FunctionComponent, ReactNode, useState } from 'react'
 import clsx from 'clsx'
 import styles from './input.module.scss'
 
@@ -12,30 +12,34 @@ export interface Props {
   /** Label for input field */
   label?: string | ReactNode
   /** Size of the Input. Might add "sm" in the future */
-  size?: 'lg' | 'md'
+  size?: 'lg' | 'md' | 'sm'
   /** Makes the input field disabled */
   disabled?: boolean
   /** Apply error styling */
   error?: boolean
   /** Message for input submission  */
   inputMessage?: string
+  /** Add a button or other component to the right side  */
+  rightSide?: ReactNode
   /** You already know what this is for. Why are you looking up the description? */
   onChange?: Function
   [rest: string]: unknown
 }
 
-const Input: FunctionComponent<Props> = ({
-  wrapperClass,
-  className,
-  name,
-  label,
-  size = 'lg',
-  disabled = false,
-  error = false,
-  inputMessage,
-  onChange,
-  ...rest
-}) => {
+const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(function TextField(props, ref) {
+  const {
+    wrapperClass,
+    className,
+    name,
+    label,
+    size = 'lg',
+    disabled = false,
+    error = false,
+    inputMessage,
+    onChange,
+    rightSide,
+    ...rest
+  } = props
   const [hasValue, setHasValue] = useState(false)
   const errorClass = error && styles.error
 
@@ -62,25 +66,26 @@ const Input: FunctionComponent<Props> = ({
           name={name}
           disabled={disabled}
           onChange={formControl}
+          ref={ref}
           {...rest}
         />
         {label && (
-          <label htmlFor={name} className={clsx(styles.label, errorClass)}>
+          <label htmlFor={name} className={clsx(styles.label, styles[size], disabled && styles.disabled, errorClass)}>
             {label}
           </label>
         )}
+        {rightSide}
       </div>
       {inputMessage && <p className={clsx(styles.footer, errorClass)}>{inputMessage}</p>}
     </div>
   )
-}
+})
 
 /** // TODO:
- * mobile label - ellipsis if too long
- * Mobile styles
- * Forward Ref
  * Put Button back in
  * Icon
+ * tests
+ * fix textArea
  */
 
 export default Input

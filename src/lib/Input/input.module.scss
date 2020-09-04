@@ -5,15 +5,13 @@
   flex-direction: column;
   width: fit-content;
   position: relative;
-
-  @media screen and (max-width: $mobile) {
-    width: 100%;
-  }
+  width: 100%;
 }
 
 .inner {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 .footer {
@@ -22,12 +20,9 @@
 }
 
 .input {
-  max-width: 100%;
-  min-width: inherit;
   text-align: start;
-  margin: inherit;
   border-radius: 25px;
-  border: solid 1px $gray-5;
+  border: solid 1px #939393;
   padding: 16px 34px;
   font-family: $r-regular;
   font-size: 16px;
@@ -36,47 +31,49 @@
   font-style: normal;
   line-height: 1.25;
   letter-spacing: normal;
-  color: #323030;
-
-  &:disabled {
-    border: solid 1px $gray-3;
-  }
+  color: #1e1e1e;
+  width: 100%;
 
   &::placeholder {
     color: $gray-8;
   }
 
   &:focus {
-    outline: none;
     border-width: 1px;
     border-color: lighten($black, 30%);
+    outline: none;
     transition: all 0.2s ease-out;
   }
 
   &:focus + .label,
   &.has-value + .label {
+    background: $white;
     top: -8px;
     left: 33px;
-    color: lighten($black, 30%);
     font-size: 12px;
     line-height: 16px;
-    background: white;
     padding-left: 2px;
     padding-right: 4px;
   }
 
-  &.has-value:not(:focus) + .label {
-    color: lighten(black, 60%);
+  &:disabled {
+    border: solid 1px $gray-3;
+    color: lighten(#1e1e1e, 70%);
+    cursor: not-allowed;
   }
 
   &.error {
     outline: 0;
     border-color: $red;
-    background-color: $white;
+
+    &:disabled {
+      border-color: lighten($red, 25%);
+      color: lighten($red, 30%);
+    }
   }
 
-  &:disabled {
-    cursor: not-allowed;
+  &.sm {
+    padding: 8px 20px;
   }
 
   &.md {
@@ -86,14 +83,25 @@
 
 .label {
   font-size: 16px;
-  text-overflow: ellipsis;
   position: absolute;
-  top: 12px;
+  top: 14px;
   left: 30px;
-  color: #9b9b9b;
+  color: #5b5b5b;
   transition: all 0.2s ease-out;
   background: transparent;
   pointer-events: none;
+
+  &.sm {
+    top: 6px;
+  }
+
+  &.md {
+    top: 10px;
+  }
+
+  &.disabled {
+    color: lighten(#1e1e1e, 70%);
+  }
 
   @media screen and (min-width: $mobile) {
     text-align: left;
@@ -102,4 +110,8 @@
 
 .error {
   color: $red !important;
+
+  &.disabled {
+    color: lighten($red, 30%) !important;
+  }
 }

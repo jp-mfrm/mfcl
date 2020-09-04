@@ -23,18 +23,19 @@ Inputs accept user entry data. Inputs use labels and sometimes icons to communic
 
 ## Basic Usage
 
-An Input field can show a user is currently interacting with it through focus styling.  
 Generic attributes for input elements can be applied.
 
 <Playground>
-  <Input type="text" label="Default" name="name" focus />
+  <Input type="text" label="Default" name="name" />
 </Playground>
 
 ## Size
 
-You can choose between medium and large input field sizes, the default being large.
+You can choose between small, medium and large input field sizes, the default being large.
 
 <Playground>
+  <Input type="text" size="sm" label="sm" />
+  <br />
   <Input type="text" size="md" label="md" />
   <br />
   <Input type="text" size="lg" label="lg" />
@@ -60,5 +61,5 @@ Add a small description below the input field.
   <br />
   <Input error inputMessage="This is an error message" label="error" />
   <br />
-  <Input disabled error inputMessage="This is an error message" />
+  <Input disabled error inputMessage="This is an disabled error message" label="disabled error" />
 </Playground>
