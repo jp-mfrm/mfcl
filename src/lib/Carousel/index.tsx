@@ -66,12 +66,6 @@ const Carousel: FunctionComponent<Props> = ({ itemsToShow, itemsToScroll, childr
   }
 
   const handleOnTransitionEnd = () => {
-    // Prevents the second slide from being rendered after initialization
-    if (!directionHandle) {
-      setDirectionHandle(true)
-      return
-    }
-
     if (direction === 1) {
       if (childrenArr) {
         // Take off last element, prepend to the start
