@@ -19,7 +19,7 @@ export interface Props {
   error?: boolean
   /** Message for input submission  */
   inputMessage?: string
-  /** Add a button or other component to the right side  */
+  /** Add a Button or other component to the right side  */
   rightSide?: ReactNode
   /** You already know what this is for. Why are you looking up the description? */
   onChange?: Function
@@ -74,7 +74,7 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
             {label}
           </label>
         )}
-        {rightSide}
+        {rightSide && <div className={styles['right-side']}>{rightSide}</div>}
       </div>
       {inputMessage && <p className={clsx(styles.footer, errorClass)}>{inputMessage}</p>}
     </div>
@@ -82,8 +82,6 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
 })
 
 /** // TODO:
- * Put Button back in
- * Icon
  * tests
  * fix textArea
  */

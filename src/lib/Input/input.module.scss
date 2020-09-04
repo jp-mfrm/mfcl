@@ -108,6 +108,12 @@
   }
 }
 
+.right-side {
+  height: 100%;
+  position: absolute;
+  right: 0;
+}
+
 .error {
   color: $red !important;
 

@@ -5,7 +5,7 @@ route: /components-input
 ---
 
 import { Playground, Props } from 'docz'
-import { Input } from '../../lib'
+import { Input, Button } from '../../lib'
 
 # Input
 
@@ -26,7 +26,7 @@ Inputs accept user entry data. Inputs use labels and sometimes icons to communic
 Generic attributes for input elements can be applied.
 
 <Playground>
-  <Input type="text" label="Default" name="name" />
+  <Input label="Default" name="name" />
 </Playground>
 
 ## Size
@@ -34,11 +34,11 @@ Generic attributes for input elements can be applied.
 You can choose between small, medium and large input field sizes, the default being large.
 
 <Playground>
-  <Input type="text" size="sm" label="sm" />
+  <Input size="sm" label="sm" />
   <br />
-  <Input type="text" size="md" label="md" />
+  <Input size="md" label="md" />
   <br />
-  <Input type="text" size="lg" label="lg" />
+  <Input size="lg" label="lg" />
 </Playground>
 
 ## Required or Disabled
@@ -62,4 +62,35 @@ Add a small description below the input field.
   <Input error inputMessage="This is an error message" label="error" />
   <br />
   <Input disabled error inputMessage="This is an disabled error message" label="disabled error" />
+</Playground>
+
+## Right Side
+
+Add a button or another component to the right side
+
+<Playground>
+  <Input
+    size="sm"
+    label="Right Side"
+    rightSide={
+      <Button btnType="secondary" style={{ height: '100%' }}>
+        Log Out
+      </Button>
+    }
+  />
+  <br />
+  <Input
+    size="md"
+    label="Secondary Btn"
+    rightSide={
+      <svg viewBox="0 0 24 24" height={18} width={18} style={{ margin: '13px 20px' }}>
+        <g strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" fill="#2D2926" stroke="#2D2926">
+          <line x1="22" y1="22" x2="15.656" y2="15.656" fill="none" strokeMiterlimit="10" />
+          <circle cx="10" cy="10" r="8" fill="none" stroke="#2D2926" strokeMiterlimit="10" />
+        </g>
+      </svg>
+    }
+  />
+  <br />
+  <Input label="Tertiary Btn" rightSide={<Button style={{ height: '100%' }}>Submit</Button>} />
 </Playground>
