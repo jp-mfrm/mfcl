@@ -20,6 +20,10 @@ export default function carouselHelper(
   autoSlide: boolean,
   slideRef: RefObject<HTMLDivElement>
 ) {
+
+  if(autoSlide)
+    infinite = true;
+
   const itemWidth = itemsToShow && itemsToShow > 1 ? 100 / itemsToShow : 100;
   const itemCount = Children.count(children);
   const sliderWidth = itemCount * 100;
@@ -123,7 +127,6 @@ export default function carouselHelper(
   useEffect(() => {
     if(slideRef && slideRef.current)
       slideRef.current.focus();
-      console.log(slideRef);
   }, [])
 
   return {

@@ -11,13 +11,15 @@ import styles from "./carousel.module.scss";
 import carouselHelper from "./carouselHelper";
 
 interface Props {
+  /** Sets the class for the Carousel wrapper */
+  carouselClass?: string;
   /** Sets how many slides to show */
   itemsToShow?: number;
   /** Sets how many slides to scroll per click */
   itemsToScroll?: number;
   /** Sets the transition control button alignments. Two non conflicting configurations can be combined.  
    * 'middle' centers vertically while 'center' centers horizontally. */
-  btnAlignment?: 'top' | 'middle' | 'center' | 'apart' | 'left' | 'right' | 'bottom' 
+  btnAlignment?: string | 'top' | 'middle' | 'center' | 'apart' | 'left' | 'right' | 'bottom' 
   /** Allows Carousel to be cyclical. */
   infinite?: boolean;
   /** Enables automatic transitions. */
@@ -28,6 +30,7 @@ interface Props {
 }
 
 const Carousel: FunctionComponent<Props> = ({
+  carouselClass,
   itemsToShow = 1,
   itemsToScroll,
   btnAlignment = 'middle apart',
@@ -38,9 +41,6 @@ const Carousel: FunctionComponent<Props> = ({
 }) => {
 
   const slideRef = useRef<HTMLDivElement>(null);
-
-  if(autoSlide)
-    infinite = true;
 
   const {
     sliderWidth,
@@ -79,7 +79,7 @@ const Carousel: FunctionComponent<Props> = ({
    
   return (
     <div 
-      className={clsx(styles["carousel-wrapper"])} 
+      className={clsx(styles["carousel-wrapper"], carouselClass)} 
       style={{ justifyContent: `${carouselJustify}` }}>
       <div
         onTransitionEnd={handleOnTransitionEnd} 
