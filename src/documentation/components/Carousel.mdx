@@ -6,12 +6,12 @@ route: /components-carousel
 
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
-import { Carousel } from '../../lib'
+import { Carousel, ProductCard } from '../../lib'
 
 # Carousel
 
 ```javascript
-import { Carousel } from 'mfcl'
+import { Carousel, ProductCard } from 'mfcl'
 ```
 
 ## Description
@@ -25,11 +25,58 @@ The Carousel component allows you to a display a selection of rotating items.
 ## Basic Usage
 
 <Playground>
-  <Carousel>
+  <Carousel draggable>
     <div>Slide 1</div>
     <div>Slide 2</div>
     <div>Slide 3</div>
     <div>Slide 4</div>
     <div>Slide 5</div>
+  </Carousel>
+</Playground>
+
+## Draggable
+
+<Playground>
+  <Carousel draggable>
+    
+     <div style={{display: 'flex', flexDirection: 'row'}}>
+  <ProductCard
+    brand="Serta"
+    brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+    productImg="https://i1.adis.ws/i/hmk/133558"
+    title='Serta Response Essentials Maplewood 8.5" Firm Mattress'
+    size="Wumbo"
+    discountPrice="2300"
+    price="3500"
+    matchPercentage="98"
+    reviews="215"
+    rating="4"
+  />
+  <ProductCard
+    brand="Serta"
+    brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+    productImg="https://i1.adis.ws/i/hmk/133558"
+    title='Serta Response Essentials Maplewood 8.5" Firm Mattress'
+    size="Wumbo"
+    discountPrice="2300"
+    price="3500"
+    matchPercentage="98"
+    reviews="215"
+    rating="4"
+  />
+  <ProductCard
+    brand="Serta"
+    brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+    productImg="https://i1.adis.ws/i/hmk/133558"
+    title='Serta Response Essentials Maplewood 8.5" Firm Mattress'
+    size="Wumbo"
+    discountPrice="2300"
+    price="3500"
+    matchPercentage="98"
+    reviews="215"
+    rating="4"
+  />
+  </div>
+
   </Carousel>
 </Playground>
