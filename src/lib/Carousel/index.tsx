@@ -1,16 +1,12 @@
 import React, {
-  Children,
   FunctionComponent,
-  ReactNode,
-  cloneElement,
-  isValidElement,
-  useCallback,
-  useEffect,
   useRef,
-  useState
+  ReactNode,
+  isValidElement,
+  cloneElement,
 } from 'react'
 
-import carouselHelper from './carouselHelper'
+import { carouselHelper, draggableHelper } from './carouselHelper'
 import clsx from 'clsx'
 import styles from './carousel.module.scss'
 
@@ -36,6 +32,10 @@ interface Props {
   /** Sets the transition control button alignments. Two non conflicting configurations can be combined.
    * 'middle' centers vertically while 'center' centers horizontally. */
   btnAlignment?: string | 'top' | 'middle' | 'center' | 'apart' | 'left' | 'right' | 'bottom'
+  /** hides indicator buttons */
+  hideIndicators?: boolean
+  /** Sets the indicator buttons' style */
+  indicatorStyle?: string | 'bar' | 'round'
   /** Allows Carousel to be cyclical. */
   infinite?: boolean
   /** Enables automatic transitions. */
@@ -52,187 +52,58 @@ const Carousel: FunctionComponent<Props> = ({
   itemsToShow = 1,
   itemsToScroll = 1,
   btnAlignment = 'middle apart',
+  hideIndicators = false,
+  indicatorStyle = 'round',
   infinite = false,
   autoSlide = false,
   duration = 3000,
   draggable = false,
   children
 }) => {
-  const slideRef = useRef<HTMLDivElement>(null)
-  const sliderRef = useRef<HTMLDivElement>(null)
 
   const {
-    sliderWidth,
     slideFlexBasis,
     childrenArr,
     alignment,
-    carouselJustify,
-    slideTransform,
-    slideTransition,
-    goLeft,
-    goRight,
-    handleOnTransitionEnd
-  } = carouselHelper(children, itemsToShow, btnAlignment, duration, infinite, autoSlide, slideRef)
+    sliderRef,
+    indicators,
+    setAction,
+  } = carouselHelper(children, itemsToShow, itemsToScroll, btnAlignment, indicatorStyle, duration, infinite, autoSlide);
 
-  const slidesLength = Children.count(children)
-  const slides = childrenArr?.map((child: ReactNode, index: number) => {
-    if (isValidElement(child)) {
-      // TODO: Figure out how to clone the outer wrapper of cloned element without overriding class name
-      return (
-        <div
-          className={clsx(styles['slide'], draggable && styles['draggable'])}
-          key={index}
-          style={{ flexBasis: draggable ? '' : `${slideFlexBasis}%` }}
-        >
-          {cloneElement(child, {
-            key: index
-          })}
-        </div>
-      )
-      // return cloneElement(child, {
-      //   key: index,
-      //   style: { flexBasis: !draggable && `${slideFlexBasis}%` }
-      // })
-    }
-  })
-
-  if (draggable) {
-    const firstSlide = slides[0]
-    const lastSlide = slides[slides.length - 1]
-    const cloneSlides = [firstSlide, lastSlide].map((child: ReactNode, index: number) => {
+  const slides = 
+    childrenArr?.map((child: ReactNode, index: number) => {
       if (isValidElement(child)) {
         return cloneElement(child, {
-          key: index === 0 ? -1 : slides.length
-        })
+          key: index,
+          index: index,
+          className: clsx(styles["slide"]),
+          style: {flexBasis: `${slideFlexBasis}%`},
+        });
       }
-    })
-    slides.unshift(cloneSlides[1])
-    slides.push(cloneSlides[0])
-  }
+    });
 
-  const buttons = (
-    <div className={clsx(styles['carousel-wrapper-controls'], alignment)}>
-      <button className={clsx(styles['prev'])} onClick={goLeft}>
-        <i className={clsx()}></i>
-      </button>
-      <button className={clsx(styles['next'])} onClick={goRight}>
-        <i className={clsx()}></i>
-      </button>
-    </div>
-  )
+  const buttons = 
+  <div className={clsx(styles["carousel-wrapper-controls"], alignment)}>
+    <button className={clsx(styles["prev"], styles["control-button"])} onClick={() => setAction("prev")}>
+      <i></i>
+    </button>
+    <button className={clsx(styles["next"], styles["control-button"])} onClick={() => setAction("next")}>
+      <i></i>
+    </button>
+  </div>
 
-  const [dragActive, setDragActive] = useState(false)
-  const [posInitial, setPosInitial] = useState(0)
-  const [posX1, setPosX1] = useState(0)
-  const [sliderLeft, setSliderLeft] = useState(-100)
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [allowShift, setAllowShift] = useState(true)
-  const slideSize = 100 // slideRef.current ? slideRef.current.offsetWidth : 0
-
-  const convertPixelToPercentage = (pixelVal: number) => {
-    return (pixelVal / (sliderRef.current!.offsetWidth / slides.length)) * 100
-  }
-
-  const getSliderLeftPos = useCallback(() => {
-    return convertPixelToPercentage(sliderRef.current!.offsetLeft)
-    // return(sliderRef.current!.offsetLeft / (sliderRef.current!.offsetWidth / slides.length)) * 100
-  }, [sliderLeft])
-
-  const handleDragStart = (event: any) => {
-    event = event || window.event
-    event.preventDefault()
-
-    setPosInitial(getSliderLeftPos())
-
-    if (event.type == 'touchstart') {
-      setPosX1(event.touches[0].clientX)
-    } else {
-      setPosX1(convertPixelToPercentage(event.clientX))
-    }
-
-    setDragActive(true)
-  }
-
-  const handleDragActionHandler = useCallback(
-    (event: any) => {
-      if (dragActive) {
-        event = event || window.event
-
-        var nextPosition = 0
-        if (event.type == 'touchmove') {
-          nextPosition = posX1 - convertPixelToPercentage(event.touches[0].clientX)
-          setPosX1(convertPixelToPercentage(event.touches[0].clientX))
-        } else {
-          nextPosition = posX1 - convertPixelToPercentage(event.clientX)
-          setPosX1(convertPixelToPercentage(event.clientX))
-        }
-
-        setSliderLeft(getSliderLeftPos() - nextPosition)
-      }
-    },
-    [dragActive, posInitial, getSliderLeftPos]
-  )
-
-  const handleDragEndHandler = useCallback(
-    (event: any) => {
-      if (dragActive) {
-        var posFinal = getSliderLeftPos()
-        var threshold = 25 // 100
-        if (posFinal - posInitial < -threshold) {
-          shiftSlide(1, 'drag')
-        } else if (posFinal - posInitial > threshold) {
-          shiftSlide(-1, 'drag')
-        } else {
-          setSliderLeft(posInitial)
-        }
-
-        setDragActive(false)
-      }
-    },
-    [dragActive, posInitial, getSliderLeftPos]
-  )
-
-  const shiftSlide = (dir: number, action?: string) => {
-    sliderRef.current!.style.transition = 'left 0.2s ease-out'
-
-    if (allowShift) {
-      const initPosition = action ? posInitial : getSliderLeftPos()
-      if (!action) {
-        setPosInitial(initPosition)
-      }
-
-      if (dir == 1) {
-        setSliderLeft(initPosition - slideSize)
-        setActiveIndex(activeIndex + 1)
-      } else if (dir == -1) {
-        setSliderLeft(initPosition + slideSize)
-        setActiveIndex(activeIndex - 1)
-      }
-    }
-
-    setAllowShift(false)
-  }
-
-  const checkIndex = () => {
-    sliderRef.current!.style.transition = ''
-
-    if (activeIndex === -1) {
-      setSliderLeft(-(slidesLength * slideSize))
-      setActiveIndex(slidesLength - 1)
-    }
-
-    if (activeIndex === slidesLength) {
-      setSliderLeft(-(1 * slideSize))
-      setActiveIndex(0)
-    }
-
-    setAllowShift(true)
-  }
-
-  useEffect(() => {
-    document.onmouseup = handleDragEndHandler
-    document.onmousemove = handleDragActionHandler
-  }, [handleDragEndHandler, handleDragActionHandler])
+if(draggable) {
+  const {
+    draggableSliderRef,
+    sliderLeft,
+    handleDragStart,
+    handleDragEndHandler,
+    handleDragActionHandler,
+    checkIndex,
+    shiftSlide,
+    slides,
+    sliderWidth
+  } = draggableHelper(children);
 
   const draggableTemplate = (
     <div id="slider" className={clsx(styles['slider'], styles['loaded'])}>
@@ -244,7 +115,7 @@ const Carousel: FunctionComponent<Props> = ({
             left: `${sliderLeft}%`,
             width: `${sliderWidth + 200}%`
           }}
-          ref={sliderRef}
+          ref={draggableSliderRef}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
           onTouchEnd={handleDragEndHandler}
@@ -259,24 +130,26 @@ const Carousel: FunctionComponent<Props> = ({
     </div>
   )
 
+  return draggableTemplate;
+}
+
   const template = (
-    <div className={clsx(styles['carousel-wrapper'], carouselClass)} style={{ justifyContent: `${carouselJustify}` }}>
+    <div 
+      className={clsx(styles["carousel-wrapper"], carouselClass)}>
       <div
-        onTransitionEnd={handleOnTransitionEnd}
-        className={clsx(styles['carousel-wrapper-slider'])}
-        style={{
-          transform: `translate(${slideTransform}%)`,
-          transition: ` ${slideTransition}`,
-          width: `${sliderWidth}%`
-        }}
+        ref={sliderRef}
+        className={clsx(styles["carousel-wrapper-slider"])} 
       >
         {slides}
       </div>
-      {buttons}
+        {buttons}
+      <div className={clsx(styles["carousel-wrapper-indicators"])}>
+        {!hideIndicators && indicators}
+      </div>
     </div>
   )
 
-  return draggable ? draggableTemplate : template
+  return template;
 }
 
 export default Carousel

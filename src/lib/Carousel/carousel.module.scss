@@ -3,8 +3,8 @@
 .carousel-wrapper {
   background: transparent;
   width: 100%;
-  min-height: 100px;
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   overflow: hidden;
   box-sizing: border-box;
@@ -16,7 +16,7 @@
     flex-shrink: 0;
     transition: all 0.5s;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start;
 
     .slide {
       background-color: $gray-4;
@@ -26,8 +26,8 @@
       justify-content: center;
       align-items: center;
       font-size: 20px;
-      color: black;
-      // margin: 0 0.2%;
+      color: $black;
+      margin: 0 0.25%;
     }
   }
 
@@ -57,7 +57,7 @@
     }
 
     &.middle {
-      bottom: 40%;
+      bottom: 50%;
     }
 
     &.bottom {
@@ -65,7 +65,7 @@
     }
 
     button {
-      border: solid gray;
+      border: solid $gray-8;
       border-width: 0 5px 5px 0;
       display: inline-block;
       padding: 5px;
@@ -74,7 +74,7 @@
       outline: none;
 
       &:hover {
-        border-color: black;
+        border-color: $black;
       }
     }
 
@@ -88,7 +88,42 @@
       -webkit-transform: rotate(135deg);
     }
   }
+
+  &-indicators {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px 0;
+  
+    .indicator-button {
+      margin: 0 0.5%;
+      outline: none;
+      background-color: $gray-6;
+  
+      &.round {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-clip: content-box;
+        box-sizing: content-box;
+        padding: 2.5px;
+        border: 1.5px solid $gray-6; 
+      }
+  
+      &.bar {
+        border: 1px solid $gray-6; 
+  
+      }
+  
+      &:hover {
+        background-color: $black;
+        border-color: $black;
+      }
+    }
+  }
 }
+
+
 
 $slider-width: 100%; // 400px;
 $slider-height: 100%; // 300px; // 100%;
@@ -107,6 +142,29 @@ $slider-height: 100%; // 300px; // 100%;
   z-index: 2;
   justify-content: center;
   display: flex;
+
+  .prev,
+  .next {
+    background-size: 22px;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+
+  .prev {
+    background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
+    left: -20px;
+  }
+
+  .next {
+    background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+    right: -20px;
+  }
+
+  .prev:active,
+  .next:active {
+    transform: scale(0.8);
+  }
 }
 
 .wrapper {
@@ -154,27 +212,4 @@ $slider-height: 100%; // 300px; // 100%;
   margin-top: -20px;
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
   z-index: 2;
-}
-
-.prev,
-.next {
-  background-size: 22px;
-  background-position: center;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-.prev {
-  background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
-  left: -20px;
-}
-
-.next {
-  background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
-  right: -20px;
-}
-
-.prev:active,
-.next:active {
-  transform: scale(0.8);
 }
