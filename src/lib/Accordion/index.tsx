@@ -36,8 +36,6 @@ type Props = {
   items?: AccordionItem[]
   /* styles to pass to each section title wrapper */
   titleStyles?: CSSProperties
-  /* styles to pass to each section content wrapper */
-  contentStyles?: CSSProperties
   /* width of the Accordion */
   width?: string
   /* Optional children to use instead of items prop */
@@ -49,7 +47,6 @@ const Accordion: FunctionComponent<Props> = ({
   items = [],
   hidePreview = false,
   titleStyles = {},
-  contentStyles = {},
   width = 'auto',
   children
 }) => {
@@ -104,7 +101,6 @@ const Accordion: FunctionComponent<Props> = ({
                 index={index}
                 {...accordionItemProps}
                 titleStyles={titleStyles}
-                contentStyles={contentStyles}
               />
             )
           })}

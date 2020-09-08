@@ -75,6 +75,7 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/documentation/**",
+      "!src/gatsby-theme-docz/**",
       "!src/lib/utils/**",
       "!src/lib/index.ts",
       "!src/lib/declaration.d.ts",

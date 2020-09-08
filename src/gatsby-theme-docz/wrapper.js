@@ -1,4 +1,4 @@
 import React, { Fragment } from 'react'
-import './styles.css'
+import './style.css'
 
 export default ({ children }) => <Fragment>{children}</Fragment>

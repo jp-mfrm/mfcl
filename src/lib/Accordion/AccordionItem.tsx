@@ -15,7 +15,6 @@ type Props = {
   setIndex?: Function
   index?: number
   titleStyles?: CSSProperties
-  contentStyles?: CSSProperties
   initialOpen?: boolean
   onOpen?: Function
   onClose?: Function
@@ -34,7 +33,6 @@ const AccordionItem: FunctionComponent<Props> = ({
   setIndex = () => {},
   hidePreview = false,
   titleStyles = {},
-  contentStyles = {},
   initialOpen = false,
   onOpen = () => {},
   onClose = () => {},
