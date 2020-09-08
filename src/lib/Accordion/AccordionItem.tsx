@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState, ReactNode, useEffect, useRef, CSSProperties } from 'react'
+import Collapse from '../Collapse'
 import styles from './accordion.module.scss'
 import clsx from 'clsx'
 
@@ -41,7 +42,7 @@ const AccordionItem: FunctionComponent<Props> = ({
 }) => {
   const labelId = `label-${id}`
   const sectionId = `section-${id}`
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(initialOpen)
 
   const labelRef = useRef<HTMLDivElement>(null)
 
@@ -53,10 +54,6 @@ const AccordionItem: FunctionComponent<Props> = ({
       }
     }
   }, [index, focused])
-
-  useEffect(() => {
-    setOpen(initialOpen)
-  }, [])
 
   const handleClick = () => {
     if (open) {
@@ -73,7 +70,7 @@ const AccordionItem: FunctionComponent<Props> = ({
   const lineStyles = clsx(styles['line'], withPreviewStyle, hidePreviewStyle)
   const centerStyles = clsx(styles['center'], withPreviewStyle, hidePreviewStyle)
   const previewStyles = clsx(styles['preview'], hidePreviewStyle)
-  const innerConentStyles = clsx(styles['content'], icon && styles['alignedContent'])
+  // const innerConentStyles = clsx(styles['content'], icon && styles['alignedContent'])
 
   const handleKeys = (e: any) => {
     switch (e.key) {
@@ -125,18 +122,18 @@ const AccordionItem: FunctionComponent<Props> = ({
         </div>
         <span className={styles.openIcon} />
       </div>
-      <div className={styles.inner}>
-        <div
-          className={innerConentStyles}
-          role="region"
-          aria-labelledby={labelId}
-          id={sectionId}
-          style={contentStyles}
-          data-testid="accordion-content"
-        >
-          <div className={styles.innerContent}>{content}</div>
-        </div>
-      </div>
+      <Collapse
+        isOpen={open}
+        childProps={{
+          role: 'region',
+          id: sectionId,
+          'aria-labelledby': labelId,
+          'aria-hidden': open ? 'false' : 'true',
+          'data-testid': 'accordion-content'
+        }}
+      >
+        <div className={styles.innerContent}>{content}</div>
+      </Collapse>
     </div>
   )
 }

@@ -3,7 +3,7 @@
 .input-wrapper {
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  font-family: $r-regular;
   position: relative;
   width: 100%;
 }
@@ -84,7 +84,7 @@
 .label {
   font-size: 16px;
   position: absolute;
-  top: 14px;
+  top: 18px;
   left: 30px;
   color: #5b5b5b;
   transition: all 0.2s ease-out;
@@ -92,11 +92,11 @@
   pointer-events: none;
 
   &.sm {
-    top: 6px;
+    top: 10px;
   }
 
   &.md {
-    top: 10px;
+    top: 14px;
   }
 
   &.disabled {
