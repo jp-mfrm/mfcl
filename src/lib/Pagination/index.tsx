@@ -40,8 +40,8 @@ const Pagination: FunctionComponent<Props> = ({ items, itemsPerPage = 6, ...rest
   return (
     <div className={styles['pagination-wrapper']} {...rest}>
       <div className={styles.wrapper}>
-        {currentItems.map((num, index) => (
-          <Price price={num} key={index} style={numStyles} />
+        {currentItems.map((item, index) => (
+          <Price key={index} price={item} style={numStyles} />
         ))}
       </div>
       <div>
