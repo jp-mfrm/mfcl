@@ -14,7 +14,7 @@
     display: flex;
     width: 500%; /* Dynamically set */
     flex-shrink: 0;
-    transition: all 0.5s;
+    transition: all 0.001s;
     flex-direction: row;
     justify-content: flex-start;
 
@@ -32,24 +32,54 @@
   }
 
   &-controls {
-    width: 100%;
+    width: 40px;
+    height: 40px;
     position: absolute;
     display: flex;
+    outline: none;
+    background: #fff;
+    border-radius: 50px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    background-size: 22px;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    z-index: 2;
 
     &.center {
-      justify-content: center;
+      &.next {
+        right: 40%
+      }
+      &.prev {
+        left: 40%;
+      }
     }
 
     &.left {
-      justify-content: flex-start;
+      &.next {
+        left: 10%;
+      }
+      &.prev {
+        left: 1%;
+      }
     }
 
     &.right {
-      justify-content: flex-end;
+      &.next {
+        right: 1%;
+      }
+      &.prev {
+        right: 10%;
+      }
     }
 
     &.apart {
-      justify-content: space-between;
+      &.next {
+        right: 1%;
+      }
+      &.prev {
+        left: 1%;
+      }
     }
 
     &.top {
@@ -61,31 +91,20 @@
     }
 
     &.bottom {
-      bottom: 0%;
+      bottom: 2%;
     }
 
-    button {
-      border: solid $gray-8;
-      border-width: 0 5px 5px 0;
-      display: inline-block;
-      padding: 5px;
-      margin: 5px;
-      background-color: transparent;
-      outline: none;
-
-      &:hover {
-        border-color: $black;
-      }
+    &.prev {
+      background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
     }
 
-    button.next {
-      transform: rotate(-45deg);
-      -webkit-transform: rotate(-45deg);
-    }
-
-    button.prev {
-      transform: rotate(135deg);
-      -webkit-transform: rotate(135deg);
+    &.next {
+      background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+    } 
+    
+    &.prev:active,
+    &.next:active {
+      transform: scale(0.8);
     }
   }
 
@@ -94,6 +113,7 @@
     flex-direction: row;
     justify-content: center;
     margin: 10px 0;
+    cursor: pointer;
   
     .indicator-button {
       margin: 0 0.5%;
@@ -118,6 +138,10 @@
       &:hover {
         background-color: $black;
         border-color: $black;
+      }
+
+      &:active {
+        transform: scale(0.8);
       }
     }
   }
@@ -192,7 +216,7 @@ $slider-height: 100%; // 300px; // 100%;
   width: $slider-width;
   max-width: $slider-width;
   height: $slider-height;
-  min-height: 100px;
+  min-height: 300px;
   cursor: pointer;
   display: flex;
   flex-direction: column;

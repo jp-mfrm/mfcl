@@ -68,29 +68,28 @@ const Carousel: FunctionComponent<Props> = ({
     sliderRef,
     indicators,
     setAction,
+    handleTransitionEnd,
   } = carouselHelper(children, itemsToShow, itemsToScroll, btnAlignment, indicatorStyle, duration, infinite, autoSlide);
 
   const slides = 
     childrenArr?.map((child: ReactNode, index: number) => {
       if (isValidElement(child)) {
         return cloneElement(child, {
+          ...child.props,
           key: index,
           index: index,
           className: clsx(styles["slide"]),
-          style: {flexBasis: `${slideFlexBasis}%`},
+          style: {...child.props.style, flexBasis: `${slideFlexBasis}%`},
         });
       }
     });
 
   const buttons = 
-  <div className={clsx(styles["carousel-wrapper-controls"], alignment)}>
-    <button className={clsx(styles["prev"], styles["control-button"])} onClick={() => setAction("prev")}>
-      <i></i>
-    </button>
-    <button className={clsx(styles["next"], styles["control-button"])} onClick={() => setAction("next")}>
-      <i></i>
-    </button>
-  </div>
+  <>
+    <a className={clsx(styles["prev"], styles["carousel-wrapper-controls"], alignment)} onClick={() => setAction("prev")}></a>
+    <a className={clsx(styles["next"], styles["carousel-wrapper-controls"], alignment)} onClick={() => setAction("next")}></a>
+  </>
+  var template;
 
 if(draggable) {
   const {
@@ -105,7 +104,7 @@ if(draggable) {
     sliderWidth
   } = draggableHelper(children);
 
-  const draggableTemplate = (
+  template = (
     <div id="slider" className={clsx(styles['slider'], styles['loaded'])}>
       <div className={styles['wrapper']}>
         <div
@@ -129,26 +128,26 @@ if(draggable) {
       <a id="next" className={clsx(styles['control'], styles['next'])} onClick={() => shiftSlide(1)}></a>
     </div>
   )
-
-  return draggableTemplate;
-}
-
-  const template = (
+} else {
+  template = (
+    <>
     <div 
       className={clsx(styles["carousel-wrapper"], carouselClass)}>
       <div
         ref={sliderRef}
-        className={clsx(styles["carousel-wrapper-slider"])} 
+        className={clsx(styles["carousel-wrapper-slider"])}
+        onTransitionEnd={handleTransitionEnd}
       >
         {slides}
       </div>
-        {buttons}
       <div className={clsx(styles["carousel-wrapper-indicators"])}>
         {!hideIndicators && indicators}
       </div>
     </div>
+    {buttons} 
+    </>
   )
-
+}
   return template;
 }
 

@@ -40,20 +40,71 @@ export function carouselHelper(
     const [activeIndex, setActiveIndex] = useState(0);
     const [action, setAction] = useState("");
   
+    const [reposition, setReposition] = useState("");
+
     const indicators: ReactNode[] = [];
     Children.forEach(children, (value, index) => {
       indicators.push(createElement('button', {
         key: index,
         className: clsx(styles["indicator-button"], styles[indicatorStyle]),  
-        onClick: () => moveToDestination(index)}, 
+        onClick: () => handleIndicatorClick(index)}, 
         ));
     });
   
-  const moveToDestination = (destinationIndex: number) => {
+  const moveToDestination = (destinationIndex: number, speed?: 'fast'|'slow') => {
     //  translate = ( -1 x destinationIndex x ( flexBasis + ( 2 x margins )  ) + ( margins x 3 )
     let translate = ( -1 * destinationIndex * ( slideFlexBasis + ( 2 * slideMargin ) ) + ( slideMargin * 3 ) );
     if(sliderRef.current) {
+      if((infinite && reposition) || !infinite) {
+        sliderRef.current.style.transition = "all 0.5s";
+      } else {
+        sliderRef.current.style.transition = "all 0.01s";
+      }
+
       sliderRef.current.style.transform = "translateX(" + translate + "%)";
+    } 
+  }
+
+  const handleIndicatorClick = (destinationIndex: number) => {
+    //Gets thrown off if the control buttons are clicked.
+    if(infinite) {
+      var scrollAmount = (destinationIndex + 1) - activeIndex;
+      if(scrollAmount === 0) return;
+      var carouselItems = sliderRef.current.children;
+      if(scrollAmount > 0) {
+        moveToDestination(0);
+        for(let i=0; i < scrollAmount; i++) {
+          sliderRef.current.insertBefore(carouselItems[0], carouselItems[itemCount-1].nextSibling);
+        }
+        moveToDestination(1);
+        setActiveIndex(destinationIndex+1);
+      } else {
+        moveToDestination(2);
+        for(let i=0; i < (-1*scrollAmount); i++) {
+          sliderRef.current.insertBefore(carouselItems[itemCount-1], carouselItems[0])
+        }
+        moveToDestination(1);
+        setActiveIndex(destinationIndex+1);
+      }
+    } else {
+      moveToDestination(destinationIndex);
+    }
+  }
+
+  const handleTransitionEnd = () => {
+
+    if(infinite) {
+      var carouselItems = sliderRef.current.children;
+
+      if(reposition == "next") {  
+        sliderRef.current.insertBefore(carouselItems[0], carouselItems[itemCount-1].nextSibling);
+        moveToDestination(1)
+      } else if (reposition == "prev") {
+        sliderRef.current.insertBefore(carouselItems[itemCount-1], carouselItems[0])
+        moveToDestination(1)
+      }
+  
+      setReposition("");
     }
   }
 
@@ -63,59 +114,25 @@ export function carouselHelper(
 
     switch(true) {
       case action === "next" && infinite:
-        destinationIndex = activeIndex >= itemCount - scrollAmount ? 0 : activeIndex + scrollAmount; 
-
-        moveToDestination(destinationIndex);
+        setReposition("next");
+        moveToDestination(0);
           
         break;
       
       case action === "next" && !infinite:
-        // destinationIndex = activeIndex + itemsToScroll;
-        
-        let itemsToScroll = scrollAmount;
-
-        if(activeIndex + (itemsToShow-1) + itemsToScroll > itemCount-1)
-        {
-            while(activeIndex + (itemsToShow-1) + itemsToScroll >= itemCount-1) {
-              itemsToScroll-=1;
-            }
-            destinationIndex = activeIndex + itemsToScroll;
-            moveToDestination(destinationIndex);
-        } else {
-          destinationIndex = activeIndex + itemsToScroll;
-          moveToDestination(destinationIndex);
-        }
-
-        // if(activeIndex + itemsToScroll > itemCount-1) {
-        //   return;
-        // } else {
-        //   if(activeIndex + itemsToShow + itemsToScroll >= itemCount-1) {
-        //     destinationIndex = activeIndex + 1;
-        //   } else {
-        //     destinationIndex = activeIndex + itemsToScroll;
-        //   }
-          moveToDestination(destinationIndex);
-        //}
+        destinationIndex = (activeIndex + scrollAmount) > itemCount - 1 ? destinationIndex : activeIndex + scrollAmount;
+        moveToDestination(destinationIndex);
         break;
 
       case action === "prev" && infinite:
-        destinationIndex = activeIndex === 0 ? itemCount - scrollAmount : activeIndex - scrollAmount;
-        // sliderRef.current.insertBefore(sliderRef.current.children[itemCount-1], sliderRef.current.children[0]);
-        moveToDestination(destinationIndex);
+        setReposition("prev");
+        moveToDestination(2);
         
         break;
 
       case action === "prev" && !infinite:
-        if(activeIndex === 0) {
-          return;
-        } else {
-          if(activeIndex - scrollAmount <= 0 || activeIndex - itemsToShow - scrollAmount <= 0) {
-            destinationIndex = activeIndex - 1;
-          } else {
-            destinationIndex = activeIndex - scrollAmount;
-          }
-          moveToDestination(destinationIndex);
-        } 
+        destinationIndex = (activeIndex - scrollAmount) < 0 ? destinationIndex : activeIndex - scrollAmount;
+        moveToDestination(destinationIndex);
         break;
     }
     setActiveIndex(destinationIndex);
@@ -131,10 +148,18 @@ export function carouselHelper(
   
       return () => clearInterval(timer);
     }
-  }, [started]);
+  }, [sliderRef, started]);
 
   useEffect(() => {
-    moveToDestination(0);
+    if(!infinite) {
+      moveToDestination(0);
+    } else {
+      var carouselItems = sliderRef.current.children;
+      sliderRef.current.insertBefore(carouselItems[itemCount-1], carouselItems[0]);
+      let translate = ( -1 * ( slideFlexBasis + ( 2 * slideMargin ) ) + ( slideMargin * 3 ) );
+      sliderRef.current.style.transform = "translateX(" + translate + "%)";
+      setActiveIndex(1);
+    }
   }, [])
 
   return {
@@ -144,6 +169,7 @@ export function carouselHelper(
     sliderRef,
     indicators,
     setAction,
+    handleTransitionEnd
   };
 }
 
