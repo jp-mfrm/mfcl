@@ -1,17 +1,30 @@
+import path from 'path'
 import typescript from 'rollup-plugin-typescript2'
 import commonjs from 'rollup-plugin-commonjs'
-import del from 'rollup-plugin-delete'
 import postcss from 'rollup-plugin-postcss'
 import resolve from 'rollup-plugin-node-resolve'
 import filesize from 'rollup-plugin-filesize'
-import pkg from './package.json'
+
+import entries from './dist/entries.json' // eslint-disable-line import/no-unresolved
+import mfclComponents from './dist/components' // eslint-disable-line import/no-unresolved
+
+// Paths
+const rootDir = path.resolve()
+const distDir = path.resolve(rootDir, './dist')
+const indexFilePath = './src/lib/index.ts'
 
 // Don't bundle dependencies
-const external = ['prop-types', 'react-dom', 'react', 'react-transition-group/Transition', 'clsx']
+const external = [
+  'prop-types',
+  'react-dom',
+  'react',
+  'react-transition-group/Transition',
+  'clsx',
+  ...mfclComponents // don't bundle itself when components reuse other components
+]
 
 const plugins = [
-  del({ targets: ['dist/*'] }),
-  typescript(),
+  typescript({ tsconfigOverride: { compilerOptions: { declaration: false } } }),
   postcss({
     modules: {},
     inject: {
@@ -25,22 +38,48 @@ const plugins = [
   commonjs()
 ]
 
+// Build export array
+const rollupEntries = Object.entries(entries).map(([name, input]) => ({
+  input,
+  output: {
+    file: `${distDir}/${name}/index.js`,
+    format: 'cjs', // commonjs
+    exports: 'auto'
+  },
+  external,
+  plugins
+}))
+
+// add an index.js file
 const rollup = [
+  ...rollupEntries,
   {
-    input: './src/lib/index.ts',
-    output: [
-      {
-        file: pkg.main,
-        format: 'cjs'
-      },
-      {
-        file: pkg.module,
-        format: 'es'
-      }
-    ],
+    input: indexFilePath,
+    output: {
+      file: `${distDir}/index.js`,
+      format: 'cjs' // commonjs
+    },
     external,
-    plugins
+    plugins: [
+      typescript(),
+      postcss({
+        modules: {},
+        inject: {
+          insertAt: 'top' // inserts styles at top of head instead of bottom. This prevents overriding custom styles
+        }
+      }),
+      resolve({
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      }),
+      filesize(),
+      commonjs()
+    ]
   }
 ]
 
 export default rollup
+
+/**
+ * TODO:
+ * bundle all the submodules (AccordionItem)
+ */
