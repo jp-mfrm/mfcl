@@ -31,11 +31,15 @@ interface Props {
   itemsToScroll?: number
   /** Sets the transition control button alignments. Two non conflicting configurations can be combined.
    * 'middle' centers vertically while 'center' centers horizontally. */
-  btnAlignment?: string | 'top' | 'middle' | 'center' | 'apart' | 'left' | 'right' | 'bottom'
-  /** hides indicator buttons */
+  btnAlignment?: 'top' | 'middle' | 'center' | 'apart' | 'left' | 'right' | 'bottom' 
+  /** Hides indicator buttons */
   hideIndicators?: boolean
+  /** Hides control buttons unless hovered */
+  hideControls?: boolean
   /** Sets the indicator buttons' style */
-  indicatorStyle?: string | 'bar' | 'round'
+  indicatorStyle?: 'bar' | 'round'
+  /** Removes margins from the slides */
+  marginless?: boolean
   /** Allows Carousel to be cyclical. */
   infinite?: boolean
   /** Enables automatic transitions. */
@@ -53,7 +57,9 @@ const Carousel: FunctionComponent<Props> = ({
   itemsToScroll = 1,
   btnAlignment = 'middle apart',
   hideIndicators = false,
+  hideControls = false,
   indicatorStyle = 'round',
+  marginless = false,
   infinite = false,
   autoSlide = false,
   duration = 3000,
@@ -66,28 +72,31 @@ const Carousel: FunctionComponent<Props> = ({
     childrenArr,
     alignment,
     sliderRef,
+    slideMargin,
     indicators,
     setAction,
     handleTransitionEnd,
-  } = carouselHelper(children, itemsToShow, itemsToScroll, btnAlignment, indicatorStyle, duration, infinite, autoSlide);
+  } = carouselHelper(children, itemsToShow, itemsToScroll, btnAlignment, indicatorStyle, duration, marginless, infinite, autoSlide);
 
-  const slides = 
-    childrenArr?.map((child: ReactNode, index: number) => {
-      if (isValidElement(child)) {
-        return cloneElement(child, {
-          ...child.props,
-          key: index,
-          index: index,
-          className: clsx(styles["slide"]),
-          style: {...child.props.style, flexBasis: `${slideFlexBasis}%`},
-        });
+  const slider = 
+  <div ref={sliderRef} className={clsx(styles["carousel-wrapper-slider"])} onTransitionEnd={handleTransitionEnd}>
+    {childrenArr?.map((child: ReactNode, index: number) =>{
+      if(isValidElement(child)) {
+        return (
+        <div key={index} 
+            className={clsx(styles["slide"], marginless && styles["marginless"])}
+            style={{...child.props.style, flexBasis: `${slideFlexBasis}%`, margin: `0 ${slideMargin}%`}}>
+          {cloneElement(child, child.props)}
+        </div>
+        )
       }
-    });
+    })}
+  </div>
 
   const buttons = 
   <>
-    <a className={clsx(styles["prev"], styles["carousel-wrapper-controls"], alignment)} onClick={() => setAction("prev")}></a>
-    <a className={clsx(styles["next"], styles["carousel-wrapper-controls"], alignment)} onClick={() => setAction("next")}></a>
+    <a className={clsx(styles["prev"], styles["carousel-wrapper-controls"], hideControls && styles["hidden"], alignment)} onClick={() => setAction("prev")}></a>
+    <a className={clsx(styles["next"], styles["carousel-wrapper-controls"], hideControls && styles["hidden"], alignment)} onClick={() => setAction("next")}></a>
   </>
   var template;
 
@@ -133,13 +142,7 @@ if(draggable) {
     <>
     <div 
       className={clsx(styles["carousel-wrapper"], carouselClass)}>
-      <div
-        ref={sliderRef}
-        className={clsx(styles["carousel-wrapper-slider"])}
-        onTransitionEnd={handleTransitionEnd}
-      >
-        {slides}
-      </div>
+      {slider}
       <div className={clsx(styles["carousel-wrapper-indicators"])}>
         {!hideIndicators && indicators}
       </div>

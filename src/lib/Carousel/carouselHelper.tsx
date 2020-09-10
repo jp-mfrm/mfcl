@@ -1,4 +1,4 @@
-import { ReactNode, Children, useState, useEffect, RefObject, isValidElement, cloneElement, useRef, useCallback, createElement } from "react";
+import { ReactNode, Children, useState, useEffect, isValidElement, cloneElement, useRef, useCallback, createElement } from "react";
 import styles from "./carousel.module.scss";
 import React from "react";
 import clsx from "clsx";
@@ -13,6 +13,18 @@ function getChildrenArr(children: ReactNode) {
   return cloneEls;
 }
 
+function getSliderMeasurements(marginless:boolean, infinite: boolean, itemsToShow: number, itemCount: number) {
+
+  var slideMargin = marginless ? 0 : 0.25/itemsToShow;
+  var slideWidth = 100/itemCount;
+  var focusWidth = slideWidth/itemsToShow;
+  var basisAdjustment = infinite ? 2 * slideMargin * ( itemCount-1 ) : slideMargin * ( itemCount-1 );
+  var slideFlexBasis = focusWidth - basisAdjustment;
+  var translationAdjustment = infinite ? ( 3 * slideMargin * itemsToShow )  : ( slideMargin * itemsToShow );
+
+  return { slideMargin, slideFlexBasis, translationAdjustment};
+}
+
 export function carouselHelper(
   children: ReactNode,
   itemsToShow: number,
@@ -20,6 +32,7 @@ export function carouselHelper(
   btnAlignment: string,
   indicatorStyle: string,
   duration: number,
+  marginless: boolean,
   infinite: boolean,
   autoSlide: boolean,
 ) {
@@ -28,8 +41,13 @@ export function carouselHelper(
     infinite = true;
 
     const itemCount = Children.count(children);
-    const slideFlexBasis = 18/itemsToShow;
-    const slideMargin = 0.25; 
+
+    const {
+      slideMargin,
+      slideFlexBasis,
+      translationAdjustment
+    } = getSliderMeasurements(marginless, infinite, itemsToShow, itemCount);
+
     const alignment = [styles[(btnAlignment + "").split(" ")[0]], styles[(btnAlignment + "").split(" ")[1]]];
     const [childrenArr, updateChildArr] = useState<ReactNode[]>(getChildrenArr(children));
     const [started, setStarted] = useState(duration ? true : false);
@@ -43,6 +61,7 @@ export function carouselHelper(
     const [reposition, setReposition] = useState("");
 
     const indicators: ReactNode[] = [];
+    
     Children.forEach(children, (value, index) => {
       indicators.push(createElement('button', {
         key: index,
@@ -51,9 +70,8 @@ export function carouselHelper(
         ));
     });
   
-  const moveToDestination = (destinationIndex: number, speed?: 'fast'|'slow') => {
-    //  translate = ( -1 x destinationIndex x ( flexBasis + ( 2 x margins )  ) + ( margins x 3 )
-    let translate = ( -1 * destinationIndex * ( slideFlexBasis + ( 2 * slideMargin ) ) + ( slideMargin * 3 ) );
+  const moveToDestination = (destinationIndex: number) => {
+    let translate = ( -1 * destinationIndex * ( slideFlexBasis + ( 2 * slideMargin ) ) + translationAdjustment );
     if(sliderRef.current) {
       if((infinite && reposition) || !infinite) {
         sliderRef.current.style.transition = "all 0.5s";
@@ -116,7 +134,7 @@ export function carouselHelper(
       case action === "next" && infinite:
         setReposition("next");
         moveToDestination(0);
-          
+        destinationIndex = (activeIndex + scrollAmount) > itemCount - 1 ? 0 : activeIndex + scrollAmount;
         break;
       
       case action === "next" && !infinite:
@@ -127,7 +145,7 @@ export function carouselHelper(
       case action === "prev" && infinite:
         setReposition("prev");
         moveToDestination(2);
-        
+        destinationIndex = (activeIndex - scrollAmount) < 0 ? itemCount - 1 : activeIndex - scrollAmount;
         break;
 
       case action === "prev" && !infinite:
@@ -135,6 +153,7 @@ export function carouselHelper(
         moveToDestination(destinationIndex);
         break;
     }
+    
     setActiveIndex(destinationIndex);
     setAction("");
   }, [action])
@@ -151,13 +170,16 @@ export function carouselHelper(
   }, [sliderRef, started]);
 
   useEffect(() => {
+    if(sliderRef.current) {
+      sliderRef.current.style.width = itemCount*100 + "%";
+    }
+
     if(!infinite) {
       moveToDestination(0);
     } else {
       var carouselItems = sliderRef.current.children;
       sliderRef.current.insertBefore(carouselItems[itemCount-1], carouselItems[0]);
-      let translate = ( -1 * ( slideFlexBasis + ( 2 * slideMargin ) ) + ( slideMargin * 3 ) );
-      sliderRef.current.style.transform = "translateX(" + translate + "%)";
+      moveToDestination(1);
       setActiveIndex(1);
     }
   }, [])
@@ -167,6 +189,7 @@ export function carouselHelper(
     childrenArr,
     alignment,
     sliderRef,
+    slideMargin,
     indicators,
     setAction,
     handleTransitionEnd
