@@ -43,7 +43,7 @@ const rollupEntries = Object.entries(entries).map(([name, input]) => ({
   input,
   output: {
     file: `${distDir}/${name}/index.js`,
-    format: 'cjs', // commonjs
+    format: 'cjs',
     exports: 'auto'
   },
   external,
@@ -57,7 +57,7 @@ const rollup = [
     input: indexFilePath,
     output: {
       file: `${distDir}/index.js`,
-      format: 'cjs' // commonjs
+      format: 'cjs'
     },
     external,
     plugins: [

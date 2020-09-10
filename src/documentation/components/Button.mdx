@@ -4,16 +4,17 @@ menu: Components
 route: /components-button
 ---
 
-import { Playground, Props } from 'docz';
-import { Button } from '../../lib';
+import { Playground, Props } from 'docz'
+import { Button } from '../../lib'
 
 # Button
 
 ```javascript
-import { Button } from 'mfcl';
+import Button from 'mfcl/dist/Button'
 ```
 
 ## Description
+
 Buttons make common actions more obvious and help users more easily perform them. Buttons use labels and sometimes icons to communicate the action that will occur when the user touches them.
 
 ## Properties
@@ -23,10 +24,17 @@ Buttons make common actions more obvious and help users more easily perform them
 ## Button Types
 
 <Playground>
-  <Button>Primary</Button><br/><br/>
-  <Button btnType="secondary">Secondary</Button><br/><br/>
-  <Button btnType="tertiary">Tertiary</Button><br/><br/>
-  <Button btnType="link">Text Link</Button><br/>
+  <Button>Primary</Button>
+  <br />
+  <br />
+  <Button btnType="secondary">Secondary</Button>
+  <br />
+  <br />
+  <Button btnType="tertiary">Tertiary</Button>
+  <br />
+  <br />
+  <Button btnType="link">Text Link</Button>
+  <br />
 </Playground>
 
 ## Size
@@ -34,10 +42,12 @@ Buttons make common actions more obvious and help users more easily perform them
 <Playground>
   <Button btnType="primary" size="sm">
     Small
-  </Button><span style={{margin: "6px"}}/>
+  </Button>
+  <span style={{ margin: '6px' }} />
   <Button btnType="primary" size="md">
     Medium
-  </Button><span style={{margin: "6px"}}/>
+  </Button>
+  <span style={{ margin: '6px' }} />
   <Button btnType="primary" size="lg">
     Large
   </Button>
@@ -46,7 +56,12 @@ Buttons make common actions more obvious and help users more easily perform them
 ## Disabled
 
 <Playground>
-  <Button size="lg" disabled btnType="primary">Disabled</Button>
-  <br/><br/>
-  <Button disabled btnType="link">Text Disabled</Button>
+  <Button size="lg" disabled btnType="primary">
+    Disabled
+  </Button>
+  <br />
+  <br />
+  <Button disabled btnType="link">
+    Text Disabled
+  </Button>
 </Playground>

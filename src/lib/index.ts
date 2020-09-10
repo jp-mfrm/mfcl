@@ -1,4 +1,3 @@
-import './layout-styles.css'
 import Accordion from './Accordion'
 import AccordionItem from './Accordion/AccordionItem'
 import Alert from './Alert'

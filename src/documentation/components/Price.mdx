@@ -4,18 +4,19 @@ menu: Components
 route: /components-price
 ---
 
-import { Playground, Props } from 'docz';
-import Component from "react-component-component";
-import { Price } from '../../lib';
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Price } from '../../lib'
 
 # Price
 
 ```javascript
-import { Price } from 'mfcl';
+import Price from 'mfcl/dist/Price'
 ```
 
 ## Description
-The Price component renders and formats the pricing to USD. The optional props allow for further customization on how 
+
+The Price component renders and formats the pricing to USD. The optional props allow for further customization on how
 the Prices render and look.
 
 ## Properties
@@ -23,6 +24,7 @@ the Prices render and look.
 <Props of={Price} />
 
 ## Basic Usage
+
 The Price component requires the Price prop to render.
 
 <Playground>
@@ -30,6 +32,7 @@ The Price component requires the Price prop to render.
 </Playground>
 
 ## Discounted Price
+
 Allows a price markdown below the discount price
 
 <Playground>
@@ -37,11 +40,12 @@ Allows a price markdown below the discount price
 </Playground>
 
 ### Optional Props
+
 A price can be discounted without the price markdown below it by adding the optional Discount prop. This also works with the Text and Divider prop. The content can also be center aligned by using the Center prop.
 
 <Playground>
   <Price discount price={3500} />
-  <Price text='Queen For' discount price={3500} />
-  <Price text='Queen' divider discount price={3500} />
-  <Price center text='Queen' divider discountPrice={1400} price={3500} />
+  <Price text="Queen For" discount price={3500} />
+  <Price text="Queen" divider discount price={3500} />
+  <Price center text="Queen" divider discountPrice={1400} price={3500} />
 </Playground>
