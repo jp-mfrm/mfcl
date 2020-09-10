@@ -1,5 +1,4 @@
 import React, { FunctionComponent, ReactNode } from 'react'
-import PropTypes from 'prop-types'
 
 import styles from './pagination.module.scss'
 
@@ -40,11 +39,4 @@ export const PaginationLink: FunctionComponent<Props> = ({
       {children}
     </button>
   )
-}
-
-PaginationLink.defaultProps = {
-  children: null,
-  className: '',
-  next: false,
-  previous: false
 }

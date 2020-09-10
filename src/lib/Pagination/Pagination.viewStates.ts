@@ -1,4 +1,12 @@
-export const getLastChunkPage = (pagesLeft, { activePage, chunkSize, totalPages, isMobile }) => {
+interface Params {
+  pagesLeft: number
+  activePage: number
+  chunkSize: number
+  totalPages: number
+  isMobile: boolean
+}
+
+export const getLastChunkPage = (pagesLeft: number, activePage: number, chunkSize: number, totalPages: number, isMobile: boolean) => {
   // last in pages chunk loop: 1,...,3,4,5 (active),6,>7<,...,20
   let lastChunkPage
   if (activePage <= chunkSize) {
@@ -15,7 +23,7 @@ export const getLastChunkPage = (pagesLeft, { activePage, chunkSize, totalPages,
   return lastChunkPage
 }
 
-export const getFirstChunkPage = (pagesLeft, { activePage, totalPages, chunkSize, isMobile }) => {
+export const getFirstChunkPage = (pagesLeft: number, activePage: number, chunkSize: number, totalPages: number, isMobile: boolean) => {
   let firstChunkPage
   if (activePage <= chunkSize) {
     firstChunkPage = 1

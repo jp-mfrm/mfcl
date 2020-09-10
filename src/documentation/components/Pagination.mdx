@@ -6,9 +6,7 @@ route: /components-pagination
 
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
-// import { Pagination } from '../../lib'
-import { Pagination } from '../../lib/Pagination'
-import { PaginationPanels } from './helpers/PaginationPanels'
+import { Pagination } from '../../lib/'
 
 # Pagination
 
@@ -27,7 +25,5 @@ TODO add description here
 ## Basic Usage
 
 <Playground>
-  <Component>
-    <Pagination activePage={1} totalPages={5} arrowsOnly={false} />
-  </Component>
+  <Pagination activePage={1} totalPages={5} />
 </Playground>
