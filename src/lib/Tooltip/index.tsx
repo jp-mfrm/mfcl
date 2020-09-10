@@ -70,7 +70,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     document.removeEventListener('keypress', handleEscape)
   }
 
-  const handleEscape = (e) => {
+  const handleEscape = (e: any) => {
     switch (e.key) {
       case 'Escape': {
         hideTooltip()
@@ -80,7 +80,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     }
   }
 
-  const handler = (e) => {
+  const handler = (e: any) => {
     let currentNode = e.target
     const componentNode = wrapperRef.current
     while (currentNode.parentNode) {
@@ -151,7 +151,9 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       {...rest}
     >
       {trigger}
-      <Portal>{tooltipContent}</Portal>
+      <Portal>
+        <>{tooltipContent}</>
+      </Portal>
     </div>
   )
 }

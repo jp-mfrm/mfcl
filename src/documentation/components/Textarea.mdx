@@ -1,0 +1,63 @@
+---
+name: Textarea
+menu: Components
+route: /components-textarea
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Textarea } from '../../lib'
+
+# Textarea
+
+```javascript
+import { Textarea } from 'mfcl'
+```
+
+## Description
+
+Textarea accepts user entry data. Textarea uses labels to communicate the textarea field that will accept data when a user submits them.
+
+## Properties
+
+<Props of={Textarea} />
+
+<div>
+  <span style="color:red">*</span> Also accepts all
+  <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes"> textarea attributes</a>
+</div>
+
+## Basic Usage
+
+<Playground>
+  <Textarea className="myTestClass" /> <br />
+  <Textarea defaultValue="My default value goes here" />
+</Playground>
+
+## Custom Styling
+
+<Playground>
+  <Textarea
+    wrapperStyling={{
+      alignItems: 'flex-start'
+    }}
+    style={{
+      width: '200px',
+      resize: 'none'
+    }}
+  />
+</Playground>
+
+## Field Variations
+
+<Playground>
+  <Textarea label="Start with 10 rows" rows={10} /> <br />
+  <Textarea error /> <br />
+</Playground>
+
+## Required or Disabled
+
+<Playground>
+  <Textarea disabled /> <br />
+  <Textarea required />
+</Playground>

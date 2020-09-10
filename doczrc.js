@@ -1,10 +1,14 @@
+import { normalize } from 'path'
+
+const fontFamily = "'Rubik', 'Arial', sans-serif"
+
 const colors = {
   white: '#FFFFFF',
-  grayUltraLight: '#F9FAFB',
-  grayExtraLight: '#F8F8F8',
-  grayLight: '#CED1D5',
-  gray: '#B3B5B7',
-  grayDark: '#626366',
+  grayUltraLight: '#f8f8f8',
+  grayExtraLight: '#e1e1e1',
+  grayLight: '#979797',
+  gray: '#87817d',
+  grayDark: '#545658',
   grayExtraDark: '#080808',
   dark: '#2d2926',
   skyBlue: '#1FB6FF',
@@ -16,6 +20,7 @@ const colors = {
 
 const prismDark = {
   plain: {
+    fontFamily,
     color: '#d6deeb',
     backgroundColor: '#13161F'
   },
@@ -163,7 +168,12 @@ const dark = {
     color: colors.gray
   },
   prism: {
-    ...prismDark
+    ...prismDark,
+    light: {
+      plain: {
+        fontFamily
+      }
+    }
   }
 }
 
@@ -173,6 +183,7 @@ export default {
   dest: './docs',
   port: 4000,
   typescript: true,
+  showPlaygroundEditor: false,
   themeConfig: {
     showPlaygroundEditor: true,
     codemirrorTheme: 'material',
@@ -182,21 +193,26 @@ export default {
       },
       dark
     },
+    fonts: {
+      sans: fontFamily
+    },
+    fontWeights: {
+      body: 'normal'
+    },
+    lineHeights: {
+      body: 1.15
+    },
     /** Styles */
     styles: {
       body: {
-        fontFamily: "'Rubik', 'Arial', sans-serif"
+        fontFamily: fontFamily
+      },
+      h1: {
+        fontFamily: fontFamily
+      },
+      h2: {
+        fontFamily: fontFamily
       }
-    }
-  },
-  htmlContext: {
-    head: {
-      links: [
-        {
-          rel: 'stylesheet',
-          href: 'https://codemirror.net/theme/material.css'
-        }
-      ]
     }
   }
 }
