@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, ReactNode, useEffect, useRef, CSSProperties } from 'react'
 import Collapse from '../Collapse'
-import styles from './accordion.module.scss'
+import styles from '../Accordion/accordion.module.scss'
 import clsx from 'clsx'
 
 type Props = {

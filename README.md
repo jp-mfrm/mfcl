@@ -10,7 +10,7 @@
 
 ```javascript
 import React, { Component } from 'react'
-import MyComponent from 'mfcl/dist/MyComponent'
+import MyComponent from 'mfcl/MyComponent'
 ```
 
 ...

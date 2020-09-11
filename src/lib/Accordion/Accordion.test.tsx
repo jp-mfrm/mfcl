@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import Accordion from './index'
-import AccordionItem from './AccordionItem'
+import AccordionItem from '../AccordionItem'
 
 describe('Accordion Component', () => {
   it('should render the accordionClass prop', () => {

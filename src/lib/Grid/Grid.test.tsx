@@ -2,8 +2,8 @@ import React from 'react'
 import { render } from '@testing-library/react'
 
 import Grid from './index'
-import GridRow from './GridRow'
-import GridItem from './GridItem'
+import GridRow from '../GridRow'
+import GridItem from '../GridItem'
 
 describe('Grid Component', () => {
   it('renders the grid styles given', () => {

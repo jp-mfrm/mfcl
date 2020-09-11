@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// DO NOT DELETE THIS FILE
 
 /* eslint-disable no-console */
 require('colors')
@@ -28,12 +29,27 @@ function setup() {
   }
 }
 
+const setupPackageJSON = () => {
+  const source = fs.readFileSync(`${rootDir}/package.json`).toString('utf-8')
+  const sourceObj = JSON.parse(source)
+  sourceObj.scripts = {}
+  sourceObj.devDependencies = {}
+  sourceObj.jest = {}
+  if (sourceObj.main.startsWith('dist/')) {
+    sourceObj.main = sourceObj.main.slice(5)
+    sourceObj.typings = sourceObj.typings.slice(5)
+    sourceObj.types = sourceObj.types.slice(5)
+  }
+  fs.writeFileSync(`${distPath}/package.json`, Buffer.from(JSON.stringify(sourceObj, null, 2), 'utf-8'))
+  fs.copyFileSync(`${rootDir}/.npmignore`, `${distPath}/.npmignore`)
+}
+
 /** Copy SCSS */
 const copyScss = () => {
   execSync(`find ${componentPath} -maxdepth 1 -type f -name \\*.scss -exec cp {} ./dist \\;`, execOptions)
   console.log(
     `
-CSS copied over
+CSS and package.json copied over
 `.magenta
   )
 }
@@ -117,6 +133,7 @@ const buildEntries = () => {
 }
 
 Promise.resolve(setup())
+  .then(setupPackageJSON)
   .then(copyScss)
   .then(buildComponents)
   .then(buildEntries)

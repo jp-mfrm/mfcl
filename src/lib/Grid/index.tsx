@@ -1,5 +1,5 @@
 import React, { FunctionComponent, Children, isValidElement, CSSProperties } from 'react'
-import GridItem from './GridItem'
+import GridItem from '../GridItem'
 import clsx from 'clsx'
 
 interface Props {
