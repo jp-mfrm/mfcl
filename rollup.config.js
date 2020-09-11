@@ -78,8 +78,3 @@ const rollup = [
 ]
 
 export default rollup
-
-/**
- * TODO:
- * bundle all the submodules (AccordionItem)
- */
