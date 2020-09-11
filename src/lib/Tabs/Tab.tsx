@@ -5,13 +5,13 @@ import styles from './tabs.module.scss'
 export interface Props {
   id: string
   index?: number
-  label: string
   isSelected: boolean
+  label: string
   onClick?: Function | null
   onKeyDown?: Function | null
 }
 
-const Tab: FunctionComponent<Props> = ({ id, index, isSelected, label }) => {
+const Tab: FunctionComponent<Props> = ({ id, isSelected, index, label }) => {
   const [isActive, setIsActive] = useState(false)
   const firstUpdate = useRef(true)
   const tabRef: any = useRef<HTMLAnchorElement>(null)

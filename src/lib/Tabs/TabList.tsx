@@ -2,7 +2,7 @@
 import React, { useState, FunctionComponent, useEffect, useRef } from 'react'
 import clsx from 'clsx';
 import styles from './tabs.module.scss'
-import Tab from './tab'
+import Tab from './Tab'
 
 export interface Props {
   items: []
