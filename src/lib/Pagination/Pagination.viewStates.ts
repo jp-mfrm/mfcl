@@ -1,11 +1,3 @@
-interface Params {
-  pagesLeft: number
-  activePage: number
-  chunkSize: number
-  totalPages: number
-  isMobile: boolean
-}
-
 export const getLastChunkPage = (pagesLeft: number, activePage: number, chunkSize: number, totalPages: number, isMobile: boolean) => {
   // last in pages chunk loop: 1,...,3,4,5 (active),6,>7<,...,20
   let lastChunkPage
@@ -35,4 +27,13 @@ export const getFirstChunkPage = (pagesLeft: number, activePage: number, chunkSi
     firstChunkPage = activePage - (Math.ceil(chunkSize / 2) - 1)
   }
   return firstChunkPage
+}
+
+
+export const handleCustomPropType = (arrowsOnly: boolean, propName: React.ReactText) => {
+  if ((arrowsOnly && propName === undefined) || typeof propName !== 'number') {
+    return new Error(`${propName} is required when "arrowsOnly" prop is true. It is expected to be a number`)
+  }
+
+  return undefined
 }

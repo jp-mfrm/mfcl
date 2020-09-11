@@ -1,38 +1,9 @@
 import React, { FunctionComponent, Fragment } from 'react'
-import { getLastChunkPage, getFirstChunkPage } from './Pagination.viewStates'
+import { getLastChunkPage, getFirstChunkPage, handleCustomPropType } from './Pagination.viewStates'
 import { PaginationItem } from './PaginationItem'
 import { PaginationLink } from './PaginationLink'
 
 import styles from './pagination.module.scss'
-
-// Pagination.propTypes = {
-//   activePage: number.isRequired,
-//   setActivePage: func.isRequired,
-//   totalPages: number.isRequired,
-//   arrowsOnly: bool,
-//   /** How many number boxes we should show */
-//   chunkSize: number,
-//   className: string,
-//   disabled: bool,
-//   isMobile: bool,
-//   listClassName: string,
-// pageSize: (props) => handleCustomPropType(props, 'pageSize'),
-//   showForOnePage: bool,
-//   styleMode: string,
-// totalElements: (props) => handleCustomPropType(props, 'totalElements')
-// }
-// Pagination.defaultProps = {
-//   arrowsOnly: false,
-//   chunkSize: 5,
-//   className: '',
-//   isMobile: false,
-//   listClassName: '',
-//   pageSize: null,
-//   showForOnePage: false,
-//   styleMode: 'light',
-//   totalElements: null,
-//   disabled: false
-// }
 
 interface Props {
   activePage: number
@@ -50,24 +21,17 @@ interface Props {
   [rest: string]: unknown // ...rest property
 }
 
-const handleCustomPropType = (arrowsOnly: boolean, propName: React.ReactText) => {
-  // eslint-disable-line
-  if ((arrowsOnly && propName === undefined) || typeof propName !== 'number') {
-    return new Error(`${propName} is required when "arrowsOnly" prop is true. It is expected to be a number`)
-  }
-}
-
 const Pagination: FunctionComponent<Props> = ({
   activePage = 2,
   totalPages,
   arrowsOnly = false,
-  chunkSize = 10,
+  chunkSize = 5,
   className = '',
   isMobile = false,
   listClassName = '',
-  pageSize,
+  pageSize = undefined,
   showForOnePage = false,
-  totalElements,
+  totalElements = undefined,
   disabled = false,
   ...rest
 }) => {

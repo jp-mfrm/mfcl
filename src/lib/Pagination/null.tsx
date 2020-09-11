@@ -22,20 +22,20 @@
 //     padding: '25px'
 //   }
 
-//   const [currentPage, setCurrentPage] = useState(1)
-//   const [childrenPerPage] = useState(itemsPerPage)
+// const [currentPage, setCurrentPage] = useState(1)
+// const [childrenPerPage] = useState(itemsPerPage)
 
-//   //Change page
-//   const paginate = (number: number) => setCurrentPage(number)
+// //Change page
+// const paginate = (number: number) => setCurrentPage(number)
 
-//   // Get current items
-//   const indexOfLastPage = currentPage * childrenPerPage
-//   const indexOfFirstPage = indexOfLastPage - childrenPerPage
-//   const currentItems = items.slice(indexOfFirstPage, indexOfLastPage)
+// // Get current items
+// const indexOfLastPage = currentPage * childrenPerPage
+// const indexOfFirstPage = indexOfLastPage - childrenPerPage
+// const currentItems = items.slice(indexOfFirstPage, indexOfLastPage)
 
-//   for (let i = 1; i <= Math.ceil(totalItems / childrenPerPage); i++) {
-//     numberOfPages.push(i)
-//   }
+// for (let i = 1; i <= Math.ceil(totalItems / childrenPerPage); i++) {
+//   numberOfPages.push(i)
+// }
 
 //   return (
 //     <div className={styles['pagination-wrapper']} {...rest}>
