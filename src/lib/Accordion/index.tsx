@@ -9,7 +9,7 @@ import React, {
 } from 'react'
 import clsx from 'clsx'
 import styles from './accordion.module.scss'
-import AccordionItem from './AccordionItem'
+import AccordionItem from '../AccordionItem'
 
 interface AccordionItem {
   title: string
