@@ -1,9 +1,8 @@
 @import '../variables';
 
 .accordionList {
-  border-top: 1px solid #d8d8d8;
+  font-family: $r-regular;
   margin: auto;
-  overflow: hidden;
 }
 
 .openIcon {
@@ -17,24 +16,64 @@
   opacity: 0.9;
 }
 
+.accordionItem {
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.line {
+  padding: 16px 0px 14px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.preview {
+  display: block;
+  font-size: 14px;
+  margin-top: 6px;
+  opacity: 1;
+  max-height: fit-content;
+  transition: opacity, max-height 0.4s ease-in-out 0.2s;
+}
+
+.center {
+  width: 66.6%;
+}
+
+.center.withPreview {
+  height: 50px;
+  overflow: hidden;
+  transition-timing-function: ease;
+  transition-duration: 0.4s;
+  transition-property: height;
+}
+
+.icon {
+  margin-right: 10px;
+
+  & > svg {
+    vertical-align: middle;
+  }
+}
+
+.innerContent {
+  margin-bottom: 14px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
 .accordionItem.open {
   .openIcon {
     transform: rotate(180deg);
-  }
-
-  .inner {
-    max-height: 100rem;
-    transition-timing-function: cubic-bezier(0.895, 0.03, 0.685, 0.22);
-    transition-duration: 0.5s;
-    transition-property: max-height;
-  }
-
-  .content {
-    opacity: 1;
-    transition-delay: 0.2s;
-    transition-timing-function: ease-in-out;
-    transition-duration: 0.6s;
-    transition-property: opacity, transform;
   }
 
   .preview.hidePreview {
@@ -45,103 +84,12 @@
     transition-duration: 0.3s;
     transition-property: opacity, max-height;
   }
+
   .center.withPreview.hidePreview {
     height: 20px;
     transition-delay: 0.2s;
     transition-timing-function: ease;
     transition-duration: 0.4s;
     transition-property: height;
-  }
-}
-.accordionItem {
-  border-bottom: 1px solid #d8d8d8;
-
-  .line {
-    padding: 12px 15px;
-    display: flex;
-    align-items: center;
-    position: relative;
-    min-height: 54px;
-    cursor: pointer;
-  }
-  .line.withPreview {
-    padding: 20px 12px;
-    height: fit-content;
-  }
-
-  .line.hidePreview {
-    height: 72px;
-    transition-delay: 0.2s;
-    transition-timing-function: ease-out;
-    transition-duration: 0.2s;
-    transition-property: height;
-  }
-
-  .title {
-    font-family: $r-bold;
-    font-size: 18px;
-    line-height: 1.22;
-    font-weight: 600;
-    margin: 0;
-  }
-  .preview {
-    font-family: $r-regular;
-    display: block;
-    font-size: 14px;
-    margin-top: 6px;
-    opacity: 1;
-    max-height: fit-content;
-    transition-delay: 0.2s;
-    transition-timing-function: ease-in-out;
-    transition-duration: 0.4s;
-    transition-property: opacity, max-height;
-  }
-  .center {
-    width: 66.6%;
-  }
-  .center.withPreview {
-    height: 45px;
-    overflow: hidden;
-    transition-timing-function: ease;
-    transition-duration: 0.4s;
-    transition-property: height;
-  }
-  .icon {
-    width: 17.65%;
-    & > svg {
-      vertical-align: middle;
-    }
-  }
-
-  .inner {
-    max-height: 0;
-    overflow: hidden;
-    text-transform: cubic-bezier(0.95, 0.05, 0.795, 0.035);
-    transition-duration: 0.5s;
-    transition-property: max-height;
-    z-index: 1;
-    position: relative;
-    margin: auto;
-    padding: 0px 15px;
-  }
-
-  .content {
-    opacity: 0;
-    transition-timing-function: linear, ease;
-    transition-duration: 0.1s;
-    transition-property: opacity, transform;
-    transition-delay: 0.6s;
-    padding-bottom: 12px;
-    padding-top: 9px;
-  }
-  .content.alignedContent {
-    margin-left: 17.65%;
-  }
-
-  .innerContent {
-    margin: 0;
-    font-family: $r-medium;
-    font-size: 16px;
-    line-height: 1.5;
   }
 }

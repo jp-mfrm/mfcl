@@ -4,17 +4,18 @@ menu: Components
 route: /components-panel
 ---
 
-import { Playground, Props } from 'docz';
-import Component from "react-component-component";
-import { Panel, PanelItem, ProductCard } from '../../lib';
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Panel, PanelItem, ProductCard } from '../../lib'
 
 # Panel
 
 ```javascript
-import { Panel } from 'mfcl';
+import Panel from 'mfcl/Panel'
 ```
 
 ## Description
+
 Panels group related content and may contain actions about that content
 
 ## Panel Properties
@@ -31,8 +32,9 @@ Panels come in two variations and house panel items within them
 
 <Playground>
   <Panel>
-    <PanelItem>Content</PanelItem>  
-  </Panel><br/>
+    <PanelItem>Content</PanelItem>
+  </Panel>
+  <br />
   <Panel rounded>
     <PanelItem>Content</PanelItem>
   </Panel>
@@ -44,33 +46,38 @@ Special panel item types can be designated by the type property
 
 <Playground>
   <Panel>
-    <PanelItem type='header'>Header</PanelItem>
-    <PanelItem type='body'>Body</PanelItem>
-    <PanelItem type='link' href='/components-flag'>Link</PanelItem>
-    <PanelItem type='footer'>Footer</PanelItem>
+    <PanelItem type="header">Header</PanelItem>
+    <PanelItem type="body">Body</PanelItem>
+    <PanelItem type="link" href="/components-flag">
+      Link
+    </PanelItem>
+    <PanelItem type="footer">Footer</PanelItem>
   </Panel>
 </Playground>
 
-## Custom Styling 
+## Custom Styling
 
 Apply custom styling to both panel and panel item components
 
 <Playground>
   <Panel rounded customStyling={{ color: 'red' }}>
-    <PanelItem type='header' customStyling={{ textAlign: 'center' }}>Centered Header</PanelItem>
+    <PanelItem type="header" customStyling={{ textAlign: 'center' }}>
+      Centered Header
+    </PanelItem>
     <PanelItem>Some information</PanelItem>
-    <PanelItem type="footer" customStyling={{ backgroundColor: 'grey', color: 'white' }}>footer</PanelItem>
+    <PanelItem type="footer" customStyling={{ backgroundColor: 'grey', color: 'white' }}>
+      footer
+    </PanelItem>
   </Panel>
 </Playground>
 
-
-## Nested Components 
+## Nested Components
 
 Nest any other component within the panel
 
 <Playground>
   <Panel>
-    <PanelItem type='header'>Header</PanelItem>
+    <PanelItem type="header">Header</PanelItem>
     <ProductCard
       brand="Serta"
       brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
@@ -83,9 +90,6 @@ Nest any other component within the panel
       reviews="215"
       rating="4"
     />
-    <PanelItem type='footer'>Footer</PanelItem>
+    <PanelItem type="footer">Footer</PanelItem>
   </Panel>
 </Playground>
-
-
-

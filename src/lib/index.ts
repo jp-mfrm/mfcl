@@ -1,6 +1,5 @@
-import './layout-styles.css'
 import Accordion from './Accordion'
-import AccordionItem from './Accordion/AccordionItem'
+import AccordionItem from './AccordionItem'
 import Alert from './Alert'
 import Badge from './Badge'
 import Button from './Button'
@@ -11,12 +10,15 @@ import Dropdown from './Dropdown'
 import Fade from './Fade'
 import Flag from './Flag'
 import Grid from './Grid'
-import GridItem from './Grid/GridItem'
-import GridRow from './Grid/GridRow'
+import GridItem from './GridItem'
+import GridRow from './GridRow'
+import Input from './Input'
 import LazyImage from './LazyImage'
 import Loading from './Loading'
 import Modal from './Modal'
 import NumberIncrementer from './NumberIncrementer'
+import Panel from './Panel'
+import PanelItem from './PanelItem'
 import Portal from './Portal'
 import Price from './Price'
 import ProductCard from './ProductCard'
@@ -24,17 +26,11 @@ import ProgressBar from './ProgressBar'
 import Rating from './Rating'
 import Select from './Select'
 import Stepper from './Stepper'
+import Textarea from './Textarea'
 import Tooltip from './Tooltip'
-import Panel from './Panel';
-import PanelItem from './Panel/PanelItem'
-import Textarea from './Textarea';
-import Input from './Input';
-import Pagination from './Pagination';
+import Pagination from './Pagination'
 
 export {
-  Pagination,
-  Panel,
-  PanelItem,
   Accordion,
   AccordionItem,
   Alert,
@@ -54,6 +50,9 @@ export {
   Loading,
   Modal,
   NumberIncrementer,
+  Pagination,
+  Panel,
+  PanelItem,
   Portal,
   Price,
   ProgressBar,

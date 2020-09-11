@@ -1,3 +1,7 @@
+import { normalize } from 'path'
+
+const fontFamily = "'Rubik', 'Arial', sans-serif"
+
 const colors = {
   white: '#FFFFFF',
   grayUltraLight: '#f8f8f8',
@@ -16,6 +20,7 @@ const colors = {
 
 const prismDark = {
   plain: {
+    fontFamily,
     color: '#d6deeb',
     backgroundColor: '#13161F'
   },
@@ -163,7 +168,12 @@ const dark = {
     color: colors.gray
   },
   prism: {
-    ...prismDark
+    ...prismDark,
+    light: {
+      plain: {
+        fontFamily
+      }
+    }
   }
 }
 
@@ -173,6 +183,7 @@ export default {
   dest: './docs',
   port: 4000,
   typescript: true,
+  showPlaygroundEditor: false,
   themeConfig: {
     showPlaygroundEditor: true,
     codemirrorTheme: 'material',
@@ -182,28 +193,26 @@ export default {
       },
       dark
     },
+    fonts: {
+      sans: fontFamily
+    },
+    fontWeights: {
+      body: 'normal'
+    },
+    lineHeights: {
+      body: 1.15
+    },
     /** Styles */
     styles: {
-      html: {
-        boxSizing: 'border-box'
-      },
       body: {
-        fontFamily: "'Rubik', 'Arial', sans-serif"
+        fontFamily: fontFamily
+      },
+      h1: {
+        fontFamily: fontFamily
+      },
+      h2: {
+        fontFamily: fontFamily
       }
-    }
-  },
-  htmlContext: {
-    head: {
-      links: [
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Rubik:wght@300;500;700&display=swap'
-        },
-        {
-          rel: 'stylesheet',
-          href: 'https://codemirror.net/theme/material.css'
-        }
-      ]
     }
   }
 }

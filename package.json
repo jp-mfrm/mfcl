@@ -1,17 +1,18 @@
 {
   "name": "mfcl",
-  "version": "1.14.0",
+  "version": "2.0.0",
   "private": false,
   "description": "React Component Library for UI consistency between repositories",
-  "main": "./dist/index.js",
-  "typings": "./dist/lib/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/lib/index.d.ts",
+  "types": "dist/lib/index.d.ts",
   "engines": {
     "node": ">=12.0.0"
   },
   "scripts": {
+    "ship": "npm run build && cd dist && yarn config set registry https://registry.npmjs.org && npm publish && cd ..",
     "prebuild": "npm run test:coverage",
-    "prepublishOnly": "npm run build",
-    "build": "rollup -c && node ./scripts/buildDist",
+    "build": "rimraf dist && node ./scripts/buildDist && rollup -c",
     "build:web": "docz build",
     "serve": "docz serve",
     "dev": "yarn start",
@@ -22,7 +23,8 @@
     "test": "cross-env CI=1 react-scripts test --env=jest-environment-jsdom-sixteen",
     "test:watch": "yarn test --watch",
     "test:coverage": "yarn test --coverage --watchAll=false",
-    "watch": "rollup -c -w"
+    "watch": "rollup -c -w",
+    "x": "rimraf dist && node ./scripts/buildDist"
   },
   "dependencies": {},
   "peerDependencies": {
@@ -62,7 +64,6 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.23.1",
     "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-filesize": "^9.0.2",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-postcss": "^3.1.5",
@@ -75,14 +76,12 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/documentation/**",
+      "!src/gatsby-theme-docz/**",
       "!src/lib/utils/**",
       "!src/lib/index.ts",
       "!src/lib/declaration.d.ts",
       "!src/react-app-env.d.ts",
       "!src/setupTests.js"
     ]
-  },
-  "files": [
-    "dist"
-  ]
+  }
 }
