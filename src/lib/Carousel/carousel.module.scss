@@ -175,93 +175,89 @@
   }
 }
 
-
-
 $slider-width: 100%; // 400px;
 $slider-height: 100%; // 300px; // 100%;
 
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-.slider {
+.carousel-drag-wrapper {
   text-align: center;
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // transform: translate(-50%, -50%);
   width: $slider-width;
   height: $slider-height;
-  // box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
   z-index: 2;
   justify-content: center;
   display: flex;
 
-  .prev,
-  .next {
+  &-slider {
+    overflow: hidden;
+    position: relative;
+    width: $slider-width;
+    height: $slider-height;
+    z-index: 1;
+  }
+
+  &-slides {
+    display: flex;
+    position: relative;
+    top: 0;
+    // left: -$slider-width;
+
+    &.shifting {
+      transition: left 0.2s ease-out;
+    }
+
+    .slide {
+      width: $slider-width;
+      max-width: $slider-width;
+      height: $slider-height;
+      min-height: 150px;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      transition: all 1s;
+      position: relative;
+      border-radius: 2px;
+    }
+
+    .grabbing {
+      cursor: grabbing;
+    }
+  }
+
+  &-control {
+    position: absolute;
+    top: 40%;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50px;
+    margin-top: -20px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+  }
+
+  &-prev,
+  &-next {
     background-size: 22px;
     background-position: center;
     background-repeat: no-repeat;
     cursor: pointer;
   }
 
-  .prev {
+  &-prev {
     background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
     left: -20px;
   }
 
-  .next {
+  &-next {
     background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
     right: -20px;
   }
 
-  .prev:active,
-  .next:active {
+  &-prev:active,
+  &-next:active {
     transform: scale(0.8);
   }
-}
-
-.wrapper {
-  overflow: hidden;
-  position: relative;
-  width: $slider-width;
-  height: $slider-height;
-  z-index: 1;
-  // max-width: 300px; // WIP - Should we set height here <?>
-}
-
-.slides {
-  display: flex;
-  position: relative;
-  top: 0;
-  left: -$slider-width;
-  // width: 10000px;
-
-  &.shifting {
-    transition: left 0.2s ease-out;
-  }
-}
-
-.slide {
-  width: $slider-width;
-  max-width: $slider-width;
-  height: $slider-height;
-  // min-height: 300px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: all 1s;
-  position: relative;
-  border-radius: 2px;
-}
-
-.control {
-  position: absolute;
-  top: 50%;
-  width: 50px;
-  height: 50px;
-  background: #fff;
-  border-radius: 50px;
-  margin-top: -20px;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
-  z-index: 2;
 }
