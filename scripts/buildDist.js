@@ -9,9 +9,10 @@ const { execSync } = require('child_process')
 
 const rootDir = path.resolve(__dirname, '../')
 const componentPath = path.resolve(rootDir, './src/lib')
+const utilsPath = path.resolve(componentPath, './utils')
 const distPath = path.resolve(rootDir, './dist')
 
-const blackListDir = ['lib', '__tests__', 'utils', 'mixins']
+const blackListDir = ['lib', '__tests__']
 
 const execOptions = {
   shell: true
@@ -76,13 +77,22 @@ const findType = (filters = '-type d', folderPath = componentPath) => {
 const buildComponents = () => {
   let reusabledComponents = []
 
+  /* Utils */
+  const utils = findType('-type f', utilsPath)
+  utils
+    .filter((file) => file !== '')
+    .forEach((file) => {
+      const takeOutExtension = file.split('.').slice(0, -1).join('.')
+      reusabledComponents.push(`../utils/${takeOutExtension}`)
+    })
+
   /* Components */
   const components = findType()
   components
     .filter((folder) => blackListDir.indexOf(folder) === -1 || !folder) // Get rid of blacklisted directories
     .filter((file) => file !== '')
     .forEach((file) => {
-      reusabledComponents.push(`mfcl/dist/${file}`)
+      reusabledComponents.push(`../${file}`)
     })
 
   reusabledComponents = JSON.stringify(reusabledComponents, null, 2)
