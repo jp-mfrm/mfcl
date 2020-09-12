@@ -48,6 +48,7 @@ const setupPackageJSON = () => {
 /** Copy SCSS */
 const copyScss = () => {
   execSync(`find ${componentPath} -maxdepth 1 -type f -name \\*.scss -exec cp {} ./dist \\;`, execOptions)
+  execSync(`tsc ${utilsPath}/*.ts --outDir ${distPath}/utils --esModuleInterop true`, execOptions)
   console.log(
     `
 CSS and package.json copied over
