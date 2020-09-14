@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState, useCallback } from 'react'
+import clsx from 'clsx'
 
 import styles from './pagination.module.scss'
 
@@ -7,50 +8,52 @@ interface Props {
   itemsPerPage?: number
   totalPages: number
   onChange?: Function
+  className: string
   [rest: string]: unknown // ...rest property
 }
 
 const Pagination: FunctionComponent<Props> = ({
   activePage = 1,
-  totalPages = 10,
+  totalPages = 6,
   itemsPerPage,
   onChange,
+  className,
   ...rest
 }) => {
-  const numberOfPages = []
   const pages = []
+  const items = []
   const [currentPage, setCurrentPage] = useState(activePage)
   const [childrenPerPage] = useState(itemsPerPage)
-//   let totalItems = Array.from(Array(totalPages).keys())
+  let totalItems = Array.from(Array(totalPages).keys())
 
-  useCallback(() => {
-    onChange
-  }, [onChange])
+  const setNumberOfPage = useCallback(
+    (number) => {
+      onChange
+      setCurrentPage(number)
+    },
+    [onChange, currentPage]
+  )
 
-  let totalItems
-  for (let i = 0; i < totalPages; i++){
+  for (let i = 0; i < totalPages; i++) {
     pages.push(i + 1)
   }
 
-  console.log(pages)
-  // const indexOfLastPage = currentPage * childrenPerPage
-  // const indexOfFirstPage = indexOfLastPage - childrenPerPage
-  // const currentItems = pages.slice(indexOfFirstPage, indexOfLastPage)
+  console.log(currentPage)
+  const indexOfLastPage = currentPage * pages.length
+  const indexOfFirstPage = indexOfLastPage - pages.length
+  const currentItems = pages.slice(indexOfFirstPage, indexOfLastPage)
 
-  // for (let i = 1; i <= Math.ceil(pages.length / childrenPerPage); i++) {
-  //   numberOfPages.push(i)
-  // }
+  for (let i = 1; i <= Math.ceil(pages.length / pages.length); i++) {
+    items.push(i)
+  }
 
-//   console.log(numberOfPages)
   return (
-    <div className={styles['pagination-wrapper']} {...rest}>
-      <div>
-        {pages.map((number) => (
-          <button key={number} onClick={() => setCurrentPage(number)}>
-            {number}
-          </button>
-        ))}
-      </div>
+    <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
+      {pages.map((number) => (
+        <button className={styles.button} key={number} onClick={() => setNumberOfPage(number)}>
+          {number}
+        </button>
+      ))}
     </div>
   )
 }
