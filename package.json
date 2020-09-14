@@ -1,6 +1,6 @@
 {
   "name": "mfcl",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": false,
   "description": "React Component Library for UI consistency between repositories",
   "main": "dist/index.js",
@@ -24,7 +24,7 @@
     "test:watch": "yarn test --watch",
     "test:coverage": "yarn test --coverage --watchAll=false",
     "watch": "rollup -c -w",
-    "x": "rimraf dist && node ./scripts/buildDist"
+    "d": "npx typescript dist/**/*.js --declaration --allowJs --emitDeclarationOnly"
   },
   "dependencies": {},
   "peerDependencies": {
