@@ -28,12 +28,3 @@ export const getFirstChunkPage = (pagesLeft: number, activePage: number, chunkSi
   }
   return firstChunkPage
 }
-
-
-export const handleCustomPropType = (arrowsOnly: boolean, propName: React.ReactText) => {
-  if ((arrowsOnly && propName === undefined) || typeof propName !== 'number') {
-    return new Error(`${propName} is required when "arrowsOnly" prop is true. It is expected to be a number`)
-  }
-
-  return undefined
-}
