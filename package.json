@@ -1,11 +1,11 @@
 {
   "name": "mfcl",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": false,
   "description": "React Component Library for UI consistency between repositories",
   "main": "dist/index.js",
-  "typings": "dist/lib/index.d.ts",
-  "types": "dist/lib/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "engines": {
     "node": ">=12.0.0"
   },
@@ -24,7 +24,7 @@
     "test:watch": "yarn test --watch",
     "test:coverage": "yarn test --coverage --watchAll=false",
     "watch": "rollup -c -w",
-    "d": "npx typescript dist/**/*.js --declaration --allowJs --emitDeclarationOnly"
+    "build:dist": "rimraf dist && node ./scripts/buildDist"
   },
   "dependencies": {},
   "peerDependencies": {
@@ -77,9 +77,9 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/documentation/**",
       "!src/gatsby-theme-docz/**",
-      "!src/lib/utils/**",
-      "!src/lib/index.ts",
-      "!src/lib/declaration.d.ts",
+      "!src/utils/**",
+      "!src/index.ts",
+      "!src/declaration.d.ts",
       "!src/react-app-env.d.ts",
       "!src/setupTests.js"
     ]

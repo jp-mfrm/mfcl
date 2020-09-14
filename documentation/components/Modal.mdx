@@ -1,44 +1,31 @@
 ---
-name: Collapse
+name: Modal
 menu: Components
-route: /components-collapse
+route: /components-modal
 ---
 
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
-import { Collapse, Button } from '../../lib'
+import { Modal, Button } from '../../src'
 
-# Collapse
-
-Collapse creates a smooth transition to hide and show content
-
-## Install
-
-React transition group is needed for the collapse
-
-```bash
-yarn add react-transition-group
-```
+# Modal
 
 ```javascript
-import Collapse from 'mfcl/Collapse'
+import Modal from 'mfcl/Modal'
 ```
 
 ## Properties
 
-#### Collapse
+<Props of={Modal} />
 
-<Props of={Collapse} />
-
-## Controlled Collapse
+## Basic Usage
 
 <Playground>
   <Component initialState={{ isOpen: false }}>
     {({ setState, state }) => {
       return (
-        <>
-          <Button onClick={() => setState({ isOpen: !state.isOpen })}>Click Me</Button>
-          <Collapse isOpen={state.isOpen}>
+        <div>
+          <Modal header="Basic Modal" isOpen={state.isOpen} onClose={(isOpen) => setState({ isOpen: false })}>
             Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial
             customized shopping options shut eye America's top-rated brands snoring soft ultra plush latex brand comfy
             nap plush medium side innerspring hot bunk bed queen best prices extra firm special financing full back low
@@ -58,8 +45,11 @@ import Collapse from 'mfcl/Collapse'
             position spine plush America's top-rated brands tulo mattress california king nap firm dreams Beautyrest
             comfy innerspring Sleepy's pillowcases Seally extra firm bed frames futon pain customized shopping options
             zzzzzz twin loft hot linens king neck headboards
-          </Collapse>
-        </>
+          </Modal>
+          <Button btnType="primary" onClick={() => setState({ isOpen: !state.isOpen })} size="lg">
+            Open Modal
+          </Button>
+        </div>
       )
     }}
   </Component>

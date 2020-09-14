@@ -1,5 +1,3 @@
-import { normalize } from 'path'
-
 const fontFamily = "'Rubik', 'Arial', sans-serif"
 
 const colors = {
