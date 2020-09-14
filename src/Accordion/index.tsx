@@ -7,8 +7,6 @@ import React, {
   isValidElement,
   cloneElement
 } from 'react'
-import clsx from 'clsx'
-import styles from './accordion.module.scss'
 import AccordionItem from '../AccordionItem'
 
 interface AccordionItem {
@@ -29,7 +27,7 @@ interface AccordionItem {
 
 type Props = {
   /* class to pass to the accordion wrapper */
-  accordionClass?: string
+  className?: string
   /* Option to hide preview text of AccordionItem on it's open state */
   hidePreview?: boolean
   /* list of AccordionItems to be rendered */
@@ -43,7 +41,7 @@ type Props = {
 }
 
 const Accordion: FunctionComponent<Props> = ({
-  accordionClass,
+  className,
   items = [],
   hidePreview = false,
   titleStyles = {},
@@ -85,7 +83,7 @@ const Accordion: FunctionComponent<Props> = ({
   }
 
   return (
-    <div className={clsx(styles['accordionList'], accordionClass)} style={{ width }}>
+    <div className={className} style={{ width, fontFamily: "'Rubik', 'Arial', sans-serif", margin: 'auto' }}>
       {children
         ? Children.map(children, (child, index) => {
             if (isValidElement(child)) {

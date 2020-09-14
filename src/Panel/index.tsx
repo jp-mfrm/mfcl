@@ -1,20 +1,18 @@
-import React, { FunctionComponent, Children, CSSProperties, isValidElement, cloneElement } from 'react';
+import React, { FunctionComponent, Children, CSSProperties, isValidElement, cloneElement } from 'react'
 import clsx from 'clsx'
 
-import styles from './panel.module.scss';
+import styles from './panel.module.scss'
 
 interface Props {
   /** Class to pass to the panel */
-  panelClass?: string
+  className?: string
   /** Enable rounded variation. */
   rounded?: boolean
-  /** Set custom inline css */
-  customStyling?: CSSProperties
-  [rest: string]: unknown; // ...rest property
-};
+  [rest: string]: unknown // ...rest property
+}
 
 const Panel: FunctionComponent<Props> = ({
-  panelClass,
+  className,
   header,
   footer,
   rounded = false,
@@ -23,18 +21,14 @@ const Panel: FunctionComponent<Props> = ({
   ...rest
 }) => {
   return (
-    <div 
-      className={clsx(styles['panel'], rounded && styles['rounded'], panelClass)}
-      style={customStyling}
-      {...rest}
-    >
+    <div className={clsx(styles.panel, rounded && styles.rounded, className)} {...rest}>
       {Children.map(children, (child) => {
-        if(isValidElement(child)) {
-          return cloneElement(child);
+        if (isValidElement(child)) {
+          return cloneElement(child)
         }
       })}
     </div>
-  );
-};
+  )
+}
 
-export default Panel;
+export default Panel

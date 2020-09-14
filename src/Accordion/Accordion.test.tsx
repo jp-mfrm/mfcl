@@ -4,9 +4,9 @@ import Accordion from './index'
 import AccordionItem from '../AccordionItem'
 
 describe('Accordion Component', () => {
-  it('should render the accordionClass prop', () => {
-    const { container } = render(<Accordion accordionClass="accordion-class" />)
-    expect(container.querySelector('.accordionList')?.classList).toContain('accordion-class')
+  it('should render the className prop', () => {
+    const { container } = render(<Accordion className="accordion-class" />)
+    expect(container.querySelector('.accordion-class')?.classList).toContain('accordion-class')
   })
 
   it('should render the style props correctly', () => {
@@ -15,7 +15,7 @@ describe('Accordion Component', () => {
   })
 
   it('should render the width prop correctly', () => {
-    const { container } = render(<Accordion width="200px" />)
+    const { container } = render(<Accordion className="accordionList" width="200px" />)
     expect(container.querySelector('.accordionList')).toHaveStyle('width: 200px')
   })
 

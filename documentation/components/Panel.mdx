@@ -60,12 +60,12 @@ Special panel item types can be designated by the type property
 Apply custom styling to both panel and panel item components
 
 <Playground>
-  <Panel rounded customStyling={{ color: 'red' }}>
-    <PanelItem type="header" customStyling={{ textAlign: 'center' }}>
+  <Panel rounded style={{ color: 'red' }}>
+    <PanelItem type="header" style={{ textAlign: 'center' }}>
       Centered Header
     </PanelItem>
     <PanelItem>Some information</PanelItem>
-    <PanelItem type="footer" customStyling={{ backgroundColor: 'grey', color: 'white' }}>
+    <PanelItem type="footer" style={{ backgroundColor: 'grey', color: 'white' }}>
       footer
     </PanelItem>
   </Panel>

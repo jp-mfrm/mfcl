@@ -1,6 +1,6 @@
 {
   "name": "mfcl",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "private": false,
   "description": "React Component Library for UI consistency between repositories",
   "main": "dist/index.js",
