@@ -1,5 +1,10 @@
 @import '../variables';
 
+.pagination-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .button {
   background: none;
   border: none;
@@ -11,6 +16,7 @@
   margin-left: 11px;
   padding: 4px 9px;
   font-size: 18px;
+  font-weight: bold;
 
   &:hover {
     background: $gray-2;
@@ -23,5 +29,19 @@
 
   &:hover {
     background: $dark-red;
+  }
+}
+
+.arrowButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    svg {
+      path {
+        stroke: $dark-red;
+      }
+    }
   }
 }
