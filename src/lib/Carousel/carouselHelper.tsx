@@ -24,6 +24,41 @@ function getChildrenArr(children: ReactNode) {
   return cloneEls
 }
 
+function getDragSliderMeasurements(marginless: boolean, infinite: boolean, itemsToShow: number, slidesToShow: number) {
+  var measurements = {
+    slideMargin: 0,
+    slideFlexBasis: 0,
+    slideSize: 0,
+    sliderLeftPos: 0,
+    sliderWidth: 0
+  }
+
+  let slideCount = itemsToShow + (infinite ? 2 : 0)
+  switch (true) {
+    case marginless:
+      measurements.slideFlexBasis = 100 / slideCount
+      measurements.slideSize = 100 / slidesToShow
+      measurements.sliderLeftPos = infinite ? -100 / slidesToShow + (-100 / slidesToShow) * (slidesToShow - 1) : 0
+      measurements.sliderWidth = (itemsToShow * 100) / slidesToShow + (infinite ? 100 * 2 : 0)
+      break
+    default:
+      let baseMargin = 0.125
+      measurements.slideMargin = baseMargin / slidesToShow
+      measurements.slideFlexBasis = (100 / slideCount / slidesToShow) * 0.9 // Set as 90% of individual slide basis
+
+      let marginAdj = 2 * measurements.slideMargin
+      let test = 90.875 + baseMargin * (itemsToShow + 2)
+      measurements.slideSize = test / slidesToShow - (infinite ? 0 : 2 * marginAdj)
+
+      let sliderLeftAdj = 100 - 13.875 + baseMargin * 3 * (itemsToShow - 1)
+      measurements.sliderLeftPos = infinite ? -sliderLeftAdj : 4.5
+      measurements.sliderWidth = itemsToShow * 100 + (infinite ? 100 * 2 : 0)
+      break
+  }
+
+  return { ...measurements }
+}
+
 function getSliderMeasurements(marginless: boolean, infinite: boolean, itemsToShow: number, itemCount: number) {
   var slideMargin = marginless ? 0 : 0.25 / itemsToShow
   var slideWidth = 100 / itemCount
@@ -208,13 +243,16 @@ export function carouselHelper(
 export function draggableHelper(
   children: ReactNode,
   itemsToShow: number,
-  itemsToScroll: number,
+  marginLess: boolean,
   btnAlignment: string,
   indicatorStyle: string,
   duration: number,
   infinite: boolean,
   autoSlide: boolean
 ) {
+  // Configure button alignment
+  const alignment = [styles[(btnAlignment + '').split(' ')[0]], styles[(btnAlignment + '').split(' ')[1]]]
+
   // Configure autoslide / infinite
   const [started, setStarted] = useState(duration ? true : false)
   if (autoSlide) infinite = true
@@ -223,14 +261,15 @@ export function draggableHelper(
   const [childrenArr, updateChildArr] = useState<ReactNode[]>(getChildrenArr(children))
   const baseSlideCount = childrenArr.length
   const slidesToShow = itemsToShow <= baseSlideCount ? itemsToShow : baseSlideCount
-  const sliderWidth = (baseSlideCount * 100) / slidesToShow + (infinite ? (100 * 2 * slidesToShow) / slidesToShow : 0)
-  const slideSize = 100 / (slidesToShow ? slidesToShow : 1)
-  const [sliderLeft, setSliderLeft] = useState(
-    infinite ? -100 / slidesToShow + (slidesToShow > 1 ? -100 / slidesToShow : 0) * (slidesToShow - 1) : 0
+  const { slideMargin, slideFlexBasis, slideSize, sliderLeftPos, sliderWidth } = getDragSliderMeasurements(
+    marginLess,
+    infinite,
+    baseSlideCount,
+    slidesToShow
   )
+  const [sliderLeft, setSliderLeft] = useState(sliderLeftPos)
 
   // Configure base slides
-  const slideFlexBasis = (1 / baseSlideCount) * 100
   const [slideGrabbing, setSlideGrabbing] = useState(false)
   const slides = childrenArr?.map((child: ReactNode, index: number) => {
     if (isValidElement(child)) {
@@ -239,7 +278,7 @@ export function draggableHelper(
           className={clsx(styles['slide'], styles['draggable'], slideGrabbing && styles['grabbing'])}
           // {...child.props}
           key={index}
-          style={{ ...child.props.style, flexBasis: `${slideFlexBasis}%` }}
+          style={{ ...child.props.style, flexBasis: `${slideFlexBasis}%`, margin: `0 ${slideMargin}%` }}
         >
           {cloneElement(child, {
             key: index
@@ -305,7 +344,12 @@ export function draggableHelper(
   const [allowShift, setAllowShift] = useState(true)
 
   const toSliderXPercentage = (pixelVal: number) => {
-    return ((pixelVal * slides.length) / (slidesToShow * draggableSliderRef.current!.offsetWidth)) * 100
+    let _width = marginLess
+      ? draggableSliderRef.current!.offsetWidth
+      : (((baseSlideCount * 100) / slidesToShow + (infinite ? 100 * 2 : 0)) / sliderWidth) *
+        draggableSliderRef.current!.offsetWidth
+
+    return ((pixelVal * slides.length) / (slidesToShow * _width)) * 100
   }
 
   const getSliderLeftPos = useCallback(() => {
@@ -325,17 +369,20 @@ export function draggableHelper(
   }
 
   const shiftSlide = (dir: number, action?: string) => {
+    // Check if slide is in the middle of a transition
     if (sliderHasTransition()) return
 
+    // Check if slide exceeds beginning/end boundaries by drag or control
     if (exceedsSliderBoundary(dir) && action !== 'indicator') {
       if (action) draggableSliderRef.current!.style.transition = 'left .5s ease-out'
-      setSliderLeft(activeIndex === 0 ? 0 : action ? posInitial : getSliderLeftPos())
+      setSliderLeft(activeIndex === 0 ? sliderLeftPos : action ? posInitial : getSliderLeftPos())
       return
     }
 
     if (allowShift) {
       switch (true) {
         case action === 'indicator':
+          // dir is the destinationIndex
           let indexAdjust = activeIndex - (infinite ? slidesToShow - 1 : 0)
           let slideMultiplier = Math.abs(dir - indexAdjust)
           if (slideMultiplier === 0) return
@@ -345,7 +392,8 @@ export function draggableHelper(
           break
         case action === 'drag':
         default:
-          const initPosition = action ? posInitial : getSliderLeftPos()
+          // dir is the direction
+          const initPosition = action ? posInitial : sliderLeft
 
           if (!action) {
             setPosInitial(initPosition)
@@ -370,12 +418,12 @@ export function draggableHelper(
     draggableSliderRef.current!.style.transition = ''
 
     if (activeIndex === -1) {
-      setSliderLeft(-(baseSlideCount * slideSize))
+      setSliderLeft(sliderLeftPos - (baseSlideCount - itemsToShow) * slideSize)
       setActiveIndex(baseSlideCount - 1)
     }
 
     if (activeIndex === baseSlideCount) {
-      setSliderLeft(-(1 * slideSize))
+      setSliderLeft(sliderLeftPos + slideSize * (slidesToShow - 1))
       setActiveIndex(0)
     }
 
@@ -426,7 +474,7 @@ export function draggableHelper(
     (event: any) => {
       if (dragActive) {
         var posFinal = getSliderLeftPos()
-        var threshold = 12 // 100
+        var threshold = 12
 
         if (posFinal - posInitial < -threshold) {
           shiftSlide(1, 'drag')
@@ -465,13 +513,15 @@ export function draggableHelper(
   return {
     draggableSliderRef,
     sliderLeft,
+    alignment,
+    slides,
+    sliderWidth,
+    indicators,
+    slideMargin,
     handleDragStart,
     handleDragEndHandler,
     handleDragActionHandler,
     handleIndexCheck,
-    shiftSlide,
-    slides,
-    sliderWidth,
-    indicators
+    shiftSlide
   }
 }

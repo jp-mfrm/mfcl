@@ -187,6 +187,7 @@ $slider-height: 100%; // 300px; // 100%;
   z-index: 2;
   justify-content: center;
   display: flex;
+  position: relative;
 
   &-slider {
     overflow: hidden;
@@ -219,6 +220,8 @@ $slider-height: 100%; // 300px; // 100%;
       transition: all 1s;
       position: relative;
       border-radius: 2px;
+      // margin: 0 0.125%;
+      // flex-basis: 10.5% !important;
     }
 
     .grabbing {
@@ -229,35 +232,106 @@ $slider-height: 100%; // 300px; // 100%;
   &-control {
     position: absolute;
     top: 40%;
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     background: #fff;
     border-radius: 50px;
     margin-top: -20px;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
     z-index: 2;
-  }
 
-  &-prev,
-  &-next {
-    background-size: 22px;
-    background-position: center;
-    background-repeat: no-repeat;
-    cursor: pointer;
-  }
+    &.prev {
+      background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
+    }
 
-  &-prev {
-    background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
-    left: -20px;
-  }
+    &.next {
+      background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+    }
 
-  &-next {
-    background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
-    right: -20px;
-  }
+    &.center {
+      &.next {
+        right: 40%;
+      }
+      &.prev {
+        left: 40%;
+      }
+    }
 
-  &-prev:active,
-  &-next:active {
-    transform: scale(0.8);
+    &.left {
+      &.next {
+        left: 10%;
+      }
+      &.prev {
+        left: 1%;
+      }
+    }
+
+    &.right {
+      &.next {
+        right: 1%;
+      }
+      &.prev {
+        right: 10%;
+      }
+    }
+
+    &.apart {
+      height: 50px;
+
+      &.next {
+        right: 0px;
+        border-radius: 5px 0 0 5px;
+      }
+      &.prev {
+        left: 0px;
+        border-radius: 0 5px 5px 0;
+      }
+    }
+
+    &.prev,
+    &.next {
+      background-size: 22px;
+      background-position: center;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+
+    &.prev:active,
+    &.next:active {
+      transform: scale(0.8);
+    }
+
+    &.hidden {
+      background-image: none;
+      background-color: rgba(255, 255, 255, 0);
+      box-shadow: none;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+        transition: all 0.25s;
+        color: $black;
+
+        &.prev {
+          background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
+        }
+
+        &.next {
+          background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+        }
+      }
+    }
+
+    &.top {
+      top: 0%;
+    }
+
+    &.middle {
+      bottom: 50%;
+    }
+
+    &.bottom {
+      bottom: 75%;
+    }
   }
 }

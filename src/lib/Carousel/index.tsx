@@ -134,24 +134,16 @@ const Carousel: FunctionComponent<Props> = ({
     const {
       draggableSliderRef,
       sliderLeft,
+      slides,
+      sliderWidth,
+      indicators,
+      alignment,
       handleDragStart,
       handleDragEndHandler,
       handleDragActionHandler,
       handleIndexCheck,
-      shiftSlide,
-      slides,
-      sliderWidth,
-      indicators
-    } = draggableHelper(
-      children,
-      itemsToShow,
-      itemsToScroll,
-      btnAlignment,
-      indicatorStyle,
-      duration,
-      infinite,
-      autoSlide
-    )
+      shiftSlide
+    } = draggableHelper(children, itemsToShow, marginless, btnAlignment, indicatorStyle, duration, infinite, autoSlide)
 
     template = (
       <div className={clsx(styles['carousel-drag-wrapper'], styles['loaded'])}>
@@ -175,12 +167,22 @@ const Carousel: FunctionComponent<Props> = ({
         </div>
         <a
           id="prev"
-          className={clsx(styles['carousel-drag-wrapper-control'], styles['carousel-drag-wrapper-prev'], alignment)}
+          className={clsx(
+            styles['carousel-drag-wrapper-control'],
+            styles['prev'],
+            hideControls && styles['hidden'],
+            alignment
+          )}
           onClick={() => shiftSlide(-1)}
         ></a>
         <a
           id="next"
-          className={clsx(styles['carousel-drag-wrapper-control'], styles['carousel-drag-wrapper-next'], alignment)}
+          className={clsx(
+            styles['carousel-drag-wrapper-control'],
+            styles['next'],
+            hideControls && styles['hidden'],
+            alignment
+          )}
           onClick={() => shiftSlide(1)}
         ></a>
       </div>

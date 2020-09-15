@@ -137,7 +137,7 @@ The Carousel component allows you to a display a selection of rotating items.
 ## Draggable
 
 <Playground>
-  <Carousel draggable indicatorStyle="bar" autoSlide duration={5000}>
+  <Carousel draggable indicatorStyle="bar" hideControls infinite>
     <div style={{ backgroundColor: 'pink', width: '100%' }}>Slide 1</div>
     <div style={{ backgroundColor: 'lightgreen', width: '100%' }}>Slide 2</div>
     <div style={{ backgroundColor: 'lightblue', width: '100%' }}>Slide 3</div>
@@ -147,7 +147,7 @@ The Carousel component allows you to a display a selection of rotating items.
 </Playground>
 
 <Playground>
-  <Carousel infinite draggable itemsToShow={2} autoSlide>
+  <Carousel infinite draggable itemsToShow={2}>
     <div style={{ backgroundColor: 'pink', width: '100%' }}>Slide 1</div>
     <div style={{ backgroundColor: 'lightgreen', width: '100%' }}>Slide 2</div>
     <div style={{ backgroundColor: 'lightblue', width: '100%' }}>Slide 3</div>
@@ -157,7 +157,7 @@ The Carousel component allows you to a display a selection of rotating items.
 </Playground>
 
 <Playground>
-  <Carousel draggable infinite itemsToShow={3} autoSlide duration={5000}>
+  <Carousel draggable infinite itemsToShow={3} marginless>
     <ProductCard
       brand="Serta"
       brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
