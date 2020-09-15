@@ -1,0 +1,21 @@
+@import '../variables';
+
+// .tabs-wrapper {
+  
+// }
+
+.tab-item {
+  color: red;
+
+  &.active {
+    color: green;
+  }
+}
+
+.panel-item {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}

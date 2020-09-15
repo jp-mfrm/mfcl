@@ -1,0 +1,32 @@
+---
+name: Tabs
+menu: Components
+route: /components-tabs
+---
+
+import { Playground, Props } from 'docz';
+import Component from "react-component-component";
+import { Tabs } from '../../lib';
+
+# Tabs
+
+```javascript
+import { Tabs } from 'mfcl';
+```
+
+## Description
+TODO add description here
+
+## Properties
+
+<Props of={Tabs} />
+
+## Basic Usage
+
+<Playground>
+  <Component initialState={{}}>
+    {({ setState, state }) => (
+      <Tabs items={['tab1', 'tab2', 'tab3']} />
+    )}
+  </Component>
+</Playground>
