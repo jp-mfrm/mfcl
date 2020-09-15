@@ -70,6 +70,7 @@ const Pagination: FunctionComponent<Props> = ({
       className={clsx(styles.button, currentPage === number && styles.active)}
       key={number}
       onClick={() => setNumberOfPage(number)}
+      aria-label={`Page ${number}`}
     >
       {number}
     </button>
