@@ -42,6 +42,7 @@
     outline: none;
     background: #fff;
     border-radius: 50px;
+    border: none;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
     background-size: 22px;
     background-position: center;
@@ -101,7 +102,7 @@
       background-image: none;
       background-color: rgba(255,255,255,0);
       box-shadow: none;
-      
+
       &:hover {
         background-color: rgba(255,255,255,.5);
         box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
@@ -164,6 +165,11 @@
       }
   
       &:hover {
+        background-color: $black;
+        border-color: $black;
+      }
+
+      &[data-selected="true"] {
         background-color: $black;
         border-color: $black;
       }
@@ -236,9 +242,11 @@ $slider-height: 100%; // 300px; // 100%;
     height: 35px;
     background: #fff;
     border-radius: 50px;
+    border: none;
     margin-top: -20px;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
     z-index: 2;
+    outline: none;
 
     &.prev {
       background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
@@ -334,4 +342,15 @@ $slider-height: 100%; // 300px; // 100%;
       bottom: 75%;
     }
   }
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(0,0,0,0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }

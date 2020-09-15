@@ -25,7 +25,24 @@ The Carousel component allows you to a display a selection of rotating items.
 ## Basic Usage
 
 <Playground>
-  <Carousel>
+  <Carousel infinite itemsToShow={1} ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightgreen' }}>Slide 3</div>
+  </Carousel>
+</Playground>
+
+<Playground>
+  <Carousel infinite itemsToShow={2} ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightgreen' }}>Slide 3</div>
+    <div style={{ backgroundColor: 'lightgray' }}>Slide 4</div>
+  </Carousel>
+</Playground>
+
+<Playground>
+  <Carousel infinite itemsToShow={3} ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
     <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
     <div style={{ backgroundColor: 'lightgreen' }}>Slide 3</div>
@@ -39,7 +56,7 @@ The Carousel component allows you to a display a selection of rotating items.
 ### Homepage Heroes
 
 <Playground>
-  <Carousel marginless autoSlide hideControls>
+  <Carousel marginless hideControls ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
     <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
     <div style={{ backgroundColor: 'lightgreen' }}>Slide 3</div>
@@ -51,7 +68,7 @@ The Carousel component allows you to a display a selection of rotating items.
 ### Product Carousel
 
 <Playground>
-  <Carousel itemsToShow={3} marginless infinite hideIndicators>
+  <Carousel itemsToShow={3} marginless infinite hideIndicators ariaLabel="one">
     <ProductCard
       brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
       productImg="https://i1.adis.ws/i/hmk/133558"
@@ -106,7 +123,7 @@ The Carousel component allows you to a display a selection of rotating items.
 ### Brand Carousel
 
 <Playground>
-  <Carousel itemsToShow={4} infinite hideIndicators btnAlignment="top right">
+  <Carousel itemsToShow={4} infinite hideIndicators btnAlignment="top right" ariaLabel="one">
     <Panel rounded>
       <PanelItem>Brand 1</PanelItem>
     </Panel>

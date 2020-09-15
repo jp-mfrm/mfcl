@@ -1,18 +1,7 @@
-import {
-  Children,
-  ReactNode,
-  cloneElement,
-  createElement,
-  isValidElement,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
-
-import React from 'react'
-import clsx from 'clsx'
-import styles from './carousel.module.scss'
+import { ReactNode, Children, useState, useEffect, isValidElement, cloneElement, useRef, useCallback, createElement, MutableRefObject } from "react";
+import styles from "./carousel.module.scss";
+import React from "react";
+import clsx from "clsx";
 
 function getChildrenArr(children: ReactNode) {
   const cloneEls: ReactNode[] = []
@@ -60,14 +49,79 @@ function getDragSliderMeasurements(marginless: boolean, infinite: boolean, items
 }
 
 function getSliderMeasurements(marginless: boolean, infinite: boolean, itemsToShow: number, itemCount: number) {
-  var slideMargin = marginless ? 0 : 0.25 / itemsToShow
-  var slideWidth = 100 / itemCount
-  var focusWidth = slideWidth / itemsToShow
-  var basisAdjustment = infinite ? 2 * slideMargin * (itemCount - 1) : slideMargin * (itemCount - 1)
-  var slideFlexBasis = focusWidth - basisAdjustment
-  var translationAdjustment = infinite ? 3 * slideMargin * itemsToShow : slideMargin * itemsToShow
+  var slideMargin = marginless ? 0 : 0.25 / itemsToShow;
+  var slideWidth = 100/itemCount;
+  var focusWidth = infinite ? (slideWidth / itemsToShow) - (4*slideMargin*itemsToShow) : slideWidth / itemsToShow;
+  var basisAdjustment = infinite ? 2 * slideMargin * (itemCount - 1) : slideMargin * (itemCount - 1);
+  var slideFlexBasis = focusWidth - basisAdjustment;
+  var translationAdjustment = infinite ? 3*slideMargin*itemsToShow + slideMargin*itemCount: slideMargin*itemsToShow + slideMargin*itemCount;
 
   return { slideMargin, slideFlexBasis, translationAdjustment }
+}
+
+function updateIndicatorDots(infinite: boolean, reposition: string, itemCount: number, activeIndex: number, destinationIndex: number, indicatorRef: MutableRefObject<any>) {
+  if(indicatorRef.current && indicatorRef.current.children) {
+    if(!infinite) {
+      indicatorRef.current.children[activeIndex].ariaCurrent = "false";
+      indicatorRef.current.children[activeIndex].attributes['data-selected'].value = "false";
+      indicatorRef.current.children[destinationIndex].ariaCurrent = "true";
+      indicatorRef.current.children[destinationIndex].attributes['data-selected'].value = "true";
+    } else if(infinite){
+
+      if(activeIndex > 1) {
+        indicatorRef.current.children[activeIndex-1].ariaCurrent = "false";
+        indicatorRef.current.children[activeIndex-1].attributes['data-selected'].value = "false";
+      } else if (activeIndex == 1) {
+        indicatorRef.current.children[0].ariaCurrent = "false";
+        indicatorRef.current.children[0].attributes['data-selected'].value = "false";
+      } else {
+        indicatorRef.current.children[itemCount-1].ariaCurrent = "false";
+        indicatorRef.current.children[itemCount-1].attributes['data-selected'].value = "false";
+      }
+
+      if(destinationIndex > 1) {
+        indicatorRef.current.children[destinationIndex-1].ariaCurrent = "true";
+        indicatorRef.current.children[destinationIndex-1].attributes['data-selected'].value = "true";
+      } else if(destinationIndex == 1) {
+        indicatorRef.current.children[0].ariaCurrent = "true";
+        indicatorRef.current.children[0].attributes['data-selected'].value = "true";
+      } else {
+        indicatorRef.current.children[itemCount-1].ariaCurrent = "true";
+        indicatorRef.current.children[itemCount-1].attributes['data-selected'].value = "true";
+      }
+    }
+  }
+}
+
+function updateAriaHidden(infinite: boolean, itemCount: number, itemsToShow: number, activeIndex: number, destinationIndex: number, direction: string, sliderRef: MutableRefObject<any>) {
+  let shownIndices: number[] = [];
+  let index;
+
+  if(!infinite) {
+    for(let i=0; i<itemsToShow; i++) {
+      index = destinationIndex+i;
+      if(!infinite && index < itemCount && index >= 0)
+        shownIndices.push(index);
+    }
+  }
+
+  if(infinite) {
+    for(let i=1; i<itemsToShow+1; i++) {
+      shownIndices.push(i);
+    }
+  }
+   
+
+  if(sliderRef.current) {
+    for(let i=0; i<sliderRef.current.children.length; i++) {
+      if(shownIndices.includes(i)) {
+        sliderRef.current.children[i].ariaHidden = "false"
+      } else {
+        sliderRef.current.children[i].ariaHidden = "true";
+      }
+    }
+  }
+
 }
 
 export function carouselHelper(
@@ -75,6 +129,7 @@ export function carouselHelper(
   itemsToShow: number,
   itemsToScroll: number,
   btnAlignment: string,
+  hideIndicators: boolean,
   indicatorStyle: string,
   duration: number,
   marginless: boolean,
@@ -110,12 +165,21 @@ export function carouselHelper(
     indicators.push(
       createElement('button', {
         key: index,
-        className: clsx(styles['indicator-button'], styles[indicatorStyle]),
-        onClick: () => handleIndicatorClick(index)
-      })
-    )
-  })
+        "data-selected": "false",
+        "aria-current": "false",
+        className: clsx(styles["indicator-button"], styles[indicatorStyle]),  
+        onClick: () => handleIndicatorClick(index)},
+        createElement('span', {className: clsx(styles['sr-only']), value: `Go to slide ${index+1}`})
+        ));
+    });
 
+    const indicatorRef = useRef<any>(null)
+
+    const indicatorWrapper = 
+      <div ref={indicatorRef} className={clsx(styles["carousel-wrapper-indicators"])}>
+        {!hideIndicators && indicators}
+      </div>
+  
   const moveToDestination = (destinationIndex: number) => {
     let translate = -1 * destinationIndex * (slideFlexBasis + 2 * slideMargin) + translationAdjustment
     if (sliderRef.current) {
@@ -130,28 +194,42 @@ export function carouselHelper(
   }
 
   const handleIndicatorClick = (destinationIndex: number) => {
-    //Gets thrown off if the control buttons are clicked.
+    if(sliderRef.current) {
+      sliderRef.current.ariaLive = "off";
+    }
+
+    let curIndex = activeIndex;
+    let newIndex = destinationIndex;
+
     if (infinite) {
       var scrollAmount = destinationIndex + 1 - activeIndex
       if (scrollAmount === 0) return
-      var carouselItems = sliderRef.current.children
+      var carouselItems = sliderRef.current.children;
       if (scrollAmount > 0) {
         moveToDestination(0)
         for (let i = 0; i < scrollAmount; i++) {
           sliderRef.current.insertBefore(carouselItems[0], carouselItems[itemCount - 1].nextSibling)
         }
         moveToDestination(1)
-        setActiveIndex(destinationIndex + 1)
+        newIndex = destinationIndex + 1;
+        setActiveIndex(newIndex);
       } else {
         moveToDestination(2)
         for (let i = 0; i < -1 * scrollAmount; i++) {
           sliderRef.current.insertBefore(carouselItems[itemCount - 1], carouselItems[0])
         }
         moveToDestination(1)
-        setActiveIndex(destinationIndex + 1)
+        newIndex = destinationIndex + 1;
+        setActiveIndex(newIndex);
       }
     } else {
-      moveToDestination(destinationIndex)
+      setActiveIndex(newIndex);
+      moveToDestination(newIndex);
+    }
+    
+    updateIndicatorDots(infinite, reposition, itemCount, curIndex, newIndex, indicatorRef);
+    if(sliderRef.current) {
+      sliderRef.current.ariaLive = "on";
     }
   }
 
@@ -167,6 +245,7 @@ export function carouselHelper(
         moveToDestination(1)
       }
 
+      updateAriaHidden(infinite, itemCount, itemsToShow, activeIndex, 1, action, sliderRef);
       setReposition('')
     }
   }
@@ -179,27 +258,44 @@ export function carouselHelper(
         setReposition('next')
         moveToDestination(0)
         destinationIndex = activeIndex + scrollAmount > itemCount - 1 ? 0 : activeIndex + scrollAmount
+        if(!hideIndicators)
+          updateIndicatorDots(infinite, reposition, itemCount, activeIndex, destinationIndex, indicatorRef);
         break
 
       case action === 'next' && !infinite:
         destinationIndex = activeIndex + scrollAmount > itemCount - 1 ? destinationIndex : activeIndex + scrollAmount
         moveToDestination(destinationIndex)
+        if(!hideIndicators)
+          updateIndicatorDots(infinite, reposition, itemCount, activeIndex, destinationIndex, indicatorRef);
         break
 
       case action === 'prev' && infinite:
         setReposition('prev')
         moveToDestination(2)
         destinationIndex = activeIndex - scrollAmount < 0 ? itemCount - 1 : activeIndex - scrollAmount
+        if(!hideIndicators)
+          updateIndicatorDots(infinite, reposition, itemCount, activeIndex, destinationIndex, indicatorRef);
         break
 
       case action === 'prev' && !infinite:
         destinationIndex = activeIndex - scrollAmount < 0 ? destinationIndex : activeIndex - scrollAmount
         moveToDestination(destinationIndex)
+        if(!hideIndicators)
+          updateIndicatorDots(infinite, reposition, itemCount, activeIndex, destinationIndex, indicatorRef);
         break
     }
+    
+    if(action && sliderRef.current) {
+      sliderRef.current.ariaLive = "off";
+    } else if(sliderRef.current) {
+      sliderRef.current.ariaLive = "on";
+    }
 
-    setActiveIndex(destinationIndex)
-    setAction('')
+    if(action && !infinite) 
+      updateAriaHidden(infinite, itemCount, itemsToShow, activeIndex, destinationIndex, action, sliderRef);
+  
+    setActiveIndex(destinationIndex);
+    setAction("");
   }, [action])
 
   useEffect(() => {
@@ -216,25 +312,35 @@ export function carouselHelper(
   useEffect(() => {
     if (sliderRef.current) {
       sliderRef.current.style.width = itemCount * 100 + '%'
+      sliderRef.current.ariaLive = "on";
 
-      if (!infinite) {
-        moveToDestination(0)
-      } else {
-        var carouselItems = sliderRef.current.children
-        sliderRef.current.insertBefore(carouselItems[itemCount - 1], carouselItems[0])
-        moveToDestination(1)
-        setActiveIndex(1)
-      }
+      for(let i=0; i<itemsToShow; i++) {
+        sliderRef.current.children[i].ariaHidden = "false";
+      } 
+    }
+
+    if(!hideIndicators && indicatorRef.current && indicatorRef.current.children[0]) {
+      indicatorRef.current.children[0].attributes['data-selected'].value = "true";
+      indicatorRef.current.children[0].ariaCurrent = "true";
+    }
+
+    if(!infinite) {
+      moveToDestination(0);
+    } else if(sliderRef.current){
+      var carouselItems = sliderRef.current.children;
+      sliderRef.current.insertBefore(carouselItems[itemCount-1], carouselItems[0]);
+      moveToDestination(1);
+      setActiveIndex(1);
     }
   }, [])
-
+  
   return {
     slideFlexBasis,
     childrenArr,
     alignment,
     sliderRef,
     slideMargin,
-    indicators,
+    indicatorWrapper,
     setAction,
     handleTransitionEnd
   }
@@ -273,8 +379,10 @@ export function draggableHelper(
   const [slideGrabbing, setSlideGrabbing] = useState(false)
   const slides = childrenArr?.map((child: ReactNode, index: number) => {
     if (isValidElement(child)) {
+      let label = `slide ${index+1} of ${childrenArr.length}`
       return (
         <div
+          aria-label={label}
           className={clsx(styles['slide'], styles['draggable'], slideGrabbing && styles['grabbing'])}
           // {...child.props}
           key={index}
@@ -326,7 +434,8 @@ export function draggableHelper(
             key: index,
             className: clsx(styles['indicator-button'], styles[indicatorStyle]),
             onClick: () => handleIndicatorClick(index)
-          })
+          },
+          createElement('span', {className: clsx(styles['sr-only']), value: `Go to slide ${index+1}`}))
         )
       })
 

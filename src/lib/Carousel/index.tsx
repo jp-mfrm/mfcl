@@ -25,6 +25,10 @@ import styles from './carousel.module.scss'
 interface Props {
   /** Sets the class for the Carousel wrapper */
   carouselClass?: string
+  /** Aria label to set apart different carousels in the page
+   * label is prefixed with 'carousel-'
+   */
+  ariaLabel : string
   /** Sets how many slides to show */
   itemsToShow?: number
   /** Sets how many slides to scroll per click */
@@ -53,6 +57,7 @@ interface Props {
 
 const Carousel: FunctionComponent<Props> = ({
   carouselClass,
+  ariaLabel,
   itemsToShow = 1,
   itemsToScroll = 1,
   btnAlignment = 'middle apart',
@@ -73,7 +78,7 @@ const Carousel: FunctionComponent<Props> = ({
     alignment,
     sliderRef,
     slideMargin,
-    indicators,
+    indicatorWrapper,
     setAction,
     handleTransitionEnd
   } = carouselHelper(
@@ -81,6 +86,7 @@ const Carousel: FunctionComponent<Props> = ({
     itemsToShow,
     itemsToScroll,
     btnAlignment,
+    hideIndicators,
     indicatorStyle,
     duration,
     marginless,
@@ -89,12 +95,15 @@ const Carousel: FunctionComponent<Props> = ({
   )
 
   const slider = (
-    <div ref={sliderRef} className={clsx(styles['carousel-wrapper-slider'])} onTransitionEnd={handleTransitionEnd}>
+    <div ref={sliderRef} className={clsx(styles['carousel-wrapper-slider'])} aria-live="off" onTransitionEnd={handleTransitionEnd}>
       {childrenArr?.map((child: ReactNode, index: number) => {
         if (isValidElement(child)) {
+          let label = `slide ${index+1} of ${childrenArr.length}`
           return (
             <div
               key={index}
+              aria-label={label}
+              aria-hidden="true"
               className={clsx(styles['slide'], marginless && styles['marginless'])}
               style={{ ...child.props.style, flexBasis: `${slideFlexBasis}%`, margin: `0 ${slideMargin}%` }}
             >
@@ -106,28 +115,33 @@ const Carousel: FunctionComponent<Props> = ({
     </div>
   )
 
-  const buttons = (
-    <>
-      <a
-        className={clsx(
-          styles['prev'],
-          styles['carousel-wrapper-controls'],
-          hideControls && styles['hidden'],
-          alignment
-        )}
-        onClick={() => setAction('prev')}
-      ></a>
-      <a
-        className={clsx(
-          styles['next'],
-          styles['carousel-wrapper-controls'],
-          hideControls && styles['hidden'],
-          alignment
-        )}
-        onClick={() => setAction('next')}
-      ></a>
-    </>
-  )
+  const buttons = 
+  <>
+    <button className={clsx(styles["prev"], styles["carousel-wrapper-controls"], hideControls && styles["hidden"], alignment)} onClick={() => setAction("prev")}
+      aria-hidden={hideControls && "true" || "false"}
+    >
+      <p className={clsx(styles["sr-only"])}>
+        Move Slider Left Button.
+      </p>
+    </button>
+    <button className={clsx(styles["next"], styles["carousel-wrapper-controls"], hideControls && styles["hidden"], alignment)} onClick={() => setAction("next")}
+      aria-hidden={hideControls && "true" || "false"}
+    >
+    <p className={clsx(styles["sr-only"])}>
+      Move Slider Right Button. 
+    </p>
+    </button>
+  </>
+
+  const screenReaderInstructions = 
+  <p className={clsx(styles["sr-only"])}>
+    {draggable && 'This is a draggable carousel.' || 'This is a carousel'} 
+    {autoSlide && "It has auto-rotating slides"}
+    Use Next and Previous buttons to navigate. 
+    {!hideIndicators && 'You can also jump to a slide using the slide dots.'}
+  </p>
+
+
   var template
 
   if (draggable) {
@@ -146,10 +160,12 @@ const Carousel: FunctionComponent<Props> = ({
     } = draggableHelper(children, itemsToShow, marginless, btnAlignment, indicatorStyle, duration, infinite, autoSlide)
 
     template = (
-      <div className={clsx(styles['carousel-drag-wrapper'], styles['loaded'])}>
+      <section className={clsx(styles['carousel-drag-wrapper'], styles['loaded'])} aria-label={'carousel-'+ariaLabel}>
+        {screenReaderInstructions}
         <div className={styles['carousel-drag-wrapper-slider']}>
           <div
             className={styles['carousel-drag-wrapper-slides']}
+            aria-live="off"
             style={{
               left: `${sliderLeft}%`,
               width: `${sliderWidth}%`
@@ -165,8 +181,9 @@ const Carousel: FunctionComponent<Props> = ({
           </div>
           <div className={clsx(styles['carousel-wrapper-indicators'])}>{!hideIndicators && indicators}</div>
         </div>
-        <a
+        <button
           id="prev"
+          aria-hidden={hideControls && "true" || "false"}
           className={clsx(
             styles['carousel-drag-wrapper-control'],
             styles['prev'],
@@ -174,9 +191,14 @@ const Carousel: FunctionComponent<Props> = ({
             alignment
           )}
           onClick={() => shiftSlide(-1)}
-        ></a>
-        <a
+        >
+        <p className={clsx(styles["sr-only"])}>
+          Move Slider Left Button.
+        </p>
+        </button>
+        <button
           id="next"
+          aria-hidden={hideControls && "true" || "false"}
           className={clsx(
             styles['carousel-drag-wrapper-control'],
             styles['next'],
@@ -184,16 +206,21 @@ const Carousel: FunctionComponent<Props> = ({
             alignment
           )}
           onClick={() => shiftSlide(1)}
-        ></a>
-      </div>
+        >
+        <p className={clsx(styles["sr-only"])}>
+          Move Slider Right Button.
+        </p>
+        </button>
+      </section>
     )
   } else {
     template = (
       <>
-        <div className={clsx(styles['carousel-wrapper'], carouselClass)}>
+        <section className={clsx(styles['carousel-wrapper'], carouselClass)} aria-label={'carousel-'+ariaLabel}>
+          {screenReaderInstructions}
           {slider}
-          <div className={clsx(styles['carousel-wrapper-indicators'])}>{!hideIndicators && indicators}</div>
-        </div>
+          {indicatorWrapper}
+        </section>
         {buttons}
       </>
     )
