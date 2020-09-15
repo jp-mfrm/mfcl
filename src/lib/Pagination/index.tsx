@@ -51,7 +51,7 @@ const Pagination: FunctionComponent<Props> = ({
     <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
       {pages.map((number) => (
         <button className={styles.button} key={number} onClick={() => setNumberOfPage(number)}>
-          {number}
+          <p className={styles.number}>{number}</p>
         </button>
       ))}
     </div>
