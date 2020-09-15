@@ -24,20 +24,14 @@ const Pagination: FunctionComponent<Props> = ({
   const pages = []
   const items = []
   const [currentPage, setCurrentPage] = useState(activePage)
-  // const [childrenPerPage] = useState(itemsPerPage)
   const [currentItems, setCurrentItems] = useState(itemsPerPage)
-  const [totalItems, setTotalItems] = useState(itemsPerPage * totalPages)
+  const indexOfLastPage = activePage * totalPages
+  const indexOfFirstPage = indexOfLastPage - totalPages + 1
+  const totalItems = itemsPerPage * totalPages
 
   for (let i = 0; i < totalPages; i++) {
     pages.push(i + 1)
   }
-
-  console.log(currentPage)
-  const indexOfLastPage = activePage * totalPages
-  const indexOfFirstPage = indexOfLastPage - totalPages + 1
-  // const currentItems = pages.slice(indexOfFirstPage, indexOfLastPage)
-
-  console.log(currentItems)
 
   for (let i = 1; i <= Math.ceil(pages.length / totalPages); i++) {
     items.push(i)
@@ -47,7 +41,7 @@ const Pagination: FunctionComponent<Props> = ({
     (number) => {
       onChange
       setCurrentPage(number)
-      setCurrentItems(Math.ceil(number * itemsPerPage))
+      setCurrentItems(number * itemsPerPage)
     },
     [onChange, currentPage]
   )
@@ -57,6 +51,7 @@ const Pagination: FunctionComponent<Props> = ({
       return
     }
     setCurrentPage(currentPage - 1)
+    setCurrentItems((currentPage - 1) * itemsPerPage)
   }
 
   const setNextPage = () => {
@@ -64,6 +59,7 @@ const Pagination: FunctionComponent<Props> = ({
       return
     }
     setCurrentPage(currentPage + 1)
+    setCurrentItems((currentPage + 1) * itemsPerPage)
   }
 
   let paginationNumbers = pages.map((number) => (
@@ -83,7 +79,9 @@ const Pagination: FunctionComponent<Props> = ({
         <div className={styles['button-wrapper']}>{paginationNumbers}</div>
         {currentPage < indexOfLastPage && <PaginationArrow next onClick={setNextPage} />}
       </div>
-      <div className={styles.numText}>{currentItems}/{totalItems}</div>
+      <div className={styles.numText}>
+        {currentItems} out of {totalItems}
+      </div>
     </div>
   )
 }
