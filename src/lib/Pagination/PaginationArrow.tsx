@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { NextArrow, PreviousArrow } from './Arrows'
+import { PreviousArrow, NextArrow } from './arrows'
 import clsx from 'clsx'
 
 import styles from './pagination.module.scss'

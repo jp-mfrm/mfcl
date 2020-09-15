@@ -10,8 +10,8 @@
   border: none;
   cursor: pointer;
   border-radius: 2px;
-  min-width: 30px;
-  min-height: 30px;
+  // min-width: 30px;
+  // min-height: 30px;
   margin-right: 11px;
   margin-left: 11px;
   padding: 4px 9px;
@@ -44,4 +44,8 @@
       }
     }
   }
+}
+
+.button-wrapper {
+  padding: 0 19px;
 }

@@ -25,7 +25,6 @@ const Pagination: FunctionComponent<Props> = ({
   const items = []
   const [currentPage, setCurrentPage] = useState(activePage)
   const [childrenPerPage] = useState(itemsPerPage)
-  let totalItems = Array.from(Array(totalPages).keys())
 
   for (let i = 0; i < totalPages; i++) {
     pages.push(i + 1)
@@ -33,7 +32,7 @@ const Pagination: FunctionComponent<Props> = ({
 
   console.log(currentPage)
   const indexOfLastPage = activePage * totalPages
-  const indexOfFirstPage = indexOfLastPage - totalPages
+  const indexOfFirstPage = indexOfLastPage - totalPages + 1
   const currentItems = pages.slice(indexOfFirstPage, indexOfLastPage)
 
   console.log(indexOfFirstPage)
@@ -51,7 +50,7 @@ const Pagination: FunctionComponent<Props> = ({
   )
 
   const setPreviousPage = () => {
-    if (currentPage === indexOfFirstPage + 1) {
+    if (currentPage === indexOfFirstPage) {
       return
     }
     setCurrentPage(currentPage - 1)
@@ -64,19 +63,21 @@ const Pagination: FunctionComponent<Props> = ({
     setCurrentPage(currentPage + 1)
   }
 
+  let paginationNumbers = pages.map((number) => (
+    <button
+      className={clsx(styles.button, currentPage === number && styles.active)}
+      key={number}
+      onClick={() => setNumberOfPage(number)}
+    >
+      {number}
+    </button>
+  ))
+
   return (
     <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
-      <PaginationArrow previous onClick={setPreviousPage} />
-      {pages.map((number) => (
-        <button
-          className={clsx(styles.button, currentPage === number && styles.active)}
-          key={number}
-          onClick={() => setNumberOfPage(number)}
-        >
-          {number}
-        </button>
-      ))}
-      <PaginationArrow next onClick={setNextPage} />
+      {currentPage > indexOfFirstPage && <PaginationArrow previous onClick={setPreviousPage} />}
+      <div className={styles['button-wrapper']}>{paginationNumbers}</div>
+      {currentPage < indexOfLastPage && <PaginationArrow next onClick={setNextPage} />}
     </div>
   )
 }
