@@ -15,8 +15,8 @@ interface Props {
 
 const Pagination: FunctionComponent<Props> = ({
   activePage = 1,
-  totalPages = 3,
-  itemsPerPage,
+  totalPages = 5,
+  itemsPerPage = 6,
   onChange,
   className,
   ...rest
@@ -24,7 +24,9 @@ const Pagination: FunctionComponent<Props> = ({
   const pages = []
   const items = []
   const [currentPage, setCurrentPage] = useState(activePage)
-  const [childrenPerPage] = useState(itemsPerPage)
+  // const [childrenPerPage] = useState(itemsPerPage)
+  const [currentItems, setCurrentItems] = useState(itemsPerPage)
+  const [totalItems, setTotalItems] = useState(itemsPerPage * totalPages)
 
   for (let i = 0; i < totalPages; i++) {
     pages.push(i + 1)
@@ -33,11 +35,11 @@ const Pagination: FunctionComponent<Props> = ({
   console.log(currentPage)
   const indexOfLastPage = activePage * totalPages
   const indexOfFirstPage = indexOfLastPage - totalPages + 1
-  const currentItems = pages.slice(indexOfFirstPage, indexOfLastPage)
+  // const currentItems = pages.slice(indexOfFirstPage, indexOfLastPage)
 
-  console.log(indexOfFirstPage)
+  console.log(currentItems)
 
-  for (let i = 1; i <= Math.ceil(pages.length / pages.length); i++) {
+  for (let i = 1; i <= Math.ceil(pages.length / totalPages); i++) {
     items.push(i)
   }
 
@@ -45,6 +47,7 @@ const Pagination: FunctionComponent<Props> = ({
     (number) => {
       onChange
       setCurrentPage(number)
+      setCurrentItems(Math.ceil(number * itemsPerPage))
     },
     [onChange, currentPage]
   )
@@ -75,9 +78,12 @@ const Pagination: FunctionComponent<Props> = ({
 
   return (
     <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
-      {currentPage > indexOfFirstPage && <PaginationArrow previous onClick={setPreviousPage} />}
-      <div className={styles['button-wrapper']}>{paginationNumbers}</div>
-      {currentPage < indexOfLastPage && <PaginationArrow next onClick={setNextPage} />}
+      <div className={styles['button-wrapper']}>
+        {currentPage > indexOfFirstPage && <PaginationArrow previous onClick={setPreviousPage} />}
+        <div className={styles['button-wrapper']}>{paginationNumbers}</div>
+        {currentPage < indexOfLastPage && <PaginationArrow next onClick={setNextPage} />}
+      </div>
+      <div className={styles.numText}>{currentItems}/{totalItems}</div>
     </div>
   )
 }
