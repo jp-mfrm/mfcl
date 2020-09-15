@@ -2,13 +2,14 @@ import React, { FunctionComponent, useState, useCallback } from 'react'
 import clsx from 'clsx'
 
 import styles from './pagination.module.scss'
+import { createSecureServer } from 'http2'
 
 interface Props {
   activePage?: number
   itemsPerPage?: number
   totalPages: number
   onChange?: Function
-  className: string
+  className?: string
   [rest: string]: unknown // ...rest property
 }
 
@@ -50,8 +51,12 @@ const Pagination: FunctionComponent<Props> = ({
   return (
     <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
       {pages.map((number) => (
-        <button className={styles.button} key={number} onClick={() => setNumberOfPage(number)}>
-          <p className={styles.number}>{number}</p>
+        <button
+          className={clsx(styles.button, currentPage === number && styles.active)}
+          key={number}
+          onClick={() => setNumberOfPage(number)}
+        >
+          {number}
         </button>
       ))}
     </div>
