@@ -2,12 +2,11 @@ import React, { FunctionComponent, useState, useCallback } from 'react'
 import clsx from 'clsx'
 
 import styles from './pagination.module.scss'
-import { createSecureServer } from 'http2'
 
 interface Props {
+  totalPages: number
   activePage?: number
   itemsPerPage?: number
-  totalPages: number
   onChange?: Function
   className?: string
   [rest: string]: unknown // ...rest property
@@ -15,7 +14,7 @@ interface Props {
 
 const Pagination: FunctionComponent<Props> = ({
   activePage = 1,
-  totalPages = 6,
+  totalPages = 3,
   itemsPerPage,
   onChange,
   className,
