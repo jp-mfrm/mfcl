@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useState, useCallback, useMemo } from 'react'
+import React, { FunctionComponent, useState, useCallback } from 'react'
+import PaginationArrow from './PaginationArrow'
 import clsx from 'clsx'
-import { NextArrow, PreviousArrow } from './arrows'
 
 import styles from './pagination.module.scss'
 
@@ -66,7 +66,7 @@ const Pagination: FunctionComponent<Props> = ({
 
   return (
     <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
-      <PreviousArrow onClick={setPreviousPage} />
+      <PaginationArrow previous onClick={setPreviousPage} />
       {pages.map((number) => (
         <button
           className={clsx(styles.button, currentPage === number && styles.active)}
@@ -76,7 +76,7 @@ const Pagination: FunctionComponent<Props> = ({
           {number}
         </button>
       ))}
-      <NextArrow onClick={setNextPage} />
+      <PaginationArrow next onClick={setNextPage} />
     </div>
   )
 }
