@@ -1,5 +1,6 @@
-import React, { FunctionComponent, useState, useCallback } from 'react'
+import React, { FunctionComponent, useState, useCallback, useMemo } from 'react'
 import clsx from 'clsx'
+import { NextArrow, PreviousArrow } from './arrows'
 
 import styles from './pagination.module.scss'
 
@@ -26,6 +27,21 @@ const Pagination: FunctionComponent<Props> = ({
   const [childrenPerPage] = useState(itemsPerPage)
   let totalItems = Array.from(Array(totalPages).keys())
 
+  for (let i = 0; i < totalPages; i++) {
+    pages.push(i + 1)
+  }
+
+  console.log(currentPage)
+  const indexOfLastPage = activePage * totalPages
+  const indexOfFirstPage = indexOfLastPage - totalPages
+  const currentItems = pages.slice(indexOfFirstPage, indexOfLastPage)
+
+  console.log(indexOfFirstPage)
+
+  for (let i = 1; i <= Math.ceil(pages.length / pages.length); i++) {
+    items.push(i)
+  }
+
   const setNumberOfPage = useCallback(
     (number) => {
       onChange
@@ -34,21 +50,23 @@ const Pagination: FunctionComponent<Props> = ({
     [onChange, currentPage]
   )
 
-  for (let i = 0; i < totalPages; i++) {
-    pages.push(i + 1)
+  const setPreviousPage = () => {
+    if (currentPage === indexOfFirstPage + 1) {
+      return
+    }
+    setCurrentPage(currentPage - 1)
   }
 
-  console.log(currentPage)
-  const indexOfLastPage = currentPage * pages.length
-  const indexOfFirstPage = indexOfLastPage - pages.length
-  const currentItems = pages.slice(indexOfFirstPage, indexOfLastPage)
-
-  for (let i = 1; i <= Math.ceil(pages.length / pages.length); i++) {
-    items.push(i)
+  const setNextPage = () => {
+    if (currentPage === indexOfLastPage) {
+      return
+    }
+    setCurrentPage(currentPage + 1)
   }
 
   return (
     <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
+      <PreviousArrow onClick={setPreviousPage} />
       {pages.map((number) => (
         <button
           className={clsx(styles.button, currentPage === number && styles.active)}
@@ -58,6 +76,7 @@ const Pagination: FunctionComponent<Props> = ({
           {number}
         </button>
       ))}
+      <NextArrow onClick={setNextPage} />
     </div>
   )
 }
