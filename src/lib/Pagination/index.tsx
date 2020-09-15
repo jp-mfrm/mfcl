@@ -5,9 +5,15 @@ import clsx from 'clsx'
 import styles from './pagination.module.scss'
 
 interface Props {
+  /** How many buttons are in the pagination */
   totalPages: number
+  /** Which page is currently selected */
   activePage?: number
   itemsPerPage?: number
+  /** Adds a name to the count if shown */
+  countName?: string
+  /** Shows the count of the items in the pagination list */
+  showItemCount?: boolean
   onChange?: Function
   className?: string
   [rest: string]: unknown // ...rest property
@@ -17,25 +23,18 @@ const Pagination: FunctionComponent<Props> = ({
   activePage = 1,
   totalPages = 5,
   itemsPerPage = 6,
+  showItemCount = true,
   onChange,
+  countName = '',
   className,
   ...rest
 }) => {
   const pages = []
-  const items = []
   const [currentPage, setCurrentPage] = useState(activePage)
   const [currentItems, setCurrentItems] = useState(itemsPerPage)
   const indexOfLastPage = activePage * totalPages
   const indexOfFirstPage = indexOfLastPage - totalPages + 1
   const totalItems = itemsPerPage * totalPages
-
-  for (let i = 0; i < totalPages; i++) {
-    pages.push(i + 1)
-  }
-
-  for (let i = 1; i <= Math.ceil(pages.length / totalPages); i++) {
-    items.push(i)
-  }
 
   const setNumberOfPage = useCallback(
     (number) => {
@@ -62,6 +61,10 @@ const Pagination: FunctionComponent<Props> = ({
     setCurrentItems((currentPage + 1) * itemsPerPage)
   }
 
+  for (let i = 0; i < totalPages; i++) {
+    pages.push(i + 1)
+  }
+
   let paginationNumbers = pages.map((number) => (
     <button
       className={clsx(styles.button, currentPage === number && styles.active)}
@@ -79,9 +82,7 @@ const Pagination: FunctionComponent<Props> = ({
         <div className={styles['button-wrapper']}>{paginationNumbers}</div>
         {currentPage < indexOfLastPage && <PaginationArrow next onClick={setNextPage} />}
       </div>
-      <div className={styles.numText}>
-        {currentItems} out of {totalItems}
-      </div>
+      <div className={styles.numText}>{showItemCount && `${currentItems} out of ${totalItems} ${countName}`}</div>
     </div>
   )
 }
