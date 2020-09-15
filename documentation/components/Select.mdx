@@ -1,0 +1,55 @@
+---
+name: Select
+menu: Components
+route: /components-select
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Row } from './helpers'
+import { Select } from '../../src'
+
+# Select
+
+```javascript
+import Select from 'mfcl/Select'
+```
+
+## Properties
+
+<Props of={Select} />
+
+## Basic usage
+
+<Playground>
+  <Select label="Default" name="default-select">
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+  </Select>
+  <Select label="Disabled" name="default-disabled" disabled>
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+  </Select>
+</Playground>
+
+## Size
+
+<Playground>
+  <Select name="sm" label="sm" placeholder="sm" size="sm">
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+  </Select>
+  <Select name="md" label="md" placeholder="md" size="md">
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+  </Select>
+  <Select name="lg" label="lg" placeholder="lg" size="lg">
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+  </Select>
+</Playground>

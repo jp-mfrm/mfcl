@@ -21,12 +21,12 @@ module.exports = (plop) => {
       const actions = []
       actions.push({
         type: 'add',
-        path: 'src/lib/{{componentName}}/index.tsx',
+        path: 'src/{{componentName}}/index.tsx',
         templateFile: 'plop-templates/Component.hbs'
       })
       actions.push({
         type: 'add',
-        path: 'src/lib/{{componentName}}/{{componentName}}.test.tsx',
+        path: 'src/{{componentName}}/{{componentName}}.test.tsx',
         templateFile: 'plop-templates/Component.test.hbs'
       })
       actions.push({
@@ -36,7 +36,7 @@ module.exports = (plop) => {
       })
       actions.push({
         type: 'add',
-        path: 'src/lib/{{componentName}}/{{camelCase componentName}}.module.scss',
+        path: 'src/{{componentName}}/{{camelCase componentName}}.module.scss',
         templateFile: 'plop-templates/scss.module.hbs'
       })
       actions.push({
@@ -47,7 +47,7 @@ module.exports = (plop) => {
       })
       actions.push({
         type: 'modify',
-        path: 'src/lib/index.ts',
+        path: 'src/index.ts',
         pattern: '\nexport {',
         template: "import {{componentName}} from './{{componentName}}';\n\nexport {\n  {{componentName}},"
       })

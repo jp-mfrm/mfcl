@@ -1,0 +1,90 @@
+@import '../variables';
+
+.openIcon {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease-in-out;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAABGklEQVR4Ae3RAcZCQRiF4buDfwshBGi+2UQgcIGAVtpSIuS/KyilG+UTcbk6zIH3GQBm3mM6AAAAAAAAAACA+eqf/yZBXcV/2XeCVPYx1FXj/FjGUMd45AQp/1HHGGLZNL+e61jHnKDmv8652YT1IvPfE2LX/Sh27/ycsF60yT/lk58JYn6eU4MJccjnlAmZ/33i0OAH4jg9Qcw/5g9YJpS+m6n0xvzpCfVe+nn59S7kGyYo+YYJWz3fO+E2PaFs9XzPhMy/6fmWCXq+YUJs9HzrhLh+JsQmrnq+bYKeb52g53snXPR88wQ93z9Bz/dP0PP9E/R89wQ93zpBz7dO0POtE/R86wQ93zpBzzdP+MoHAAAAAAAAAADAExTnTW20AtjhAAAAAElFTkSuQmCC);
+  opacity: 0.9;
+}
+
+.accordionItem {
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.line {
+  padding: 16px 0px 14px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.preview {
+  display: block;
+  font-size: 14px;
+  margin-top: 6px;
+  opacity: 1;
+  max-height: fit-content;
+  transition: opacity, max-height 0.4s ease-in-out 0.2s;
+}
+
+.center {
+  width: 66.6%;
+}
+
+.center.withPreview {
+  height: 50px;
+  overflow: hidden;
+  transition-timing-function: ease;
+  transition-duration: 0.4s;
+  transition-property: height;
+}
+
+.icon {
+  margin-right: 10px;
+
+  & > svg {
+    vertical-align: middle;
+  }
+}
+
+.innerContent {
+  margin-bottom: 14px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.accordionItem.open {
+  .openIcon {
+    transform: rotate(180deg);
+  }
+
+  .preview.hidePreview {
+    opacity: 0;
+    max-height: 0;
+    transition-delay: 0s;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.3s;
+    transition-property: opacity, max-height;
+  }
+
+  .center.withPreview.hidePreview {
+    height: 20px;
+    transition-delay: 0.2s;
+    transition-timing-function: ease;
+    transition-duration: 0.4s;
+    transition-property: height;
+  }
+}

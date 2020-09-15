@@ -15,3 +15,5 @@ doczrc.js
 gatsby-node.js
 plopfile.js
 rollup.config.js
+entries.json
+components.js

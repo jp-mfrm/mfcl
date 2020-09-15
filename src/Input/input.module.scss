@@ -1,0 +1,123 @@
+@import '../variables';
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  font-family: $r-regular;
+  position: relative;
+  width: 100%;
+}
+
+.inner {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.footer {
+  text-align: center;
+  font-size: 14px;
+}
+
+.input {
+  text-align: start;
+  border-radius: 25px;
+  border: solid 1px #939393;
+  padding: 16px 34px;
+  font-family: $r-regular;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+  color: #1e1e1e;
+  width: 100%;
+
+  &::placeholder {
+    color: $gray-8;
+  }
+
+  &:focus {
+    border-width: 1px;
+    border-color: lighten($black, 30%);
+    outline: none;
+    transition: all 0.2s ease-out;
+  }
+
+  &:focus + .label,
+  &.has-value + .label {
+    background: $white;
+    top: -8px;
+    left: 33px;
+    font-size: 12px;
+    line-height: 16px;
+    padding-left: 2px;
+    padding-right: 4px;
+  }
+
+  &:disabled {
+    border: solid 1px $gray-3;
+    color: lighten(#1e1e1e, 70%);
+    cursor: not-allowed;
+  }
+
+  &.error {
+    outline: 0;
+    border-color: $red;
+
+    &:disabled {
+      border-color: lighten($red, 25%);
+      color: lighten($red, 30%);
+    }
+  }
+
+  &.sm {
+    padding: 8px 20px;
+  }
+
+  &.md {
+    padding: 12px 25px;
+  }
+}
+
+.label {
+  font-size: 16px;
+  position: absolute;
+  top: 18px;
+  left: 30px;
+  color: #5b5b5b;
+  transition: all 0.2s ease-out;
+  background: transparent;
+  pointer-events: none;
+
+  &.sm {
+    top: 10px;
+  }
+
+  &.md {
+    top: 14px;
+  }
+
+  &.disabled {
+    color: lighten(#1e1e1e, 70%);
+  }
+
+  @media screen and (min-width: $mobile) {
+    text-align: left;
+  }
+}
+
+.right-side {
+  height: 100%;
+  position: absolute;
+  right: 0;
+}
+
+.error {
+  color: $red !important;
+
+  &.disabled {
+    color: lighten($red, 30%) !important;
+  }
+}

@@ -1,0 +1,239 @@
+---
+name: Carousel
+menu: Components
+route: /components-carousel
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Carousel, ProductCard, Panel, PanelItem } from '../../src'
+
+# Carousel
+
+```javascript
+import { Carousel } from 'mfcl'
+```
+
+## Description
+
+The Carousel component allows you to a display a selection of rotating items.
+
+## Properties
+
+<Props of={Carousel} />
+
+## Basic Usage
+
+<Playground>
+  <Carousel infinite itemsToShow={1} ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightgreen' }}>Slide 3</div>
+  </Carousel>
+</Playground>
+
+<Playground>
+  <Carousel infinite itemsToShow={2} ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightgreen' }}>Slide 3</div>
+    <div style={{ backgroundColor: 'lightgray' }}>Slide 4</div>
+  </Carousel>
+</Playground>
+
+<Playground>
+  <Carousel infinite itemsToShow={3} ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightgreen' }}>Slide 3</div>
+    <div style={{ backgroundColor: 'lightgray' }}>Slide 4</div>
+    <div style={{ backgroundColor: 'lightblue' }}>Slide 5</div>
+  </Carousel>
+</Playground>
+
+## Style Variations
+
+### Homepage Heroes
+
+<Playground>
+  <Carousel marginless hideControls ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightgreen' }}>Slide 3</div>
+    <div style={{ backgroundColor: 'lightgray' }}>Slide 4</div>
+    <div style={{ backgroundColor: 'lightblue' }}>Slide 5</div>
+  </Carousel>
+</Playground>
+
+### Product Carousel
+
+<Playground>
+  <Carousel itemsToShow={3} marginless infinite hideIndicators ariaLabel="one">
+    <ProductCard
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title="Product 1"
+      brand="Serta"
+      size="Wumbo"
+      discountPrice="2300"
+      price="3500"
+      matchPercentage="98"
+      reviews="215"
+      rating="4"
+    />
+    <ProductCard
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title="Product 2"
+      brand="Serta"
+      size="Wumbo"
+      discountPrice="5000"
+      price="8500"
+      matchPercentage="80"
+      reviews="100"
+      rating="5"
+    />
+    <ProductCard
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title="Product 3"
+      brand="Serta"
+      size="Wumbo"
+      discountPrice="700"
+      price="1000"
+      matchPercentage="100"
+      reviews="10"
+      rating="2"
+    />
+    <ProductCard
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title="Product 4"
+      brand="Serta"
+      size="Wumbo"
+      discountPrice="2000"
+      price="3000"
+      matchPercentage="95"
+      reviews="150"
+      rating="3"
+    />
+  </Carousel>
+</Playground>
+
+### Brand Carousel
+
+<Playground>
+  <Carousel itemsToShow={4} infinite hideIndicators btnAlignment="top right" ariaLabel="one">
+    <Panel rounded>
+      <PanelItem>Brand 1</PanelItem>
+    </Panel>
+    <Panel rounded>
+      <PanelItem>Brand 2</PanelItem>
+    </Panel>
+    <Panel rounded>
+      <PanelItem>Brand 3</PanelItem>
+    </Panel>
+    <Panel rounded>
+      <PanelItem>Brand 4</PanelItem>
+    </Panel>
+    <Panel rounded>
+      <PanelItem>Brand 5</PanelItem>
+    </Panel>
+    <Panel rounded>
+      <PanelItem>Brand 6</PanelItem>
+    </Panel>
+    <Panel rounded>
+      <PanelItem>Brand 7</PanelItem>
+    </Panel>
+    <Panel rounded>
+      <PanelItem>Brand 8</PanelItem>
+    </Panel>
+  </Carousel>
+</Playground>
+
+## Draggable
+
+<Playground>
+  <Carousel draggable indicatorStyle="bar" hideControls infinite>
+    <div style={{ backgroundColor: 'pink', width: '100%' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'lightgreen', width: '100%' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightblue', width: '100%' }}>Slide 3</div>
+    <div style={{ backgroundColor: 'orange', width: '100%' }}>Slide 4</div>
+    <div style={{ backgroundColor: 'yellow', width: '100%' }}>Slide 5</div>
+  </Carousel>
+</Playground>
+
+<Playground>
+  <Carousel infinite draggable itemsToShow={2}>
+    <div style={{ backgroundColor: 'pink', width: '100%' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'lightgreen', width: '100%' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightblue', width: '100%' }}>Slide 3</div>
+    <div style={{ backgroundColor: 'orange', width: '100%' }}>Slide 4</div>
+    <div style={{ backgroundColor: 'yellow', width: '100%' }}>Slide 5</div>
+  </Carousel>
+</Playground>
+
+<Playground>
+  <Carousel draggable infinite itemsToShow={3} marginless>
+    <ProductCard
+      brand="Serta"
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title='1 - Serta Response Essentials Maplewood 8.5" Firm Mattress'
+      size="Wumbo"
+      discountPrice="2300"
+      price="3500"
+      matchPercentage="98"
+      reviews="215"
+      rating="4"
+    />
+    <ProductCard
+      brand="Serta"
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i.guim.co.uk/img/media/20098ae982d6b3ba4d70ede3ef9b8f79ab1205ce/0_0_969_1005/master/969.jpg?width=620&quality=85&auto=format&fit=max&s=2a2baf6cf8f918ef763bb105f98f4cc0"
+      title='2 - Serta Response Essentials Maplewood 8.5" Firm Mattress'
+      size="Wumbo"
+      discountPrice="2300"
+      price="3500"
+      matchPercentage="98"
+      reviews="215"
+      rating="4"
+    />
+    <ProductCard
+      brand="Serta"
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title='3 - Serta Response Essentials Maplewood 8.5" Firm Mattress'
+      size="Wumbo"
+      discountPrice="2300"
+      price="3500"
+      matchPercentage="98"
+      reviews="215"
+      rating="4"
+    />
+    <ProductCard
+      brand="Serta"
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i.guim.co.uk/img/media/20098ae982d6b3ba4d70ede3ef9b8f79ab1205ce/0_0_969_1005/master/969.jpg?width=620&quality=85&auto=format&fit=max&s=2a2baf6cf8f918ef763bb105f98f4cc0"
+      title='4 - Serta Response Essentials Maplewood 8.5" Firm Mattress'
+      size="Wumbo"
+      discountPrice="2300"
+      price="3500"
+      matchPercentage="98"
+      reviews="215"
+      rating="4"
+    />
+    <ProductCard
+      brand="Serta"
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title='5 - Serta Response Essentials Maplewood 8.5" Firm Mattress'
+      size="Wumbo"
+      discountPrice="2300"
+      price="3500"
+      matchPercentage="98"
+      reviews="215"
+      rating="4"
+    />
+  </Carousel>
+</Playground>

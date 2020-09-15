@@ -1,0 +1,59 @@
+---
+name: Badge
+menu: Components
+route: /components-badge
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Badge } from '../../src'
+
+# Badge
+
+```javascript
+import Badge from 'mfcl/Badge'
+```
+
+## Description
+
+Badges can be added to show small, simple details of information.
+
+## Properties
+
+<Props of={Badge} />
+
+## Badge Types
+
+A badge can be of two types, primary and secondary.
+
+<Playground>
+  <Badge>Save $100</Badge>
+  <span style={{ paddingLeft: '5px' }} />
+  <Badge type="secondary">Save $100</Badge>
+</Playground>
+
+## Adding Components
+
+You can pass components to the Badge component to inherit their styles and props.
+
+<Playground>
+  <Badge component={'a'} href="/">
+    Click Me
+  </Badge>
+  <span style={{ paddingLeft: '5px' }} />
+  <Badge component={'a'} href="/" type="secondary">
+    Click Me
+  </Badge>
+</Playground>
+
+## Custom Width and Height
+
+You can also set a custom width/height using the provided props as well.
+
+<Playground>
+  <Badge width="200px">WideGuy</Badge>
+  <span style={{ paddingLeft: '5px' }} />
+  <Badge height="50px" type="secondary">
+    TallMan
+  </Badge>
+</Playground>
