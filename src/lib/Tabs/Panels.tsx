@@ -3,9 +3,10 @@ import Panel from './Panel'
 
 export interface Props {
   items: []
+  selectedIndex: number
 }
 
-const Panels: FunctionComponent<Props> = ({ items }) => {
+const Panels: FunctionComponent<Props> = ({ items, selectedIndex }) => {
   return (
     <div className="tabs__panels">
       {items.map((panel, index) => {
@@ -14,7 +15,8 @@ const Panels: FunctionComponent<Props> = ({ items }) => {
             key={index}
             id={`panel-${index}`}
             index={index}
-            // selectedIndex={selectedIndex}
+            // @ts-ignore
+            selectedIndex={selectedIndex}
           >
             {panel}
           </Panel>

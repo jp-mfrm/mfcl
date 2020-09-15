@@ -1,24 +1,29 @@
-import React, { useState, FunctionComponent, useEffect, useRef } from 'react'
+import React, { FunctionComponent, ReactNode } from 'react'
 import clsx from 'clsx';
 import styles from './tabs.module.scss'
 
 export interface Props {
   id: string
   index?: number
-  isSelected?: boolean
+  selectedIndex: number
+  children?: ReactNode
 }
 
-const Panel: FunctionComponent<Props> = ({ id, index, isSelected }) => {
+const Panel: FunctionComponent<Props> = ({ id, index, selectedIndex, children }) => {
+
+  const isSelected = index === selectedIndex;
+
   return (
     <section
-    // aria-hidden={!isSelected}
-    className='panel'
+    aria-hidden={!isSelected}
+    className={clsx(styles['panel-item'], isSelected && styles['active'])}
     id={id}
     role="tabpanel"
-    // tabIndex={isSelected ? 0 : -1}
+    // @ts-ignore
+    index={index}
+    tabIndex={isSelected ? 0 : -1}
     >
-      Panel Content
-    {/* {React.Children.map(children, this.renderContents, this)} */}
+     {children}
   </section>
   
   )
