@@ -8,6 +8,7 @@ interface Props {
   className?: string
   /** Enable rounded variation. */
   rounded?: boolean
+  selectedIndex?: number
   [rest: string]: unknown // ...rest property
 }
 

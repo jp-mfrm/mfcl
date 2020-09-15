@@ -2,6 +2,8 @@ import React, { FunctionComponent, useState } from 'react'
 import styles from './tabs.module.scss'
 import TabList from './TabList';
 import Panels from './Panels';
+import Panel from '../Panel';
+import PanelItem from '../PanelItem';
 
 export interface Props {
   items: []
@@ -19,14 +21,19 @@ const Tabs: FunctionComponent<Props> = ({ items, children, ...rest }) => {
   }
 
   return (
-    <div className={styles['tabs-wrapper']} {...rest}>
+    <div className='tabs-wrapper' {...rest}>
         <TabList 
           onClick={handleClick}
           items={items}
           // @ts-ignore
           selectedIndex={selectedIndex}
         /> 
-        <Panels items={items} selectedIndex={selectedIndex} />
+        <Panel>
+          <PanelItem itemClass="tabs-panel-item" selectedIndex={selectedIndex} index={0}> Content 1</PanelItem>
+          <PanelItem itemClass="tabs-panel-item" selectedIndex={selectedIndex} index={1}> Content 2</PanelItem>
+          <PanelItem itemClass="tabs-panel-item" selectedIndex={selectedIndex} index={2}> Content 3</PanelItem>
+        </Panel>
+        {/* <Panels items={items} selectedIndex={selectedIndex} /> */}
     </div>
   )
 }

@@ -9,7 +9,7 @@ export interface Props {
 const Panels: FunctionComponent<Props> = ({ items, selectedIndex }) => {
   return (
     <div className="tabs__panels">
-      {/* {items.map((panel, index) => {
+      {items.map((panel, index) => {
         return (
           <Panel
             key={index}
@@ -21,7 +21,7 @@ const Panels: FunctionComponent<Props> = ({ items, selectedIndex }) => {
             {panel}
           </Panel>
         )
-      })} */}
+      })}
     </div>
   )
 }

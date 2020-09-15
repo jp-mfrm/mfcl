@@ -8,21 +8,25 @@ interface Props {
   type?: 'header' | 'body' | 'footer' | 'link'
   /** Class to pass to the panel item */
   itemClass?: string
+  index?: number
   /** Set custom inline css */
   customStyling?: CSSProperties
+  selectedIndex?: number
   [rest: string]: unknown // ...rest property
 }
 
-const PanelItem: FunctionComponent<Props> = ({ type, itemClass, customStyling, ...rest }) => {
+const PanelItem: FunctionComponent<Props> = ({ type, index, itemClass, customStyling, selectedIndex, ...rest }) => {
   let Component = 'div'
   if (type == 'link') {
     Component = 'a'
   }
 
+  const isSelected = index === selectedIndex;
+
   return (
     <Component
       // @ts-ignore
-      className={clsx(styles['panel-item'], type && styles[type], itemClass)}
+      className={clsx(styles['panel-item'], isSelected && styles['active'], !isSelected && styles['hidden'], type && styles[type], itemClass)}
       style={customStyling}
       {...rest}
     />
