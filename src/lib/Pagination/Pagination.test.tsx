@@ -41,16 +41,10 @@ describe('Pagination Component', () => {
     expect(mock).toBeCalled
   })
 
-  it('does not render the next arrow', () => {
-    const { getByLabelText } = render(<Pagination {...defaultProps} activePage={4} />)
-    fireEvent.click(getByLabelText('Next'))
-    expect(getByLabelText('Next')).toBeNull
-  })
-
   it('clicks the previous arrow and sets the correct page', () => {
-    const { getByLabelText, rerender } = render(<Pagination {...defaultProps} activePage={1} />)
+    const { getByLabelText, rerender } = render(<Pagination {...defaultProps} activePage={3} />)
     fireEvent.click(getByLabelText('Next'))
-    rerender(<Pagination {...defaultProps} activePage={2} />)
+    rerender(<Pagination {...defaultProps} />)
     fireEvent.click(getByLabelText('Previous'))
     expect(mock).toBeCalled
   })
