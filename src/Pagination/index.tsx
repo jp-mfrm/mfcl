@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useCallback } from 'react'
+import React, { FunctionComponent, useState, useCallback, useMemo } from 'react'
 import PaginationArrow from './PaginationArrow'
 import clsx from 'clsx'
 
@@ -29,7 +29,6 @@ const Pagination: FunctionComponent<Props> = ({
   className,
   ...rest
 }) => {
-  const pages = []
   const [currentPage, setCurrentPage] = useState(activePage)
   const [currentItems, setCurrentItems] = useState(itemsPerPage)
   const indexOfLastPage = activePage * totalPages
@@ -57,9 +56,13 @@ const Pagination: FunctionComponent<Props> = ({
 
   /** Creates an array based of the number 
    * given to the totalPages prop */
-  for (let i = 0; i < totalPages; i++) {
-    pages.push(i + 1)
-  }
+  const pages = useMemo(() => {
+      const newPages = []
+    for (let i = 0; i < totalPages; i++) {
+      newPages.push(i + 1)
+    }
+    return newPages
+  }, [totalPages])
 
   /** The pages array is then mapped over to
    * create correct number of pagination buttons */
@@ -81,7 +84,7 @@ const Pagination: FunctionComponent<Props> = ({
         <div className={styles['button-wrapper']}>{paginationNumbers}</div>
         {currentPage < indexOfLastPage && <PaginationArrow arrowType='Next' onClick={setNextPage}/>}
       </div>
-      <div className={styles.numText}>{showItemCount && `${currentItems} out of ${totalItems} ${countName}`}</div>
+      {showItemCount && <div className={styles.numText}>{currentItems} out of {totalItems} {countName}</div>}
     </div>
   )
 }

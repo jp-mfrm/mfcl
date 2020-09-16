@@ -2,7 +2,6 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 
 import Pagination from './index'
-import { get } from 'http'
 
 let defaultProps = {
   totalPages: 5

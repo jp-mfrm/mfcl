@@ -12,17 +12,14 @@ interface Props {
 
 const PaginationArrow: FunctionComponent<Props> = ({ arrowType, className, ...rest }) => {
   let children
-  let ariaLabel
   if (arrowType === 'Previous') {
-    ariaLabel = 'Previous'
     children = <PreviousArrow />
   }
   if (arrowType === 'Next') {
-    ariaLabel = 'Next'
     children = <NextArrow />
   }
   return (
-    <button aria-label={ariaLabel} className={clsx(styles.arrowButton, className)} {...rest}>
+    <button aria-label={arrowType} className={clsx(styles.arrowButton, className)} {...rest}>
       {children}
     </button>
   )
