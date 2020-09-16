@@ -1,0 +1,40 @@
+---
+name: ProductCard
+menu: Components
+route: /components-productCard
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { ProductCard } from '../../src'
+
+# ProductCard
+
+```javascript
+import ProductCard from 'mfcl/ProductCard'
+```
+
+## Description
+
+The ProductCard gives specific information and specific details on a product.
+
+## Properties
+
+<Props of={ProductCard} />
+
+## Basic Usage
+
+<Playground>
+  <ProductCard
+    brand="Serta"
+    brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+    productImg="https://i1.adis.ws/i/hmk/133558"
+    title='Serta Response Essentials Maplewood 8.5" Firm Mattress'
+    size="Wumbo"
+    discountPrice="2300"
+    price="3500"
+    matchPercentage="98"
+    reviews="215"
+    rating="4"
+  />
+</Playground>

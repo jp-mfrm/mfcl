@@ -11,7 +11,7 @@ import mfclComponents from './dist/components' // eslint-disable-line import/no-
 // Paths
 const rootDir = path.resolve()
 const distDir = path.resolve(rootDir, './dist')
-const indexFilePath = './src/lib/index.ts'
+const indexFilePath = './src/index.ts'
 
 // Don't bundle dependencies
 const external = [

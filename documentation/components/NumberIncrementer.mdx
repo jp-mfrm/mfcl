@@ -1,0 +1,35 @@
+---
+name: NumberIncrementer
+menu: Components
+route: /components-numberIncrementer
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { NumberIncrementer } from '../../src'
+
+# NumberIncrementer
+
+```javascript
+import NumberIncrementer from 'mfcl/NumberIncrementer'
+```
+
+## Description
+
+Implements a number incrementer that increases and decreases the number displayed.
+
+## Properties
+
+<Props of={NumberIncrementer} />
+
+## Basic Usage
+
+You can pass a name and label prop to the component. The label will be hidden unless the component is passed the showLabel prop.
+
+<Playground>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+    <NumberIncrementer />
+    <span style={{ padding: '5px 0' }} />
+    <NumberIncrementer showLabel />
+  </div>
+</Playground>

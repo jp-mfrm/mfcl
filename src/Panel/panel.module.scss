@@ -1,0 +1,70 @@
+@import '../variables';
+
+.panel {
+  min-height: 200px;
+  min-width: 295px;
+  border-radius: 2px;
+  border: solid 1px #e0e0e0;
+  background-color: var(--white);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: fit-content;
+
+  &.rounded {
+    min-height: 77px;
+    border-radius: 38.5px;
+
+    .panel-item {
+      padding: $spacing-s;
+    }
+
+    & .header {
+      border-radius: 37.5px 37.5px 0 0;
+    }
+
+    & .footer {
+      border-radius: 0 0 37.5px 37.5px;
+    }
+  }
+
+  &-item {
+    padding: $spacing-xs;
+    letter-spacing: normal;
+    color: $gray-11;
+    display: flex;
+    flex-direction: column;
+
+    &.header {
+      font-family: $r-bold;
+      font-size: 28px;
+      line-height: 1.14;
+      background-color: $gray-1;
+    }
+
+    &.body {
+      font-family: $r-regular;
+      font-size: 22px;
+      line-height: 1.14;
+    }
+
+    &.footer {
+      font-family: $r-semibold;
+      font-size: 18px;
+      line-height: 1.14;
+    }
+
+    &.link {
+      color: $blue;
+    }
+  }
+
+  @media screen and (max-width: $mobile) {
+    width: 100%;
+    min-width: inherit;
+    & div:not(.panel-item) {
+      width: 100%;
+    }
+  }
+}

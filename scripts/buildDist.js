@@ -8,11 +8,11 @@ const fs = require('fs')
 const { execSync } = require('child_process')
 
 const rootDir = path.resolve(__dirname, '../')
-const componentPath = path.resolve(rootDir, './src/lib')
+const componentPath = path.resolve(rootDir, './src')
 const utilsPath = path.resolve(componentPath, './utils')
 const distPath = path.resolve(rootDir, './dist')
 
-const blackListDir = ['lib', '__tests__']
+const blackListDir = ['src', '__tests__']
 
 const execOptions = {
   shell: true
@@ -48,6 +48,7 @@ const setupPackageJSON = () => {
 /** Copy SCSS */
 const copyScss = () => {
   execSync(`find ${componentPath} -maxdepth 1 -type f -name \\*.scss -exec cp {} ./dist \\;`, execOptions)
+  execSync(`tsc ${utilsPath}/*.ts --outDir ${distPath}/utils --esModuleInterop true`, execOptions)
   console.log(
     `
 CSS and package.json copied over
