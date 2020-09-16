@@ -7,6 +7,7 @@ route: /components-pagination
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
 import { Pagination } from '../../lib/'
+import {Row} from './helpers'
 
 # Pagination
 
@@ -25,5 +26,16 @@ Pagination allows you to paginate through a list of items.
 ## Basic Usage
 
 <Playground>
-  <Pagination totalPages={5} />
+  <Row>
+    <Pagination totalPages={5} />
+  </Row>
+</Playground>
+
+### You can choose to show the item count, and give a name to it as well.
+
+<Playground>
+  <Row>
+    <Pagination totalPages={5} showItemCount={false}/>
+    <Pagination totalPages={5} countName='Reviews'/>
+  </Row>
 </Playground>
