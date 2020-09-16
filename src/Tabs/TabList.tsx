@@ -8,16 +8,12 @@ export interface Props {
   items: []
   selectedIndex: number
   onClick: Function | null
+  onKeyDown: Function | null
 }
 
-const TabList: FunctionComponent<Props> = ({ items, onClick, selectedIndex }) => {
-  // const handleClick = (e: any) => {
-  //   console.log('click in index.tsx')
-  // }
-  console.log(items)
-
+const TabList: FunctionComponent<Props> = ({ items, onClick, onKeyDown, selectedIndex }) => {
   return (
-   <ul role='tablist' className='tablist'>
+   <ul role='tablist' className={clsx(styles['tabs'])}>
      {items?.map((item, index) => {
        console.log(item)
       return (
@@ -30,6 +26,7 @@ const TabList: FunctionComponent<Props> = ({ items, onClick, selectedIndex }) =>
           // @ts-ignore
           label={item.header}
           onClick={onClick}
+          onKeyDown={onKeyDown}
           selectedIndex={selectedIndex}
         />
       )
