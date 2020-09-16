@@ -21,7 +21,7 @@ interface Props {
 
 const Pagination: FunctionComponent<Props> = ({
   activePage = 1,
-  totalPages = 5,
+  totalPages,
   itemsPerPage = 6,
   showItemCount = true,
   onChange,
@@ -48,9 +48,6 @@ const Pagination: FunctionComponent<Props> = ({
   /** This function is used to incremenet the 
    * pagination using the previous arrow */
   const setPreviousPage = () => {
-    if (currentPage === indexOfFirstPage) {
-      return
-    }
     setCurrentPage(currentPage - 1)
     setCurrentItems((currentPage - 1) * itemsPerPage)
   }
@@ -58,9 +55,6 @@ const Pagination: FunctionComponent<Props> = ({
   /** This function is used to incremenet the 
    * pagination using the next arrow */
   const setNextPage = () => {
-    if (currentPage === indexOfLastPage) {
-      return
-    }
     setCurrentPage(currentPage + 1)
     setCurrentItems((currentPage + 1) * itemsPerPage)
   }
@@ -89,9 +83,9 @@ const Pagination: FunctionComponent<Props> = ({
   return (
     <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
       <div className={styles['button-wrapper']}>
-        {currentPage > indexOfFirstPage && <PaginationArrow previous onClick={setPreviousPage} />}
+        {currentPage > indexOfFirstPage && <PaginationArrow previous onClick={setPreviousPage}/>}
         <div className={styles['button-wrapper']}>{paginationNumbers}</div>
-        {currentPage < indexOfLastPage && <PaginationArrow next onClick={setNextPage} />}
+        {currentPage < indexOfLastPage && <PaginationArrow next onClick={setNextPage}/>}
       </div>
       <div className={styles.numText}>{showItemCount && `${currentItems} out of ${totalItems} ${countName}`}</div>
     </div>
