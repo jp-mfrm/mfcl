@@ -77,9 +77,9 @@ const Pagination: FunctionComponent<Props> = ({
   return (
     <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
       <div className={styles['button-wrapper']}>
-        {currentPage > indexOfFirstPage && <PaginationArrow previous onClick={setPreviousPage}/>}
+        {currentPage > indexOfFirstPage && <PaginationArrow arrowType='Previous' onClick={setPreviousPage}/>}
         <div className={styles['button-wrapper']}>{paginationNumbers}</div>
-        {currentPage < indexOfLastPage && <PaginationArrow next onClick={setNextPage}/>}
+        {currentPage < indexOfLastPage && <PaginationArrow arrowType='Next' onClick={setNextPage}/>}
       </div>
       <div className={styles.numText}>{showItemCount && `${currentItems} out of ${totalItems} ${countName}`}</div>
     </div>

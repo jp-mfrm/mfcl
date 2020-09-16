@@ -5,20 +5,19 @@ import clsx from 'clsx'
 import styles from './pagination.module.scss'
 
 interface Props {
-  previous?: boolean
-  next?: boolean
+  arrowType: 'Previous' | 'Next'
   className?: string
   [rest: string]: unknown // ...rest property
 }
 
-const PaginationArrow: FunctionComponent<Props> = ({ previous = false, next = false, className, ...rest }) => {
+const PaginationArrow: FunctionComponent<Props> = ({ arrowType, className, ...rest }) => {
   let children
   let ariaLabel
-  if (previous) {
+  if (arrowType === 'Previous') {
     ariaLabel = 'Previous'
     children = <PreviousArrow />
   }
-  if (next) {
+  if (arrowType === 'Next') {
     ariaLabel = 'Next'
     children = <NextArrow />
   }
