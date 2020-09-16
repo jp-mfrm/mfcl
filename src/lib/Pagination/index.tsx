@@ -45,20 +45,15 @@ const Pagination: FunctionComponent<Props> = ({
     [onChange, currentPage, currentItems]
   )
 
-  /** This function is used to incremenet the 
-   * pagination using the previous arrow */
   const setPreviousPage = () => {
     setCurrentPage(currentPage - 1)
     setCurrentItems((currentPage - 1) * itemsPerPage)
   }
 
-  /** This function is used to incremenet the 
-   * pagination using the next arrow */
   const setNextPage = () => {
     setCurrentPage(currentPage + 1)
     setCurrentItems((currentPage + 1) * itemsPerPage)
   }
-
 
   /** Creates an array based of the number 
    * given to the totalPages prop */
@@ -66,9 +61,8 @@ const Pagination: FunctionComponent<Props> = ({
     pages.push(i + 1)
   }
 
-  /** The pages array is created and then 
-   * mapped over to create correct number 
-   * of pagination buttons */
+  /** The pages array is then mapped over to
+   * create correct number of pagination buttons */
   let paginationNumbers = pages.map((number) => (
     <button
       className={clsx(styles.button, currentPage === number && styles.active)}
