@@ -28,6 +28,7 @@ import Select from './Select'
 import Stepper from './Stepper'
 import Textarea from './Textarea'
 import Tooltip from './Tooltip'
+import Pagination from './Pagination'
 
 export {
   Accordion,
@@ -49,6 +50,7 @@ export {
   Loading,
   Modal,
   NumberIncrementer,
+  Pagination,
   Panel,
   PanelItem,
   Portal,

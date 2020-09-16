@@ -1,0 +1,41 @@
+---
+name: Pagination
+menu: Components
+route: /components-pagination
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Pagination } from '../../src'
+import {Row} from './helpers'
+
+# Pagination
+
+```javascript
+import Pagination from 'mfcl/Pagination'
+```
+
+## Description
+
+Pagination allows you to paginate through a list of items.
+
+## Properties
+
+<Props of={Pagination} />
+
+## Basic Usage
+
+<Playground>
+  <Row>
+    <Pagination totalPages={5} />
+  </Row>
+</Playground>
+
+### You can choose to show the item count, and give a name to it as well.
+
+<Playground>
+  <Row>
+    <Pagination totalPages={5} showItemCount={false}/>
+    <Pagination totalPages={5} countName='Reviews'/>
+  </Row>
+</Playground>
