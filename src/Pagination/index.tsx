@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useCallback, useMemo } from 'react'
+import React, { FunctionComponent, useState, useMemo } from 'react'
 import PaginationArrow from './PaginationArrow'
 import clsx from 'clsx'
 
@@ -35,21 +35,26 @@ const Pagination: FunctionComponent<Props> = ({
   const totalItems = itemsPerPage * totalPages
   const indexOfFirstPage = indexOfLastPage - totalPages + 1
 
-  const setNumberOfPage = useCallback(
-    (number) => {
-      onChange
-      setCurrentPage(number)
-      setCurrentItems(number * itemsPerPage)
-    },
-    [onChange, currentPage, currentItems]
-  )
+  const setNumberOfPage = (number: number) => {
+    if(onChange){
+      onChange()
+    }
+    setCurrentPage(number)
+    setCurrentItems(number * itemsPerPage)
+  }
 
   const setPreviousPage = () => {
+    if(onChange){
+      onChange()
+    }
     setCurrentPage(currentPage - 1)
     setCurrentItems((currentPage - 1) * itemsPerPage)
   }
 
   const setNextPage = () => {
+    if(onChange){
+      onChange()
+    }
     setCurrentPage(currentPage + 1)
     setCurrentItems((currentPage + 1) * itemsPerPage)
   }
