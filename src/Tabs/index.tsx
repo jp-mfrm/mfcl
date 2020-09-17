@@ -9,11 +9,13 @@ import styles from './tabs.module.scss'
 export interface Props {
   items: []
   position: string
+  defaultOpen: number
   [rest: string]: unknown // ...rest property
 }
 
-const Tabs: FunctionComponent<Props> = ({ items, position='top', ...rest }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0)
+const Tabs: FunctionComponent<Props> = ({ items, position='top', defaultOpen = 0, ...rest }) => {
+  console.log(`default Open + ${defaultOpen}`)
+  const [selectedIndex, setSelectedIndex] = useState(defaultOpen)
 
   const handleClick = (e: any) => {
     e.preventDefault()

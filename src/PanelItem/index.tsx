@@ -8,14 +8,15 @@ interface Props {
   type?: 'header' | 'body' | 'footer' | 'link'
   /** Class to pass to the panel item */
   itemClass?: string
+  /* index & selectedIndex required when using a panel for a tabs component */
   index?: number
+  selectedIndex?: number
   /** Set custom inline css */
   customStyling?: CSSProperties
-  selectedIndex?: number
   [rest: string]: unknown // ...rest property
 }
 
-const PanelItem: FunctionComponent<Props> = ({ type, index, itemClass, customStyling, selectedIndex, ...rest }) => {
+const PanelItem: FunctionComponent<Props> = ({ type, index, selectedIndex, itemClass, customStyling, ...rest }) => {
   let Component = 'div'
   if (type == 'link') {
     Component = 'a'
