@@ -1,5 +1,84 @@
 @import '../variables';
 
-.typography-wrapper {
-  
+.xxl,
+.xl,
+.lg,
+.md,
+.sm,
+.xs {
+  font-weight: 700;
+}
+
+.xxl {
+  font-size: 44px;
+  line-height: 48px;
+}
+
+.xl {
+  font-size: 36px;
+  line-height: 40px;
+}
+
+.lg {
+  font-size: 32px;
+  line-height: 36px;
+}
+
+.md {
+  font-size: 28px;
+  line-height: 32px;
+}
+
+.sm {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.xs {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.body-sm,
+.body,
+.body-lg {
+  font-weight: 400;
+}
+
+.body-sm {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.body {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.body-lg {
+  font-size: 22px;
+  line-height: 30px;
+}
+
+.price-lg,
+.price,
+.price-sale {
+  font-weight: 500;
+}
+
+.price {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.price-lg {
+  font-size: 28px;
+  line-height: 32px;
+  color: $red;
+}
+
+.price-sale {
+  font-size: 16px;
+  line-height: 20px;
+  color: $red;
 }
