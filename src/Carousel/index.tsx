@@ -150,17 +150,27 @@ const Carousel: FunctionComponent<Props> = ({
       sliderLeft,
       slides,
       sliderWidth,
-      indicators,
+      indicatorWrapper,
       alignment,
       handleDragStart,
       handleDragEndHandler,
       handleDragActionHandler,
       handleIndexCheck,
       shiftSlide
-    } = draggableHelper(children, itemsToShow, marginless, btnAlignment, indicatorStyle, duration, infinite, autoSlide)
+    } = draggableHelper(
+      children,
+      itemsToShow,
+      marginless,
+      btnAlignment,
+      hideIndicators,
+      indicatorStyle,
+      duration,
+      infinite,
+      autoSlide
+    )
 
     template = (
-      <section className={clsx(styles['carousel-drag-wrapper'], styles['loaded'])} aria-label={'carousel-'+ariaLabel}>
+      <section className={clsx(styles['carousel-drag-wrapper'], styles['loaded'])} aria-label={'carousel-' + ariaLabel}>
         {screenReaderInstructions}
         <div className={styles['carousel-drag-wrapper-slider']}>
           <div
@@ -179,11 +189,11 @@ const Carousel: FunctionComponent<Props> = ({
           >
             {slides}
           </div>
-          <div className={clsx(styles['carousel-wrapper-indicators'])}>{!hideIndicators && indicators}</div>
+          {indicatorWrapper}
         </div>
         <button
           id="prev"
-          aria-hidden={hideControls && "true" || "false"}
+          aria-hidden={(hideControls && 'true') || 'false'}
           className={clsx(
             styles['carousel-drag-wrapper-control'],
             styles['prev'],
