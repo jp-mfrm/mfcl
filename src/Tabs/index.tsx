@@ -8,10 +8,11 @@ import styles from './tabs.module.scss'
 
 export interface Props {
   items: []
+  position: string
   [rest: string]: unknown // ...rest property
 }
 
-const Tabs: FunctionComponent<Props> = ({ items, children, ...rest }) => {
+const Tabs: FunctionComponent<Props> = ({ items, position='top', ...rest }) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const handleClick = (e: any) => {
@@ -20,15 +21,13 @@ const Tabs: FunctionComponent<Props> = ({ items, children, ...rest }) => {
   }
 
   const handleKeyDown = (e: any) => {
-    console.log('handle keys')
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
       e.preventDefault()
-      console.log('arrows')
     } else {
       return
     }
 
-    let targetIndex
+    let targetIndex;
 
     if (e.key === 'ArrowLeft' && selectedIndex > 0) {
       targetIndex = selectedIndex - 1
@@ -41,19 +40,17 @@ const Tabs: FunctionComponent<Props> = ({ items, children, ...rest }) => {
   }
 
   return (
-    <div className={clsx(styles['tabs-wrapper'])} {...rest}>
+    <div className={clsx(styles['tabs-wrapper'], styles[position])} {...rest}>
       <TabList
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         items={items}
-        // @ts-ignore
         selectedIndex={selectedIndex}
       />
       <Panel className={clsx(styles['panel'])}>
-      {/* <PanelItem itemClass="tabs-panel-item" selectedIndex={selectedIndex} index={0}> Test 123 </PanelItem> */}
         {items.map((item, index) => {
            return (
-          <PanelItem itemClass="tabs-panel-item" selectedIndex={selectedIndex} index={index}>
+          <PanelItem selectedIndex={selectedIndex} index={index}>
             {/* @ts-ignore */}
             {item.content}
           </PanelItem>
