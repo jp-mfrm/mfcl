@@ -28,6 +28,8 @@
       color: $black;
       min-height: 150px;
 
+      margin: 0 5px;
+
       &.marginless {
         margin: 0;
       }
@@ -228,6 +230,12 @@ $slider-height: 100%; // 300px; // 100%;
       border-radius: 2px;
       // margin: 0 0.125%;
       // flex-basis: 10.5% !important;
+
+      // margin: 0 5px;
+
+      // &.marginless {
+      //   margin: 0;
+      // }
     }
 
     .grabbing {
