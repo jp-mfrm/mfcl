@@ -14,7 +14,6 @@ export interface Props {
 }
 
 const Tabs: FunctionComponent<Props> = ({ items, position='top', defaultOpen = 0, ...rest }) => {
-  console.log(`default Open + ${defaultOpen}`)
   const [selectedIndex, setSelectedIndex] = useState(defaultOpen)
 
   const handleClick = (e: any) => {
@@ -52,7 +51,7 @@ const Tabs: FunctionComponent<Props> = ({ items, position='top', defaultOpen = 0
       <Panel className={clsx(styles['panel'])}>
         {items.map((item, index) => {
            return (
-          <PanelItem selectedIndex={selectedIndex} index={index}>
+          <PanelItem selectedIndex={selectedIndex} index={index} key={index}> 
             {/* @ts-ignore */}
             {item.content}
           </PanelItem>

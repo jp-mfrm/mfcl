@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+  import React, { FunctionComponent, useRef, useEffect } from 'react'
 import clsx from 'clsx';
 import styles from './tabs.module.scss'
 
@@ -13,10 +13,27 @@ export interface Props {
 
 const Tab: FunctionComponent<Props> = ({ id, onClick, onKeyDown, selectedIndex, index, label }) => {
   const isSelected = index === selectedIndex;
+  const tabRef: any = useRef<HTMLDivElement>(null)
+  const firstUpdate = useRef(true)
+
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false
+      return
+    }  
+
+    // tabRef.current.focus()
+    // if (tabRef.current !== null) {
+    //   console.log(tabRef.current)
+    //   tabRef.current.focus()
+    // }
+
+  }, [isSelected])
 
   return (
     <li className={clsx(styles['tab-list-item'], isSelected && styles['active']) } role="presentation">
       <a
+        ref={tabRef}
         aria-controls={id}
         aria-selected={isSelected}
         className={clsx(styles['tab-item'], isSelected && styles['active'])}

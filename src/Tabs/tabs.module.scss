@@ -22,6 +22,10 @@
         border-bottom: 5px solid $red;
         padding-bottom: 5px;
       }
+
+      &:focus {
+        border: 1px solid hotpink;
+      }
     }
   }
 

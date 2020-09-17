@@ -30,6 +30,10 @@ const PanelItem: FunctionComponent<Props> = ({ type, index, selectedIndex, itemC
       className={clsx(styles['panel-item'], isSelected && styles['active'], !isSelected && styles['hidden'], type && styles[type], itemClass)}
       style={customStyling}
       {...rest}
+      aria-hidden={!isSelected}
+      // @ts-ignore
+      role="tabpanel"
+      tabIndex={isSelected ? 0 : -1}
     />
   )
 }
