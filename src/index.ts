@@ -29,6 +29,7 @@ import Stepper from './Stepper'
 import Textarea from './Textarea'
 import Tooltip from './Tooltip'
 import Pagination from './Pagination'
+import Typography from './Typography'
 
 export {
   Accordion,
@@ -61,5 +62,6 @@ export {
   Select,
   Stepper,
   Textarea,
-  Tooltip
+  Tooltip,
+  Typography
 }
