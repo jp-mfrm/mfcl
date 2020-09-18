@@ -11,7 +11,7 @@ export interface Props {
   onKeyDown?: Function | null
 }
 
-const Tab: FunctionComponent<Props> = ({ id, onClick, onKeyDown, selectedIndex, index, label }) => {
+const Tab: FunctionComponent<Props> = ({ id, onClick, onKeyDown, selectedIndex, index, label}) => {
   const isSelected = index === selectedIndex;
   const tabRef: any = useRef<HTMLDivElement>(null)
   const firstUpdate = useRef(true)
@@ -22,11 +22,9 @@ const Tab: FunctionComponent<Props> = ({ id, onClick, onKeyDown, selectedIndex, 
       return
     }  
 
-    // tabRef.current.focus()
-    // if (tabRef.current !== null) {
-    //   console.log(tabRef.current)
-    //   tabRef.current.focus()
-    // }
+    if (isSelected && tabRef.current) {
+      tabRef.current.focus();
+    }
 
   }, [isSelected])
 

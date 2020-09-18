@@ -60,14 +60,32 @@ describe('Tabs Component', () => {
 
   it('should change tab on left arrow', () => {
     const onKeyDown = jest.fn()
-    const { container } = render(
+
+    const { getAllByRole } = render(
       <Tabs items={items} onKeyDown={onKeyDown}/>
     )
+    
     // @ts-ignore
-    fireEvent.keyDown(container.querySelector('.tab-item'), { keyCode: 37})
-    expect(container.querySelector('.tab-item')?.classList).toContain('active')
+    fireEvent.keyDown(getAllByRole('tab')[2], { keyCode: 39})
+    expect(getAllByRole('tab')[1]?.classList).toContain('active')
     expect(onKeyDown).toHaveBeenCalled()
   })
+
+  it('should change tab on right arrow', () => {
+    const onKeyDown2 = jest.fn()
+
+    const { getAllByRole } = render(
+      <Tabs items={items} onKeyDown={onKeyDown2}/>
+    )
+    
+    // @ts-ignore
+    fireEvent.keyDown(getAllByRole('tab')[0], { keyCode: 39})
+    expect(getAllByRole('tab')[1]?.classList).toContain('active')
+    expect(onKeyDown2).toHaveBeenCalled()
+  })
+
+
+
 
   it('should be vertical if position="left"', () => {
     const { container } = render(<Tabs items={items} position="left" />)
