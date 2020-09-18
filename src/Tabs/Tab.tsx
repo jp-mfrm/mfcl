@@ -15,14 +15,8 @@ export interface Props {
 const Tab: FunctionComponent<Props> = ({ name, id, onClick, onKeyDown, selectedIndex, index, label}) => {
   const isSelected = index === selectedIndex;
   const tabRef: any = useRef<HTMLDivElement>(null)
-  const firstUpdate = useRef(true)
 
   useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false
-      return
-    }  
-
     if (isSelected && tabRef.current) {
       tabRef.current.focus();
     }
