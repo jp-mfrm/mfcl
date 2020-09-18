@@ -7,13 +7,14 @@ import clsx from 'clsx';
 import styles from './tabs.module.scss'
 
 export interface Props {
+  name: string
   items: []
   position: string
   defaultOpen: number
   [rest: string]: unknown // ...rest property
 }
 
-const Tabs: FunctionComponent<Props> = ({ items, position='top', defaultOpen = 0, ...rest }) => {
+const Tabs: FunctionComponent<Props> = ({ name, items, position='top', defaultOpen = 0, ...rest }) => {
   const [selectedIndex, setSelectedIndex] = useState(defaultOpen)
 
   const handleClick = (e: any) => {
@@ -43,6 +44,7 @@ const Tabs: FunctionComponent<Props> = ({ items, position='top', defaultOpen = 0
   return (
     <div className={clsx(styles['tabs-wrapper'], styles[position])} {...rest}>
       <TabList
+        name={name}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         items={items}
@@ -51,7 +53,7 @@ const Tabs: FunctionComponent<Props> = ({ items, position='top', defaultOpen = 0
       <Panel className={clsx(styles['panel'])}>
         {items.map((item, index) => {
            return (
-          <PanelItem selectedIndex={selectedIndex} index={index} key={index}> 
+          <PanelItem name={name} selectedIndex={selectedIndex} index={index} key={index}> 
             {/* @ts-ignore */}
             {item.content}
           </PanelItem>

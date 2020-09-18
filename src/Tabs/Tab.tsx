@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import styles from './tabs.module.scss'
 
 export interface Props {
+  name: string
   id: string
   index: number
   selectedIndex: number
@@ -11,7 +12,7 @@ export interface Props {
   onKeyDown?: Function | null
 }
 
-const Tab: FunctionComponent<Props> = ({ id, onClick, onKeyDown, selectedIndex, index, label}) => {
+const Tab: FunctionComponent<Props> = ({ name, id, onClick, onKeyDown, selectedIndex, index, label}) => {
   const isSelected = index === selectedIndex;
   const tabRef: any = useRef<HTMLDivElement>(null)
   const firstUpdate = useRef(true)
@@ -32,7 +33,8 @@ const Tab: FunctionComponent<Props> = ({ id, onClick, onKeyDown, selectedIndex, 
     <li className={clsx(styles['tab-list-item'], isSelected && styles['active']) } role="presentation">
       <a
         ref={tabRef}
-        aria-controls={id}
+        aria-controls={`panel-${name}-${index}`}
+        id={`tab-${name}-${index}`}
         aria-selected={isSelected}
         className={clsx(styles['tab-item'], isSelected && styles['active'])}
         href={`#${id}`}

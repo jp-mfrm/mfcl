@@ -8,8 +8,6 @@ interface Props {
   className?: string
   /** Enable rounded variation. */
   rounded?: boolean
-  // selectedIndex required if using a panel with tabs component
-  selectedIndex?: number
   [rest: string]: unknown // ...rest property
 }
 
