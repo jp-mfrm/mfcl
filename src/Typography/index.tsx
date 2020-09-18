@@ -1,7 +1,6 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, createElement } from 'react'
 
 import styles from './typography.module.scss'
-import clsx from 'clsx'
 
 interface Props {
   children: string
@@ -20,19 +19,28 @@ interface Props {
     | 'price'
     | 'price-sale'
   className?: string
+  component?: string
   [rest: string]: unknown // ...rest property
 }
 
-const Typography: FunctionComponent<Props> = ({ variant, children, className, ...rest }) => {
+const Typography: FunctionComponent<Props> = ({ variant, children, className, component, ...rest }) => {
   let text
+  let customTag
+
   if (variant === 'xxl') {
     text = <h1 className={styles.xxl}>{children}</h1>
+    if (component) {
+      return (customTag = createElement(component, { className: styles.xxl }, children))
+    }
   }
   if (variant === 'xl') {
     text = <h2 className={styles.xl}>{children}</h2>
   }
   if (variant === 'lg') {
     text = <h3 className={styles.lg}>{children}</h3>
+    if (component) {
+      return (customTag = createElement(component, styles.lg, children))
+    }
   }
   if (variant === 'md') {
     text = <h4 className={styles.md}>{children}</h4>
