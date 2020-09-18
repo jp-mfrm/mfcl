@@ -84,9 +84,6 @@ describe('Tabs Component', () => {
     expect(onKeyDown2).toHaveBeenCalled()
   })
 
-
-
-
   it('should be vertical if position="left"', () => {
     const { container } = render(<Tabs items={items} position="left" />)
     expect(container.querySelector('.tabs-wrapper')?.classList).toContain('left')
