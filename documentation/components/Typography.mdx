@@ -44,41 +44,73 @@ can also be passed to the component.
     <Typography variant='h6'>
       h6 - Hello World
     </Typography>
-    <Typography variant='bodyLg'>
-      bodyLg - Hello World
+    <Typography variant='paragraph-lg'>
+      paragraph-lg - Hello World
     </Typography>
-    <Typography variant='body'>
-      body - Hello World
+    <Typography variant='paragraph'>
+      paragraph - Hello World
     </Typography>
-    <Typography variant='bodySm'>
-      bodySm - Hello World
+    <Typography variant='paragraph-sm'>
+      paragraph-sm - Hello World
     </Typography>
-    <Typography variant='priceLg'>
-      priceLg - Hello World
+    <Typography variant='price-lg'>
+      price-lg - Hello World
     </Typography>
-    <Typography variant='priceSale'>
-      priceSale - Hello World
+    <Typography variant='price-sale'>
+      price-sale - Hello World
     </Typography>
     <Typography variant='price'>
       price - Hello World
+    </Typography>
+    <Typography variant='eyebrow'>
+      eyebrow - Hello World
+    </Typography>
+    <Typography variant='byline'>
+      byline - Hello World
     </Typography>
   </Component>
 </Playground>
 
 ### Pass a Custom Tag to the Component
-You may want the xxl variant, but you already have an h1 on the page, 
+You may want the h1 variant, but you already have an h1 on the page, 
 so you're able to pass a tag with the tag prop. 
 
 - For example, turn an h2 variant into a p tag. 
 
 <Playground>
-  <Typography variant='xxl' tag='p'>
-    This is the xxl variant but rendered as a p tag instead!
+  <Typography variant='h2' tag='p'>
+    This is the h2 variant but rendered as a p tag instead!
   </Typography>
-  <Typography variant='priceSale' tag='a' href='/'>
-    This is the priceSale variant but rendered as an a tag instead!
+  <Typography variant='price-sale' tag='a' href='/'>
+    This is the price-sale variant but rendered as an a tag instead!
   </Typography>
-  <Typography variant='bodyLg' tag='h3' className='veryGreen' style={{color: 'green'}}>
-    This is the bodyLg variant but rendered as an h3 tag instead! Also with a custom className and styling.
+  <Typography variant='paragraph-lg' tag='h3' className='veryGreen' style={{color: 'green'}}>
+    This is the paragraph-lg variant but rendered as an h3 tag instead! Also with a custom className and styling.
   </Typography>
+</Playground>
+
+### Align the text with the align prop
+
+<Playground>
+  <Typography variant='paragraph-lg' align='left'>
+    I'm left aligned! This is the default alignment.
+  </Typography>
+  <Typography variant='paragraph-lg' align='center'>
+    I'm center aligned!
+  </Typography>
+  <Typography variant='paragraph-lg' align='right'>
+    I'm right aligned!
+  </Typography>
+</Playground>
+
+### The noWrap Prop
+
+You can pass the noWrap prop and the text will not wrap and instead truncate with a text overflow ellipsis.
+
+<Playground>
+    <div style={{width:'15%'}}>
+      <Typography variant='paragraph-lg' noWrap>
+        This is what it's like to have noWrap on
+      </Typography>
+    </div>
 </Playground>
