@@ -4,6 +4,7 @@ import styles from './typography.module.scss'
 
 interface Props {
   children: string
+  /** The variations the typography can render. */
   variant:
     | 'xxl'
     | 'xl'
@@ -18,8 +19,12 @@ interface Props {
     | 'priceLg'
     | 'price'
     | 'priceSale'
+  /** Can pass a custom custom tag to the component. 
+   * For example, this is helpful when you want the styles of an xxl 
+   * without it being an h1 */
+  tag?: string
+  /** Give a custom className to the typography component. */
   className?: string
-  component?: string
   [rest: string]: unknown // ...rest property
 }
 
@@ -39,11 +44,11 @@ const customElement = {
   priceSale: 'p'
 }
 
-const Typography: FunctionComponent<Props> = ({ variant, children, className, component, ...rest }) => {
+const Typography: FunctionComponent<Props> = ({ variant, children, className, tag, ...rest }) => {
   return (
     <>
       {createElement(
-        component ? component : customElement[variant],
+        tag ? tag : customElement[variant],
         { className: clsx(styles[variant], className), ...rest },
         children
       )}
