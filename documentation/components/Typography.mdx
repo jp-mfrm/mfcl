@@ -15,7 +15,8 @@ import Typography  from 'mfcl/Typography';
 ```
 
 ## Description
-TOO add description here
+Wrap text in the Typography component and give it a variant for the correct style and tags. Custom tags
+can also be passed to the component.
 
 ## Properties
 
@@ -25,23 +26,23 @@ TOO add description here
 
 <Playground>
   <Component>
-    <Typography variant='xxl'>
-      xxl - Hello World
+    <Typography variant='h1'>
+      h1 - Hello World
     </Typography>
-    <Typography variant='xl'>
-      xl - Hello World
+    <Typography variant='h2'>
+      h2 - Hello World
     </Typography>
-    <Typography variant='lg'>
-      lg - Hello World
+    <Typography variant='h3'>
+      h3 - Hello World
     </Typography>
-    <Typography variant='md'>
-      md - Hello World
+    <Typography variant='h4'>
+      h4 - Hello World
     </Typography>
-    <Typography variant='sm'>
-      sm - Hello World
+    <Typography variant='h5'>
+      h5 - Hello World
     </Typography>
-    <Typography variant='xs'>
-      xs - Hello World
+    <Typography variant='h6'>
+      h6 - Hello World
     </Typography>
     <Typography variant='bodyLg'>
       bodyLg - Hello World
@@ -68,7 +69,7 @@ TOO add description here
 You may want the xxl variant, but you already have an h1 on the page, 
 so you're able to pass a tag with the tag prop. 
 
-- For example, turn an xl variant, which is an h2, into a p tag. 
+- For example, turn an h2 variant into a p tag. 
 
 <Playground>
   <Typography variant='xxl' tag='p'>

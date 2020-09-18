@@ -6,12 +6,12 @@ interface Props {
   children: string
   /** The variations the typography can render. */
   variant:
-    | 'xxl'
-    | 'xl'
-    | 'lg'
-    | 'md'
-    | 'sm'
-    | 'xs'
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
     | 'subtitle'
     | 'body'
     | 'bodySm'
@@ -29,31 +29,27 @@ interface Props {
 }
 
 const customElement = {
-  xxl: 'h1',
-  xl: 'h2',
-  lg: 'h3',
-  md: 'h4',
-  sm: 'h5',
-  xs: 'h6',
+  h1: 'h1',
+  h2: 'h2',
+  h3: 'h3',
+  h4: 'h4',
+  h5: 'h5',
+  h6: 'h6',
   subtitle: 'p',
   body: 'p',
   bodySm: 'p',
   bodyLg: 'p',
   priceLg: 'p',
   price: 'p',
-  priceSale: 'p'
+  priceSale: 'p',
 }
 
 const Typography: FunctionComponent<Props> = ({ variant, children, className, tag, ...rest }) => {
-  return (
-    <>
-      {createElement(
+  return createElement(
         tag ? tag : customElement[variant],
         { className: clsx(styles[variant], className), ...rest },
         children
-      )}
-    </>
-  )
+      )
 }
 
 export default Typography

@@ -1,40 +1,40 @@
 @import '../variables';
 
-.xxl,
-.xl,
-.lg,
-.md,
-.sm,
-.xs {
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
   font-weight: 700;
 }
 
-.xxl {
+.h1 {
   font-size: 44px;
   line-height: 48px;
+  font-weight: 900;
 }
 
-.xl {
+.h2 {
   font-size: 36px;
   line-height: 40px;
 }
 
-.lg {
+.h3 {
   font-size: 32px;
   line-height: 36px;
 }
 
-.md {
+.h4 {
   font-size: 28px;
   line-height: 32px;
 }
 
-.sm {
+.h5 {
   font-size: 24px;
   line-height: 28px;
 }
 
-.xs {
+.h6 {
   font-size: 18px;
   line-height: 22px;
 }
