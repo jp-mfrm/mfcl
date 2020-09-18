@@ -1,0 +1,62 @@
+@import '../variables';
+
+.pagination-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  min-width: 30px;
+  min-height: 30px;
+  margin-right: 11px;
+  margin-left: 11px;
+  padding: 4px 9px;
+  font-size: 18px;
+  font-weight: bold;
+
+  &:hover {
+    background: $gray-2;
+  }
+}
+
+.active {
+  background: $red;
+  color: $white;
+
+  &:hover {
+    background: $dark-red;
+  }
+}
+
+.arrowButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    svg {
+      path {
+        stroke: $dark-red;
+      }
+    }
+  }
+}
+
+.button-wrapper {
+  padding: 0 19px;
+}
+
+.numText {
+  padding-top: 15px;
+  font-size: 12px;
+}

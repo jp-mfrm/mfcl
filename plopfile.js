@@ -31,7 +31,7 @@ module.exports = (plop) => {
       })
       actions.push({
         type: 'add',
-        path: 'src/documentation/components/{{componentName}}.mdx',
+        path: 'documentation/components/{{componentName}}.mdx',
         templateFile: 'plop-templates/Component.mdx.hbs'
       })
       actions.push({
@@ -41,7 +41,7 @@ module.exports = (plop) => {
       })
       actions.push({
         type: 'modify',
-        path: 'src/CHANGELOG.mdx',
+        path: 'CHANGELOG.mdx',
         pattern: '# Changelog',
         template: '# Changelog\n\n#### [v. TODO]\n\n- Init {{componentName}} Component\n\n_TODO_'
       })
