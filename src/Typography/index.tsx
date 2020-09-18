@@ -46,13 +46,13 @@ const customElement = {
 
 const Typography: FunctionComponent<Props> = ({ variant, children, className, tag, ...rest }) => {
   return (
-    <>
+    <div data-testid='typography-wrapper'>
       {createElement(
         tag ? tag : customElement[variant],
         { className: clsx(styles[variant], className), ...rest },
         children
       )}
-    </>
+    </div>
   )
 }
 
