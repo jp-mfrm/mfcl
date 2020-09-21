@@ -1,0 +1,87 @@
+@import '../variables';
+
+.tabs-wrapper {
+  .tabs {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  &.top {
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      border-bottom: 1px solid $gray-5;
+      padding-bottom: 10px;
+
+      @media screen and (max-width: $mobile) {
+        flex-wrap: wrap;
+      }
+    }
+
+    .tab-list-item {
+      @media screen and (max-width: $mobile) {
+        padding: 7px;
+      }
+    }
+
+    .tab-item {
+      color: $black;
+      text-decoration: none;
+      outline: none;
+      &.active {
+        border-bottom: 5px solid $red;
+        padding-bottom: 5px;
+
+        @media screen and (max-width: $mobile) {
+          padding-bottom: 0px;
+        }
+      }
+    }
+  }
+
+  &.left {
+    display: flex;
+    .tabs {
+      border-right: 1px solid $gray-5;
+      width: 25%;
+      @media screen and (max-width: $mobile) {
+        width: auto;
+      }
+    }
+
+    .panel {
+      display: flex;
+      justify-content: center;
+      font-size: 16px;
+      padding-left: 15px;
+    }
+
+    .tab-list-item {
+      padding: 5px;
+      @media screen and (max-width: $mobile) {
+        padding: 8px;
+      }
+
+      &.active {
+        border-right: 3px solid $red;
+        padding-right: 5px;
+        
+      }
+    }
+
+    .tab-item {
+      color: $black;
+      text-decoration: none;
+      outline: none;
+      font-size: 16px;
+      @media screen and (max-width: $mobile) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .panel {
+    width: 100%;
+    border: none;
+  }
+}

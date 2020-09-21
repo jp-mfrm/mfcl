@@ -1,0 +1,84 @@
+@import '../variables';
+
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-weight: 700;
+}
+
+.h1 {
+  font-size: 44px;
+  line-height: 48px;
+  font-weight: 900;
+}
+
+.h2 {
+  font-size: 36px;
+  line-height: 40px;
+}
+
+.h3 {
+  font-size: 32px;
+  line-height: 36px;
+}
+
+.h4 {
+  font-size: 28px;
+  line-height: 32px;
+}
+
+.h5 {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.h6 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.bodySm,
+.body,
+.bodyLg {
+  font-weight: 400;
+}
+
+.bodySm {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.body {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.bodyLg {
+  font-size: 22px;
+  line-height: 30px;
+}
+
+.priceLg,
+.price,
+.priceSale {
+  font-weight: 500;
+}
+
+.price {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.priceLg {
+  font-size: 28px;
+  line-height: 32px;
+  color: $red;
+}
+
+.priceSale {
+  font-size: 16px;
+  line-height: 20px;
+  color: $red;
+}

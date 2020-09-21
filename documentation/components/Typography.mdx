@@ -1,0 +1,84 @@
+---
+name: Typography
+menu: Components
+route: /components-typography
+---
+
+import { Playground, Props } from 'docz';
+import Component from "react-component-component";
+import { Typography } from '../../src';
+
+# Typography
+
+```javascript
+import Typography  from 'mfcl/Typography';
+```
+
+## Description
+Wrap text in the Typography component and give it a variant for the correct style and tags. Custom tags
+can also be passed to the component.
+
+## Properties
+
+<Props of={Typography} />
+
+## Basic Usage
+
+<Playground>
+  <Component>
+    <Typography variant='h1'>
+      h1 - Hello World
+    </Typography>
+    <Typography variant='h2'>
+      h2 - Hello World
+    </Typography>
+    <Typography variant='h3'>
+      h3 - Hello World
+    </Typography>
+    <Typography variant='h4'>
+      h4 - Hello World
+    </Typography>
+    <Typography variant='h5'>
+      h5 - Hello World
+    </Typography>
+    <Typography variant='h6'>
+      h6 - Hello World
+    </Typography>
+    <Typography variant='bodyLg'>
+      bodyLg - Hello World
+    </Typography>
+    <Typography variant='body'>
+      body - Hello World
+    </Typography>
+    <Typography variant='bodySm'>
+      bodySm - Hello World
+    </Typography>
+    <Typography variant='priceLg'>
+      priceLg - Hello World
+    </Typography>
+    <Typography variant='priceSale'>
+      priceSale - Hello World
+    </Typography>
+    <Typography variant='price'>
+      price - Hello World
+    </Typography>
+  </Component>
+</Playground>
+
+### Pass a Custom Tag to the Component
+You may want the xxl variant, but you already have an h1 on the page, 
+so you're able to pass a tag with the tag prop. 
+
+- For example, turn an h2 variant into a p tag. 
+
+<Playground>
+  <Typography variant='xxl' tag='p'>
+    This is the xxl variant but rendered as a p tag instead!
+  </Typography>
+  <Typography variant='priceSale' tag='a' href='/'>
+    This is the priceSale variant but rendered as an a tag instead!
+  </Typography>
+  <Typography variant='bodyLg' tag='h3' className='veryGreen' style={{color: 'green'}}>
+    This is the bodyLg variant but rendered as an h3 tag instead! Also with a custom className and styling.
+  </Typography>
+</Playground>

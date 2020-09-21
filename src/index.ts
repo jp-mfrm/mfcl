@@ -27,8 +27,11 @@ import ProgressBar from './ProgressBar'
 import Rating from './Rating'
 import Select from './Select'
 import Stepper from './Stepper'
+import Tabs from './Tabs'
 import Textarea from './Textarea'
 import Tooltip from './Tooltip'
+import Pagination from './Pagination'
+import Typography from './Typography'
 
 export {
   Accordion,
@@ -51,6 +54,7 @@ export {
   Loading,
   Modal,
   NumberIncrementer,
+  Pagination,
   Panel,
   PanelItem,
   Portal,
@@ -60,6 +64,8 @@ export {
   Rating,
   Select,
   Stepper,
+  Tabs,
   Textarea,
-  Tooltip
+  Tooltip,
+  Typography
 }
