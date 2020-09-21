@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { useState, useEffect, ReactNode, FunctionComponent } from 'react'
+import React, { useState, useEffect, ReactNode, FunctionComponent, cloneElement } from 'react'
 import clsx from 'clsx'
 import useDimensions from '../utils/useDimensions'
 import Portal from '../Portal'
@@ -150,7 +150,8 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       ref={wrapperRef}
       {...rest}
     >
-      {trigger}
+      {/* @ts-ignore */}
+      {cloneElement(trigger, { 'aria-expanded': isShowing })}
       <Portal>
         <>{tooltipContent}</>
       </Portal>

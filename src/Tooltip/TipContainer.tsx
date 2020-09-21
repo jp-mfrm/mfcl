@@ -193,7 +193,7 @@ const TipContainer: FunctionComponent<Props> = ({
             enter: {
               ...getAnimationStyleByPosition('bottom').enter,
               transform: 'translate3d(calc(-100% + 16px), 0, 0)',
-              top: top + window.scrollY + 5,
+              top: top + window.scrollY + 23,
               left: left + width - width / 2
             },
             active: {
@@ -206,7 +206,7 @@ const TipContainer: FunctionComponent<Props> = ({
             enter: {
               ...getAnimationStyleByPosition('bottom').enter,
               transform: 'translate3d(calc(0% + -16px), 0, 0)',
-              top: top + window.scrollY + 5,
+              top: top + window.scrollY + 23,
               left: left + width - width / 2
             },
             active: {
