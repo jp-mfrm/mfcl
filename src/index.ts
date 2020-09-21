@@ -26,6 +26,7 @@ import ProgressBar from './ProgressBar'
 import Rating from './Rating'
 import Select from './Select'
 import Stepper from './Stepper'
+import Tabs from './Tabs'
 import Textarea from './Textarea'
 import Tooltip from './Tooltip'
 import Pagination from './Pagination'
@@ -61,6 +62,7 @@ export {
   Rating,
   Select,
   Stepper,
+  Tabs,
   Textarea,
   Tooltip,
   Typography

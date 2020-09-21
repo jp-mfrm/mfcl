@@ -58,6 +58,14 @@
     &.link {
       color: $blue;
     }
+
+    &.active { 
+      display: block;
+    }
+
+    &.hidden {
+      display: none;
+    }
   }
 
   @media screen and (max-width: $mobile) {
