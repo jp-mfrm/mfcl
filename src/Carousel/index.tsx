@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, cloneElement, isValidElement, useRef } from 'react'
+import React, { FunctionComponent } from 'react'
 
 import carouselHelper from './carouselHelper'
 import clsx from 'clsx'
@@ -78,7 +78,6 @@ const Carousel: FunctionComponent<Props> = ({
   const buttons = (
     <>
       <button
-        id="prev"
         aria-hidden={(hideControls && 'true') || 'false'}
         className={clsx(
           styles['carousel-wrapper-control'],
@@ -91,7 +90,6 @@ const Carousel: FunctionComponent<Props> = ({
         <p className={clsx(styles['sr-only'])}>Move Slider Left Button.</p>
       </button>
       <button
-        id="next"
         aria-hidden={(hideControls && 'true') || 'false'}
         className={clsx(
           styles['carousel-wrapper-control'],

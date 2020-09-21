@@ -7,14 +7,12 @@ import {
   isValidElement,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState
 } from 'react'
 
 import React from 'react'
-import { act } from 'react-dom/test-utils'
 import clsx from 'clsx'
 import styles from './carousel.module.scss'
 
@@ -35,7 +33,7 @@ function getSliderMeasurements(
   baseSlideCount: number,
   slidesShown: number
 ) {
-  var measurements = {
+  const measurements = {
     slidesPxWidth: current.offsetWidth,
     slidesLeft: 0,
     slideMargin: 0,
@@ -48,28 +46,25 @@ function getSliderMeasurements(
   let totalSlideCount = baseSlideCount + (infinite ? 2 : 0) * slidesShown
   measurements.slidePxWidth = measurements.slidesPxWidth / totalSlideCount
 
-  switch (true) {
-    case layoutGap === 0:
-      measurements.slideFlexBasis = 100 / totalSlideCount
-      measurements.slideShift = 100 / slidesShown
-      measurements.slidesLeft = infinite ? -100 / slidesShown + (-100 / slidesShown) * (slidesShown - 1) : 0
-      break
-    default:
-      let flexBasisPercent = 0.9
-      measurements.slideFlexPxWidth = measurements.slidePxWidth * flexBasisPercent
-      measurements.slideFlexBasis = 90 / totalSlideCount
+  if(layoutGap === 0) {
+    measurements.slideFlexBasis = 100 / totalSlideCount
+    measurements.slideShift = 100 / slidesShown
+    measurements.slidesLeft = infinite ? -100 / slidesShown + (-100 / slidesShown) * (slidesShown - 1) : 0
+  } else {
+    let flexBasisPercent = 0.9
+    measurements.slideFlexPxWidth = measurements.slidePxWidth * flexBasisPercent
+    measurements.slideFlexBasis = 90 / totalSlideCount
 
-      let defaultMarginPixel = layoutGap // 5
-      measurements.slideMargin = (defaultMarginPixel / measurements.slidesPxWidth) * 100
+    let defaultMarginPixel = layoutGap // 5
+    measurements.slideMargin = (defaultMarginPixel / measurements.slidesPxWidth) * 100
 
-      measurements.slideShift =
-        (((measurements.slideFlexPxWidth + defaultMarginPixel * 2) / measurements.slidePxWidth) * 100) / slidesShown
+    measurements.slideShift =
+      (((measurements.slideFlexPxWidth + defaultMarginPixel * 2) / measurements.slidePxWidth) * 100) / slidesShown
 
-      let remainingWidthPx = measurements.slidePxWidth - measurements.slideFlexPxWidth
-      let offsetLeftPx = remainingWidthPx / 2 - defaultMarginPixel
-      let startPos = (offsetLeftPx / measurements.slidePxWidth) * 100
-      measurements.slidesLeft = infinite ? startPos - measurements.slideShift * slidesShown : startPos
-      break
+    let remainingWidthPx = measurements.slidePxWidth - measurements.slideFlexPxWidth
+    let offsetLeftPx = remainingWidthPx / 2 - defaultMarginPixel
+    let startPos = (offsetLeftPx / measurements.slidePxWidth) * 100
+    measurements.slidesLeft = infinite ? startPos - measurements.slideShift * slidesShown : startPos
   }
 
   return { ...measurements }
@@ -120,23 +115,18 @@ function getIndicators(
     }
 
     initIndicators.push(
-      createElement(
-        'button',
-        {
-          key: index,
-          'data-selected': index === 0 ? 'true' : 'false',
-          'aria-current': index === 0 ? 'true' : 'false',
-          className: clsx(styles['indicator-button'], styles[indicatorStyle]),
-          onClick: () => handleIndicatorClick(index)
-        },
-        createElement('span', { className: clsx(styles['sr-only']), value: slidesLabel })
-      )
-    )
+      <button
+        key={index}
+        type="button"
+        data-selected={index === 0 ? 'true' : 'false'}
+        aria-current={index === 0 ? 'true' : 'false'}
+        className={clsx(styles['indicator-button'], styles[indicatorStyle])}
+        onClick={() => shiftSlide(index, 'indicator')}
+      >
+        <span className={clsx(styles['sr-only'])} aria-label={slidesLabel} />
+      </button>
+    );
   })
-
-  const handleIndicatorClick = (destinationIndex: number) => {
-    shiftSlide(destinationIndex, 'indicator')
-  }
 
   return initIndicators
 }
@@ -163,7 +153,7 @@ function getSlides(
             slideGrabbing && styles['grabbing'],
             layoutGap === 0 && styles['marginless']
           )}
-          key={index}
+          key={label}
           style={{
             ...child.props.style,
             flexBasis: `${flexBasis}%`,
@@ -180,8 +170,9 @@ function getSlides(
 
   // Configure infinite slider
   if (infinite) {
+    const initSlidesLength = initSlides.length;
     const firstSlides = initSlides.slice(0, slidesShown)
-    const lastSlides = initSlides.slice().reverse().slice(0, slidesShown).reverse()
+    const lastSlides = initSlides.slice(initSlidesLength - slidesShown, initSlidesLength);
     const cloneSlides = firstSlides.concat(lastSlides).map((child: ReactNode, index: number) => {
       if (isValidElement(child)) {
         return cloneElement(child, {
@@ -292,7 +283,7 @@ export default function carouselHelper(
         slideMargin,
         infinite
       ),
-    [slideGrabbing, slideFlexBasis, slideMargin, slidesRef.current]
+    [childrenArr, baseSlideCount, slidesShown, slideGrabbing, slideFlexBasis, slideMargin, slidesRef.current]
   )
 
   const [slidesTransition, setSlidesTransition] = useState<string>('')

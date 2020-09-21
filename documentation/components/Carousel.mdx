@@ -119,7 +119,7 @@ The Carousel component allows you to a display a selection of rotating items.
 AutoSlide overrides the infinite prop to true and sets duration to 3 seconds by default
 
 <Playground>
-  <Carousel autoSlide>
+  <Carousel autoSlide ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
     <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
   </Carousel>
@@ -128,7 +128,7 @@ AutoSlide overrides the infinite prop to true and sets duration to 3 seconds by 
 ## Multiple Slides 
 
 <Playground>
-  <Carousel itemsToShow={2}>
+  <Carousel itemsToShow={2} ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
     <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
     <div style={{ backgroundColor: 'lightgreen' }}>Slide 1</div>
@@ -148,14 +148,14 @@ AutoSlide overrides the infinite prop to true and sets duration to 3 seconds by 
 The layoutGap prop sets the slides' margins in pixels
 
 <Playground>
-  <Carousel itemsToShow={2} layoutGap={20}>
+  <Carousel itemsToShow={2} layoutGap={20} ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
     <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
     <div style={{ backgroundColor: 'lightgreen' }}>Slide 1</div>
     <div style={{ backgroundColor: 'lightblue' }}>Slide 2</div>
   </Carousel>
 
-  <Carousel infinite itemsToShow={2} layoutGap={5}>
+  <Carousel infinite itemsToShow={2} layoutGap={5} ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
     <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
     <div style={{ backgroundColor: 'lightgreen' }}>Slide 1</div>
@@ -166,17 +166,17 @@ The layoutGap prop sets the slides' margins in pixels
 ## Indicator Button Styles
 
 <Playground>
-  <Carousel indicatorStyle="round">
+  <Carousel indicatorStyle="round" ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
     <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
   </Carousel>
   <br/>
-  <Carousel indicatorStyle="bar">
+  <Carousel indicatorStyle="bar" ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
     <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
   </Carousel>
   <br />
-  <Carousel hideIndicators>
+  <Carousel hideIndicators ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
     <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
   </Carousel>
@@ -188,23 +188,23 @@ Any non conflicting combination of 'top', 'middle', 'bottom', 'left', 'right', '
 hideControls prop removes the control buttons from view until hovered.
 
 <Playground>
-  <Carousel controlAlignment="top center">
+  <Carousel controlAlignment="top center" ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
   </Carousel>
   <br/>
-  <Carousel controlAlignment="middle apart">
+  <Carousel controlAlignment="middle apart" ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
   </Carousel>
   <br />
-  <Carousel controlAlignment="apart">
+  <Carousel controlAlignment="apart" ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
   </Carousel>
   <br />
-  <Carousel controlAlignment="bottom right">
+  <Carousel controlAlignment="bottom right" ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
   </Carousel>
   <br />
-  <Carousel hideControls>
+  <Carousel hideControls ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
   </Carousel>
 </Playground>

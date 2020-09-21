@@ -127,7 +127,6 @@ describe('Carousel Component', () => {
     fireEvent.click(next)
     
     setTimeout(() => {
-      screen.debug();
       expect(getAllByLabelText('slide 1 of 2')[0]).toHaveAttribute('aria-hidden', 'true');
       expect(getAllByLabelText('slide 2 of 2')[0]).toHaveAttribute('aria-hidden', 'false');
     }, 100);
