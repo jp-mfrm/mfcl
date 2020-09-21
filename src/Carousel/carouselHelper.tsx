@@ -30,8 +30,7 @@ function getChildrenArr(children: ReactNode) {
 
 function getSliderMeasurements(
   current: any,
-  marginless: boolean,
-  margin: number,
+  layoutGap: number,
   infinite: boolean,
   baseSlideCount: number,
   slidesShown: number
@@ -50,7 +49,7 @@ function getSliderMeasurements(
   measurements.slidePxWidth = measurements.slidesPxWidth / totalSlideCount
 
   switch (true) {
-    case marginless:
+    case layoutGap === 0:
       measurements.slideFlexBasis = 100 / totalSlideCount
       measurements.slideShift = 100 / slidesShown
       measurements.slidesLeft = infinite ? -100 / slidesShown + (-100 / slidesShown) * (slidesShown - 1) : 0
@@ -60,7 +59,7 @@ function getSliderMeasurements(
       measurements.slideFlexPxWidth = measurements.slidePxWidth * flexBasisPercent
       measurements.slideFlexBasis = 90 / totalSlideCount
 
-      let defaultMarginPixel = margin // 5
+      let defaultMarginPixel = layoutGap // 5
       measurements.slideMargin = (defaultMarginPixel / measurements.slidesPxWidth) * 100
 
       measurements.slideShift =
@@ -147,7 +146,7 @@ function getSlides(
   baseSlideCount: number,
   slidesShown: number,
   slideGrabbing: boolean,
-  marginLess: boolean,
+  layoutGap: number,
   flexBasis: number,
   margin: number,
   infinite: boolean
@@ -161,11 +160,9 @@ function getSlides(
           aria-hidden={slidesShown - 1 < index}
           className={clsx(
             styles['slide'],
-            styles['draggable'],
             slideGrabbing && styles['grabbing'],
-            marginLess && styles['marginless']
+            layoutGap===0 && styles['marginless']
           )}
-          // {...child.props}
           key={index}
           style={{
             ...child.props.style,
@@ -181,7 +178,6 @@ function getSlides(
     }
   })
 
-  // TODO: Change slice/reverse to filter
   // Configure infinite slider
   if (infinite) {
     const firstSlides = initSlides.slice(0, slidesShown)
@@ -251,11 +247,10 @@ function updateAriaHidden(
   }
 }
 
-export function carouselHelper(
+export default function carouselHelper(
   children: ReactNode,
   itemsToShow: number,
-  marginLess: boolean,
-  btnAlignment: string,
+  controlAlignment: string,
   hideIndicators: boolean,
   indicatorStyle: string,
   duration: number,
@@ -264,7 +259,7 @@ export function carouselHelper(
   layoutGap: number
 ) {
   // Configure button alignment
-  const alignment = [styles[(btnAlignment + '').split(' ')[0]], styles[(btnAlignment + '').split(' ')[1]]]
+  const alignment = [styles[(controlAlignment + '').split(' ')[0]], styles[(controlAlignment + '').split(' ')[1]]]
 
   // Configure autoslide / infinite
   if (autoSlide) infinite = true
@@ -282,7 +277,7 @@ export function carouselHelper(
 
   // Configure base slides
   const slidesRef = useRef<any>(null)
-  const [slideMargin, setSlideMargin] = useState<number>(marginLess ? 0 : layoutGap)
+  const [slideMargin, setSlideMargin] = useState<number>(layoutGap)
   const [slideFlexBasis, setSlideFlexBasis] = useState<number>(100)
   const [slideGrabbing, setSlideGrabbing] = useState(false)
   const slides = useMemo(
@@ -292,7 +287,7 @@ export function carouselHelper(
         baseSlideCount,
         slidesShown,
         slideGrabbing,
-        marginLess,
+        layoutGap,
         slideFlexBasis,
         slideMargin,
         infinite
@@ -312,13 +307,23 @@ export function carouselHelper(
   const [activeIndex, setActiveIndex] = useState(0)
   const [allowShift, setAllowShift] = useState(true)
 
-  // TODO: Refine
-  const toSliderXPercentage = (pixelVal: number) => {
-    let _width = marginLess
-      ? slidesPxWidth
-      : (((baseSlideCount * 100) / slidesShown + (infinite ? 100 * 2 : 0)) / slidesWidth) * slidesPxWidth
+  const toSlidesPercentage = (pixelVal: number) => {
+    let _width;
 
-    return ((pixelVal * slides.length) / (slidesShown * _width)) * 100
+    switch(true) {
+      case layoutGap === 0:
+        _width = slidesPxWidth;
+        break;
+
+      default:
+        let adjustment = slidesShown + (infinite ? 100 * 2 : 0);
+        _width = (((baseSlideCount * 100) / adjustment) / slidesWidth) * slidesPxWidth;
+        break;
+    }
+
+    let percentage = ((pixelVal * slides.length) / (slidesShown * _width)) * 100;
+
+    return percentage
   }
 
   const exceedsSliderBoundary = (dir: number) => {
@@ -428,9 +433,9 @@ export function carouselHelper(
     setPosInitial(slidesLeft)
 
     if (event.type == 'touchstart') {
-      setPosX1(event.touches[0].clientX)
+      setPosX1(toSlidesPercentage(event.touches[0].clientX))
     } else {
-      setPosX1(toSliderXPercentage(event.clientX))
+      setPosX1(toSlidesPercentage(event.clientX))
     }
 
     document.body.style.cursor = 'grabbing'
@@ -446,11 +451,11 @@ export function carouselHelper(
 
         var nextPosition = 0
         if (event.type == 'touchmove') {
-          nextPosition = posX1 - toSliderXPercentage(event.touches[0].clientX)
-          setPosX1(toSliderXPercentage(event.touches[0].clientX))
+          nextPosition = posX1 - toSlidesPercentage(event.touches[0].clientX)
+          setPosX1(toSlidesPercentage(event.touches[0].clientX))
         } else {
-          nextPosition = posX1 - toSliderXPercentage(event.clientX)
-          setPosX1(toSliderXPercentage(event.clientX))
+          nextPosition = posX1 - toSlidesPercentage(event.clientX)
+          setPosX1(toSlidesPercentage(event.clientX))
         }
 
         setSlidesLeft(slidesLeft - nextPosition)
@@ -510,7 +515,6 @@ export function carouselHelper(
 
     const { ...measurements } = getSliderMeasurements(
       current,
-      marginLess,
       layoutGap,
       infinite,
       baseSlideCount,

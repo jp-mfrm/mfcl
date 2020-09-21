@@ -1,43 +1,28 @@
 import React, { FunctionComponent, ReactNode, cloneElement, isValidElement, useRef } from 'react'
 
-import { carouselHelper } from './carouselHelper'
+import carouselHelper from './carouselHelper'
 import clsx from 'clsx'
 import styles from './carousel.module.scss'
 
-/// TODO: Props to implement
-/// as: 'div' | 'section' | 'a' | 'img'
-/// asProps: {}
-/// controls: boolean;
-/// indicators: boolean; (High priority)
-/// nextIcon: node (Low priority)
-/// nextLabel: string (Low priority)
-/// prevIcon: node (Low priority)
-/// prevLabel: string (Low priority)
-/// pause: 'hover' | false (Low priority)
-/// touch: boolean (High priority)
-
 interface Props {
-  /** Sets the class for the Carousel wrapper */
-  carouselClass?: string
-  /** Aria label to set apart different carousels in the page
-   * label is prefixed with 'carousel-'
+  /** Aria label to set apart different carousels in the page.  
+   * Label is prefixed with 'carousel-'
    */
   ariaLabel: string
+  /** Sets the class for the Carousel wrapper */
+  carouselClass?: string
   /** Sets how many slides to show */
   itemsToShow?: number
-  /** Sets how many slides to scroll per click */
-  itemsToScroll?: number
-  /** Sets the transition control button alignments. Two non conflicting configurations can be combined.
+  /** Sets the transition control button alignments. Two non conflicting configurations can be combined.  
+   * Valid configurations are: 'top', 'middle', 'center', 'apart', 'left', 'right', 'bottom'.  
    * 'middle' centers vertically while 'center' centers horizontally. */
-  btnAlignment?: string | 'top' | 'middle' | 'center' | 'apart' | 'left' | 'right' | 'bottom'
-  /** Hides indicator buttons */
-  hideIndicators?: boolean
+  controlAlignment?: string 
   /** Hides control buttons unless hovered */
   hideControls?: boolean
   /** Sets the indicator buttons' style */
   indicatorStyle?: 'bar' | 'round'
-  /** Removes margins from the slides */
-  marginless?: boolean
+  /** Hides indicator buttons */
+  hideIndicators?: boolean
   /** Supply a px margin between slides */
   layoutGap?: number
   /** Allows Carousel to be cyclical. */
@@ -46,8 +31,6 @@ interface Props {
   autoSlide?: boolean
   /** Time in milliseconds for autoSlide */
   duration?: number
-  /** Enable draggable slides */
-  draggable?: boolean
   [rest: string]: unknown // ...rest property
 }
 
@@ -55,16 +38,14 @@ const Carousel: FunctionComponent<Props> = ({
   carouselClass,
   ariaLabel,
   itemsToShow = 1,
-  btnAlignment = 'middle apart',
+  controlAlignment = 'middle apart',
   hideIndicators = false,
   hideControls = false,
   indicatorStyle = 'round',
-  marginless = false,
-  layoutGap: layoutGap = 5,
+  layoutGap = 0,
   infinite = false,
   autoSlide = false,
   duration = 3000,
-  draggable = false,
   children
 }) => {
   const {
@@ -85,8 +66,7 @@ const Carousel: FunctionComponent<Props> = ({
   } = carouselHelper(
     children,
     itemsToShow,
-    marginless,
-    btnAlignment,
+    controlAlignment,
     hideIndicators,
     indicatorStyle,
     duration,
@@ -101,7 +81,7 @@ const Carousel: FunctionComponent<Props> = ({
         id="prev"
         aria-hidden={(hideControls && 'true') || 'false'}
         className={clsx(
-          styles['carousel-drag-wrapper-control'],
+          styles['carousel-wrapper-control'],
           styles['prev'],
           hideControls && styles['hidden'],
           alignment
@@ -114,7 +94,7 @@ const Carousel: FunctionComponent<Props> = ({
         id="next"
         aria-hidden={(hideControls && 'true') || 'false'}
         className={clsx(
-          styles['carousel-drag-wrapper-control'],
+          styles['carousel-wrapper-control'],
           styles['next'],
           hideControls && styles['hidden'],
           alignment
@@ -128,7 +108,7 @@ const Carousel: FunctionComponent<Props> = ({
 
   const screenReaderInstructions = (
     <p className={clsx(styles['sr-only'])}>
-      {(draggable && 'This is a draggable carousel.') || 'This is a carousel'}
+      This is a draggable carousel
       {autoSlide && 'It has auto-rotating slides'}
       Use Next and Previous buttons to navigate.
       {!hideIndicators && 'You can also jump to a slide using the slide dots.'}
@@ -143,13 +123,13 @@ const Carousel: FunctionComponent<Props> = ({
 
   const template = (
     <section
-      className={clsx(styles['carousel-drag-wrapper'], styles['loaded'], carouselClass)}
+      className={clsx(styles['carousel-wrapper'], styles['loaded'], carouselClass)}
       aria-label={'carousel-' + ariaLabel}
     >
       {screenReaderInstructions}
-      <div className={styles['carousel-drag-wrapper-slider']}>
+      <div className={styles['carousel-wrapper-slider']}>
         <div
-          className={styles['carousel-drag-wrapper-slides']}
+          className={styles['carousel-wrapper-slides']}
           aria-live={ariaLive}
           style={{
             left: `${slidesLeft}%`,
