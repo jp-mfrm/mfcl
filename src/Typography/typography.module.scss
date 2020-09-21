@@ -4,26 +4,6 @@
   color: $gray-11;
 }
 
-.primary {
-  color: $gray-11;
-}
-
-.secondary {
-  color: $red;
-}
-
-.error {
-  color: $red;
-}
-
-.alert {
-  color: $yellow;
-}
-
-.success {
-  color: $green;
-}
-
 .h2,
 .h3,
 .h4,
@@ -99,14 +79,14 @@
 
 .price-lg {
   font-size: 28px;
-  line-height: 32px;
   color: $red;
+  line-height: 32px;
 }
 
 .price-sale {
   font-size: 16px;
-  line-height: 20px;
   color: $red;
+  line-height: 20px;
 }
 
 .eyebrow {
@@ -138,6 +118,26 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.primary {
+  color: $gray-11;
+}
+
+.secondary {
+  color: $red;
+}
+
+.error {
+  color: $red;
+}
+
+.alert {
+  color: $yellow;
+}
+
+.success {
+  color: $green;
 }
 
 @media screen and (max-width: $tablet) {

@@ -44,4 +44,13 @@ describe('Typography Component', () => {
     )
     expect(container.querySelector('.h3')?.classList).toContain('test-class-name')
   })
+
+  it('renders the color prop correctly', () => {
+    const { container } = render(
+      <Typography variant="h3" color="alert">
+        Hello World
+      </Typography>
+    )
+    expect(container.querySelector('.h3')?.classList).toContain('alert')
+  })
 })

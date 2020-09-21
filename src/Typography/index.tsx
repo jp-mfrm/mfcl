@@ -4,7 +4,7 @@ import styles from './typography.module.scss'
 
 interface Props {
   children: string
-  /** The variations the typography can render. */
+  /** The variations the typography can render */
   variant:
     | 'h1'
     | 'h2'
@@ -21,15 +21,14 @@ interface Props {
     | 'price-sale'
     | 'eyebrow'
     | 'byline'
-  /** Can pass a custom custom tag to the component. 
-   * For example, this is helpful when you want the typography 
+  /** Can pass a custom custom tag to the component.
+   * For example, this is helpful when you want the typography
    * of an h1 without it being an h1 */
   tag?: string
-  /** Give a custom className to the typography component. */
   className?: string
   /** Which way the text is aligned */
   align?: 'left' | 'center' | 'right'
-  /** If true, sets the text to not wrap and instead display ellipsis */
+  /** If true, sets the text to not wrpa and instead display elipsis */
   noWrap?: boolean
   /** Sets the color of the text */
   color?: 'primary' | 'secondary' | 'error' | 'success' | 'alert'
@@ -54,29 +53,16 @@ const customElement = {
   byline: 'p'
 }
 
-const Typography: FunctionComponent<Props> = ({ 
-  variant, 
-  children, 
-  className, 
-  tag, 
-  align, 
-  noWrap, 
-  color, 
-  ...rest 
-}) => {
+const Typography: FunctionComponent<Props> = ({ variant, children, className, tag, align, noWrap, color, ...rest }) => {
   let textStyles = clsx(
-      styles.wrapper,
-      color && styles[color], 
-      align && styles[align], 
-      noWrap && styles.noWrap,
-      styles[variant],
-      className
-    )
-  return createElement(
-        tag ? tag : customElement[variant],
-        { className: textStyles, ...rest },
-        children
-      )
+    styles.wrapper,
+    align && styles[align],
+    noWrap && styles.noWrap,
+    color && styles[color],
+    styles[variant],
+    className
+  )
+  return createElement(tag ? tag : customElement[variant], { className: textStyles, ...rest }, children)
 }
 
 export default Typography
