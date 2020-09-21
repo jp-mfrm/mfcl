@@ -7,6 +7,8 @@ import {
   isValidElement,
   useCallback,
   useEffect,
+  useLayoutEffect,
+  useMemo,
   useRef,
   useState
 } from 'react'
@@ -26,42 +28,55 @@ function getChildrenArr(children: ReactNode) {
   return cloneEls
 }
 
-function getDragSliderMeasurements(marginless: boolean, infinite: boolean, itemsToShow: number, slidesShown: number) {
+function getSliderMeasurements(
+  current: any,
+  marginless: boolean,
+  margin: number,
+  infinite: boolean,
+  baseSlideCount: number,
+  slidesShown: number
+) {
   var measurements = {
+    slidesPxWidth: current.offsetWidth,
+    slidesLeft: 0,
     slideMargin: 0,
+    slidePxWidth: 0,
     slideFlexBasis: 0,
-    slideSize: 0,
-    sliderLeftPos: 0,
-    sliderWidth: 0
+    slideFlexPxWidth: 0,
+    slideShift: 0
   }
 
-  let slideCount = itemsToShow + (infinite ? 2 : 0)
+  let totalSlideCount = baseSlideCount + (infinite ? 2 : 0) * slidesShown
+  measurements.slidePxWidth = measurements.slidesPxWidth / totalSlideCount
+
   switch (true) {
     case marginless:
-      measurements.slideFlexBasis = 100 / slideCount
-      measurements.slideSize = 100 / slidesShown
-      measurements.sliderLeftPos = infinite ? -100 / slidesShown + (-100 / slidesShown) * (slidesShown - 1) : 0
-      measurements.sliderWidth = (itemsToShow * 100) / slidesShown + (infinite ? 100 * 2 : 0)
+      measurements.slideFlexBasis = 100 / totalSlideCount
+      measurements.slideShift = 100 / slidesShown
+      measurements.slidesLeft = infinite ? -100 / slidesShown + (-100 / slidesShown) * (slidesShown - 1) : 0
       break
     default:
-      let baseMargin = 0.125
-      measurements.slideMargin = baseMargin / slidesShown
-      measurements.slideFlexBasis = (100 / slideCount / slidesShown) * 0.9 // Set as 90% of individual slide basis
+      let flexBasisPercent = 0.9
+      measurements.slideFlexPxWidth = measurements.slidePxWidth * flexBasisPercent
+      measurements.slideFlexBasis = 90 / totalSlideCount
 
-      let marginAdj = 2 * measurements.slideMargin
-      let test = 90.875 + baseMargin * (itemsToShow + 2)
-      measurements.slideSize = test / slidesShown - (infinite ? 0 : 2 * marginAdj)
+      let defaultMarginPixel = margin // 5
+      measurements.slideMargin = (defaultMarginPixel / measurements.slidesPxWidth) * 100
 
-      let sliderLeftAdj = 100 - 13.875 + baseMargin * 3 * (itemsToShow - 1)
-      measurements.sliderLeftPos = infinite ? -sliderLeftAdj : 4.5
-      measurements.sliderWidth = itemsToShow * 100 + (infinite ? 100 * 2 : 0)
+      measurements.slideShift =
+        (((measurements.slideFlexPxWidth + defaultMarginPixel * 2) / measurements.slidePxWidth) * 100) / slidesShown
+
+      let remainingWidthPx = measurements.slidePxWidth - measurements.slideFlexPxWidth
+      let offsetLeftPx = remainingWidthPx / 2 - defaultMarginPixel
+      let startPos = (offsetLeftPx / measurements.slidePxWidth) * 100
+      measurements.slidesLeft = infinite ? startPos - measurements.slideShift * slidesShown : startPos
       break
   }
 
   return { ...measurements }
 }
 
-function getNumberOfIndicators(baseSlideCount: number, slidesShown: number) {
+function getNumberOfIndicators(baseSlideCount: number, slidesShown: number, infinite: boolean) {
   var count = 1
   for (var i = baseSlideCount; 0 < i; i--) {
     if (i % slidesShown === 0 && slidesShown === i) break
@@ -69,10 +84,124 @@ function getNumberOfIndicators(baseSlideCount: number, slidesShown: number) {
     count++
   }
 
-  return count //== 1 ? 0 : count
+  return count + (infinite ? slidesShown - 1 : 0)
 }
 
-function updateDragIndicatorDots(
+function getIndicators(
+  indicatorsLength: number,
+  baseSlideCount: number,
+  slidesShown: number,
+  childrenArr: ReactNode[],
+  indicatorStyle: any,
+  shiftSlide: any
+) {
+  if (baseSlideCount < 1) return []
+
+  let initIndicators: ReactNode[] = []
+
+  let copy = childrenArr.slice()
+  copy.splice(0, indicatorsLength).forEach((value, index) => {
+    let baseIndex = index + 1
+    let slidesLabel = `Go to slide ${baseIndex}`
+    if (slidesShown > 1) {
+      let numToAdd = slidesShown - 1
+      for (var i = 1; i <= numToAdd; i++) {
+        let nextSlide = i
+
+        if (baseIndex + i <= indicatorsLength) {
+          nextSlide = baseIndex + i
+        }
+
+        if (baseIndex + i > indicatorsLength) {
+          nextSlide = baseIndex + i - indicatorsLength
+        }
+
+        slidesLabel += `, ${nextSlide}`
+      }
+    }
+
+    initIndicators.push(
+      createElement(
+        'button',
+        {
+          key: index,
+          'data-selected': index === 0 ? 'true' : 'false',
+          'aria-current': index === 0 ? 'true' : 'false',
+          className: clsx(styles['indicator-button'], styles[indicatorStyle]),
+          onClick: () => handleIndicatorClick(index)
+        },
+        createElement('span', { className: clsx(styles['sr-only']), value: slidesLabel })
+      )
+    )
+  })
+
+  const handleIndicatorClick = (destinationIndex: number) => {
+    shiftSlide(destinationIndex, 'indicator')
+  }
+
+  return initIndicators
+}
+
+function getSlides(
+  childrenArr: ReactNode[],
+  baseSlideCount: number,
+  slidesShown: number,
+  slideGrabbing: boolean,
+  marginLess: boolean,
+  flexBasis: number,
+  margin: number,
+  infinite: boolean
+) {
+  const initSlides = childrenArr?.map((child: ReactNode, index: number) => {
+    if (isValidElement(child)) {
+      let label = `slide ${index + 1} of ${baseSlideCount}`
+      return (
+        <div
+          aria-label={label}
+          aria-hidden={slidesShown - 1 < index}
+          className={clsx(
+            styles['slide'],
+            styles['draggable'],
+            slideGrabbing && styles['grabbing'],
+            marginLess && styles['marginless']
+          )}
+          // {...child.props}
+          key={index}
+          style={{
+            ...child.props.style,
+            flexBasis: `${flexBasis}%`,
+            margin: `0 ${margin}%`
+          }}
+        >
+          {cloneElement(child, {
+            key: index
+          })}
+        </div>
+      )
+    }
+  })
+
+  // TODO: Change slice/reverse to filter
+  // Configure infinite slider
+  if (infinite) {
+    const firstSlides = initSlides.slice(0, slidesShown)
+    const lastSlides = initSlides.slice().reverse().slice(0, slidesShown).reverse()
+    const cloneSlides = firstSlides.concat(lastSlides).map((child: ReactNode, index: number) => {
+      if (isValidElement(child)) {
+        return cloneElement(child, {
+          key: -index - 100,
+          'aria-hidden': 'true'
+        })
+      }
+    })
+    initSlides.unshift(...cloneSlides.slice(cloneSlides.length - slidesShown))
+    initSlides.push(...cloneSlides.slice(0, slidesShown))
+  }
+
+  return initSlides
+}
+
+function updateIndicatorDots(
   indicatorCount: number,
   activeIndex: number,
   destinationIndex: number,
@@ -95,7 +224,7 @@ function updateDragIndicatorDots(
   }
 }
 
-function updateDragAriaHidden(
+function updateAriaHidden(
   infinite: boolean,
   activeIndex: number,
   destinationIndex: number,
@@ -122,7 +251,7 @@ function updateDragAriaHidden(
   }
 }
 
-export function draggableHelper(
+export function carouselHelper(
   children: ReactNode,
   itemsToShow: number,
   marginLess: boolean,
@@ -131,142 +260,65 @@ export function draggableHelper(
   indicatorStyle: string,
   duration: number,
   infinite: boolean,
-  autoSlide: boolean
+  autoSlide: boolean,
+  layoutGap: number
 ) {
   // Configure button alignment
   const alignment = [styles[(btnAlignment + '').split(' ')[0]], styles[(btnAlignment + '').split(' ')[1]]]
 
   // Configure autoslide / infinite
-  const [started, setStarted] = useState(duration ? true : false)
   if (autoSlide) infinite = true
 
   // Configure slide boundary vars
   const [childrenArr, updateChildArr] = useState<ReactNode[]>(getChildrenArr(children))
   const [baseSlideCount] = useState(childrenArr.length)
   const [slidesShown] = useState(itemsToShow <= baseSlideCount ? itemsToShow : baseSlideCount)
-  const { slideMargin, slideFlexBasis, slideSize, sliderLeftPos, sliderWidth } = getDragSliderMeasurements(
-    marginLess,
-    infinite,
-    baseSlideCount,
-    slidesShown
+  const [slidesLeft, setSlidesLeft] = useState(0)
+  const [initLeftPos, setInitLeftState] = useState(0)
+
+  const [slidesWidth, setSlidesWidth] = useState<number>(
+    (baseSlideCount * 100) / slidesShown + (infinite ? 100 * 2 : 0)
   )
-  const [sliderLeft, setSliderLeft] = useState(sliderLeftPos)
 
   // Configure base slides
+  const slidesRef = useRef<any>(null)
+  const [slideMargin, setSlideMargin] = useState<number>(marginLess ? 0 : layoutGap)
+  const [slideFlexBasis, setSlideFlexBasis] = useState<number>(100)
   const [slideGrabbing, setSlideGrabbing] = useState(false)
-  const slides = childrenArr?.map((child: ReactNode, index: number) => {
-    if (isValidElement(child)) {
-      let label = `slide ${index + 1} of ${baseSlideCount}`
-      return (
-        <div
-          aria-label={label}
-          aria-hidden={slidesShown - 1 < index}
-          className={clsx(styles['slide'], styles['draggable'], slideGrabbing && styles['grabbing'])}
-          // {...child.props}
-          key={index}
-          style={{ ...child.props.style, flexBasis: `${slideFlexBasis}%`, margin: `0 ${slideMargin}%` }}
-        >
-          {cloneElement(child, {
-            key: index
-          })}
-        </div>
-      )
-    }
-  })
-
-  // TODO: Change slice/reverse to filter
-  // Configure infinite slider
-  if (infinite) {
-    const firstSlides = slides.slice(0, slidesShown)
-    const lastSlides = slides.slice().reverse().slice(0, slidesShown).reverse()
-    const cloneSlides = firstSlides.concat(lastSlides).map((child: ReactNode, index: number) => {
-      if (isValidElement(child)) {
-        return cloneElement(child, {
-          key: -index - 100,
-          'aria-hidden': 'true'
-        })
-      }
-    })
-    slides.unshift(...cloneSlides.slice(cloneSlides.length - slidesShown))
-    slides.push(...cloneSlides.slice(0, slidesShown))
-  }
-
-  // Configure slider indicators
-  const indicators: ReactNode[] = []
-
-  if (baseSlideCount > 1) {
-    let numOfIndicators = getNumberOfIndicators(baseSlideCount, slidesShown) + (infinite ? slidesShown - 1 : 0)
-    Children.toArray(children)
-      .splice(0, numOfIndicators)
-      .forEach((value, index) => {
-        let baseIndex = index + 1
-        let slidesLabel = `Go to slide ${baseIndex}`
-        if (slidesShown > 1) {
-          let numToAdd = slidesShown - 1
-          for (var i = 1; i <= numToAdd; i++) {
-            let nextSlide = i
-
-            if (baseIndex + i <= numOfIndicators) {
-              nextSlide = baseIndex + i
-            }
-
-            if (baseIndex + i > numOfIndicators) {
-              nextSlide = baseIndex + i - numOfIndicators
-            }
-
-            slidesLabel += `, ${nextSlide}`
-          }
-        }
-
-        indicators.push(
-          createElement(
-            'button',
-            {
-              key: index,
-              'data-selected': index === 0 ? 'true' : 'false',
-              'aria-current': index === 0 ? 'true' : 'false',
-              className: clsx(styles['indicator-button'], styles[indicatorStyle]),
-              onClick: () => handleIndicatorClick(index)
-            },
-            createElement('span', { className: clsx(styles['sr-only']), value: slidesLabel })
-          )
-        )
-      })
-
-    const handleIndicatorClick = (destinationIndex: number) => {
-      shiftSlide(destinationIndex, 'indicator')
-    }
-  }
-  const indicatorRef = useRef<any>(null)
-  const indicatorWrapper = (
-    <div ref={indicatorRef} className={clsx(styles['carousel-wrapper-indicators'])}>
-      {!hideIndicators && indicators}
-    </div>
+  const slides = useMemo(
+    () =>
+      getSlides(
+        childrenArr,
+        baseSlideCount,
+        slidesShown,
+        slideGrabbing,
+        marginLess,
+        slideFlexBasis,
+        slideMargin,
+        infinite
+      ),
+    [slideGrabbing, slideFlexBasis, slideMargin, slidesRef.current]
   )
 
+  const [slidesTransition, setSlidesTransition] = useState<string>('')
+  const [slidesPxWidth, setSlidesPxWidth] = useState(0)
+  const [slideShift, setSlideShift] = useState<number>(0)
+  const [ariaLive, setAriaLive] = useState<'off' | 'assertive' | 'polite' | undefined>('off')
+
   // Configure slider drag/touch handling
-  const draggableSliderRef = useRef<any>(null)
   const [dragActive, setDragActive] = useState(false)
   const [posInitial, setPosInitial] = useState(0)
   const [posX1, setPosX1] = useState(0)
   const [activeIndex, setActiveIndex] = useState(0)
   const [allowShift, setAllowShift] = useState(true)
 
+  // TODO: Refine
   const toSliderXPercentage = (pixelVal: number) => {
     let _width = marginLess
-      ? draggableSliderRef.current!.offsetWidth
-      : (((baseSlideCount * 100) / slidesShown + (infinite ? 100 * 2 : 0)) / sliderWidth) *
-        draggableSliderRef.current!.offsetWidth
+      ? slidesPxWidth
+      : (((baseSlideCount * 100) / slidesShown + (infinite ? 100 * 2 : 0)) / slidesWidth) * slidesPxWidth
 
     return ((pixelVal * slides.length) / (slidesShown * _width)) * 100
-  }
-
-  const getSliderLeftPos = useCallback(() => {
-    return toSliderXPercentage(draggableSliderRef.current!.offsetLeft)
-  }, [sliderLeft])
-
-  const sliderHasTransition = () => {
-    return draggableSliderRef.current!.style.transition
   }
 
   const exceedsSliderBoundary = (dir: number) => {
@@ -279,12 +331,14 @@ export function draggableHelper(
 
   const shiftSlide = (dir: number, action?: string) => {
     // Check if slide is in the middle of a transition
-    if (sliderHasTransition()) return
+    if (slidesTransition) return
 
     // Check if slide exceeds beginning/end boundaries by drag or control
     if (exceedsSliderBoundary(dir) && action !== 'indicator') {
-      if (action) draggableSliderRef.current!.style.transition = 'left .5s ease-out'
-      setSliderLeft(activeIndex === 0 ? sliderLeftPos : action ? posInitial : getSliderLeftPos())
+      if (action !== 'drag') return
+
+      setSlidesTransition('left .5s ease-out')
+      setSlidesLeft(activeIndex === 0 ? initLeftPos : action ? posInitial : slidesLeft)
       return
     }
 
@@ -295,23 +349,23 @@ export function draggableHelper(
           // dir is the exact index destination
           let slideMultiplier = Math.abs(destinationIndex - activeIndex)
           if (slideMultiplier === 0) return
-          let sliderLeftAdjustment = (activeIndex < destinationIndex ? -1 : 1) * slideSize * slideMultiplier
-          setSliderLeft(sliderLeft + sliderLeftAdjustment)
+          let sliderLeftAdjustment = (activeIndex < destinationIndex ? -1 : 1) * slideShift * slideMultiplier
+          setSlidesLeft(slidesLeft + sliderLeftAdjustment)
           setActiveIndex(destinationIndex)
           break
         case action === 'drag':
         default:
           // dir is the direction: left (-1) or right (1)
-          const initPosition = action ? posInitial : sliderLeft
+          const initPosition = action ? posInitial : slidesLeft
           if (!action) {
             setPosInitial(initPosition)
           }
 
           if (destinationIndex == 1) {
-            setSliderLeft(initPosition - slideSize)
+            setSlidesLeft(initPosition - slideShift)
           } else {
             // destinationIndex == -1
-            setSliderLeft(initPosition + slideSize)
+            setSlidesLeft(initPosition + slideShift)
           }
 
           destinationIndex += activeIndex
@@ -319,49 +373,59 @@ export function draggableHelper(
           break
       }
 
-      updateDragAriaHidden(infinite, activeIndex, destinationIndex, draggableSliderRef, baseSlideCount, slidesShown)
+      if (action != 'initialize')
+        updateAriaHidden(infinite, activeIndex, destinationIndex, slidesRef, baseSlideCount, slidesShown)
 
-      if (!hideIndicators && indicatorRef.current && indicatorRef.current.children) {
-        updateDragIndicatorDots(indicators.length, activeIndex, destinationIndex, indicatorRef, baseSlideCount)
+      if (!hideIndicators && indicatorRef.current && indicatorRef.current.children && action != 'initialize') {
+        updateIndicatorDots(indicators.length, activeIndex, destinationIndex, indicatorRef, baseSlideCount)
       }
 
-      if (draggableSliderRef.current) {
-        draggableSliderRef.current.style.transition = 'left .3s ease-out'
-        draggableSliderRef.current.ariaLive = 'off'
-      }
+      setAriaLive('off')
+      setSlidesTransition('left .3s ease-out')
     }
-
     setAllowShift(false)
   }
 
+  // Configure slider indicators
+  const indicatorsLength = useMemo(() => getNumberOfIndicators(baseSlideCount, slidesShown, infinite), [
+    baseSlideCount,
+    slidesShown,
+    infinite
+  ])
+  const indicatorRef = useRef<any>(null)
+  const indicators = useMemo(
+    () => getIndicators(indicatorsLength, baseSlideCount, slidesShown, childrenArr, indicatorStyle, shiftSlide),
+    [activeIndex, slidesTransition, slidesLeft, slideShift]
+  )
+
+  // Event Handler: transitionend
   const handleIndexCheck = () => {
-    if (draggableSliderRef.current) {
-      draggableSliderRef.current.style.transition = ''
-      draggableSliderRef.current.ariaLive = 'on'
-    }
+    setSlidesTransition('')
+    setAriaLive('polite')
 
     if (activeIndex === -1) {
-      let leftAdjustment = (baseSlideCount - slidesShown + (slidesShown - 1)) * slideSize
-      setSliderLeft(sliderLeftPos - leftAdjustment)
+      let leftAdjustment = (baseSlideCount - slidesShown + (slidesShown - 1)) * slideShift
+      setSlidesLeft(initLeftPos - leftAdjustment)
       setActiveIndex(baseSlideCount - 1)
     }
 
     if (activeIndex === baseSlideCount) {
-      setSliderLeft(sliderLeftPos)
+      setSlidesLeft(initLeftPos)
       setActiveIndex(0)
     }
 
     setAllowShift(true)
   }
 
+  // Event Handler: mousedown
   const handleDragStart = (event: any) => {
-    if (sliderHasTransition()) return
+    if (slidesTransition) return
 
     event = event || window.event
     event.preventDefault()
     event.stopPropagation()
 
-    setPosInitial(getSliderLeftPos())
+    setPosInitial(slidesLeft)
 
     if (event.type == 'touchstart') {
       setPosX1(event.touches[0].clientX)
@@ -374,6 +438,7 @@ export function draggableHelper(
     setDragActive(true)
   }
 
+  // Event Handler: mouseover
   const handleDragActionHandler = useCallback(
     (event: any) => {
       if (dragActive) {
@@ -388,16 +453,17 @@ export function draggableHelper(
           setPosX1(toSliderXPercentage(event.clientX))
         }
 
-        setSliderLeft(sliderLeft - nextPosition)
+        setSlidesLeft(slidesLeft - nextPosition)
       }
     },
-    [dragActive, posInitial, getSliderLeftPos]
+    [dragActive, posInitial, slidesLeft]
   )
 
+  // Event Handler: mouseup
   const handleDragEndHandler = useCallback(
     (event: any) => {
       if (dragActive) {
-        var posFinal = getSliderLeftPos()
+        var posFinal = slidesLeft
         var threshold = 12
 
         if (posFinal - posInitial < -threshold) {
@@ -405,7 +471,7 @@ export function draggableHelper(
         } else if (posFinal - posInitial > threshold) {
           shiftSlide(-1, 'drag')
         } else {
-          setSliderLeft(posInitial)
+          setSlidesLeft(posInitial)
         }
 
         document.body.style.cursor = 'default'
@@ -413,12 +479,17 @@ export function draggableHelper(
         setDragActive(false)
       }
     },
-    [dragActive, posInitial, getSliderLeftPos]
+    [dragActive, posInitial, slidesLeft]
   )
 
   useEffect(() => {
-    document.onmouseup = handleDragEndHandler
-    document.onmousemove = handleDragActionHandler
+    document.addEventListener('mouseup', handleDragEndHandler)
+    document.addEventListener('mousemove', handleDragActionHandler)
+
+    return () => {
+      document.removeEventListener('mouseup', handleDragEndHandler)
+      document.removeEventListener('mousemove', handleDragActionHandler)
+    }
   }, [handleDragEndHandler, handleDragActionHandler])
 
   useEffect(() => {
@@ -432,22 +503,40 @@ export function draggableHelper(
 
       return () => clearInterval(timer)
     }
-  }, [draggableSliderRef, started, activeIndex, dragActive, allowShift])
+  }, [activeIndex, dragActive, allowShift, slidesLeft])
 
   useEffect(() => {
-    if (draggableSliderRef.current) {
-      draggableSliderRef.current.ariaLive = 'on'
-    }
+    const { current } = slidesRef
+
+    const { ...measurements } = getSliderMeasurements(
+      current,
+      marginLess,
+      layoutGap,
+      infinite,
+      baseSlideCount,
+      slidesShown
+    )
+
+    setInitLeftState(measurements.slidesLeft)
+    setSlidesLeft(measurements.slidesLeft)
+    setSlidesPxWidth(measurements.slidesPxWidth)
+    setSlideShift(measurements.slideShift)
+    setSlideMargin(measurements.slideMargin)
+    setSlideFlexBasis(measurements.slideFlexBasis)
+
+    setAriaLive('polite')
   }, [])
 
   return {
-    draggableSliderRef,
-    sliderLeft,
+    slidesRef,
+    slidesLeft,
     alignment,
     slides,
-    sliderWidth,
-    indicatorWrapper,
-    slideMargin,
+    slidesWidth,
+    indicators,
+    indicatorRef,
+    slidesTransition,
+    ariaLive,
     handleDragStart,
     handleDragEndHandler,
     handleDragActionHandler,

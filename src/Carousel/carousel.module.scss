@@ -236,6 +236,11 @@ $slider-height: 100%; // 300px; // 100%;
       // &.marginless {
       //   margin: 0;
       // }
+      margin: 0 5px;
+    }
+
+    &.marginless {
+      margin: 0;
     }
 
     .grabbing {
