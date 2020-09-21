@@ -17,33 +17,33 @@ describe('Carousel Component', () => {
     const { container } = render(
       <Carousel ariaLabel="test" carouselClass="test-class-name"></Carousel>
     );
-    expect(container.querySelector('.carousel-drag-wrapper')?.classList).toContain('test-class-name')
+    expect(container.querySelector('.carousel-wrapper')?.classList).toContain('test-class-name')
   })
 
   it('should align the buttons properly', () => {
     const { container, rerender } = render(
       <Carousel ariaLabel="test" infinite></Carousel>
     );
-    expect(container.querySelector('.carousel-drag-wrapper-control')?.classList).toContain('middle');
-    expect(container.querySelector('.carousel-drag-wrapper-control')?.classList).toContain('apart');
+    expect(container.querySelector('.carousel-wrapper-control')?.classList).toContain('middle');
+    expect(container.querySelector('.carousel-wrapper-control')?.classList).toContain('apart');
 
     rerender(
-      <Carousel ariaLabel="test" autoSlide btnAlignment='top'></Carousel>
+      <Carousel ariaLabel="test" autoSlide controlAlignment='top'></Carousel>
     );
-    expect(container.querySelector('.carousel-drag-wrapper-control')?.classList).toContain('top');
+    expect(container.querySelector('.carousel-wrapper-control')?.classList).toContain('top');
 
     rerender(
-      <Carousel ariaLabel="test" btnAlignment='top center'></Carousel>
+      <Carousel ariaLabel="test" controlAlignment='top center'></Carousel>
     );
-    expect(container.querySelector('.carousel-drag-wrapper-control')?.classList).toContain('top');
-    expect(container.querySelector('.carousel-drag-wrapper-control')?.classList).toContain('center');
+    expect(container.querySelector('.carousel-wrapper-control')?.classList).toContain('top');
+    expect(container.querySelector('.carousel-wrapper-control')?.classList).toContain('center');
 
     rerender(
-      <Carousel ariaLabel="test" btnAlignment='middle left bottom'></Carousel>
+      <Carousel ariaLabel="test" controlAlignment='middle left bottom'></Carousel>
     );
-    expect(container.querySelector('.carousel-drag-wrapper-control')?.classList).toContain('middle');
-    expect(container.querySelector('.carousel-drag-wrapper-control')?.classList).toContain('left');
-    expect(container.querySelector('.carousel-drag-wrapper-control')?.classList).not.toContain('bottom');
+    expect(container.querySelector('.carousel-wrapper-control')?.classList).toContain('middle');
+    expect(container.querySelector('.carousel-wrapper-control')?.classList).toContain('left');
+    expect(container.querySelector('.carousel-wrapper-control')?.classList).not.toContain('bottom');
   })
 
   it('should hide the control buttons when necessary', () => {
