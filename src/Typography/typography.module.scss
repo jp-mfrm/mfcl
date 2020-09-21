@@ -1,10 +1,16 @@
 @import '../variables';
 
+.wrapper {
+  color: $gray-11;
+}
+
 .h2,
 .h3,
 .h4,
 .h5,
-.h6 {
+.h6,
+.byline,
+.eyebrow {
   font-weight: 700;
 }
 
@@ -39,13 +45,13 @@
   line-height: 22px;
 }
 
-.bodySm,
+.body-sm,
 .body,
-.bodyLg {
+.body-lg {
   font-weight: 400;
 }
 
-.bodySm {
+.body-sm {
   font-size: 14px;
   line-height: 20px;
 }
@@ -55,14 +61,14 @@
   line-height: 22px;
 }
 
-.bodyLg {
+.body-lg {
   font-size: 22px;
   line-height: 30px;
 }
 
-.priceLg,
+.price-lg,
 .price,
-.priceSale {
+.price-sale {
   font-weight: 500;
 }
 
@@ -71,14 +77,109 @@
   line-height: 20px;
 }
 
-.priceLg {
+.price-lg {
   font-size: 28px;
+  color: $red;
   line-height: 32px;
+}
+
+.price-sale {
+  font-size: 16px;
+  color: $red;
+  line-height: 20px;
+}
+
+.eyebrow {
+  font-size: 14px;
+  line-height: 16px;
+  text-transform: uppercase;
   color: $red;
 }
 
-.priceSale {
-  font-size: 16px;
-  line-height: 20px;
+.byline {
+  font-size: 18px;
+  line-height: 22px;
   color: $red;
+}
+
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.noWrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.primary {
+  color: $gray-11;
+}
+
+.secondary {
+  color: $red;
+}
+
+.error {
+  color: $red;
+}
+
+.alert {
+  color: $yellow;
+}
+
+.success {
+  color: $green;
+}
+
+@media screen and (max-width: $tablet) {
+  .h1 {
+    font-size: 36px;
+    line-height: 44px;
+    font-weight: 900;
+  }
+
+  .h2 {
+    font-size: 32px;
+    line-height: 38px;
+  }
+
+  .h3 {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .h4 {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .h5 {
+    font-size: 22px;
+    line-height: 22px;
+  }
+
+  .h6 {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .body-lg {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .price-lg {
+    font-size: 24px;
+    line-height: 28px;
+    color: $red;
+  }
 }
