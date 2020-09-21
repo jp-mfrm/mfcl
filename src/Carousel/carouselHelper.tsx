@@ -161,7 +161,7 @@ function getSlides(
           className={clsx(
             styles['slide'],
             slideGrabbing && styles['grabbing'],
-            layoutGap===0 && styles['marginless']
+            layoutGap === 0 && styles['marginless']
           )}
           key={index}
           style={{
@@ -308,20 +308,21 @@ export default function carouselHelper(
   const [allowShift, setAllowShift] = useState(true)
 
   const toSlidesPercentage = (pixelVal: number) => {
-    let _width;
+    let _width
 
-    switch(true) {
+    switch (true) {
       case layoutGap === 0:
-        _width = slidesPxWidth;
-        break;
+        _width = slidesPxWidth
+        break
 
       default:
-        let adjustment = slidesShown + (infinite ? 100 * 2 : 0);
-        _width = (((baseSlideCount * 100) / adjustment) / slidesWidth) * slidesPxWidth;
-        break;
+        let additionalWidth = infinite ? 100 * 2 : 0
+        let visibleWidth = (baseSlideCount * 100) / slidesShown
+        _width = ((visibleWidth + additionalWidth) / slidesWidth) * slidesPxWidth
+        break
     }
 
-    let percentage = ((pixelVal * slides.length) / (slidesShown * _width)) * 100;
+    let percentage = ((pixelVal * slides.length) / (slidesShown * _width)) * 100
 
     return percentage
   }
@@ -513,13 +514,7 @@ export default function carouselHelper(
   useEffect(() => {
     const { current } = slidesRef
 
-    const { ...measurements } = getSliderMeasurements(
-      current,
-      layoutGap,
-      infinite,
-      baseSlideCount,
-      slidesShown
-    )
+    const { ...measurements } = getSliderMeasurements(current, layoutGap, infinite, baseSlideCount, slidesShown)
 
     setInitLeftState(measurements.slidesLeft)
     setSlidesLeft(measurements.slidesLeft)
