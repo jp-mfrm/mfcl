@@ -1,4 +1,4 @@
 import React, { Fragment } from 'react'
 import './style.css'
 
-export default ({ children }) => <Fragment>{children}</Fragment>
+export default ({ children }) => <div style={{ fontFamily: "'Rubik', 'Arial', sans-serif" }}>{children}</div>
