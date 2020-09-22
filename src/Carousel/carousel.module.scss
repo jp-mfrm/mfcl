@@ -179,6 +179,10 @@ $slider-height: 100%;
     &.bottom {
       top: 70%;
     }
+
+    &:focus {
+      box-shadow:  0 0 0 3px $blue;
+    }
   }
 
   &-indicators {
@@ -220,6 +224,11 @@ $slider-height: 100%;
 
       &:active {
         transform: scale(0.8);
+      }
+
+      &:focus {
+        background-color: $blue;
+        box-shadow:  0 0 0 3px $blue;
       }
     }
   }
