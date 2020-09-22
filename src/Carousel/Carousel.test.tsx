@@ -167,7 +167,7 @@ describe('Carousel Component', () => {
 
   it('should render the correct number of items to show', () => {
     const { container, getAllByLabelText } = render(
-      <Carousel infinite itemsToShow={2} ariaLabel='test'>
+      <Carousel layoutGap={5} infinite itemsToShow={2} ariaLabel='test'>
         <div>One</div>
         <div>Two</div>
         <div>Three</div>
