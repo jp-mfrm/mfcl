@@ -1,11 +1,17 @@
-import React, { FunctionComponent, ReactNode, useState } from 'react'
-import TabList, { Item } from './TabList'
+import React, { FunctionComponent, useMemo, createRef, ReactNode, MouseEvent, KeyboardEvent } from 'react'
+import Tab from './Tab'
+import Indicator from './Indicator'
 import Panel from '../Panel'
 import PanelItem from '../PanelItem'
 import useControlled from '../utils/useControlled'
 
 import clsx from 'clsx'
 import styles from './tabs.module.scss'
+
+interface Item {
+  header: string | ReactNode
+  content: string | ReactNode
+}
 
 export interface Props {
   /** Uniquely identifies the Tabs component */
@@ -14,8 +20,6 @@ export interface Props {
   items: Item[]
   /** Callback function for controlled behavior */
   onChange?: (activeIndex: number) => void
-  /** Animates the tab indicator below the active tab */
-  animated?: boolean
   /** Horizontal or vertical left tabs */
   position?: 'top' | 'left'
   /** Uncontrolled default value */
@@ -28,7 +32,6 @@ export interface Props {
 const Tabs: FunctionComponent<Props> = ({
   name,
   items,
-  animated = false,
   onChange,
   position = 'top',
   defaultValue = 0,
@@ -40,6 +43,8 @@ const Tabs: FunctionComponent<Props> = ({
     defaultValue
   })
 
+  const tabRefs = useMemo(() => Array.from(items).map(() => createRef()), [items])
+
   const handleChange = (activeIndex: number) => {
     setSelectedIndex(activeIndex)
     if (onChange) {
@@ -47,21 +52,24 @@ const Tabs: FunctionComponent<Props> = ({
     }
   }
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    handleChange(parseInt(e.target.getAttribute('data-index')))
+    // @ts-ignore
+    const index = parseInt(e.target.getAttribute('data-index'), 10)
+    handleChange(index)
   }
 
-  const handleKeyDown = (e: any) => {
-    if (e.key !== 'ArrowLeft' || e.key !== 'ArrowRight') {
+  const handleKeyDown = (e: KeyboardEvent<HTMLAnchorElement>) => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      e.preventDefault()
+    } else {
       return
     }
 
-    e.preventDefault()
     let targetIndex
     if (e.key === 'ArrowLeft' && selectedIndex > 0) {
       targetIndex = selectedIndex - 1
-    } else if (e.key === 'ArrowRight' && selectedIndex < items.length - 1) {
+    } else if (e.key === 'ArrowRight' && selectedIndex < itemsLength - 1) {
       targetIndex = selectedIndex + 1
     } else {
       return
@@ -70,15 +78,30 @@ const Tabs: FunctionComponent<Props> = ({
     handleChange(targetIndex)
   }
 
+  const itemsLength = items.length
+
   return (
     <div className={clsx(styles['tabs-wrapper'], styles[position])} {...rest}>
-      <TabList
-        name={name}
-        onClick={handleClick}
-        onKeyDown={handleKeyDown}
-        items={items}
-        selectedIndex={selectedIndex}
-      />
+      <div className={styles['tablist-wrapper']}>
+        <ul role="tablist" className={styles.tablist}>
+          {items.map((item, index) => {
+            return (
+              <Tab
+                name={name}
+                key={index}
+                id={`tab-${index}`}
+                innerRef={tabRefs[index]}
+                index={index}
+                label={item.header}
+                handleClick={handleClick}
+                handleKeyDown={handleKeyDown}
+                isSelected={index === selectedIndex}
+              />
+            )
+          })}
+        </ul>
+        <Indicator activeTabElement={tabRefs[selectedIndex]} position={position} />
+      </div>
       <Panel className={styles.panel}>
         {items.map((item, index) => {
           return (

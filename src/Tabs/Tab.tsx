@@ -1,39 +1,38 @@
-import React, { FunctionComponent, useRef, useEffect, MouseEvent, KeyboardEvent, ReactNode } from 'react'
+import React, { memo, useEffect, FunctionComponent, MouseEvent, KeyboardEvent, ReactNode } from 'react'
 import clsx from 'clsx'
 import styles from './tabs.module.scss'
 
-export interface Props {
+interface Props {
   name: string
   id: string
   index: number
-  selectedIndex: number
+  innerRef: any
+  isSelected: boolean
   label: string | ReactNode
-  onClick: (event: MouseEvent<HTMLAnchorElement>) => void
-  onKeyDown: (event: KeyboardEvent<HTMLAnchorElement>) => void
+  handleClick: (e: MouseEvent<HTMLAnchorElement>) => void
+  handleKeyDown: (e: KeyboardEvent<HTMLAnchorElement>) => void
 }
 
-const Tab: FunctionComponent<Props> = ({ name, id, onClick, onKeyDown, selectedIndex, index, label }) => {
-  const isSelected = index === selectedIndex
-  const tabRef = useRef<HTMLAnchorElement>(null)
-
+const Tab: FunctionComponent<Props> = ({
+  name,
+  innerRef,
+  id,
+  handleClick,
+  handleKeyDown,
+  isSelected,
+  index,
+  label
+}) => {
   useEffect(() => {
-    if (isSelected && tabRef.current) {
-      tabRef.current.focus()
+    if (isSelected && innerRef.current) {
+      innerRef.current.focus()
     }
   }, [isSelected])
-
-  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    onClick(event)
-  }
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLAnchorElement>) => {
-    onKeyDown(event)
-  }
 
   return (
     <li className={clsx(styles['tab-list-item'], isSelected && styles.active)} role="presentation">
       <a
-        ref={tabRef}
+        ref={innerRef}
         aria-controls={`panel-${name}-${index}`}
         id={`tab-${name}-${index}`}
         aria-selected={isSelected}
@@ -51,4 +50,4 @@ const Tab: FunctionComponent<Props> = ({ name, id, onClick, onKeyDown, selectedI
   )
 }
 
-export default Tab
+export default memo(Tab)
