@@ -11,10 +11,6 @@
   }
 
   &.top {
-    .tablist-wrapper {
-      position: relative;
-    }
-
     .tablist {
       border-bottom: 1px solid $gray-5;
       display: flex;
