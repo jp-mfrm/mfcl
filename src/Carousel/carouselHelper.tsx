@@ -3,7 +3,6 @@ import {
   MutableRefObject,
   ReactNode,
   cloneElement,
-  createElement,
   isValidElement,
   useCallback,
   useEffect,
@@ -46,7 +45,7 @@ function getSliderMeasurements(
   let totalSlideCount = baseSlideCount + (infinite ? 2 : 0) * slidesShown
   measurements.slidePxWidth = measurements.slidesPxWidth / totalSlideCount
 
-  if(layoutGap === 0) {
+  if (layoutGap === 0) {
     measurements.slideFlexBasis = 100 / totalSlideCount
     measurements.slideShift = 100 / slidesShown
     measurements.slidesLeft = infinite ? -100 / slidesShown + (-100 / slidesShown) * (slidesShown - 1) : 0
@@ -125,7 +124,7 @@ function getIndicators(
       >
         <span className={clsx(styles['sr-only'])} aria-label={slidesLabel} />
       </button>
-    );
+    )
   })
 
   return initIndicators
@@ -170,9 +169,9 @@ function getSlides(
 
   // Configure infinite slider
   if (infinite) {
-    const initSlidesLength = initSlides.length;
+    const initSlidesLength = initSlides.length
     const firstSlides = initSlides.slice(0, slidesShown)
-    const lastSlides = initSlides.slice(initSlidesLength - slidesShown, initSlidesLength);
+    const lastSlides = initSlides.slice(initSlidesLength - slidesShown, initSlidesLength)
     const cloneSlides = firstSlides.concat(lastSlides).map((child: ReactNode, index: number) => {
       if (isValidElement(child)) {
         return cloneElement(child, {
@@ -219,23 +218,25 @@ function updateAriaHidden(
   baseSlideCount: number,
   slidesShown: number
 ) {
-  let positionAdj = infinite ? slidesShown : 0
-  let activeIndexBoundary = activeIndex + 1 + (slidesShown - 1)
-  for (let i = activeIndex; i < activeIndexBoundary; i++) {
-    let pos1 = i + positionAdj
-    sliderRef.current.children[pos1].ariaHidden = 'true'
+  const setAriaHidden = (index: number, boundary: number, val: string) => {
+    let positionAdj = infinite ? slidesShown : 0
+    for (let i = index; i < boundary; i++) {
+      let pos1 = i + positionAdj
+      sliderRef.current.children[pos1].ariaHidden = val
+    }
   }
+
+  const activeIndexBoundary = activeIndex + 1 + (slidesShown - 1)
+  setAriaHidden(activeIndex, activeIndexBoundary, 'true')
 
   if (destinationIndex > baseSlideCount - 1) {
     destinationIndex = 0
   } else if (destinationIndex < 0) {
     destinationIndex = baseSlideCount - 1
   }
-  let destinationIndexBoundary = destinationIndex + 1 + (slidesShown - 1)
-  for (let i = destinationIndex; i < destinationIndexBoundary; i++) {
-    let pos2 = i + positionAdj
-    sliderRef.current.children[pos2].ariaHidden = 'false'
-  }
+
+  const destinationIndexBoundary = destinationIndex + 1 + (slidesShown - 1)
+  setAriaHidden(destinationIndex, destinationIndexBoundary, 'false')
 }
 
 export default function carouselHelper(
@@ -256,21 +257,23 @@ export default function carouselHelper(
   if (autoSlide) infinite = true
 
   // Configure slide boundary vars
-  const [childrenArr, updateChildArr] = useState<ReactNode[]>(getChildrenArr(children))
+  const [childrenArr] = useState<ReactNode[]>(getChildrenArr(children))
   const [baseSlideCount] = useState(childrenArr.length)
   const [slidesShown] = useState(itemsToShow <= baseSlideCount ? itemsToShow : baseSlideCount)
-  const [slidesLeft, setSlidesLeft] = useState(0)
   const [initLeftPos, setInitLeftState] = useState(0)
-
-  const [slidesWidth, setSlidesWidth] = useState<number>(
-    (baseSlideCount * 100) / slidesShown + (infinite ? 100 * 2 : 0)
-  )
 
   // Configure base slides
   const slidesRef = useRef<any>(null)
+  const [slidesWidth] = useState<number>((baseSlideCount * 100) / slidesShown + (infinite ? 100 * 2 : 0))
+  const [slidesTransition, setSlidesTransition] = useState<string>('')
+  const [slidesLeft, setSlidesLeft] = useState(0)
+  const [slidesPxWidth, setSlidesPxWidth] = useState(0)
   const [slideMargin, setSlideMargin] = useState<number>(layoutGap)
   const [slideFlexBasis, setSlideFlexBasis] = useState<number>(100)
   const [slideGrabbing, setSlideGrabbing] = useState(false)
+  const [slideShift, setSlideShift] = useState<number>(0)
+  const [ariaLive, setAriaLive] = useState<'off' | 'assertive' | 'polite' | undefined>('off')
+
   const slides = useMemo(
     () =>
       getSlides(
@@ -286,11 +289,6 @@ export default function carouselHelper(
     [childrenArr, baseSlideCount, slidesShown, slideGrabbing, slideFlexBasis, slideMargin, slidesRef.current]
   )
 
-  const [slidesTransition, setSlidesTransition] = useState<string>('')
-  const [slidesPxWidth, setSlidesPxWidth] = useState(0)
-  const [slideShift, setSlideShift] = useState<number>(0)
-  const [ariaLive, setAriaLive] = useState<'off' | 'assertive' | 'polite' | undefined>('off')
-
   // Configure slider drag/touch handling
   const [dragActive, setDragActive] = useState(false)
   const [posInitial, setPosInitial] = useState(0)
@@ -301,20 +299,15 @@ export default function carouselHelper(
   const toSlidesPercentage = (pixelVal: number) => {
     let _width
 
-    switch (true) {
-      case layoutGap === 0:
-        _width = slidesPxWidth
-        break
-
-      default:
-        let additionalWidth = infinite ? 100 * 2 : 0
-        let visibleWidth = (baseSlideCount * 100) / slidesShown
-        _width = ((visibleWidth + additionalWidth) / slidesWidth) * slidesPxWidth
-        break
+    if (layoutGap === 0) {
+      _width = slidesPxWidth
+    } else {
+      let additionalWidth = infinite ? 100 * 2 : 0
+      let visibleWidth = (baseSlideCount * 100) / slidesShown
+      _width = ((visibleWidth + additionalWidth) / slidesWidth) * slidesPxWidth
     }
 
     let percentage = ((pixelVal * slides.length) / (slidesShown * _width)) * 100
-
     return percentage
   }
 
