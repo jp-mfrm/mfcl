@@ -1,11 +1,16 @@
-import React, { useState, FunctionComponent, useEffect, useRef } from 'react'
+import React, { ReactNode, FunctionComponent } from 'react'
 import clsx from 'clsx'
 import styles from './tabs.module.scss'
 import Tab from './Tab'
 
+export interface Item {
+  header: string | ReactNode
+  content: string | ReactNode
+}
+
 export interface Props {
   name: string
-  items: []
+  items: Item[]
   selectedIndex: number
   onClick: Function | null
   onKeyDown: Function | null
