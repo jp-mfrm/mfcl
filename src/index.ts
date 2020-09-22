@@ -3,6 +3,7 @@ import AccordionItem from './AccordionItem'
 import Alert from './Alert'
 import Badge from './Badge'
 import Button from './Button'
+import Carousel from './Carousel'
 import Checkbox from './Checkbox'
 import Collapse from './Collapse'
 import Drawer from './Drawer'
@@ -38,6 +39,7 @@ export {
   Alert,
   Badge,
   Button,
+  Carousel,
   Checkbox,
   Collapse,
   Drawer,

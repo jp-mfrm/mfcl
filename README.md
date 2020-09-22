@@ -41,7 +41,7 @@ The docs are built with ❤️ from [docz][]
 
 1. `yarn plop` and follow the prompt or `yarn plop MyComponent` will generate `MyComponent.jsx`, `myComponent.module.scss`, `MyComponent.test.js`, and `MyComponent.mdx`
 2. Update `package.json` according to semver.
-3. Give a description of what changed in `src/CHANGELOG.mdx` followed by who made the changes.
+3. Give a description of what changed in `CHANGELOG.mdx` followed by who made the changes.
 4. Profit 💰
 
 ### Automatic code formatting
