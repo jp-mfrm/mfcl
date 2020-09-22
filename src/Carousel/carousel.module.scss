@@ -1,0 +1,238 @@
+@import '../variables';
+
+$slider-width: 100%;
+$slider-height: 100%;
+
+.carousel-wrapper {
+  text-align: center;
+  width: $slider-width;
+  height: $slider-height;
+  z-index: 2;
+  justify-content: center;
+  display: flex;
+  position: relative;
+
+  &-slider {
+    overflow: hidden;
+    position: relative;
+    width: $slider-width;
+    height: $slider-height;
+    z-index: 1;
+  }
+
+  &-slides {
+    display: flex;
+    position: relative;
+    top: 0;
+
+    &.shifting {
+      transition: left 0.2s ease-out;
+    }
+
+    .slide {
+      width: $slider-width;
+      max-width: $slider-width;
+      height: $slider-height;
+      min-height: 150px;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      transition: left 1s;
+      position: relative;
+      border-radius: 2px;
+    }
+
+    &.marginless {
+      margin: 0;
+    }
+
+    .grabbing {
+      cursor: grabbing;
+    }
+  }
+
+  &-control {
+    position: absolute;
+    top: 40%;
+    width: 35px;
+    height: 35px;
+    background: #fff;
+    border-radius: 50px;
+    border: none;
+    margin-top: -20px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    outline: none;
+
+    &.prev {
+      background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
+    }
+
+    &.next {
+      background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+    }
+
+    &.center {
+      &.next {
+        right: 40%;
+      }
+      &.prev {
+        left: 40%;
+      }
+
+      @media only screen and (max-width: $small-mobile) {
+        &.next {
+          right: 35%;
+        }
+        &.prev {
+          left: 35%;
+        }  
+      }
+    }
+
+    &.left {
+      &.next {
+        left: 10%;
+        
+        @media only screen and (max-width: $small-mobile) {
+          left: 20%;
+        }
+      }
+      &.prev {
+        left: 1%;
+      }
+    }
+
+    &.right {
+      &.next {
+        right: 1%;
+      }
+      &.prev {
+        right: 10%;
+        
+        @media only screen and (max-width: $small-mobile) {
+          right: 20%;
+        }
+      }
+    }
+
+    &.apart {
+      &.next {
+        right: 0px;
+
+        &.middle {
+          height: 50px;
+          border-radius: 5px 0 0 5px;
+        }
+        
+      }
+      &.prev {
+        left: 0px;
+
+        &.middle {
+          height: 50px;
+          border-radius: 0 5px 5px 0;
+        }
+      }
+    }
+
+    &.prev,
+    &.next {
+      background-size: 22px;
+      background-position: center;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+
+    &.prev:active,
+    &.next:active {
+      transform: scale(0.8);
+    }
+
+    &.hidden {
+      background-image: none;
+      background-color: rgba(255, 255, 255, 0);
+      box-shadow: none;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+        transition: all 0.25s;
+        color: $black;
+
+        &.prev {
+          background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
+        }
+
+        &.next {
+          background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+        }
+      }
+    }
+
+    &.top {
+      top: 5%;
+    }
+
+    &.bottom {
+      top: 70%;
+    }
+  }
+
+  &-indicators {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px 0;
+    cursor: pointer;
+  
+    .indicator-button {
+      margin: 0 0.5%;
+      outline: none;
+      background-color: $gray-6;
+  
+      &.round {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-clip: content-box;
+        box-sizing: content-box;
+        padding: 2.5px;
+        border: 1.5px solid $gray-6; 
+      }
+  
+      &.bar {
+        border: 1px solid $gray-6; 
+  
+      }
+  
+      &:hover {
+        background-color: $black;
+        border-color: $black;
+      }
+
+      &[data-selected="true"] {
+        background-color: $black;
+        border-color: $black;
+      }
+
+      &:active {
+        transform: scale(0.8);
+      }
+    }
+  }
+
+  .sr-only {
+    border: 0;
+    clip: rect(0,0,0,0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+}
+

@@ -1,0 +1,227 @@
+---
+name: Carousel
+menu: Components
+route: /components-carousel
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Carousel, ProductCard, Panel, PanelItem } from '../../src'
+
+# Carousel
+
+```javascript
+import { Carousel } from 'mfcl'
+```
+
+## Description
+
+The Carousel component allows you to a display a selection of rotating items.
+
+## Properties
+
+<Props of={Carousel} />
+
+## Basic Usage
+
+<Playground> 
+  <Carousel ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+  </Carousel>
+</Playground>
+
+## Style Variations
+
+### Homepage Heroes
+
+<Playground>
+  <Carousel hideControls autoSlide duration={5000} ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightgreen' }}>Slide 3</div>
+  </Carousel>
+</Playground>
+
+### Product Carousel
+
+<Playground>
+  <Carousel itemsToShow={4} layoutGap={5} infinite hideIndicators controlAlignment="apart" ariaLabel="one">
+    <ProductCard
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title="Product 1"
+      brand="Serta"
+      size="Wumbo"
+      discountPrice="2300"
+      price="3500"
+      matchPercentage="98"
+      reviews="215"
+      rating="4"
+      style={{
+        width: '100%'
+      }}
+    />
+    <ProductCard
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title="Product 2"
+      brand="Serta"
+      size="Wumbo"
+      discountPrice="5000"
+      price="8500"
+      matchPercentage="80"
+      reviews="100"
+      rating="5"
+      style={{
+        width: '100%'
+      }}
+    />
+    <ProductCard
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title="Product 3"
+      brand="Serta"
+      size="Wumbo"
+      discountPrice="700"
+      price="1000"
+      matchPercentage="100"
+      reviews="10"
+      rating="2"
+      style={{
+        width: '100%'
+      }}
+    />
+    <ProductCard
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title="Product 1"
+      brand="Serta"
+      size="Wumbo"
+      discountPrice="2300"
+      price="3500"
+      matchPercentage="98"
+      reviews="215"
+      rating="4"
+      style={{
+        width: '100%'
+      }}
+    />
+  </Carousel>
+</Playground>
+
+### Brand Carousel
+
+<Playground>
+  <Carousel itemsToShow={4} layoutGap={5} infinite hideIndicators controlAlignment="top right" ariaLabel="one">
+    <Panel rounded>
+      <PanelItem>Brand 1</PanelItem>
+    </Panel>
+    <Panel rounded>
+      <PanelItem>Brand 2</PanelItem>
+    </Panel>
+    <Panel rounded>
+      <PanelItem>Brand 3</PanelItem>
+    </Panel>
+    <Panel rounded>
+      <PanelItem>Brand 4</PanelItem>
+    </Panel>
+  </Carousel>
+</Playground>
+
+## Auto Slide 
+
+AutoSlide overrides the infinite prop to true and sets duration to 3 seconds by default
+
+<Playground>
+  <Carousel autoSlide ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+  </Carousel>
+</Playground>
+
+## Multiple Slides 
+
+<Playground>
+  <Carousel itemsToShow={2} ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightgreen' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'lightblue' }}>Slide 2</div>
+  </Carousel>
+  <br/>
+  <Carousel infinite itemsToShow={3}>
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightgreen' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'lightblue' }}>Slide 2</div>
+  </Carousel>
+</Playground>
+
+## Spacing Between Slides
+
+The layoutGap prop sets the slides' margins in pixels
+
+<Playground>
+  <Carousel itemsToShow={2} layoutGap={20} ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightgreen' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'lightblue' }}>Slide 2</div>
+  </Carousel>
+
+  <Carousel infinite itemsToShow={2} layoutGap={5} ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'lightgreen' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'lightblue' }}>Slide 2</div>
+  </Carousel>
+</Playground>
+
+## Indicator Button Styles
+
+<Playground>
+  <Carousel indicatorStyle="round" ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+  </Carousel>
+  <br/>
+  <Carousel indicatorStyle="bar" ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+  </Carousel>
+  <br />
+  <Carousel hideIndicators ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+    <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
+  </Carousel>
+</Playground>
+
+## Control Button Alignment
+
+Any non conflicting combination of 'top', 'middle', 'bottom', 'left', 'right', 'center'.  
+hideControls prop removes the control buttons from view until hovered.
+
+<Playground>
+  <Carousel controlAlignment="top center" ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+  </Carousel>
+  <br/>
+  <Carousel controlAlignment="middle apart" ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+  </Carousel>
+  <br />
+  <Carousel controlAlignment="apart" ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+  </Carousel>
+  <br />
+  <Carousel controlAlignment="bottom right" ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+  </Carousel>
+  <br />
+  <Carousel hideControls ariaLabel="one">
+    <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
+  </Carousel>
+</Playground>
+
+
