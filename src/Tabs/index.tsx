@@ -69,7 +69,7 @@ const Tabs: FunctionComponent<Props> = ({
     let targetIndex
     if (e.key === 'ArrowLeft' && selectedIndex > 0) {
       targetIndex = selectedIndex - 1
-    } else if (e.key === 'ArrowRight' && selectedIndex < itemsLength - 1) {
+    } else if (e.key === 'ArrowRight' && selectedIndex < items.length - 1) {
       targetIndex = selectedIndex + 1
     } else {
       return
@@ -77,8 +77,6 @@ const Tabs: FunctionComponent<Props> = ({
 
     handleChange(targetIndex)
   }
-
-  const itemsLength = items.length
 
   return (
     <div className={clsx(styles['tabs-wrapper'], styles[position])} {...rest}>
