@@ -371,7 +371,7 @@ export default function carouselHelper(
       }
 
       setAriaLive('off')
-      setSlidesTransition('left .3s ease-out')
+      setSlidesTransition('left .5s ease-out')
     }
     setAllowShift(false)
   }

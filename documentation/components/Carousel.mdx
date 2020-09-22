@@ -46,7 +46,7 @@ The Carousel component allows you to a display a selection of rotating items.
 ### Product Carousel
 
 <Playground>
-  <Carousel itemsToShow={3} layoutGap={5} infinite hideIndicators ariaLabel="one">
+  <Carousel itemsToShow={4} layoutGap={5} infinite hideIndicators controlAlignment="apart" ariaLabel="one">
     <ProductCard
       brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
       productImg="https://i1.adis.ws/i/hmk/133558"
@@ -88,6 +88,21 @@ The Carousel component allows you to a display a selection of rotating items.
       matchPercentage="100"
       reviews="10"
       rating="2"
+      style={{
+        width: '100%'
+      }}
+    />
+    <ProductCard
+      brandImg="https://cdn.zeplin.io/5f10c55f15b5648d753636bf/assets/E1C61C66-6366-44A6-8F34-5D11764BC0C1.svg"
+      productImg="https://i1.adis.ws/i/hmk/133558"
+      title="Product 1"
+      brand="Serta"
+      size="Wumbo"
+      discountPrice="2300"
+      price="3500"
+      matchPercentage="98"
+      reviews="215"
+      rating="4"
       style={{
         width: '100%'
       }}
