@@ -49,18 +49,16 @@ const Tabs: FunctionComponent<Props> = ({
 
   const handleClick = (e: any) => {
     e.preventDefault()
-    handleChange(parseInt(e.target.getAttribute('index')))
+    handleChange(parseInt(e.target.getAttribute('data-index')))
   }
 
   const handleKeyDown = (e: any) => {
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-      e.preventDefault()
-    } else {
+    if (e.key !== 'ArrowLeft' || e.key !== 'ArrowRight') {
       return
     }
 
+    e.preventDefault()
     let targetIndex
-
     if (e.key === 'ArrowLeft' && selectedIndex > 0) {
       targetIndex = selectedIndex - 1
     } else if (e.key === 'ArrowRight' && selectedIndex < items.length - 1) {
@@ -68,6 +66,7 @@ const Tabs: FunctionComponent<Props> = ({
     } else {
       return
     }
+
     handleChange(targetIndex)
   }
 
@@ -84,7 +83,6 @@ const Tabs: FunctionComponent<Props> = ({
         {items.map((item, index) => {
           return (
             <PanelItem name={name} selectedIndex={selectedIndex} index={index} key={index}>
-              {/* @ts-ignore */}
               {item.content}
             </PanelItem>
           )
