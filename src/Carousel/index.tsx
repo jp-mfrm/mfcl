@@ -72,17 +72,15 @@ const Carousel: FunctionComponent<Props> = ({
     slides,
     slidesWidth,
     indicators,
-    controlsVisibility,
+    controlButtons,
     indicatorVisibility,
     indicatorRef,
-    alignment,
     slidesTransition,
     ariaLive,
     handleDragStart,
     handleDragEndHandler,
     handleDragActionHandler,
-    handleIndexCheck,
-    shiftSlide
+    handleIndexCheck
   } = carouselHelper(
     children,
     itemsToShow,
@@ -96,37 +94,6 @@ const Carousel: FunctionComponent<Props> = ({
     layoutGap,
     //@ts-ignore
     responsive
-  )
-
-  const buttons = (
-    <>
-      <button
-        aria-hidden={(controlsVisibility && 'true') || 'false'}
-        className={clsx(
-          styles['carousel-wrapper-control'],
-          styles['prev'],
-          controlsVisibility && styles['hidden'],
-          alignment
-        )}
-        onClick={() => shiftSlide(-1)}
-        onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(-1);}}}
-      >
-        <p className={clsx(styles['sr-only'])}>Move Slider Left Button.</p>
-      </button>
-      <button
-        aria-hidden={(controlsVisibility && 'true') || 'false'}
-        className={clsx(
-          styles['carousel-wrapper-control'],
-          styles['next'],
-          controlsVisibility && styles['hidden'],
-          alignment
-        )}
-        onClick={() => shiftSlide(1)}
-        onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(1);}}}
-      >
-        <p className={clsx(styles['sr-only'])}>Move Slider Right Button.</p>
-      </button>
-    </>
   )
 
   const screenReaderInstructions = (
@@ -175,7 +142,7 @@ const Carousel: FunctionComponent<Props> = ({
         </div>
         {indicatorWrapper}
       </div>
-      {buttons}
+      {controlButtons}
     </section>
   )
 

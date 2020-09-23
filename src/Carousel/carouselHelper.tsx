@@ -86,8 +86,8 @@ function getIndicators(
   baseSlideCount: number,
   slidesShown: number,
   childrenArr: ReactNode[],
-  indicatorStyle: any,
-  shiftSlide: any
+  indicatorStyle: string,
+  shiftSlide: Function
 ) {
   if (baseSlideCount < 1) return []
 
@@ -130,6 +130,43 @@ function getIndicators(
   })
 
   return initIndicators
+}
+
+function getControlButtons(
+  controlsVisibility: boolean, 
+  alignment: string[], 
+  shiftSlide: Function
+) {
+  return (
+  <>
+    <button
+      aria-hidden={(controlsVisibility && 'true') || 'false'}
+      className={clsx(
+        styles['carousel-wrapper-control'],
+        styles['prev'],
+        controlsVisibility && styles['hidden'],
+        alignment
+      )}
+      onClick={() => shiftSlide(-1)}
+      onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(-1);}}}
+    >
+      <p className={clsx(styles['sr-only'])}>Move Slider Left Button.</p>
+    </button>
+    <button
+      aria-hidden={(controlsVisibility && 'true') || 'false'}
+      className={clsx(
+        styles['carousel-wrapper-control'],
+        styles['next'],
+        controlsVisibility && styles['hidden'],
+        alignment
+      )}
+      onClick={() => shiftSlide(1)}
+      onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(1);}}}
+    >
+      <p className={clsx(styles['sr-only'])}>Move Slider Right Button.</p>
+    </button>
+  </>
+  );
 }
 
 function getSlides(
@@ -448,7 +485,7 @@ export default function carouselHelper(
     setPosInitial(slidesLeft)
 
     if (event.type == 'touchstart') {
-      setPosX1(toSlidesPercentage(event.touches[0].clientX))
+      setPosX1(toSlidesPercentage(event.touches[0]?.clientX))
     } else {
       setPosX1(toSlidesPercentage(event.clientX))
     }
@@ -466,8 +503,8 @@ export default function carouselHelper(
 
         var nextPosition = 0
         if (event.type == 'touchmove') {
-          nextPosition = posX1 - toSlidesPercentage(event.touches[0].clientX)
-          setPosX1(toSlidesPercentage(event.touches[0].clientX))
+          nextPosition = posX1 - toSlidesPercentage(event.touches[0]?.clientX)
+          setPosX1(toSlidesPercentage(event.touches[0]?.clientX))
         } else {
           nextPosition = posX1 - toSlidesPercentage(event.clientX)
           setPosX1(toSlidesPercentage(event.clientX))
@@ -551,15 +588,19 @@ export default function carouselHelper(
   ])
   const indicatorRef = useRef<any>(null)
   const indicators = useMemo(
-    () => getIndicators(indicatorsLength, baseSlideCount, slidesShown, childrenArr, indicatorStyle, shiftSlide),
+    () => getIndicators(indicatorsLength, baseSlideCount, slidesShown, childrenArr, indicatorStyling, shiftSlide),
     [activeIndex, slidesTransition, slidesLeft, slideShift]
   )
 
+  const controlButtons =  getControlButtons(controlsVisibility, alignment, shiftSlide)
+  
   const initializeTabIndices = (infinite: boolean, slidesShown: number, index: number) => {
     let positionAdj = infinite ? slidesShown : 0
     for (let i = index; i < index + 1 + (slidesShown - 1); i++) {
       let pos1 = i + positionAdj
-      slidesRef.current.children[pos1].attributes['tabindex'].value = 0
+      if(slidesRef.current.children[pos1]) {
+        slidesRef.current.children[pos1].attributes['tabindex'].value = 0
+      }
     }
   }
 
@@ -661,11 +702,10 @@ export default function carouselHelper(
   return {
     slidesRef,
     slidesLeft,
-    alignment,
     slides,
     slidesWidth,
-    controlsVisibility,
     indicators,
+    controlButtons,
     indicatorVisibility,
     indicatorRef,
     slidesTransition,
@@ -673,7 +713,6 @@ export default function carouselHelper(
     handleDragStart,
     handleDragEndHandler,
     handleDragActionHandler,
-    handleIndexCheck,
-    shiftSlide
+    handleIndexCheck
   }
 }
