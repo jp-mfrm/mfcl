@@ -295,6 +295,7 @@ export default function carouselHelper(
 
   // Configure slider drag/touch handling
   const [dragActive, setDragActive] = useState(false)
+  const [dragAttempt, setDragAttempt] = useState(0)
   const [posInitial, setPosInitial] = useState(0)
   const [posX1, setPosX1] = useState(0)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -323,7 +324,7 @@ export default function carouselHelper(
     )
   }
 
-  const shiftSlide = (dir: number, action?: string) => {
+  const shiftSlide = (dir: number, action?: string, extraShift: number = 0) => {
     // Check if slide is in the middle of a transition
     if (slidesTransition) return
 
@@ -355,14 +356,22 @@ export default function carouselHelper(
             setPosInitial(initPosition)
           }
 
+          let extraSlideShift = slideShift * extraShift
           if (destinationIndex == 1) {
-            setSlidesLeft(initPosition - slideShift)
+            setSlidesLeft(initPosition - slideShift - extraSlideShift)
+            destinationIndex = destinationIndex + activeIndex + extraShift
           } else {
             // destinationIndex == -1
-            setSlidesLeft(initPosition + slideShift)
+            setSlidesLeft(initPosition + slideShift + extraSlideShift)
+            destinationIndex = destinationIndex + activeIndex - extraShift
           }
 
-          destinationIndex += activeIndex
+          // Handle destination index overshot
+          if (destinationIndex < -1) {
+            destinationIndex = indicatorsLength + destinationIndex
+          } else if (destinationIndex > indicatorsLength) {
+            destinationIndex = destinationIndex - indicatorsLength
+          }
           setActiveIndex(destinationIndex)
           break
       }
@@ -375,22 +384,10 @@ export default function carouselHelper(
       }
 
       setAriaLive('off')
-      setSlidesTransition('left .5s ease-out')
+      setSlidesTransition('left .3s ease-out')
     }
     setAllowShift(false)
   }
-
-  // Configure slider indicators
-  const indicatorsLength = useMemo(() => getNumberOfIndicators(baseSlideCount, slidesShown, infinite), [
-    baseSlideCount,
-    slidesShown,
-    infinite
-  ])
-  const indicatorRef = useRef<any>(null)
-  const indicators = useMemo(
-    () => getIndicators(indicatorsLength, baseSlideCount, slidesShown, childrenArr, indicatorStyle, shiftSlide),
-    [activeIndex, slidesTransition, slidesLeft, slideShift]
-  )
 
   // Event Handler: transitionend
   const handleIndexCheck = () => {
@@ -413,10 +410,20 @@ export default function carouselHelper(
 
   // Event Handler: mousedown
   const handleDragStart = (event: any) => {
-    if (slidesTransition) return
+    // Check if we are currently transitioning
+    if (slidesTransition) {
+      handleIndexCheck()
+
+      if (dragAttempt < 1) {
+        setDragAttempt(1)
+        return
+      }
+
+      setDragAttempt(0)
+    }
 
     event = event || window.event
-    event.preventDefault()
+    if (event.type !== 'touchstart') event.preventDefault()
     event.stopPropagation()
 
     setPosInitial(slidesLeft)
@@ -447,7 +454,13 @@ export default function carouselHelper(
           setPosX1(toSlidesPercentage(event.clientX))
         }
 
-        setSlidesLeft(slidesLeft - nextPosition)
+        if (infinite && slidesLeft > 0) {
+          setSlidesLeft(-slideShift * baseSlideCount)
+        } else if (infinite && slidesLeft < -(slideShift * baseSlideCount) - 100) {
+          setSlidesLeft(-100)
+        } else {
+          setSlidesLeft(slidesLeft - nextPosition)
+        }
       }
     },
     [dragActive, posInitial, slidesLeft]
@@ -458,12 +471,17 @@ export default function carouselHelper(
     (event: any) => {
       if (dragActive) {
         var posFinal = slidesLeft
-        var threshold = 12
+        var threshold = slideShift / 2
 
-        if (posFinal - posInitial < -threshold) {
-          shiftSlide(1, 'drag')
-        } else if (posFinal - posInitial > threshold) {
-          shiftSlide(-1, 'drag')
+        let diff = posFinal - posInitial
+        let extraSlides = calculateExtraSlides(diff, slideShift, threshold)
+
+        if (diff < -threshold) {
+          if (!infinite) extraSlides = boundaryCheck(1, extraSlides)
+          shiftSlide(1, 'drag', extraSlides)
+        } else if (diff > threshold) {
+          if (!infinite) extraSlides = boundaryCheck(-1, extraSlides)
+          shiftSlide(-1, 'drag', extraSlides)
         } else {
           setSlidesLeft(posInitial)
         }
@@ -476,11 +494,53 @@ export default function carouselHelper(
     [dragActive, posInitial, slidesLeft]
   )
 
+  const calculateExtraSlides = (diff: number, shift: number, threshold: number) => {
+    let extraSlides = 0
+    let absDiff = Math.abs(diff)
+    for (let i = 0; i < absDiff; i = i + shift) {
+      if (i - threshold <= absDiff && absDiff <= i + threshold) {
+        break
+      }
+
+      extraSlides++
+    }
+
+    return extraSlides - 1
+  }
+
+  const boundaryCheck = (dir: number, extraSlides: number) => {
+    let destinationIndex = dir + activeIndex + dir * extraSlides
+
+    if (destinationIndex <= -1) {
+      var limit = dir + activeIndex
+      return limit > 0 ? limit : 0
+    }
+
+    if (destinationIndex >= indicatorsLength) {
+      var limit = indicatorsLength - 1 - activeIndex - 1
+      return limit > 0 ? limit : 0
+    }
+
+    return extraSlides
+  }
+
+  // Configure slider indicators
+  const indicatorsLength = useMemo(() => getNumberOfIndicators(baseSlideCount, slidesShown, infinite), [
+    baseSlideCount,
+    slidesShown,
+    infinite
+  ])
+  const indicatorRef = useRef<any>(null)
+  const indicators = useMemo(
+    () => getIndicators(indicatorsLength, baseSlideCount, slidesShown, childrenArr, indicatorStyle, shiftSlide),
+    [activeIndex, slidesTransition, slidesLeft, slideShift]
+  )
+
   const initializeTabIndices = (infinite: boolean, slidesShown: number, index: number) => {
     let positionAdj = infinite ? slidesShown : 0
     for (let i = index; i < index + 1 + (slidesShown - 1); i++) {
       let pos1 = i + positionAdj
-      slidesRef.current.children[pos1].attributes["tabindex"].value = 0 
+      slidesRef.current.children[pos1].attributes['tabindex'].value = 0
     }
   }
 

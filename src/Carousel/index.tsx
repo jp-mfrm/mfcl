@@ -134,13 +134,18 @@ const Carousel: FunctionComponent<Props> = ({
           style={{
             left: `${slidesLeft}%`,
             width: `${slidesWidth}%`,
-            transition: slidesTransition
+            transition: slidesTransition,
+            WebkitTransition: slidesTransition,
+            MozTransition: slidesTransition,
+            msTransition: slidesTransition,
+            OTransition: slidesTransition
           }}
           ref={slidesRef}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
           onTouchEnd={handleDragEndHandler}
           onTouchMove={handleDragActionHandler}
+          onTouchCancel={handleIndexCheck}
           onTransitionEnd={handleIndexCheck}
         >
           {slides}
