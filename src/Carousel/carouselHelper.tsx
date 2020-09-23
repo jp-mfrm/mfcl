@@ -54,7 +54,8 @@ function getSliderMeasurements(
     measurements.slideFlexPxWidth = measurements.slidePxWidth * flexBasisPercent
     measurements.slideFlexBasis = 90 / totalSlideCount
 
-    let defaultMarginPixel = layoutGap // 5
+    var scaleFactor = measurements.slidesPxWidth/2344
+    let defaultMarginPixel = layoutGap * scaleFactor;
     measurements.slideMargin = (defaultMarginPixel / measurements.slidesPxWidth) * 100
 
     measurements.slideShift =
