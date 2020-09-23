@@ -97,8 +97,8 @@ const Tabs: FunctionComponent<Props> = ({
               />
             )
           })}
-        <Indicator activeTabElement={tabRefs[selectedIndex]} position={position} />
         </ul>
+        <Indicator activeTabElement={tabRefs[selectedIndex]} position={position} />
       </div>
       <Panel className={styles.panel}>
         {items.map((item, index) => {
