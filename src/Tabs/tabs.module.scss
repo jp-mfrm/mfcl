@@ -3,6 +3,10 @@
 .tabs-wrapper {
   .tablist-wrapper {
     position: relative;
+
+  //  @media screen and (max-width: $mobile) {
+  //   display: inline-block;
+  //   }
   }
 
   .tablist {
@@ -18,15 +22,30 @@
       padding-bottom: 10px;
 
       @media screen and (max-width: $mobile) {
-        flex-wrap: wrap;
+        padding-bottom: 0;
+        overflow: scroll;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
       }
     }
 
     .tab-list-item {
       @media screen and (max-width: $mobile) {
-        padding: 7px;
+        max-height: 44px;
+        padding: 10px;
+        white-space: nowrap
       }
     }
+
+    .tab-item {
+      @media screen and (max-width: $mobile) {
+          &.active {
+            border-bottom: 5px solid red;
+            padding-bottom: 6px;
+          }
+        }
+      }
   }
 
   &.left {
@@ -73,9 +92,10 @@
   font-size: 21px;
   font-weight: 700;
 
-  @media screen and (max-width: $mobile) {
-    font-size: 18px;
+  @media screen and (max-width: $tablet) {
+    font-size: 14px;
   }
+
 }
 
 .indicator {

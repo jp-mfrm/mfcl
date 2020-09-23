@@ -10,33 +10,42 @@ interface Props {
 
 const Indicator: FunctionComponent<Props> = ({ activeTabElement, position, duration }) => {
   const [style, setStyle] = useState<any>({})
-
+  const [width, setWidth] = React.useState(window.innerWidth);
+  const breakpoint = 767;
+  
   const changeStyle = () => {
-    if (activeTabElement?.current) {
-      const newStyle: any = {}
-      if (position === 'top') {
-        newStyle.bottom = '0px'
-        newStyle.left = activeTabElement.current.offsetLeft
-        newStyle.height = '5px'
-        newStyle.width = activeTabElement.current.offsetWidth
-      } else if (position === 'left') {
-        newStyle.right = '0px'
-        newStyle.top = activeTabElement.current.offsetTop
-        newStyle.height = activeTabElement.current.offsetHeight
-        newStyle.width = '5px'
+    if (width > breakpoint) { 
+      if (activeTabElement?.current) {
+        const newStyle: any = {}
+        if (position === 'top') {
+          newStyle.bottom = '0px'
+          newStyle.left = activeTabElement.current.offsetLeft
+          newStyle.height = '5px'
+          newStyle.width = activeTabElement.current.offsetWidth
+        } else if (position === 'left') {
+          newStyle.right = '0px'
+          newStyle.top = activeTabElement.current.offsetTop
+          newStyle.height = activeTabElement.current.offsetHeight
+          newStyle.width = '5px'
+        }
+        setStyle(newStyle)
       }
-      setStyle(newStyle)
     }
+ 
   }
+
 
   useEffect(() => {
     window.addEventListener('resize', changeStyle)
+
     return () => {
       window.removeEventListener('resize', changeStyle)
+
     }
   }, [])
 
   useEffect(() => {
+    setWidth(window.innerWidth)
     changeStyle()
   }, [activeTabElement, position])
 
