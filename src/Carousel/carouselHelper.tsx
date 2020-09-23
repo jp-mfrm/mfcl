@@ -27,7 +27,7 @@ function getChildrenArr(children: ReactNode) {
 
 function getSliderMeasurements(
   current: any,
-  layoutGap: number,
+  slideGap: number,
   infinite: boolean,
   baseSlideCount: number,
   slidesShown: number
@@ -45,7 +45,7 @@ function getSliderMeasurements(
   let totalSlideCount = baseSlideCount + (infinite ? 2 : 0) * slidesShown
   measurements.slidePxWidth = measurements.slidesPxWidth / totalSlideCount
 
-  if (layoutGap === 0) {
+  if (slideGap === 0) {
     measurements.slideFlexBasis = 100 / totalSlideCount
     measurements.slideShift = 100 / slidesShown
     measurements.slidesLeft = infinite ? -100 / slidesShown + (-100 / slidesShown) * (slidesShown - 1) : 0
@@ -55,7 +55,7 @@ function getSliderMeasurements(
     measurements.slideFlexBasis = 90 / totalSlideCount
 
     var scaleFactor = measurements.slidesPxWidth/2344
-    let defaultMarginPixel = layoutGap * scaleFactor;
+    let defaultMarginPixel = slideGap * scaleFactor;
     measurements.slideMargin = (defaultMarginPixel / measurements.slidesPxWidth) * 100
 
     measurements.slideShift =
@@ -137,7 +137,7 @@ function getSlides(
   baseSlideCount: number,
   slidesShown: number,
   slideGrabbing: boolean,
-  layoutGap: number,
+  slideGap: number,
   flexBasis: number,
   margin: number,
   infinite: boolean
@@ -153,7 +153,7 @@ function getSlides(
           className={clsx(
             styles['slide'],
             slideGrabbing && styles['grabbing'],
-            layoutGap === 0 && styles['marginless']
+            slideGap === 0 && styles['marginless']
           )}
           key={label}
           style={{
@@ -247,15 +247,29 @@ export default function carouselHelper(
   children: ReactNode,
   itemsToShow: number,
   controlAlignment: string,
+  hideControls: boolean,
   hideIndicators: boolean,
   indicatorStyle: string,
   duration: number,
   infinite: boolean,
   autoSlide: boolean,
-  layoutGap: number
+  layoutGap: number,
+  responsive: {
+    breakpoint: number, 
+    itemsToShow: number, 
+    controlAlignment: string, 
+    hideControls: boolean,
+    hideIndicators: boolean,
+    indicatorStyle: string,
+    layoutGap: number
+  }[]
 ) {
-  // Configure button alignment
-  const alignment = [styles[(controlAlignment + '').split(' ')[0]], styles[(controlAlignment + '').split(' ')[1]]]
+
+  // Configure buttons
+  const [alignment, setAlignment] = useState([styles[(controlAlignment + '').split(' ')[0]], styles[(controlAlignment + '').split(' ')[1]]])
+  const [indicatorVisibility, setIndicatorVisibility] = useState(hideIndicators); 
+  const [indicatorStyling, setIndicatorStyling] = useState(indicatorStyle);
+  const [controlsVisibility, setControlVisibility] = useState(hideControls);
 
   // Configure autoslide / infinite
   if (autoSlide) infinite = true
@@ -263,20 +277,25 @@ export default function carouselHelper(
   // Configure slide boundary vars
   const [childrenArr] = useState<ReactNode[]>(getChildrenArr(children))
   const [baseSlideCount] = useState(childrenArr.length)
-  const [slidesShown] = useState(itemsToShow <= baseSlideCount ? itemsToShow : baseSlideCount)
+  const [slidesShown, setSlidesShown] = useState(itemsToShow <= baseSlideCount ? itemsToShow : baseSlideCount)
   const [initLeftPos, setInitLeftState] = useState(0)
 
   // Configure base slides
   const slidesRef = useRef<any>(null)
-  const [slidesWidth] = useState<number>((baseSlideCount * 100) / slidesShown + (infinite ? 100 * 2 : 0))
+  const [slidesWidth, setSlidesWidth] = useState<number>((baseSlideCount * 100) / slidesShown + (infinite ? 100 * 2 : 0))
   const [slidesTransition, setSlidesTransition] = useState<string>('')
   const [slidesLeft, setSlidesLeft] = useState(0)
   const [slidesPxWidth, setSlidesPxWidth] = useState(0)
+  const [slideGap, setSlideGap] = useState(layoutGap)
   const [slideMargin, setSlideMargin] = useState<number>(layoutGap)
   const [slideFlexBasis, setSlideFlexBasis] = useState<number>(100)
   const [slideGrabbing, setSlideGrabbing] = useState(false)
   const [slideShift, setSlideShift] = useState<number>(0)
   const [ariaLive, setAriaLive] = useState<'off' | 'assertive' | 'polite' | undefined>('off')
+
+  // Configure responsive settings
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [responsiveSettings] = useState(responsive);
 
   const slides = useMemo(
     () =>
@@ -285,7 +304,7 @@ export default function carouselHelper(
         baseSlideCount,
         slidesShown,
         slideGrabbing,
-        layoutGap,
+        slideGap,
         slideFlexBasis,
         slideMargin,
         infinite
@@ -304,7 +323,7 @@ export default function carouselHelper(
   const toSlidesPercentage = (pixelVal: number) => {
     let _width
 
-    if (layoutGap === 0) {
+    if (slideGap === 0) {
       _width = slidesPxWidth
     } else {
       let additionalWidth = infinite ? 100 * 2 : 0
@@ -379,7 +398,7 @@ export default function carouselHelper(
       if (action != 'initialize')
         updateSlideAttributes(infinite, activeIndex, destinationIndex, slidesRef, baseSlideCount, slidesShown)
 
-      if (!hideIndicators && indicatorRef.current && indicatorRef.current.children && action != 'initialize') {
+      if (!indicatorVisibility && indicatorRef.current && indicatorRef.current.children && action != 'initialize') {
         updateIndicatorDots(indicators.length, activeIndex, destinationIndex, indicatorRef, baseSlideCount)
       }
 
@@ -568,9 +587,64 @@ export default function carouselHelper(
   }, [activeIndex, dragActive, allowShift, slidesLeft])
 
   useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+
+      if(responsiveSettings.length) {
+        let possibleSettings = responsiveSettings.filter(settings => window.innerWidth <= settings.breakpoint);
+        let newSettings = null
+        if(possibleSettings.length) {
+          newSettings = possibleSettings.reduce((min, settings) => min.breakpoint < settings.breakpoint ? min : settings)
+        }
+        
+        if(newSettings) {
+          if("itemsToShow" in newSettings) {
+            let newItemsToShow = baseSlideCount ? newSettings.itemsToShow : baseSlideCount;
+
+            for (let i = 0; i < slidesRef.current.children.length; i++) {
+              slidesRef.current.children[i].attributes["tabindex"].value = -1;
+            }
+
+            setSlidesShown(newItemsToShow)
+            setSlidesWidth((baseSlideCount * 100) / newItemsToShow + (infinite ? 100 * 2 : 0))            
+          }
+          if("controlAlignment" in newSettings) {
+            setAlignment([styles[(newSettings.controlAlignment + '').split(' ')[0]], styles[(newSettings.controlAlignment + '').split(' ')[1]]])
+          }
+          if("hideControls" in newSettings) {
+            setControlVisibility(newSettings.hideControls)
+          }
+          if("hideIndicators" in newSettings) {
+            setIndicatorVisibility(newSettings.hideIndicators)
+          }
+          if("indicatorStyle" in newSettings) {
+            setIndicatorStyling(newSettings.indicatorStyle)
+          }
+          if("layoutGap" in newSettings) {
+            setSlideGap(newSettings.layoutGap)
+          }
+        } else {
+          setSlidesShown(itemsToShow)
+          setSlidesWidth((baseSlideCount * 100) / itemsToShow + (infinite ? 100 * 2 : 0))
+          setAlignment([styles[(controlAlignment + '').split(' ')[0]], styles[(controlAlignment + '').split(' ')[1]]])
+          setControlVisibility(hideControls)
+          setIndicatorVisibility(hideIndicators)
+          setIndicatorStyling(indicatorStyle)
+          setSlideGap(layoutGap)
+        }
+      }
+    }
+    
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    
+    return () => window.removeEventListener("resize", handleResize);
+  }, [windowWidth]); 
+
+  useEffect(() => {
     const { current } = slidesRef
 
-    const { ...measurements } = getSliderMeasurements(current, layoutGap, infinite, baseSlideCount, slidesShown)
+    const { ...measurements } = getSliderMeasurements(current, slideGap, infinite, baseSlideCount, slidesShown)
 
     setInitLeftState(measurements.slidesLeft)
     setSlidesLeft(measurements.slidesLeft)
@@ -582,7 +656,7 @@ export default function carouselHelper(
     setAriaLive('polite')
     initializeTabIndices(infinite, slidesShown, activeIndex)
     
-  }, [])
+  }, [windowWidth])
 
   return {
     slidesRef,
@@ -590,7 +664,9 @@ export default function carouselHelper(
     alignment,
     slides,
     slidesWidth,
+    controlsVisibility,
     indicators,
+    indicatorVisibility,
     indicatorRef,
     slidesTransition,
     ariaLive,

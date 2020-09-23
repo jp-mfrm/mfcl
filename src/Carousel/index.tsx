@@ -31,6 +31,22 @@ interface Props {
   autoSlide?: boolean
   /** Time in milliseconds for autoSlide */
   duration?: number
+  /** Override props at certain breakpoints  
+  
+
+  responsive prop properties:   
+
+
+    breakpoint: number,  
+    itemsToShow: number,   
+    controlAlignment: string,    
+    hideIndicators: boolean,   
+    hideControls: boolean,  
+    indicatorStyle: string,   
+    layoutGap: number   
+  
+  */
+  responsive?: object[]
   [rest: string]: unknown // ...rest property
 }
 
@@ -46,14 +62,18 @@ const Carousel: FunctionComponent<Props> = ({
   infinite = false,
   autoSlide = false,
   duration = 3000,
+  responsive = [{}],
   children
 }) => {
+
   const {
     slidesRef,
     slidesLeft,
     slides,
     slidesWidth,
     indicators,
+    controlsVisibility,
+    indicatorVisibility,
     indicatorRef,
     alignment,
     slidesTransition,
@@ -67,22 +87,25 @@ const Carousel: FunctionComponent<Props> = ({
     children,
     itemsToShow,
     controlAlignment,
+    hideControls,
     hideIndicators,
     indicatorStyle,
     duration,
     infinite,
     autoSlide,
-    layoutGap
+    layoutGap,
+    //@ts-ignore
+    responsive
   )
 
   const buttons = (
     <>
       <button
-        aria-hidden={(hideControls && 'true') || 'false'}
+        aria-hidden={(controlsVisibility && 'true') || 'false'}
         className={clsx(
           styles['carousel-wrapper-control'],
           styles['prev'],
-          hideControls && styles['hidden'],
+          controlsVisibility && styles['hidden'],
           alignment
         )}
         onClick={() => shiftSlide(-1)}
@@ -91,11 +114,11 @@ const Carousel: FunctionComponent<Props> = ({
         <p className={clsx(styles['sr-only'])}>Move Slider Left Button.</p>
       </button>
       <button
-        aria-hidden={(hideControls && 'true') || 'false'}
+        aria-hidden={(controlsVisibility && 'true') || 'false'}
         className={clsx(
           styles['carousel-wrapper-control'],
           styles['next'],
-          hideControls && styles['hidden'],
+          controlsVisibility && styles['hidden'],
           alignment
         )}
         onClick={() => shiftSlide(1)}
@@ -111,13 +134,13 @@ const Carousel: FunctionComponent<Props> = ({
       This is a draggable carousel
       {autoSlide && 'It has auto-rotating slides'}
       Use Next and Previous buttons to navigate.
-      {!hideIndicators && 'You can also jump to a slide using the slide dots.'}
+      {!indicatorVisibility && 'You can also jump to a slide using the slide dots.'}
     </p>
   )
 
   const indicatorWrapper = (
     <div ref={indicatorRef} className={clsx(styles['carousel-wrapper-indicators'])}>
-      {!hideIndicators && indicators}
+      {!indicatorVisibility && indicators}
     </div>
   )
 
