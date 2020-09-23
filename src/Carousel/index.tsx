@@ -86,6 +86,7 @@ const Carousel: FunctionComponent<Props> = ({
           alignment
         )}
         onClick={() => shiftSlide(-1)}
+        onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(-1);}}}
       >
         <p className={clsx(styles['sr-only'])}>Move Slider Left Button.</p>
       </button>
@@ -98,6 +99,7 @@ const Carousel: FunctionComponent<Props> = ({
           alignment
         )}
         onClick={() => shiftSlide(1)}
+        onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(1);}}}
       >
         <p className={clsx(styles['sr-only'])}>Move Slider Right Button.</p>
       </button>

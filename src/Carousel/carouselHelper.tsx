@@ -121,6 +121,7 @@ function getIndicators(
         aria-current={index === 0 ? 'true' : 'false'}
         className={clsx(styles['indicator-button'], styles[indicatorStyle])}
         onClick={() => shiftSlide(index, 'indicator')}
+        onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(index, 'indicator');}}}
       >
         <span className={clsx(styles['sr-only'])} aria-label={slidesLabel} />
       </button>
@@ -147,6 +148,7 @@ function getSlides(
         <div
           aria-label={label}
           aria-hidden={slidesShown - 1 < index}
+          tabIndex={-1}
           className={clsx(
             styles['slide'],
             slideGrabbing && styles['grabbing'],
@@ -210,7 +212,7 @@ function updateIndicatorDots(
   }
 }
 
-function updateAriaHidden(
+function updateSlideAttributes(
   infinite: boolean,
   activeIndex: number,
   destinationIndex: number,
@@ -218,16 +220,17 @@ function updateAriaHidden(
   baseSlideCount: number,
   slidesShown: number
 ) {
-  const setAriaHidden = (index: number, boundary: number, val: string) => {
+  const setSlideAttributes = (index: number, boundary: number, hidden: boolean) => {
     let positionAdj = infinite ? slidesShown : 0
     for (let i = index; i < boundary; i++) {
       let pos1 = i + positionAdj
-      sliderRef.current.children[pos1].ariaHidden = val
+      sliderRef.current.children[pos1].ariaHidden = hidden
+      sliderRef.current.children[pos1].attributes["tabindex"].value = hidden ? -1 : 0 
     }
   }
 
   const activeIndexBoundary = activeIndex + 1 + (slidesShown - 1)
-  setAriaHidden(activeIndex, activeIndexBoundary, 'true')
+  setSlideAttributes(activeIndex, activeIndexBoundary, true)
 
   if (destinationIndex > baseSlideCount - 1) {
     destinationIndex = 0
@@ -236,7 +239,7 @@ function updateAriaHidden(
   }
 
   const destinationIndexBoundary = destinationIndex + 1 + (slidesShown - 1)
-  setAriaHidden(destinationIndex, destinationIndexBoundary, 'false')
+  setSlideAttributes(destinationIndex, destinationIndexBoundary, false)
 }
 
 export default function carouselHelper(
@@ -364,7 +367,7 @@ export default function carouselHelper(
       }
 
       if (action != 'initialize')
-        updateAriaHidden(infinite, activeIndex, destinationIndex, slidesRef, baseSlideCount, slidesShown)
+        updateSlideAttributes(infinite, activeIndex, destinationIndex, slidesRef, baseSlideCount, slidesShown)
 
       if (!hideIndicators && indicatorRef.current && indicatorRef.current.children && action != 'initialize') {
         updateIndicatorDots(indicators.length, activeIndex, destinationIndex, indicatorRef, baseSlideCount)
@@ -472,6 +475,14 @@ export default function carouselHelper(
     [dragActive, posInitial, slidesLeft]
   )
 
+  const initializeTabIndices = (infinite: boolean, slidesShown: number, index: number) => {
+    let positionAdj = infinite ? slidesShown : 0
+    for (let i = index; i < index + 1 + (slidesShown - 1); i++) {
+      let pos1 = i + positionAdj
+      slidesRef.current.children[pos1].attributes["tabindex"].value = 0 
+    }
+  }
+
   useEffect(() => {
     document.addEventListener('mouseup', handleDragEndHandler)
     document.addEventListener('mousemove', handleDragActionHandler)
@@ -508,6 +519,8 @@ export default function carouselHelper(
     setSlideFlexBasis(measurements.slideFlexBasis)
 
     setAriaLive('polite')
+    initializeTabIndices(infinite, slidesShown, activeIndex)
+    
   }, [])
 
   return {
