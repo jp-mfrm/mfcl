@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import styles from './carousel.module.scss'
 
 interface Props {
-  /** Aria label to set apart different carousels in the page.  
+  /** Aria label to set apart different carousels in the page.
    * Label is prefixed with 'carousel-'
    */
   ariaLabel: string
@@ -13,16 +13,18 @@ interface Props {
   carouselClass?: string
   /** Sets how many slides to show */
   itemsToShow?: number
-  /** Sets the transition control button alignments. Two non conflicting configurations can be combined.  
-   * Valid configurations are: 'top', 'middle', 'center', 'apart', 'left', 'right', 'bottom'.  
+  /** Sets the transition control button alignments. Two non conflicting configurations can be combined.
+   * Valid configurations are: 'top', 'middle', 'center', 'apart', 'left', 'right', 'bottom'.
    * 'middle' centers vertically while 'center' centers horizontally. */
-  controlAlignment?: string 
+  controlAlignment?: string
+  /** Sets the control buttons' style */
+  controlStyle?: 'square' | 'round'
   /** Hides control buttons unless hovered */
   hideControls?: boolean
   /** Sets the indicator buttons' style */
   indicatorStyle?: 'bar' | 'round'
   /** Sets indicator bar background color*/
-  indicatorBG?: 'dark' | 'light'
+  indicatorBg?: 'dark' | 'light'
   /** Hides indicator buttons */
   hideIndicators?: boolean
   /** Supply a px margin between slides */
@@ -60,6 +62,7 @@ const Carousel: FunctionComponent<Props> = ({
   hideIndicators = false,
   hideControls = false,
   indicatorStyle = 'round',
+  controlStyle = 'square',
   indicatorBg = 'light',
   layoutGap = 0,
   infinite = false,
@@ -68,7 +71,6 @@ const Carousel: FunctionComponent<Props> = ({
   responsive = [{}],
   children
 }) => {
-
   const {
     slidesRef,
     slidesLeft,
@@ -89,6 +91,7 @@ const Carousel: FunctionComponent<Props> = ({
     itemsToShow,
     controlAlignment,
     hideControls,
+    controlStyle,
     hideIndicators,
     indicatorStyle,
     duration,
@@ -109,7 +112,10 @@ const Carousel: FunctionComponent<Props> = ({
   )
 
   const indicatorWrapper = (
-    <div ref={indicatorRef} className={clsx(styles['carousel-wrapper-indicators'], indicatorBg=="dark" && styles["dark"])}>
+    <div
+      ref={indicatorRef}
+      className={clsx(styles['carousel-wrapper-indicators'], indicatorBg == 'dark' && styles['dark'])}
+    >
       {!indicatorVisibility && indicators}
     </div>
   )
@@ -144,7 +150,7 @@ const Carousel: FunctionComponent<Props> = ({
         >
           {slides}
         </div>
-        {indicatorWrapper}
+        {!indicatorVisibility && indicatorWrapper}
       </div>
       {controlButtons[1]}
     </section>

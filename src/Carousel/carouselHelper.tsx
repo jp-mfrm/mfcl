@@ -54,8 +54,8 @@ function getSliderMeasurements(
     measurements.slideFlexPxWidth = measurements.slidePxWidth * flexBasisPercent
     measurements.slideFlexBasis = 90 / totalSlideCount
 
-    var scaleFactor = measurements.slidesPxWidth/2344
-    let defaultMarginPixel = slideGap * scaleFactor;
+    var scaleFactor = measurements.slidesPxWidth / 2344
+    let defaultMarginPixel = slideGap * scaleFactor
     measurements.slideMargin = (defaultMarginPixel / measurements.slidesPxWidth) * 100
 
     measurements.slideShift =
@@ -122,7 +122,11 @@ function getIndicators(
         aria-current={index === 0 ? 'true' : 'false'}
         className={clsx(styles['indicator-button'], styles[indicatorStyle])}
         onClick={() => shiftSlide(index, 'indicator')}
-        onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(index, 'indicator');}}}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            shiftSlide(index, 'indicator')
+          }
+        }}
       >
         <span className={clsx(styles['sr-only'])} aria-label={slidesLabel} />
       </button>
@@ -133,30 +137,58 @@ function getIndicators(
 }
 
 function getControlButtons(
-  controlsVisibility: boolean, 
-  alignment: string[], 
+  controlsVisibility: boolean,
+  alignment: string[],
   shiftSlide: Function,
-  direction: string
+  direction: string,
+  controlStyle: string,
+  indicatorVisibility: boolean
 ) {
-
   return (
-  <>
-    <button
-      aria-hidden={(controlsVisibility && 'true') || 'false'}
-      className={clsx(
-        styles['carousel-wrapper-control'],
-        styles[direction],
-        controlsVisibility && styles['hidden'],
-        alignment
-      )}
-      onClick={() => shiftSlide(direction === "next" ? 1 : -1)}
-      
-      onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(direction === "next" ? 1 : -1);}}}
-    >
-      <p className={clsx(styles['sr-only'])}>{direction === "next" ? "Move Slider Left Button" : "Move Slider Right Button"}</p>
-    </button>
-  </>
-  );
+    <>
+      <button
+        aria-hidden={(controlsVisibility && 'true') || 'false'}
+        className={clsx(
+          styles['carousel-wrapper-control'],
+          styles[direction],
+          controlsVisibility && styles['hidden'],
+          alignment,
+          styles[controlStyle],
+          !indicatorVisibility && styles['mt-48']
+        )}
+        onClick={() => shiftSlide(direction === 'next' ? 1 : -1)}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            shiftSlide(direction === 'next' ? 1 : -1)
+          }
+        }}
+      >
+        {controlStyle === 'round' && (
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="36" cy="36" r="35" transform="rotate(-180 36 36)" fill="white" stroke="#2D2926" />
+            <path
+              d="M55.9997 35.5L17.0176 35.5"
+              stroke="#2D2926"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M29.0176 47.5L17.0176 35.5L29.0176 23.5"
+              stroke="#2D2926"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
+
+        <p className={clsx(styles['sr-only'])}>
+          {direction === 'next' ? 'Move Slider Left Button' : 'Move Slider Right Button'}
+        </p>
+      </button>
+    </>
+  )
 }
 function getSlides(
   childrenArr: ReactNode[],
@@ -175,11 +207,7 @@ function getSlides(
         <div
           aria-label={label}
           aria-hidden={slidesShown - 1 < index}
-          className={clsx(
-            styles['slide'],
-            slideGrabbing && styles['grabbing'],
-            slideGap === 0 && styles['marginless']
-          )}
+          className={clsx(styles['slide'], slideGrabbing && styles['grabbing'], slideGap === 0 && styles['marginless'])}
           key={label}
           style={{
             ...child.props.style,
@@ -272,6 +300,7 @@ export default function carouselHelper(
   itemsToShow: number,
   controlAlignment: string,
   hideControls: boolean,
+  controlStyle: string,
   hideIndicators: boolean,
   indicatorStyle: string,
   duration: number,
@@ -279,21 +308,23 @@ export default function carouselHelper(
   autoSlide: boolean,
   layoutGap: number,
   responsive: {
-    breakpoint: number, 
-    itemsToShow: number, 
-    controlAlignment: string, 
-    hideControls: boolean,
-    hideIndicators: boolean,
-    indicatorStyle: string,
+    breakpoint: number
+    itemsToShow: number
+    controlAlignment: string
+    hideControls: boolean
+    hideIndicators: boolean
+    indicatorStyle: string
     layoutGap: number
   }[]
 ) {
-
   // Configure buttons
-  const [alignment, setAlignment] = useState([styles[(controlAlignment + '').split(' ')[0]], styles[(controlAlignment + '').split(' ')[1]]])
-  const [indicatorVisibility, setIndicatorVisibility] = useState(hideIndicators); 
-  const [indicatorStyling, setIndicatorStyling] = useState(indicatorStyle);
-  const [controlsVisibility, setControlVisibility] = useState(hideControls);
+  const [alignment, setAlignment] = useState([
+    styles[(controlAlignment + '').split(' ')[0]],
+    styles[(controlAlignment + '').split(' ')[1]]
+  ])
+  const [indicatorVisibility, setIndicatorVisibility] = useState(hideIndicators)
+  const [indicatorStyling, setIndicatorStyling] = useState(indicatorStyle)
+  const [controlsVisibility, setControlVisibility] = useState(hideControls)
 
   // Configure autoslide / infinite
   if (autoSlide) infinite = true
@@ -306,7 +337,9 @@ export default function carouselHelper(
 
   // Configure base slides
   const slidesRef = useRef<any>(null)
-  const [slidesWidth, setSlidesWidth] = useState<number>((baseSlideCount * 100) / slidesShown + (infinite ? 100 * 2 : 0))
+  const [slidesWidth, setSlidesWidth] = useState<number>(
+    (baseSlideCount * 100) / slidesShown + (infinite ? 100 * 2 : 0)
+  )
   const [slidesTransition, setSlidesTransition] = useState<string>('')
   const [slidesLeft, setSlidesLeft] = useState(0)
   const [slidesPxWidth, setSlidesPxWidth] = useState(0)
@@ -318,8 +351,8 @@ export default function carouselHelper(
   const [ariaLive, setAriaLive] = useState<'off' | 'assertive' | 'polite' | undefined>('off')
 
   // Configure responsive settings
-  const [windowWidth, setWindowWidth] = useState(0);
-  const [responsiveSettings] = useState(responsive);
+  const [windowWidth, setWindowWidth] = useState(0)
+  const [responsiveSettings] = useState(responsive)
 
   const slides = useMemo(
     () =>
@@ -579,10 +612,14 @@ export default function carouselHelper(
     [activeIndex, slidesTransition, slidesLeft, slideShift]
   )
 
-  const controlButtons: ReactNode[] = [];
-  controlButtons.push(getControlButtons(controlsVisibility, alignment, shiftSlide, "prev"))
-  controlButtons.push(getControlButtons(controlsVisibility, alignment, shiftSlide, "next"))
-  
+  const controlButtons: ReactNode[] = []
+  controlButtons.push(
+    getControlButtons(controlsVisibility, alignment, shiftSlide, 'prev', controlStyle, indicatorVisibility)
+  )
+  controlButtons.push(
+    getControlButtons(controlsVisibility, alignment, shiftSlide, 'next', controlStyle, indicatorVisibility)
+  )
+
   useEffect(() => {
     document.addEventListener('mouseup', handleDragEndHandler)
     document.addEventListener('mousemove', handleDragActionHandler)
@@ -608,35 +645,40 @@ export default function carouselHelper(
 
   useEffect(() => {
     function handleResize() {
-      setWindowWidth(window.innerWidth);
+      setWindowWidth(window.innerWidth)
 
-      if(responsiveSettings.length) {
-        let possibleSettings = responsiveSettings.filter(settings => window.innerWidth <= settings.breakpoint);
+      if (responsiveSettings.length) {
+        let possibleSettings = responsiveSettings.filter((settings) => window.innerWidth <= settings.breakpoint)
         let newSettings = null
-        if(possibleSettings.length) {
-          newSettings = possibleSettings.reduce((min, settings) => min.breakpoint < settings.breakpoint ? min : settings)
+        if (possibleSettings.length) {
+          newSettings = possibleSettings.reduce((min, settings) =>
+            min.breakpoint < settings.breakpoint ? min : settings
+          )
         }
-        
-        if(newSettings) {
-          if("itemsToShow" in newSettings) {
-            let newItemsToShow = baseSlideCount ? newSettings.itemsToShow : baseSlideCount;
+
+        if (newSettings) {
+          if ('itemsToShow' in newSettings) {
+            let newItemsToShow = baseSlideCount ? newSettings.itemsToShow : baseSlideCount
 
             setSlidesShown(newItemsToShow)
-            setSlidesWidth((baseSlideCount * 100) / newItemsToShow + (infinite ? 100 * 2 : 0))            
+            setSlidesWidth((baseSlideCount * 100) / newItemsToShow + (infinite ? 100 * 2 : 0))
           }
-          if("controlAlignment" in newSettings) {
-            setAlignment([styles[(newSettings.controlAlignment + '').split(' ')[0]], styles[(newSettings.controlAlignment + '').split(' ')[1]]])
+          if ('controlAlignment' in newSettings) {
+            setAlignment([
+              styles[(newSettings.controlAlignment + '').split(' ')[0]],
+              styles[(newSettings.controlAlignment + '').split(' ')[1]]
+            ])
           }
-          if("hideControls" in newSettings) {
+          if ('hideControls' in newSettings) {
             setControlVisibility(newSettings.hideControls)
           }
-          if("hideIndicators" in newSettings) {
+          if ('hideIndicators' in newSettings) {
             setIndicatorVisibility(newSettings.hideIndicators)
           }
-          if("indicatorStyle" in newSettings) {
+          if ('indicatorStyle' in newSettings) {
             setIndicatorStyling(newSettings.indicatorStyle)
           }
-          if("layoutGap" in newSettings) {
+          if ('layoutGap' in newSettings) {
             setSlideGap(newSettings.layoutGap)
           }
         } else {
@@ -650,12 +692,12 @@ export default function carouselHelper(
         }
       }
     }
-    
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    
-    return () => window.removeEventListener("resize", handleResize);
-  }, [windowWidth]); 
+
+    window.addEventListener('resize', handleResize)
+    handleResize()
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [windowWidth])
 
   useEffect(() => {
     const { current } = slidesRef
@@ -670,7 +712,6 @@ export default function carouselHelper(
     setSlideFlexBasis(measurements.slideFlexBasis)
 
     setAriaLive('polite')
-    
   }, [windowWidth])
 
   return {
