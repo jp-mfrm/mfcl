@@ -24,6 +24,7 @@
   min-width: 28px;
   padding: 0;
   position: relative;
+  opacity: 0.3;
   text-align: center;
 }
 
@@ -31,6 +32,10 @@
   min-height: 65px;
   flex: 1 1 auto;
   text-align: inherit;
+}
+
+.progress-step.active-step {
+  opacity: 1;
 }
 
 .outer-circle {
@@ -60,11 +65,11 @@
   width: 20px;
 }
 
-.circle-label {
+.circle-icon {
   bottom: 23px;
 }
 
-.circle-active.circle-label {
+.circle-active.circle-icon {
   bottom: 28px;
 }
 
@@ -79,39 +84,40 @@
   left: 0px;
 }
 
-.word {
+.label {
   box-sizing: border-box;
   display: block;
   font-size: 14px;
+  font-weight: 500;
   height: 100%;
-  line-height: initial;
-  overflow: hidden;
+  line-height: 20px;
   padding: 14px 9.3px;
-  text-overflow: ellipsis;
 }
 
-.word.vertical {
+.label.vertical {
   height: initial;
+  line-height: initial;
   padding: 10px 0px 10px 40px;
 }
 
 .line {
-  background: $gray-4;
+  border: 1px dashed;
+  border-color: $red;
   bottom: 18px;
   box-sizing: border-box;
   display: block;
-  height: 2px;
-  left: 50%;
+  height: 0px;
+  left: 60%;
   position: absolute;
   top: auto;
   transition: all 0.3s;
-  width: 100%;
+  width: 80%;
 }
 
 .line.vertical {
-  height: 100%;
+  height: 50%;
   left: 9px;
   right: auto;
-  top: 10px;
-  width: 2px;
+  top: 35px;
+  width: 0px;
 }

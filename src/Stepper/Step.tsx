@@ -1,9 +1,15 @@
-import React, { FunctionComponent, memo } from 'react'
+import React, { FunctionComponent, ReactNode, memo } from 'react'
 import clsx from 'clsx'
 
 import styles from './stepper.module.scss'
 
-const empty = {}
+export interface IStep {
+  className?: string
+  color?: string
+  icon?: ReactNode
+  label?: string | ReactNode
+  dividerClass?: string
+}
 
 interface Props {
   /**
@@ -11,9 +17,8 @@ interface Props {
    */
   activeStep: boolean
   index: number
-  alreadyPassed: boolean
   lastIndex: boolean
-  content?: any
+  step: IStep
   color?: string
   /**
    * Use this function to save the selected index
@@ -23,17 +28,8 @@ interface Props {
   vertical?: boolean
 }
 
-const Step: FunctionComponent<Props> = ({
-  activeStep,
-  alreadyPassed,
-  color,
-  content,
-  index,
-  lastIndex,
-  selectIndex,
-  stepClass,
-  vertical
-}) => {
+const Step: FunctionComponent<Props> = ({ activeStep, step, index, lastIndex, selectIndex, stepClass, vertical }) => {
+  const { color = '#302926', icon, label, dividerClass } = step
   const verticalClass = vertical && styles.vertical
   const circleNumber = (
     <div className={clsx(styles['outer-circle'], verticalClass)}>
@@ -48,27 +44,20 @@ const Step: FunctionComponent<Props> = ({
         className={clsx(
           styles.circle,
           activeStep && styles['circle-active'],
-          content && styles['circle-label'],
+          label && styles['circle-icon'],
           verticalClass
         )}
-      />
+      >
+        {icon}
+      </div>
     </div>
   )
 
   return (
-    <li className={clsx(styles['progress-step'], verticalClass, stepClass)}>
-      {vertical ? (
-        <>
-          {circleNumber}
-          {content && <div className={clsx(styles.word, verticalClass)}>{content}</div>}
-        </>
-      ) : (
-        <>
-          {content && <div className={styles.word}>{content}</div>}
-          {circleNumber}
-        </>
-      )}
-      {!lastIndex && <div style={{ backgroundColor: color }} className={clsx(styles.line, verticalClass)} />}
+    <li className={clsx(styles['progress-step'], activeStep && styles['active-step'], verticalClass, stepClass)}>
+      {circleNumber}
+      {label && <div className={clsx(styles.label, verticalClass)}>{label}</div>}
+      {!lastIndex && <div style={{ borderColor: color }} className={clsx(styles.line, verticalClass, dividerClass)} />}
     </li>
   )
 }
