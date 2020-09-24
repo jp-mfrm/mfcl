@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ElementType } from 'react'
 import clsx from 'clsx'
+import Bouncer from '../Icons/bouncer'
 
 import styles from './badge.module.scss'
 
@@ -26,6 +27,7 @@ const Badge: FunctionComponent<Props> = ({
   return (
     <Component className={badgeClassName} style={badgeSizeStyles} {...rest}>
       {children}
+      <Bouncer />
     </Component>
   )
 }
