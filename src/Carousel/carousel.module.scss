@@ -194,12 +194,21 @@ $slider-height: 100%;
         left: 40%;
       }
 
-      @media only screen and (max-width: $small-mobile) {
+      @media only screen and (max-width: $mobile) {
         &.next {
-          right: 35%;
+          right: 30%;
         }
         &.prev {
-          left: 35%;
+          left: 30%;
+        }
+      }
+
+      @media only screen and (max-width: $small-mobile) {
+        &.next {
+          right: 25%;
+        }
+        &.prev {
+          left: 25%;
         }
       }
     }
@@ -208,8 +217,12 @@ $slider-height: 100%;
       &.next {
         left: 10%;
 
-        @media only screen and (max-width: $small-mobile) {
+        @media only screen and (max-width: $mobile) {
           left: 20%;
+        }
+
+        @media only screen and (max-width: $small-mobile) {
+          left: 25%;
         }
       }
       &.prev {
@@ -224,8 +237,12 @@ $slider-height: 100%;
       &.prev {
         right: 10%;
 
-        @media only screen and (max-width: $small-mobile) {
+        @media only screen and (max-width: $mobile) {
           right: 20%;
+        }
+
+        @media only screen and (max-width: $small-mobile) {
+          right: 25%;
         }
       }
     }
