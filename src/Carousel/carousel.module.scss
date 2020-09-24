@@ -93,6 +93,11 @@ $slider-height: 100%;
       margin-top: -48px;
     }
 
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
     &.prev,
     &.next {
       width: 35px;
@@ -127,6 +132,10 @@ $slider-height: 100%;
 
       svg {
         display: block;
+      }
+
+      &.prev {
+        transform: rotate(180deg) scaleX(-1);
       }
 
       &.next {

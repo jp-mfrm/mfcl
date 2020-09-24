@@ -25,7 +25,7 @@ The Carousel component allows you to a display a selection of rotating items.
 ## Basic Usage
 
 <Playground>
-  <Carousel ariaLabel="one">
+  <Carousel ariaLabel="one" controlStyle="round">
     <div style={{ backgroundColor: 'rgb(214,52,38)', color: '#fff' }}>Slide 1</div>
     <div style={{ backgroundColor: ' rgb(253,204,11)' }}>Slide 2</div>
   </Carousel>
@@ -266,6 +266,7 @@ The layoutGap prop sets the slides' margins in pixels
     <div style={{ backgroundColor: 'lightblue' }}>Slide 4</div>
   </Carousel>
 
+
   <Carousel infinite itemsToShow={2} layoutGap={5} ariaLabel="one">
     <div style={{ backgroundColor: 'rgb(214,52,38)', color: '#fff' }}>Slide 1</div>
     <div style={{ backgroundColor: 'rgb(253,204,11)' }}>Slide 2</div>
@@ -273,6 +274,7 @@ The layoutGap prop sets the slides' margins in pixels
     <div style={{ backgroundColor: 'lightblue' }}>Slide 4</div>
   </Carousel>
 </Playground>
+
 
 ## Indicator Button Styles
 
