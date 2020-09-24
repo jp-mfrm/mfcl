@@ -62,7 +62,7 @@ The Responsive prop overrides the provided props of the carousel at different pi
 ### Homepage Heroes
 
 <Playground>
-  <Carousel hideControls duration={5000} ariaLabel="one">
+  <Carousel hideControls autoSlide duration={5000} ariaLabel="one">
     <div style={{ backgroundColor: 'lavender' }}>Slide 1</div>
     <div style={{ backgroundColor: 'pink' }}>Slide 2</div>
     <div style={{ backgroundColor: 'lightgreen' }}>Slide 3</div>
@@ -179,7 +179,12 @@ The Responsive prop overrides the provided props of the carousel at different pi
 ### Brand Carousel
 
 <Playground>
-  <Carousel itemsToShow={3} layoutGap={5} infinite hideIndicators controlAlignment="top right" ariaLabel="one">
+  <Carousel itemsToShow={3} layoutGap={5} infinite hideIndicators controlAlignment="top right" ariaLabel="one"
+    responsive={[{
+      breakpoint: 500,
+      itemsToShow: 2
+    }]}
+  >
     <Panel rounded>
       <PanelItem>Brand 1</PanelItem>
     </Panel>
