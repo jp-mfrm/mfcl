@@ -1,4 +1,4 @@
-import React, { forwardRef, FunctionComponent, ReactNode, useState } from 'react'
+import React, { forwardRef, FunctionComponent, ReactNode, useState, useEffect } from 'react'
 import clsx from 'clsx'
 import styles from './input.module.scss'
 
@@ -23,6 +23,8 @@ export interface Props {
   rightSide?: ReactNode
   /** You already know what this is for. Why are you looking up the description? */
   onChange?: Function
+  /** Id for input field */
+  id?: string
   [rest: string]: unknown
 }
 
@@ -38,6 +40,7 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
     inputMessage,
     onChange,
     rightSide,
+    id,
     ...rest
   } = props
   const [hasValue, setHasValue] = useState(false)
@@ -58,6 +61,15 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
     }
   }
 
+  useEffect(() => {
+    if (id && document) {
+      const input = document.querySelector(`#${id}`) as HTMLInputElement
+      if (input.value) {
+        setHasValue(true)
+      }
+    }
+  }, [])
+
   return (
     <div className={clsx(styles['input-wrapper'], wrapperClass)}>
       <div className={styles.inner}>
@@ -67,6 +79,7 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
           disabled={disabled}
           onChange={formControl}
           ref={ref}
+          id={id}
           {...rest}
         />
         {label && (
