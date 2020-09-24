@@ -21,6 +21,8 @@ interface Props {
   hideControls?: boolean
   /** Sets the indicator buttons' style */
   indicatorStyle?: 'bar' | 'round'
+  /** Sets indicator bar background color*/
+  indicatorBG?: 'dark' | 'light'
   /** Hides indicator buttons */
   hideIndicators?: boolean
   /** Supply a px margin between slides */
@@ -58,6 +60,7 @@ const Carousel: FunctionComponent<Props> = ({
   hideIndicators = false,
   hideControls = false,
   indicatorStyle = 'round',
+  indicatorBg = 'light',
   layoutGap = 0,
   infinite = false,
   autoSlide = false,
@@ -106,7 +109,7 @@ const Carousel: FunctionComponent<Props> = ({
   )
 
   const indicatorWrapper = (
-    <div ref={indicatorRef} className={clsx(styles['carousel-wrapper-indicators'])}>
+    <div ref={indicatorRef} className={clsx(styles['carousel-wrapper-indicators'], indicatorBg=="dark" && styles["dark"])}>
       {!indicatorVisibility && indicators}
     </div>
   )
