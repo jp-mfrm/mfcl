@@ -117,6 +117,7 @@ const Carousel: FunctionComponent<Props> = ({
       aria-label={'carousel-' + ariaLabel}
     >
       {screenReaderInstructions}
+      {controlButtons[0]}
       <div className={styles['carousel-wrapper-slider']}>
         <div
           className={styles['carousel-wrapper-slides']}
@@ -142,7 +143,7 @@ const Carousel: FunctionComponent<Props> = ({
         </div>
         {indicatorWrapper}
       </div>
-      {controlButtons}
+      {controlButtons[1]}
     </section>
   )
 

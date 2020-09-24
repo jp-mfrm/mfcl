@@ -135,40 +135,29 @@ function getIndicators(
 function getControlButtons(
   controlsVisibility: boolean, 
   alignment: string[], 
-  shiftSlide: Function
+  shiftSlide: Function,
+  direction: string
 ) {
+
   return (
   <>
     <button
       aria-hidden={(controlsVisibility && 'true') || 'false'}
       className={clsx(
         styles['carousel-wrapper-control'],
-        styles['prev'],
+        styles[direction],
         controlsVisibility && styles['hidden'],
         alignment
       )}
-      onClick={() => shiftSlide(-1)}
-      onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(-1);}}}
+      onClick={() => shiftSlide(direction === "next" ? 1 : -1)}
+      
+      onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(direction === "next" ? 1 : -1);}}}
     >
-      <p className={clsx(styles['sr-only'])}>Move Slider Left Button.</p>
-    </button>
-    <button
-      aria-hidden={(controlsVisibility && 'true') || 'false'}
-      className={clsx(
-        styles['carousel-wrapper-control'],
-        styles['next'],
-        controlsVisibility && styles['hidden'],
-        alignment
-      )}
-      onClick={() => shiftSlide(1)}
-      onKeyDown={(event) => {if(event.key === "Enter") {shiftSlide(1);}}}
-    >
-      <p className={clsx(styles['sr-only'])}>Move Slider Right Button.</p>
+      <p className={clsx(styles['sr-only'])}>{direction === "next" ? "Move Slider Left Button" : "Move Slider Right Button"}</p>
     </button>
   </>
   );
 }
-
 function getSlides(
   childrenArr: ReactNode[],
   baseSlideCount: number,
@@ -186,7 +175,6 @@ function getSlides(
         <div
           aria-label={label}
           aria-hidden={slidesShown - 1 < index}
-          tabIndex={-1}
           className={clsx(
             styles['slide'],
             slideGrabbing && styles['grabbing'],
@@ -263,7 +251,6 @@ function updateSlideAttributes(
     for (let i = index; i < boundary; i++) {
       let pos1 = i + positionAdj
       sliderRef.current.children[pos1].ariaHidden = hidden
-      sliderRef.current.children[pos1].attributes["tabindex"].value = hidden ? -1 : 0 
     }
   }
 
@@ -592,18 +579,10 @@ export default function carouselHelper(
     [activeIndex, slidesTransition, slidesLeft, slideShift]
   )
 
-  const controlButtons =  getControlButtons(controlsVisibility, alignment, shiftSlide)
+  const controlButtons: ReactNode[] = [];
+  controlButtons.push(getControlButtons(controlsVisibility, alignment, shiftSlide, "prev"))
+  controlButtons.push(getControlButtons(controlsVisibility, alignment, shiftSlide, "next"))
   
-  const initializeTabIndices = (infinite: boolean, slidesShown: number, index: number) => {
-    let positionAdj = infinite ? slidesShown : 0
-    for (let i = index; i < index + 1 + (slidesShown - 1); i++) {
-      let pos1 = i + positionAdj
-      if(slidesRef.current.children[pos1]) {
-        slidesRef.current.children[pos1].attributes['tabindex'].value = 0
-      }
-    }
-  }
-
   useEffect(() => {
     document.addEventListener('mouseup', handleDragEndHandler)
     document.addEventListener('mousemove', handleDragActionHandler)
@@ -641,10 +620,6 @@ export default function carouselHelper(
         if(newSettings) {
           if("itemsToShow" in newSettings) {
             let newItemsToShow = baseSlideCount ? newSettings.itemsToShow : baseSlideCount;
-
-            for (let i = 0; i < slidesRef.current.children.length; i++) {
-              slidesRef.current.children[i].attributes["tabindex"].value = -1;
-            }
 
             setSlidesShown(newItemsToShow)
             setSlidesWidth((baseSlideCount * 100) / newItemsToShow + (infinite ? 100 * 2 : 0))            
@@ -695,7 +670,6 @@ export default function carouselHelper(
     setSlideFlexBasis(measurements.slideFlexBasis)
 
     setAriaLive('polite')
-    initializeTabIndices(infinite, slidesShown, activeIndex)
     
   }, [windowWidth])
 

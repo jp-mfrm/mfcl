@@ -269,20 +269,20 @@ describe('Carousel Component', () => {
   })
 
   it('should correctly handle responsive breakpoints on window resize', () => {
-    const { container } = render(
+    const { container, rerender } = render(
       <Carousel infinite ariaLabel="test" responsive={[
         {
           breakpoint: 1000,
           itemsToShow: 2,
           controlAlignment: 'top right',
           hideControls: true,
-          hideIndicators: true,
+          hideIndicators: false,
           indicatorStyle: 'bar',
           layoutGap: 0
         },
         {
           breakpoint: 250,
-          hideIndicators: false,
+          hideIndicators: true,
         }
       ]}>
         <div>Slide 1</div>
