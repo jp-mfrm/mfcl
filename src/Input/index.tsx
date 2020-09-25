@@ -62,11 +62,11 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
   }
 
   useEffect(() => {
-    if (id && document) {
-      const input = document.querySelector(`#${id}`) as HTMLInputElement
-      if (input.value) {
-        setHasValue(true)
-      }
+    if (
+      (id && document && (document.querySelector(`#${id}`) as HTMLInputElement)?.value) ||
+      (ref as React.RefObject<HTMLInputElement>)?.current?.value
+    ) {
+      setHasValue(true)
     }
   }, [])
 
