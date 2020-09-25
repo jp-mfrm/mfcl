@@ -33,6 +33,33 @@ $slider-height: 100%;
         display: block;
       }
     }
+
+    &:focus {
+      box-shadow: 0 0 0 2px $red;
+      background-color: $white;
+
+      &.prev {
+        background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
+      }
+
+      &.next {
+        background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+      }
+
+      &.round {
+        background-image: none;
+
+        svg {
+          display: block;
+          background-color: rgba(255, 255, 255, 0);
+
+          circle {
+            stroke: rgba(255, 255, 255, 0.5);
+            fill: rgba(255, 255, 255, 0.5);
+          }
+        }
+      }
+    }
   }
 
   &-slider {
