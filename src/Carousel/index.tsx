@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import styles from './carousel.module.scss'
 
 interface Props {
-  /** Aria label to set apart different carousels in the page.  
+  /** Aria label to set apart different carousels in the page.
    * Label is prefixed with 'carousel-'
    */
   ariaLabel: string
@@ -13,14 +13,18 @@ interface Props {
   carouselClass?: string
   /** Sets how many slides to show */
   itemsToShow?: number
-  /** Sets the transition control button alignments. Two non conflicting configurations can be combined.  
-   * Valid configurations are: 'top', 'middle', 'center', 'apart', 'left', 'right', 'bottom'.  
+  /** Sets the transition control button alignments. Two non conflicting configurations can be combined.
+   * Valid configurations are: 'top', 'middle', 'center', 'apart', 'left', 'right', 'bottom'.
    * 'middle' centers vertically while 'center' centers horizontally. */
-  controlAlignment?: string 
+  controlAlignment?: string
+  /** Sets the control buttons' style */
+  controlStyle?: 'square' | 'round'
   /** Hides control buttons unless hovered */
   hideControls?: boolean
   /** Sets the indicator buttons' style */
   indicatorStyle?: 'bar' | 'round'
+  /** Sets indicator bar background color*/
+  indicatorBg?: 'dark' | 'light'
   /** Hides indicator buttons */
   hideIndicators?: boolean
   /** Supply a px margin between slides */
@@ -31,6 +35,22 @@ interface Props {
   autoSlide?: boolean
   /** Time in milliseconds for autoSlide */
   duration?: number
+  /** Override props at certain breakpoints  
+  
+
+  responsive prop properties:   
+
+
+    breakpoint: number,  
+    itemsToShow: number,   
+    controlAlignment: string,    
+    hideIndicators: boolean,   
+    hideControls: boolean,  
+    indicatorStyle: string,   
+    layoutGap: number   
+  
+  */
+  responsive?: object[]
   [rest: string]: unknown // ...rest property
 }
 
@@ -42,10 +62,13 @@ const Carousel: FunctionComponent<Props> = ({
   hideIndicators = false,
   hideControls = false,
   indicatorStyle = 'round',
+  controlStyle = 'square',
+  indicatorBg = 'light',
   layoutGap = 0,
   infinite = false,
   autoSlide = false,
   duration = 3000,
+  responsive = [{}],
   children
 }) => {
   const {
@@ -54,54 +77,29 @@ const Carousel: FunctionComponent<Props> = ({
     slides,
     slidesWidth,
     indicators,
+    controlButtons,
+    indicatorVisibility,
     indicatorRef,
-    alignment,
     slidesTransition,
     ariaLive,
     handleDragStart,
     handleDragEndHandler,
     handleDragActionHandler,
-    handleIndexCheck,
-    shiftSlide
+    handleIndexCheck
   } = carouselHelper(
     children,
     itemsToShow,
     controlAlignment,
+    hideControls,
+    controlStyle,
     hideIndicators,
     indicatorStyle,
     duration,
     infinite,
     autoSlide,
-    layoutGap
-  )
-
-  const buttons = (
-    <>
-      <button
-        aria-hidden={(hideControls && 'true') || 'false'}
-        className={clsx(
-          styles['carousel-wrapper-control'],
-          styles['prev'],
-          hideControls && styles['hidden'],
-          alignment
-        )}
-        onClick={() => shiftSlide(-1)}
-      >
-        <p className={clsx(styles['sr-only'])}>Move Slider Left Button.</p>
-      </button>
-      <button
-        aria-hidden={(hideControls && 'true') || 'false'}
-        className={clsx(
-          styles['carousel-wrapper-control'],
-          styles['next'],
-          hideControls && styles['hidden'],
-          alignment
-        )}
-        onClick={() => shiftSlide(1)}
-      >
-        <p className={clsx(styles['sr-only'])}>Move Slider Right Button.</p>
-      </button>
-    </>
+    layoutGap,
+    //@ts-ignore
+    responsive
   )
 
   const screenReaderInstructions = (
@@ -109,13 +107,16 @@ const Carousel: FunctionComponent<Props> = ({
       This is a draggable carousel
       {autoSlide && 'It has auto-rotating slides'}
       Use Next and Previous buttons to navigate.
-      {!hideIndicators && 'You can also jump to a slide using the slide dots.'}
+      {!indicatorVisibility && 'You can also jump to a slide using the slide dots.'}
     </p>
   )
 
   const indicatorWrapper = (
-    <div ref={indicatorRef} className={clsx(styles['carousel-wrapper-indicators'])}>
-      {!hideIndicators && indicators}
+    <div
+      ref={indicatorRef}
+      className={clsx(styles['carousel-wrapper-indicators'], indicatorBg == 'dark' && styles['dark'])}
+    >
+      {!indicatorVisibility && indicators}
     </div>
   )
 
@@ -125,6 +126,7 @@ const Carousel: FunctionComponent<Props> = ({
       aria-label={'carousel-' + ariaLabel}
     >
       {screenReaderInstructions}
+      {controlButtons[0]}
       <div className={styles['carousel-wrapper-slider']}>
         <div
           className={styles['carousel-wrapper-slides']}
@@ -132,20 +134,25 @@ const Carousel: FunctionComponent<Props> = ({
           style={{
             left: `${slidesLeft}%`,
             width: `${slidesWidth}%`,
-            transition: slidesTransition
+            transition: slidesTransition,
+            WebkitTransition: slidesTransition,
+            MozTransition: slidesTransition,
+            msTransition: slidesTransition,
+            OTransition: slidesTransition
           }}
           ref={slidesRef}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
           onTouchEnd={handleDragEndHandler}
           onTouchMove={handleDragActionHandler}
+          onTouchCancel={handleIndexCheck}
           onTransitionEnd={handleIndexCheck}
         >
           {slides}
         </div>
-        {indicatorWrapper}
+        {!indicatorVisibility && indicatorWrapper}
       </div>
-      {buttons}
+      {controlButtons[1]}
     </section>
   )
 
