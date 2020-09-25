@@ -78,7 +78,7 @@ const Drawer: React.FunctionComponent<Props> = ({
   const [isShowing, setIsShowing] = useState(isOpen)
 
   const drawerClassName = clsx(styles['drawer-wrapper'], styles[position], className)
-  const closeBtnRef = useRef<HTMLButtonElement>(null)
+  const closeBtnRef = useRef<HTMLDivElement>(null)
   const modalRef: any = useRef<HTMLDivElement>(null)
   const firstUpdate = useRef(true)
 
@@ -166,15 +166,17 @@ const Drawer: React.FunctionComponent<Props> = ({
           >
             <div className={clsx(styles['drawer-header'], headerClassName)}>
               {(close || onClose) && (
-                <button
-                  type="button"
+            
+                <div
+                  role="button"
+                  tabIndex={0}
                   onClick={hideDrawer}
-                  className={clsx(styles.close, closeClassName)}
-                  aria-label="Close Modal"
+                  className={styles.close}
+                  aria-label="Close Drawer"
                   ref={closeBtnRef}
                 >
                   <span aria-hidden="true">&times;</span>
-                </button>
+                </div>
               )}
             </div>
             <div className={clsx(styles['drawer-body'], bodyClassName)}>{children}</div>
