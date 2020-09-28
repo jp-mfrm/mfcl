@@ -1,4 +1,5 @@
-import React, { forwardRef, FunctionComponent, ReactNode, useState } from 'react'
+import React, { forwardRef, FunctionComponent, ReactNode, useState, useEffect } from 'react'
+import useForwardedRef from '../utils/useForwardedRef'
 import clsx from 'clsx'
 import styles from './input.module.scss'
 
@@ -42,6 +43,7 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
   } = props
   const [hasValue, setHasValue] = useState(false)
   const errorClass = error && styles.error
+  const forwardedRef = useForwardedRef(ref)
 
   const formControl = (e: any) => {
     const length = e.target.value.length
@@ -58,6 +60,12 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
     }
   }
 
+  useEffect(() => {
+    if ((forwardedRef as React.RefObject<HTMLInputElement>)?.current?.value) {
+      setHasValue(true)
+    }
+  }, [])
+
   return (
     <div className={clsx(styles['input-wrapper'], wrapperClass)}>
       <div className={styles.inner}>
@@ -66,7 +74,7 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
           name={name}
           disabled={disabled}
           onChange={formControl}
-          ref={ref}
+          ref={forwardedRef}
           {...rest}
         />
         {label && (
