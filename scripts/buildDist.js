@@ -10,6 +10,7 @@ const { execSync } = require('child_process')
 const rootDir = path.resolve(__dirname, '../')
 const componentPath = path.resolve(rootDir, './src')
 const utilsPath = path.resolve(componentPath, './utils')
+const iconsPath = path.resolve(componentPath, './Icons')
 const distPath = path.resolve(rootDir, './dist')
 
 const blackListDir = ['src', '__tests__']
@@ -49,6 +50,7 @@ const setupPackageJSON = () => {
 const copyScss = () => {
   execSync(`find ${componentPath} -maxdepth 1 -type f -name \\*.scss -exec cp {} ./dist \\;`, execOptions)
   execSync(`tsc ${utilsPath}/*.ts --outDir ${distPath}/utils --esModuleInterop true`, execOptions)
+  execSync(`tsc ${iconsPath}/*.ts --outDir ${distPath}/Icons --esModuleInterop true`, execOptions)
   console.log(
     `
 CSS and package.json copied over
@@ -85,6 +87,15 @@ const buildComponents = () => {
     .forEach((file) => {
       const takeOutExtension = file.split('.').slice(0, -1).join('.')
       reusabledComponents.push(`../utils/${takeOutExtension}`)
+    })
+
+  /* Utils */
+  const icons = findType('-type f', iconsPath)
+  icons
+    .filter((file) => file !== '')
+    .forEach((file) => {
+      const takeOutExtension = file.split('.').slice(0, -1).join('.')
+      reusabledComponents.push(`../icons/${takeOutExtension}`)
     })
 
   /* Components */

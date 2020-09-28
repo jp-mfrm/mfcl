@@ -75,7 +75,7 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
-      "!src/icons/**",
+      "!src/Icons/**",
       "!src/documentation/**",
       "!src/gatsby-theme-docz/**",
       "!src/utils/**",
