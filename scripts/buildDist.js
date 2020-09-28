@@ -89,7 +89,7 @@ const buildComponents = () => {
       reusabledComponents.push(`../utils/${takeOutExtension}`)
     })
 
-  /* Utils */
+  /* Icons */
   const icons = findType('-type f', iconsPath)
   icons
     .filter((file) => file !== '')
