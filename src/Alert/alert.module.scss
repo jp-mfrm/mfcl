@@ -1,4 +1,5 @@
 @import '../variables';
+@import '../mixins/closeX';
 
 .alert {
   align-items: center;
@@ -38,28 +39,10 @@
 }
 
 .close {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-color: $transparent;
-  border: 0;
-  color: $inherit;
-  cursor: pointer;
-  float: right;
-  font-size: 25px;
-  height: 100%;
-  line-height: 1;
-  padding: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 22px;
-
-  .close-icon {
+  @include closeX();
     position: absolute;
-    right: 10px;
-    top: 3px;
-  }
+    right: 5px;
+    top: 0;
 
   &:hover {
     opacity: 0.5;

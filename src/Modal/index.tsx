@@ -27,7 +27,7 @@ const Modal: FunctionComponent<Props> = ({
   const [isShowing, setIsShowing] = useState(isOpen)
 
   const modalRef: any = useRef<HTMLDivElement>(null)
-  const closeBtnRef = useRef<HTMLButtonElement>(null)
+  const closeBtnRef = useRef<HTMLDivElement>(null)
   const firstUpdate = useRef(true)
 
   useEffect(() => {
@@ -101,17 +101,18 @@ const Modal: FunctionComponent<Props> = ({
               ref={modalRef}
               {...rest}
             >
-              <div>
-                <button
-                  type="button"
+              <>
+                <div
+                  role="button"
+                  tabIndex={0}
                   onClick={hideModal}
                   className={styles.close}
                   aria-label="Close Modal"
                   ref={closeBtnRef}
                 >
                   <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
+                </div>
+              </>
               <div className="modal-content">
                 <h1>{header}</h1>
                 {children}
