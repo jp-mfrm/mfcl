@@ -13,7 +13,7 @@ const utilsPath = path.resolve(componentPath, './utils')
 const iconsPath = path.resolve(componentPath, './Icons')
 const distPath = path.resolve(rootDir, './dist')
 
-const blackListDir = ['src', '__tests__']
+const blackListDir = ['src', 'Icons', '__tests__']
 
 const execOptions = {
   shell: true
@@ -50,7 +50,7 @@ const setupPackageJSON = () => {
 const copyScss = () => {
   execSync(`find ${componentPath} -maxdepth 1 -type f -name \\*.scss -exec cp {} ./dist \\;`, execOptions)
   execSync(`tsc ${utilsPath}/*.ts --outDir ${distPath}/utils --esModuleInterop true`, execOptions)
-  execSync(`tsc ${iconsPath}/*.tsx --outDir ${distPath}/icons --esModuleInterop true`, execOptions)
+  execSync(`tsc ${iconsPath}/*.tsx --outDir ${distPath}/Icons --esModuleInterop true --jsx react`, execOptions)
   console.log(
     `
 CSS and package.json copied over
