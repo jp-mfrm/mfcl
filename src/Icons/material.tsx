@@ -7,12 +7,7 @@ interface Props {
   [x: string]: unknown // for the rest property
 }
 
-const NaturalMaterial: React.FunctionComponent<Props> = ({
-  width = '26',
-  height = '26',
-  fillColor = '#2D2926',
-  ...rest
-}) => (
+const Material: React.FunctionComponent<Props> = ({ width = '26', height = '26', fillColor = '#2D2926', ...rest }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 26 26">
     <mask id="e9vvbau7aa" width="26" height="26" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
@@ -28,4 +23,4 @@ const NaturalMaterial: React.FunctionComponent<Props> = ({
   </svg>
 )
 
-export default NaturalMaterial
+export default Material

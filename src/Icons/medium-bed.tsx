@@ -7,7 +7,7 @@ interface Props {
   [x: string]: unknown // for the rest property
 }
 
-const FirmBed: React.FunctionComponent<Props> = ({ width = '24', height = '14', fillColor = '#2D2926', ...rest }) => (
+const MediumBed: React.FunctionComponent<Props> = ({ width = '24', height = '14', fillColor = '#2D2926', ...rest }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 24 14">
     <mask id="5k5kd4ncua" width="24" height="14" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
@@ -23,4 +23,4 @@ const FirmBed: React.FunctionComponent<Props> = ({ width = '24', height = '14', 
   </svg>
 )
 
-export default FirmBed
+export default MediumBed

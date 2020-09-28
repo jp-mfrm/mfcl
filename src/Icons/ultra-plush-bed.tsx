@@ -7,7 +7,7 @@ interface Props {
   [x: string]: unknown // for the rest property
 }
 
-const UltraFirmBed: React.FunctionComponent<Props> = ({
+const UltraPlushBed: React.FunctionComponent<Props> = ({
   width = '24',
   height = '14',
   fillColor = '#2D2926',
@@ -28,4 +28,4 @@ const UltraFirmBed: React.FunctionComponent<Props> = ({
   </svg>
 )
 
-export default UltraFirmBed
+export default UltraPlushBed

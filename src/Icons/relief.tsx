@@ -7,12 +7,7 @@ interface Props {
   [x: string]: unknown // for the rest property
 }
 
-const PressureRelief: React.FunctionComponent<Props> = ({
-  width = '24',
-  height = '16',
-  fillColor = '#2D2926',
-  ...rest
-}) => (
+const Relief: React.FunctionComponent<Props> = ({ width = '24', height = '16', fillColor = '#2D2926', ...rest }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 24 16">
     <mask id="ownxqh4goa" width="26" height="16" x="-1" y="0" maskUnits="userSpaceOnUse">
       <path
@@ -28,4 +23,4 @@ const PressureRelief: React.FunctionComponent<Props> = ({
   </svg>
 )
 
-export default PressureRelief
+export default Relief

@@ -50,7 +50,7 @@ const setupPackageJSON = () => {
 const copyScss = () => {
   execSync(`find ${componentPath} -maxdepth 1 -type f -name \\*.scss -exec cp {} ./dist \\;`, execOptions)
   execSync(`tsc ${utilsPath}/*.ts --outDir ${distPath}/utils --esModuleInterop true`, execOptions)
-  execSync(`tsc ${iconsPath}/*.ts --outDir ${distPath}/Icons --esModuleInterop true`, execOptions)
+  execSync(`tsc ${iconsPath}/*.tsx --outDir ${distPath}/icons --esModuleInterop true`, execOptions)
   console.log(
     `
 CSS and package.json copied over
@@ -95,7 +95,7 @@ const buildComponents = () => {
     .filter((file) => file !== '')
     .forEach((file) => {
       const takeOutExtension = file.split('.').slice(0, -1).join('.')
-      reusabledComponents.push(`../icons/${takeOutExtension}`)
+      reusabledComponents.push(`../Icons/${takeOutExtension}`)
     })
 
   /* Components */

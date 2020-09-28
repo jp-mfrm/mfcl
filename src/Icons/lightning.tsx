@@ -7,12 +7,7 @@ interface Props {
   [x: string]: unknown // for the rest property
 }
 
-const LightningBolt: React.FunctionComponent<Props> = ({
-  width = '16',
-  height = '25',
-  fillColor = '#2D2926',
-  ...rest
-}) => (
+const Lightning: React.FunctionComponent<Props> = ({ width = '16', height = '25', fillColor = '#2D2926', ...rest }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 16 25">
     <mask id="u64sn44m6a" width="16" height="25" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
@@ -28,4 +23,4 @@ const LightningBolt: React.FunctionComponent<Props> = ({
   </svg>
 )
 
-export default LightningBolt
+export default Lightning

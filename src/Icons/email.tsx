@@ -7,7 +7,7 @@ interface Props {
   [x: string]: unknown // for the rest property
 }
 
-const Envelope: React.FunctionComponent<Props> = ({ width = '24', height = '16', fillColor = '#2D2926', ...rest }) => (
+const Email: React.FunctionComponent<Props> = ({ width = '24', height = '16', fillColor = '#2D2926', ...rest }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 24 16">
     <mask id="7o23vn5tda" width="24" height="16" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
@@ -23,4 +23,4 @@ const Envelope: React.FunctionComponent<Props> = ({ width = '24', height = '16',
   </svg>
 )
 
-export default Envelope
+export default Email
