@@ -45,10 +45,5 @@
 
   .close {
     @include closeX();
-
-    span {
-      position: relative;
-      top: -1px;
-    }
   }
 }
