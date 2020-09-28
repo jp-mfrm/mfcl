@@ -24,14 +24,17 @@ const Stepper: FunctionComponent<Props> = ({ activeStep, className, color, steps
   return (
     <ul className={clsx(styles['stepper-wrapper'], vertical && styles.vertical, className)} {...rest}>
       {steps.map((step: any, index) => {
-        const lastIndex = index === steps.length - 1
+        const currentOrPassed = activeStep >= index
+        // const lastIndex = index === steps.length - 1
+        const firstIndex = index === 0
         return (
           <Step
             key={index}
             activeStep={activeStep === index}
+            currentOrPassed={currentOrPassed}
             step={step}
             index={index}
-            lastIndex={lastIndex}
+            firstIndex={firstIndex}
             selectIndex={selectIndex}
             vertical={vertical}
           />

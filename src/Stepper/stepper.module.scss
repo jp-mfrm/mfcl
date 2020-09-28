@@ -24,7 +24,6 @@
   min-width: 28px;
   padding: 0;
   position: relative;
-  opacity: 0.3;
   text-align: center;
 }
 
@@ -34,47 +33,35 @@
   text-align: inherit;
 }
 
-.progress-step.active-step {
+.not-passed {
+  opacity: 0.3;
+}
+
+.current-or-passed {
   opacity: 1;
-}
-
-.outer-circle {
-  min-height: 20px;
-}
-
-.outer-circle.vertical {
-  min-height: 0px;
 }
 
 .circle {
   border-radius: 50%;
-  bottom: 3px;
   box-sizing: border-box;
-  height: 8px;
+  height: 22px;
   margin: 0 auto;
   position: relative;
   transition: all 0.3s;
-  width: 8px;
+  width: 22px;
   z-index: 20;
 }
 
-.circle-active {
-  background-color: $white;
-  bottom: 10px;
-  height: 20px;
-  width: 20px;
+.circle-has-label {
+  // bottom: 23px;
 }
 
-.circle-icon {
-  bottom: 23px;
-}
-
-.circle-active.circle-icon {
-  bottom: 28px;
+.circle-active.circle-has-label {
+  // bottom: 28px;
 }
 
 .circle.vertical {
-  left: 6px;
+  left: 0px;
   margin: 0;
   position: absolute;
   top: 10px;
@@ -103,13 +90,12 @@
 .line {
   border: 1px dashed;
   border-color: $red;
-  bottom: 18px;
   box-sizing: border-box;
   display: block;
   height: 0px;
   left: 60%;
   position: absolute;
-  top: auto;
+  top: 12px;
   transition: all 0.3s;
   width: 80%;
 }
@@ -118,6 +104,6 @@
   height: 50%;
   left: 9px;
   right: auto;
-  top: 35px;
+  top: 37px;
   width: 0px;
 }

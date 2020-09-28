@@ -16,8 +16,9 @@ interface Props {
    * Controls the current active step
    */
   activeStep: boolean
+  currentOrPassed: boolean
   index: number
-  lastIndex: boolean
+  firstIndex: boolean
   step: IStep
   color?: string
   /**
@@ -28,36 +29,46 @@ interface Props {
   vertical?: boolean
 }
 
-const Step: FunctionComponent<Props> = ({ activeStep, step, index, lastIndex, selectIndex, stepClass, vertical }) => {
-  const { color = '#302926', icon, label, dividerClass } = step
+const Step: FunctionComponent<Props> = ({
+  activeStep,
+  currentOrPassed,
+  step,
+  index,
+  firstIndex,
+  selectIndex,
+  stepClass,
+  vertical
+}) => {
+  const { color = '#d63426', icon, label, dividerClass } = step
   const verticalClass = vertical && styles.vertical
+  const currentOrPassedClass = currentOrPassed ? styles['current-or-passed'] : styles['not-passed']
   const circleNumber = (
-    <div className={clsx(styles['outer-circle'], verticalClass)}>
-      <div
-        onClick={selectIndex ? () => selectIndex(index) : undefined}
-        onKeyPress={selectIndex ? () => selectIndex(index) : undefined}
-        role="button"
-        tabIndex={0}
-        style={
-          activeStep ? { border: `2px solid ${color}` } : { background: color, cursor: selectIndex ? 'pointer' : '' }
-        }
-        className={clsx(
-          styles.circle,
-          activeStep && styles['circle-active'],
-          label && styles['circle-icon'],
-          verticalClass
-        )}
-      >
-        {icon}
-      </div>
+    <div
+      onClick={selectIndex ? () => selectIndex(index) : undefined}
+      onKeyPress={selectIndex ? () => selectIndex(index) : undefined}
+      role="button"
+      tabIndex={selectIndex ? 0 : -1}
+      style={
+        activeStep
+          ? { border: `2px solid ${color}` }
+          : { border: `2px solid ${color}`, background: color, cursor: selectIndex ? 'pointer' : '' }
+      }
+      className={clsx(styles.circle, currentOrPassedClass, label && styles['circle-has-label'], verticalClass)}
+    >
+      {icon}
     </div>
   )
 
   return (
-    <li className={clsx(styles['progress-step'], activeStep && styles['active-step'], verticalClass, stepClass)}>
+    <li className={clsx(styles['progress-step'], verticalClass, stepClass)}>
       {circleNumber}
-      {label && <div className={clsx(styles.label, verticalClass)}>{label}</div>}
-      {!lastIndex && <div style={{ borderColor: color }} className={clsx(styles.line, verticalClass, dividerClass)} />}
+      {!firstIndex && (
+        <div
+          style={{ borderColor: color }}
+          className={clsx(styles.line, currentOrPassedClass, verticalClass, dividerClass)}
+        />
+      )}
+      {label && <div className={clsx(styles.label, currentOrPassedClass, verticalClass)}>{label}</div>}
     </li>
   )
 }
