@@ -56,7 +56,7 @@ function getSliderMeasurements(
 
     let maxScreenPxWidth = 2560
     let scaleFactor = measurements.slidesPxWidth / maxScreenPxWidth
-    let defaultMarginPixel = slideGap * scaleFactor;
+    let defaultMarginPixel = slideGap * scaleFactor
     measurements.slideMargin = (defaultMarginPixel / measurements.slidesPxWidth) * 100
 
     measurements.slideShift =
@@ -157,7 +157,10 @@ function getControlButtons(
           styles[controlStyle],
           !indicatorVisibility && styles['mt-48']
         )}
-        onClick={() => shiftSlide(direction === 'next' ? 1 : -1)}
+        onClick={(event) => {
+          ;(event.target as HTMLElement).focus()
+          shiftSlide(direction === 'next' ? 1 : -1)
+        }}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
             shiftSlide(direction === 'next' ? 1 : -1)
@@ -500,7 +503,10 @@ export default function carouselHelper(
     }
 
     event = event || window.event
-    if (event.type !== 'touchstart') event.preventDefault()
+    if (event.type !== 'touchstart') {
+      event.preventDefault()
+      ;(document.activeElement as HTMLElement).blur()
+    }
     event.stopPropagation()
 
     setPosInitial(slidesLeft)
