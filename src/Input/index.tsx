@@ -24,8 +24,6 @@ export interface Props {
   rightSide?: ReactNode
   /** You already know what this is for. Why are you looking up the description? */
   onChange?: Function
-  /** Id for input field */
-  id?: string
   [rest: string]: unknown
 }
 
@@ -41,7 +39,6 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
     inputMessage,
     onChange,
     rightSide,
-    id,
     ...rest
   } = props
   const [hasValue, setHasValue] = useState(false)
@@ -78,7 +75,6 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
           disabled={disabled}
           onChange={formControl}
           ref={forwardedRef}
-          id={id}
           {...rest}
         />
         {label && (
