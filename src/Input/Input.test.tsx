@@ -108,4 +108,9 @@ describe('Input Component', () => {
     expect(input?.value).toBe('')
     expect(input?.classList).not.toContain('has-value')
   })
+
+  it('should have correct styles with default value given', () => {
+    const { container } = render(<Input label="default" defaultValue="Default Value" />)
+    expect(container.querySelector('.input')?.classList).toContain('has-value')
+  })
 })

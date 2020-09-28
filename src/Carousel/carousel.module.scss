@@ -12,6 +12,56 @@ $slider-height: 100%;
   display: flex;
   position: relative;
 
+  &:hover > &-control.hidden {
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.25s;
+    color: $black;
+
+    &.prev {
+      background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
+    }
+
+    &.next {
+      background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+    }
+
+    &.round {
+      background-image: none;
+
+      svg {
+        display: block;
+      }
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px $red;
+      background-color: $white;
+
+      &.prev {
+        background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
+      }
+
+      &.next {
+        background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+      }
+
+      &.round {
+        background-image: none;
+
+        svg {
+          display: block;
+          background-color: rgba(255, 255, 255, 0);
+
+          circle {
+            stroke: rgba(255, 255, 255, 0.5);
+            fill: rgba(255, 255, 255, 0.5);
+          }
+        }
+      }
+    }
+  }
+
   &-slider {
     overflow: hidden;
     position: relative;
@@ -55,10 +105,10 @@ $slider-height: 100%;
 
   &-control {
     position: absolute;
-    top: 40%;
-    width: 35px;
-    height: 35px;
-    background: #fff;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    background: $white;
     border-radius: 50px;
     border: none;
     margin-top: -20px;
@@ -66,12 +116,101 @@ $slider-height: 100%;
     z-index: 2;
     outline: none;
 
+    &.mt-48 {
+      margin-top: -48px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    &.prev,
+    &.next {
+      width: 35px;
+      background-size: 22px;
+      background-position: center;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+
     &.prev {
+      border-radius: 0 5px 5px 0;
       background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
     }
 
     &.next {
+      border-radius: 5px 0 0 5px;
       background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+    }
+
+    &.prev:active,
+    &.next:active {
+      transform: scale(0.8);
+    }
+
+    &.round {
+      background-image: none;
+      width: 50px;
+      display: flex;
+      align-items: center;
+      border-radius: 50px;
+      padding: 0px;
+
+      svg {
+        display: block;
+      }
+
+      &.prev {
+        transform: rotate(180deg) scaleX(-1);
+      }
+
+      &.next {
+        transform: rotate(180deg);
+      }
+    }
+
+    &.hidden {
+      background-image: none;
+      background-color: rgba(255, 255, 255, 0);
+      box-shadow: none;
+
+      svg {
+        display: none;
+        background-color: rgba(255, 255, 255, 0);
+
+        circle {
+          stroke: rgba(255, 255, 255, 0.5);
+          fill: rgba(255, 255, 255, 0.5);
+        }
+      }
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px $red;
+      background-color: $white;
+
+      &.prev {
+        background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
+      }
+
+      &.next {
+        background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+      }
+
+      &.round {
+        background-image: none;
+
+        svg {
+          display: block;
+          background-color: rgba(255, 255, 255, 0);
+
+          circle {
+            stroke: rgba(255, 255, 255, 0.5);
+            fill: rgba(255, 255, 255, 0.5);
+          }
+        }
+      }
     }
 
     &.center {
@@ -82,22 +221,35 @@ $slider-height: 100%;
         left: 40%;
       }
 
-      @media only screen and (max-width: $small-mobile) {
+      @media only screen and (max-width: $mobile) {
         &.next {
-          right: 35%;
+          right: 30%;
         }
         &.prev {
-          left: 35%;
-        }  
+          left: 30%;
+        }
+      }
+
+      @media only screen and (max-width: $small-mobile) {
+        &.next {
+          right: 25%;
+        }
+        &.prev {
+          left: 25%;
+        }
       }
     }
 
     &.left {
       &.next {
         left: 10%;
-        
-        @media only screen and (max-width: $small-mobile) {
+
+        @media only screen and (max-width: $mobile) {
           left: 20%;
+        }
+
+        @media only screen and (max-width: $small-mobile) {
+          left: 25%;
         }
       }
       &.prev {
@@ -111,9 +263,13 @@ $slider-height: 100%;
       }
       &.prev {
         right: 10%;
-        
-        @media only screen and (max-width: $small-mobile) {
+
+        @media only screen and (max-width: $mobile) {
           right: 20%;
+        }
+
+        @media only screen and (max-width: $small-mobile) {
+          right: 25%;
         }
       }
     }
@@ -121,54 +277,9 @@ $slider-height: 100%;
     &.apart {
       &.next {
         right: 0px;
-
-        &.middle {
-          height: 50px;
-          border-radius: 5px 0 0 5px;
-        }
-        
       }
       &.prev {
         left: 0px;
-
-        &.middle {
-          height: 50px;
-          border-radius: 0 5px 5px 0;
-        }
-      }
-    }
-
-    &.prev,
-    &.next {
-      background-size: 22px;
-      background-position: center;
-      background-repeat: no-repeat;
-      cursor: pointer;
-    }
-
-    &.prev:active,
-    &.next:active {
-      transform: scale(0.8);
-    }
-
-    &.hidden {
-      background-image: none;
-      background-color: rgba(255, 255, 255, 0);
-      box-shadow: none;
-
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.5);
-        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
-        transition: all 0.25s;
-        color: $black;
-
-        &.prev {
-          background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
-        }
-
-        &.next {
-          background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
-        }
       }
     }
 
@@ -183,50 +294,62 @@ $slider-height: 100%;
 
   &-indicators {
     display: flex;
+    width: fit-content;
     flex-direction: row;
     justify-content: center;
-    margin: 10px 0;
+    margin: 5px auto;
+    padding: 12px;
     cursor: pointer;
-  
+
+    &.dark {
+      background-color: $gray-11;
+    }
+
     .indicator-button {
-      margin: 0 0.5%;
+      margin: 0 5px;
       outline: none;
-      background-color: $gray-6;
-  
+      background-color: $gray-5;
+
       &.round {
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background-clip: content-box;
+        width: 10px;
+        height: 10px;
         box-sizing: content-box;
-        padding: 2.5px;
-        border: 1.5px solid $gray-6; 
-      }
-  
-      &.bar {
-        border: 1px solid $gray-6; 
-  
-      }
-  
-      &:hover {
-        background-color: $black;
-        border-color: $black;
+        border-radius: 50%;
+        border: 2px solid $gray-5;
+        padding: 0;
       }
 
-      &[data-selected="true"] {
-        background-color: $black;
-        border-color: $black;
+      &.bar {
+        height: 5px;
+        width: 5px;
+        border: 2px solid $gray-5;
+      }
+
+      &:hover {
+        background-color: $gray-5;
+        border-color: $red;
+        border: 2px solid $red;
+      }
+
+      &[data-selected='true'] {
+        background-color: $red;
+        border-color: $red;
       }
 
       &:active {
         transform: scale(0.8);
+      }
+
+      &:focus {
+        border-color: $red;
+        // transform: scale(1.2);
       }
     }
   }
 
   .sr-only {
     border: 0;
-    clip: rect(0,0,0,0);
+    clip: rect(0, 0, 0, 0);
     height: 1px;
     margin: -1px;
     overflow: hidden;
@@ -235,4 +358,3 @@ $slider-height: 100%;
     width: 1px;
   }
 }
-

@@ -60,8 +60,9 @@ const Alert: React.FunctionComponent<Props> = ({
     <div {...rest} className={clsx(styles.alert, styles[`alert-${color}`], className)} role="alert">
       <div className={styles.alertInside}>
         {onClose && (
-          <button
-            type="button"
+          <div
+            role="button"
+            tabIndex={0}
             className={clsx(styles.close, closeClassName)}
             aria-label="Close Alert"
             onClick={() => {
@@ -80,7 +81,7 @@ const Alert: React.FunctionComponent<Props> = ({
             <span aria-hidden="true" className={styles['close-icon']}>
               &times;
             </span>
-          </button>
+          </div>
         )}
         <div className={styles.children}>{children}</div>
       </div>
