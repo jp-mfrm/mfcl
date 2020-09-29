@@ -20,7 +20,7 @@ const sizes = {
 const Loading: React.FunctionComponent<Props> = ({
   className = '',
   color = '#d63426',
-  size = 'sm',
+  size = 'md',
   type = 'ring',
   ...rest
 }) => {
@@ -38,12 +38,9 @@ const Loading: React.FunctionComponent<Props> = ({
     return <div className={dotsClassNameWrapper} style={dotStyle} {...rest} />
   }
 
-  // TODO: change to SVG
   return (
     <div className={ringClassNameWrapper} {...rest}>
-      <div>
-        <Spinner strokeColor={color} width={loadingSize} height={loadingSize} />
-      </div>
+      <Spinner strokeColor={color} width={loadingSize} height={loadingSize} />
     </div>
   )
 }
