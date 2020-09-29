@@ -26,7 +26,8 @@ export interface Props {
   onClose?: Function | null
   onOpen?: Function | null
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
-  tipContainerClassName?: string
+  tipContainerClassName?: string,
+  header?: string,
   [rest: string]: unknown
 }
 
@@ -47,12 +48,12 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     position,
     tipContainerClassName,
     isOpen,
+    header,
     ...rest
   } = props
   const [isShowing, setIsShowing] = useState(isOpen)
   // @ts-ignore
   const [wrapperRef, dimensions] = useDimensions(true, 250, initialDimensions, [isShowing])
-
   useEffect(() => {
     if (isOpen) {
       handleTouch()
@@ -127,6 +128,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
         />
       )}
       <TipContainer
+        header={header}
         delay={delay}
         dimensions={dimensions}
         duration={duration}
@@ -151,6 +153,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       {...rest}
     >
       {trigger}
+      {/* @ts-ignore */}
       <Portal>
         <>{tooltipContent}</>
       </Portal>

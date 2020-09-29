@@ -1,5 +1,7 @@
 import React, { FunctionComponent, ReactNode } from 'react'
 import clsx from 'clsx'
+import Typography from '../Typography'
+
 
 import styles from './tooltip.module.scss'
 
@@ -12,6 +14,7 @@ export interface Props {
   isShowing?: boolean
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
   tipContainerClassName?: string
+  header?: string
 }
 
 const TipContainer: FunctionComponent<Props> = ({
@@ -22,7 +25,8 @@ const TipContainer: FunctionComponent<Props> = ({
   easing,
   isShowing,
   position,
-  tipContainerClassName
+  tipContainerClassName, 
+  header,
 }) => {
   const getBaseStyle = () => {
     const opacity = isShowing ? 1 : 0
@@ -193,7 +197,7 @@ const TipContainer: FunctionComponent<Props> = ({
             enter: {
               ...getAnimationStyleByPosition('bottom').enter,
               transform: 'translate3d(calc(-100% + 16px), 0, 0)',
-              top: top + window.scrollY + 5,
+              top: top + window.scrollY - 3,
               left: left + width - width / 2
             },
             active: {
@@ -206,7 +210,7 @@ const TipContainer: FunctionComponent<Props> = ({
             enter: {
               ...getAnimationStyleByPosition('bottom').enter,
               transform: 'translate3d(calc(0% + -16px), 0, 0)',
-              top: top + window.scrollY + 5,
+              top: top + window.scrollY - 3,
               left: left + width - width / 2
             },
             active: {
@@ -282,7 +286,22 @@ const TipContainer: FunctionComponent<Props> = ({
       }}
     >
       <div className={styles.gap} style={getGap()} />
-      {children}
+      <div className={styles['header-wrapper']}>
+        <Typography className={styles['header']} variant="h6"> {header} </Typography>
+        <div
+            role="button"
+            tabIndex={0}
+            className={clsx(styles.close)}
+            aria-label="Close Alert"
+            // onClick={hideTooltip}
+          >
+            <span aria-hidden="true" className={styles['close-icon']}>
+              &times;
+            </span>
+          </div>
+      </div>
+    
+      <Typography className={styles['tooltip-content']} variant="paragraph-sm">{children}</Typography>
     </div>
   )
 }

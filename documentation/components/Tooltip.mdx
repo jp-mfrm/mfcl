@@ -25,25 +25,25 @@ Tooltips help clarify what certain features do.
 
 ## Basic Usage
 
+**Note:** Hover only tooltips are not WCAG 2.0 / ADA compliant. 
+
 <Playground>
   {() => {
     const margin = { marginBottom: 5 }
     return (
       <Row>
-        <Tooltip trigger={<Button style={margin}>Hover Me</Button>}>Now you see me!</Tooltip>
-        <Tooltip hover={false} trigger={<Button style={margin}>Click Me</Button>} position="bottom">
-          Now you see me!
+        <Tooltip header="header"  hover={false} trigger={<Button style={margin}>Hover Me</Button>}>Now you see me!</Tooltip>
+        <Tooltip header="header" hover={false} trigger={<Button style={margin}>Click Me</Button>} position="bottom">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </Tooltip>
-        <Tooltip arrow={false} trigger={<Button style={margin}>No arrow</Button>} position="bottom">
-          Where did my arrow go?
-        </Tooltip>
-        <Tooltip arrow={false} hover={false} trigger={<Button style={margin}>No arrow Click</Button>} position="bottom">
+        <Tooltip header="header" arrow={false} hover={false} trigger={<Button style={margin}>No arrow Click</Button>} position="bottom">
           Where did my arrow go?
         </Tooltip>
       </Row>
     )
   }}
 </Playground>
+
 
 ## Positions
 
@@ -58,8 +58,10 @@ Tooltips help clarify what certain features do.
             position={position}
             trigger={`I am on the ${position}`}
             style={{ margin: '0px 10px' }}
+            hover={false}
+            header="header"
           >
-            {position.toUpperCase()}
+            {position.toUpperCase()}  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </Tooltip>
         ))}
       </Row>
