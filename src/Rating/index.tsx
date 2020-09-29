@@ -1,6 +1,6 @@
 import React, { ReactNode, FunctionComponent, useState, useRef } from 'react'
 import clsx from 'clsx'
-import Star from './Star'
+import Star from '../Icons/Star'
 import styles from './rating.module.scss'
 
 import useControlled from '../utils/useControlled'

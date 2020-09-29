@@ -1,6 +1,6 @@
 {
   "name": "mfcl",
-  "version": "2.2.7",
+  "version": "2.3.0",
   "private": false,
   "description": "React Component Library for UI consistency between repositories",
   "main": "dist/index.js",
@@ -75,6 +75,7 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
+      "!src/Icons/**",
       "!src/documentation/**",
       "!src/gatsby-theme-docz/**",
       "!src/utils/**",
