@@ -13,7 +13,7 @@ const DeliveryTruck: React.FunctionComponent<Props> = ({
   fillColor = '#2D2926',
   ...rest
 }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 30 30">
+  <svg width={width} height={height} fill="none" viewBox="0 0 30 30" {...rest}>
     <mask id="gwk72sw7ca" width="25" height="21" x="3" y="5" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

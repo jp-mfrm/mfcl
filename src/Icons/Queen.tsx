@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Queen: React.FunctionComponent<Props> = ({ width = '18', height = '24', fillColor = '#2D2926', ...rest }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 18 24">
+  <svg width={width} height={height} fill="none" viewBox="0 0 18 24" {...rest}>
     <mask id="9jwnv82a1a" width="18" height="26" x="0" y="-1" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Bouncer: React.FunctionComponent<Props> = ({ width = '20', height = '24', fillColor = '#2D2926', ...rest }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} fill="none" viewBox="0 0 20 24">
+  <svg width={width} height={height} fill="none" viewBox="0 0 20 24" {...rest}>
     <mask id="1yiv4evk9a" width="20" height="24" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

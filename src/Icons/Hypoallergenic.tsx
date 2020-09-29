@@ -13,7 +13,7 @@ const Hypoallergenic: React.FunctionComponent<Props> = ({
   fillColor = '#2D2926',
   ...rest
 }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 22 26">
+  <svg width={width} height={height} fill="none" viewBox="0 0 22 26" {...rest}>
     <mask id="y3j5g7jp0a" width="22" height="26" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

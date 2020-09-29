@@ -8,7 +8,7 @@ interface Props {
 }
 
 const CribSize: React.FunctionComponent<Props> = ({ width = '10', height = '20', fillColor = '#2D2926', ...rest }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} fill="none" {...rest} viewBox="0 0 10 20">
+  <svg width={width} height={height} fill="none" viewBox="0 0 10 20" {...rest}>
     <mask id="lsfh6vv00a" width="10" height="20" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

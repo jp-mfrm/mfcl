@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Phone: React.FunctionComponent<Props> = ({ width = '16', height = '24', fillColor = '#2D2926', ...rest }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 16 24">
+  <svg width={width} height={height} fill="none" viewBox="0 0 16 24" {...rest}>
     <mask id="vwua97rhha" width="16" height="26" x="0" y="-1" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

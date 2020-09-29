@@ -13,7 +13,7 @@ const MattressProtector: React.FunctionComponent<Props> = ({
   fillColor = '#2D2926',
   ...rest
 }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 24 12">
+  <svg width={width} height={height} fill="none" viewBox="0 0 24 12" {...rest}>
     <mask id="m2tyrpswqa" width="24" height="12" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

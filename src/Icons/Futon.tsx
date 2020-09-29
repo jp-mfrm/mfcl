@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Futon: React.FunctionComponent<Props> = ({ width = '26', height = '16', fillColor = '#2D2926', ...rest }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 26 16">
+  <svg width={width} height={height} fill="none" viewBox="0 0 26 16" {...rest}>
     <mask id="j03c7x4lja" width="26" height="16" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

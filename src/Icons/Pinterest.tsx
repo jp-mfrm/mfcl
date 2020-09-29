@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Pinterest: React.FunctionComponent<Props> = ({ width = '20', height = '25', fillColor = '#2D2926', ...rest }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 20 25">
+  <svg width={width} height={height} fill="none" viewBox="0 0 20 25" {...rest}>
     <mask id="0xm1k618na" width="20" height="25" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

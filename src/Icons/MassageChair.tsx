@@ -13,7 +13,7 @@ const MassageChair: React.FunctionComponent<Props> = ({
   fillColor = '#2D2926',
   ...rest
 }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 21 24">
+  <svg width={width} height={height} fill="none" viewBox="0 0 21 24" {...rest}>
     <mask id="myotex5q7a" width={width} height={height} {...rest} x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

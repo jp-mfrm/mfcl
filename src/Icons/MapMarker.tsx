@@ -8,7 +8,7 @@ interface Props {
 }
 
 const MapMarker: React.FunctionComponent<Props> = ({ width = '18', height = '25', fillColor = '#2D2926', ...rest }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="25" {...rest} fill="none" viewBox="0 0 18 25">
+  <svg width="18" height="25" fill="none" viewBox="0 0 18 25" {...rest}>
     <mask id="y7qtz4w4pa" width="18" height="25" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

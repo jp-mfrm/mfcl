@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Swaddler: React.FunctionComponent<Props> = ({ width = '14', height = '24', fillColor = '#2D2926', ...rest }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 14 24">
+  <svg width={width} height={height} fill="none" viewBox="0 0 14 24" {...rest}>
     <mask id="h65s3xcxra" width="14" height="24" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

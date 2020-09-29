@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Arrow: React.FunctionComponent<Props> = ({ width = '12', height = '21', fillColor = '#2D2926', ...rest }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 12 21">
+  <svg fill="none" viewBox="0 0 12 21" {...rest}>
     <mask id="r0z7mlnq3a" width="12" height="20" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

@@ -13,7 +13,7 @@ const PlatformFrame: React.FunctionComponent<Props> = ({
   fillColor = '#2D2926',
   ...rest
 }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 24 6">
+  <svg width={width} height={height} fill="none" viewBox="0 0 24 6" {...rest}>
     <mask id="dppw6flera" width="24" height="7" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

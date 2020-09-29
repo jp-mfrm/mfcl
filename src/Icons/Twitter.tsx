@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Twitter: React.FunctionComponent<Props> = ({ width = '25', height = '21', fillColor = '#2D2926', ...rest }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 25 21">
+  <svg width={width} height={height} fill="none" viewBox="0 0 25 21" {...rest}>
     <mask id="5fd6cfn2ma" width="25" height="22" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"

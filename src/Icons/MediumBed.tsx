@@ -8,7 +8,7 @@ interface Props {
 }
 
 const MediumBed: React.FunctionComponent<Props> = ({ width = '24', height = '14', fillColor = '#2D2926', ...rest }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} {...rest} fill="none" viewBox="0 0 24 14">
+  <svg width={width} height={height} fill="none" viewBox="0 0 24 14" {...rest}>
     <mask id="5k5kd4ncua" width="24" height="14" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"
