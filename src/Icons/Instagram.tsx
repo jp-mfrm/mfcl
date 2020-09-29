@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Instagram: React.FunctionComponent<Props> = ({ width = '24', height = '24', fillColor = '#2D2926', ...rest }) => (
-  <svg width={width} height={height} {...rest} fill="none" viewBox="0 0 24 24">
+  <svg width={width} height={height} fill="none" viewBox="0 0 24 24" {...rest}>
     <mask id="52fh4xsyba" width="24" height="24" x="0" y="0" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"
