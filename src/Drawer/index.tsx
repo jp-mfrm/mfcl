@@ -19,7 +19,6 @@ export interface Props {
   className?: string
   /** Include the (x) icon to close */
   close?: boolean
-  closeClassName?: string
   duration?: number
   headerClassName?: string
   isOpen?: boolean
@@ -66,7 +65,6 @@ const Drawer: React.FunctionComponent<Props> = ({
   children = null,
   className = '',
   close = true,
-  closeClassName = '',
   duration = 100,
   position = 'right',
   onClose = null,
@@ -153,49 +151,48 @@ const Drawer: React.FunctionComponent<Props> = ({
   return (
     <Portal>
       <>
-      <Transition in={isShowing} timeout={duration} {...rest}>
-        {(state) => (
-          // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-          <div
-            className={drawerClassName}
-            style={positions[position][state]}
-            role="dialog"
-            aria-modal="true"
-            ref={modalRef}
-            onKeyDown={handleKeys}
-          >
-            <div className={clsx(styles['drawer-header'], headerClassName)}>
-              {(close || onClose) && (
-            
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={hideDrawer}
-                  className={styles.close}
-                  aria-label="Close Drawer"
-                  ref={closeBtnRef}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </div>
-              )}
+        <Transition in={isShowing} timeout={duration} {...rest}>
+          {(state) => (
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+            <div
+              className={drawerClassName}
+              style={positions[position][state]}
+              role="dialog"
+              aria-modal="true"
+              ref={modalRef}
+              onKeyDown={handleKeys}
+            >
+              <div className={clsx(styles['drawer-header'], headerClassName)}>
+                {(close || onClose) && (
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={hideDrawer}
+                    className={styles.close}
+                    aria-label="Close Drawer"
+                    ref={closeBtnRef}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </div>
+                )}
+              </div>
+              <div className={clsx(styles['drawer-body'], bodyClassName)}>{children}</div>
             </div>
-            <div className={clsx(styles['drawer-body'], bodyClassName)}>{children}</div>
-          </div>
+          )}
+        </Transition>
+        {backdrop && (
+          <Fade
+            className={clsx(styles['drawer-backdrop'], isOpen && styles.backdrop, backdropClassName)}
+            onClick={hideDrawer}
+            onKeyDown={handleKeys}
+            duration={backdropDuration}
+            in={isOpen && !!backdrop}
+            opacity={0.5}
+            data-testid="backdrop"
+          />
         )}
-      </Transition>
-      {backdrop && (
-        <Fade
-          className={clsx(styles['drawer-backdrop'], isOpen && styles.backdrop, backdropClassName)}
-          onClick={hideDrawer}
-          onKeyDown={handleKeys}
-          duration={backdropDuration}
-          in={isOpen && !!backdrop}
-          opacity={0.5}
-          data-testid="backdrop"
-        />
-      )}
       </>
-      </Portal>
+    </Portal>
   )
 }
 
