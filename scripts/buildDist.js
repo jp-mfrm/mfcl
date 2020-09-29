@@ -13,7 +13,7 @@ const utilsPath = path.resolve(componentPath, './utils')
 const iconsPath = path.resolve(componentPath, './Icons')
 const distPath = path.resolve(rootDir, './dist')
 
-const blackListDir = ['src', 'Icons', '__tests__']
+const blackListDir = ['src', '__tests__']
 
 const execOptions = {
   shell: true
