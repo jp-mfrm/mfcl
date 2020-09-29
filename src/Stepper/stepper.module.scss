@@ -42,7 +42,9 @@
 }
 
 .circle {
+  background-color: $white;
   border-radius: 50%;
+  box-shadow: 0 0 0 10px $white;
   box-sizing: border-box;
   height: 22px;
   margin: 0 auto;
@@ -52,14 +54,6 @@
   z-index: 20;
 }
 
-.circle-has-label {
-  // bottom: 23px;
-}
-
-.circle-active.circle-has-label {
-  // bottom: 28px;
-}
-
 .circle.vertical {
   left: 0px;
   margin: 0;
@@ -67,8 +61,25 @@
   top: 10px;
 }
 
-.circle-active.vertical {
-  left: 0px;
+.line {
+  border: 1px dashed;
+  border-color: inherit;
+  box-sizing: border-box;
+  display: block;
+  height: 0px;
+  right: 50%;
+  position: absolute;
+  top: 11px;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.line.vertical {
+  height: 100%;
+  left: 10px;
+  right: auto;
+  top: -100%;
+  width: 0px;
 }
 
 .label {
@@ -84,26 +95,5 @@
 .label.vertical {
   height: initial;
   line-height: initial;
-  padding: 10px 0px 10px 40px;
-}
-
-.line {
-  border: 1px dashed;
-  border-color: $red;
-  box-sizing: border-box;
-  display: block;
-  height: 0px;
-  left: 60%;
-  position: absolute;
-  top: 12px;
-  transition: all 0.3s;
-  width: 80%;
-}
-
-.line.vertical {
-  height: 50%;
-  left: 9px;
-  right: auto;
-  top: 37px;
-  width: 0px;
+  padding: 13px 0px 10px 40px;
 }

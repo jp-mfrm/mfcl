@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, memo } from 'react'
+import React, { FunctionComponent, ReactNode, memo, KeyboardEvent } from 'react'
 import clsx from 'clsx'
 
 import styles from './stepper.module.scss'
@@ -25,6 +25,7 @@ interface Props {
    * Use this function to save the selected index
    */
   selectIndex?: Function
+  handleKeyDown: (e: KeyboardEvent<HTMLDivElement>, index: number) => void
   stepClass?: string
   vertical?: boolean
 }
@@ -32,6 +33,7 @@ interface Props {
 const Step: FunctionComponent<Props> = ({
   activeStep,
   currentOrPassed,
+  handleKeyDown,
   step,
   index,
   firstIndex,
@@ -41,34 +43,26 @@ const Step: FunctionComponent<Props> = ({
 }) => {
   const { color = '#d63426', icon, label, dividerClass } = step
   const verticalClass = vertical && styles.vertical
-  const currentOrPassedClass = currentOrPassed ? styles['current-or-passed'] : styles['not-passed']
-  const circleNumber = (
-    <div
-      onClick={selectIndex ? () => selectIndex(index) : undefined}
-      onKeyPress={selectIndex ? () => selectIndex(index) : undefined}
-      role="button"
-      tabIndex={selectIndex ? 0 : -1}
-      style={
-        activeStep
-          ? { border: `2px solid ${color}` }
-          : { border: `2px solid ${color}`, background: color, cursor: selectIndex ? 'pointer' : '' }
-      }
-      className={clsx(styles.circle, currentOrPassedClass, label && styles['circle-has-label'], verticalClass)}
-    >
-      {icon}
-    </div>
-  )
+  const currentOrPassedClass = currentOrPassed ? null : styles['not-passed']
 
   return (
-    <li className={clsx(styles['progress-step'], verticalClass, stepClass)}>
-      {circleNumber}
-      {!firstIndex && (
-        <div
-          style={{ borderColor: color }}
-          className={clsx(styles.line, currentOrPassedClass, verticalClass, dividerClass)}
-        />
-      )}
-      {label && <div className={clsx(styles.label, currentOrPassedClass, verticalClass)}>{label}</div>}
+    <li className={clsx(styles['progress-step'], verticalClass, currentOrPassedClass, stepClass)}>
+      {!firstIndex && <div style={{ borderColor: color }} className={clsx(styles.line, verticalClass, dividerClass)} />}
+      <div
+        onClick={selectIndex ? () => selectIndex(index) : undefined}
+        onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => handleKeyDown(e, index)}
+        role="button"
+        tabIndex={selectIndex ? 0 : -1}
+        className={clsx(styles.circle, verticalClass)}
+        style={
+          activeStep
+            ? { border: `2px solid ${color}` }
+            : { border: `2px solid ${color}`, background: color, cursor: selectIndex ? 'pointer' : '' }
+        }
+      >
+        {icon}
+      </div>
+      {label && <div className={clsx(styles.label, verticalClass)}>{label}</div>}
     </li>
   )
 }

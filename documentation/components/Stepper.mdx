@@ -54,7 +54,12 @@ Steppers display progress through a sequence of logical and numbered steps. They
 ## Dynamic and Controlled
 
 <Playground>
-  <Component initialState={{ activeStep: 0, steps: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'] }}>
+  <Component
+    initialState={{
+      activeStep: 0,
+      steps: [{ label: 'Preparing Order' }, { label: 'In Transit' }, { label: 'Delivered' }]
+    }}
+  >
     {({ setState, state }) => (
       <>
         <Stepper activeStep={state.activeStep} selectIndex={(i) => setState({ activeStep: i })} steps={state.steps} />
@@ -77,7 +82,10 @@ Steppers display progress through a sequence of logical and numbered steps. They
           >
             Next Page
           </Button>
-          <Button size="md" onClick={() => setState({ steps: [...state.steps, `Label ${state.steps.length + 1}`] })}>
+          <Button
+            size="md"
+            onClick={() => setState({ steps: [...state.steps, { label: `Label ${state.steps.length + 1}` }] })}
+          >
             Add Step
           </Button>
           <Button size="md" onClick={() => setState({ steps: state.steps.slice(0, -1), activeStep: 0 })}>
