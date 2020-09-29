@@ -20,7 +20,7 @@ const Bouncer: React.FunctionComponent<Props> = ({ width = '20', height = '24', 
     <g mask="url(#1yiv4evk9a)">
       <path fill={fillColor} d="M-5 -3H25V27H-5z" />
       <mask id="ipny5e689b" width="628" height="628" x="-615" y="-51" maskUnits="userSpaceOnUse">
-        <path fill="#fff" fill-rule="evenodd" d="M-614.999-51H12.06v627.06H-615V-51z" clip-rule="evenodd" />
+        <path fill="#fff" fillRule="evenodd" d="M-614.999-51H12.06v627.06H-615V-51z" clipRule="evenodd" />
       </mask>
       <g mask="url(#ipny5e689b)">
         <path
