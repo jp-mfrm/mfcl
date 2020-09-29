@@ -17,7 +17,7 @@ const Spinner: FunctionComponent<Props> = ({
 }) => (
   <svg width={width} height={height} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" {...rest}>
     <circle cx="50" cy="50" r="30" stroke={backgroundStrokeColor} strokeWidth="10" fill="none"></circle>
-    <circle cx="50" cy="50" r="30" stroke={strokeColor} stroke-width="8" strokeLinecap="round" fill="none">
+    <circle cx="50" cy="50" r="30" stroke={strokeColor} strokeWidth="8" strokeLinecap="round" fill="none">
       <animateTransform
         attributeName="transform"
         type="rotate"

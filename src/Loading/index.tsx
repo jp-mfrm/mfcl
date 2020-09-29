@@ -40,7 +40,7 @@ const Loading: React.FunctionComponent<Props> = ({
 
   return (
     <div className={ringClassNameWrapper} {...rest}>
-      <Spinner strokeColor={color} width={loadingSize} height={loadingSize} />
+      <Spinner strokeColor={color} width={loadingSize} height={loadingSize} data-testid="spinner" />
     </div>
   )
 }

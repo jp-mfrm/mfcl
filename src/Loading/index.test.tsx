@@ -16,9 +16,9 @@ describe('Loading', () => {
   it('should have the right size', () => {
     const color = '#eee'
     const size = '18px'
-    const { getByTestId } = render(<Loading color={color} size={size} data-testid="loading" />)
+    const { getByTestId } = render(<Loading color={color} size={size} />)
 
     // @ts-ignore
-    expect(getByTestId('loading').firstChild?.style.height).toBe(size)
+    expect(getByTestId('spinner').getAttribute('height')).toBe(size)
   })
 })
