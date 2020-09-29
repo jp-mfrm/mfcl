@@ -35,12 +35,12 @@ describe('Alert Component', () => {
     const onClose = () => {
       num += 1
     }
-    const { container, rerender } = render(
+    const { getByRole, rerender } = render(
       <Alert fade={false} onClose={onClose}>
         Alert
       </Alert>
     )
-    const closeIcon = container.querySelector('button')
+    const closeIcon = getByRole('button')
     // @ts-ignore
     fireEvent.click(closeIcon)
     jest.runAllTimers()

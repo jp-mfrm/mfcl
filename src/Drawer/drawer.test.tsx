@@ -16,9 +16,8 @@ describe('Drawer', () => {
   it('should render children', () => {
     const { getByTestId, getByRole } = render(<Drawer isOpen>{children}</Drawer>)
     // @ts-ignore
-      fireEvent.click(getByRole('dialog').querySelector('.close'))
+    fireEvent.click(getByRole('dialog').querySelector('.close'))
     expect(getByTestId('yo')?.textContent).toBe('Yo')
-
   })
 
   it('should render the className prop correctly', () => {
@@ -46,15 +45,6 @@ describe('Drawer', () => {
       </Drawer>
     )
     expect(getByRole('dialog').querySelector('.drawer-body')?.classList).toContain('test-class-name')
-  })
-
-  it('should pass closeClassName down', () => {
-    const { getByRole } = render(
-      <Drawer isOpen closeClassName="test-class-name">
-        {children}
-      </Drawer>
-    )
-    expect(getByRole('dialog').querySelector('.close')?.classList).toContain('test-class-name')
   })
 
   it('should pass backdropClassName down', () => {
