@@ -8,7 +8,6 @@ export interface IStep {
   color?: string
   icon?: ReactNode
   label?: string | ReactNode
-  dividerClass?: string
 }
 
 interface Props {
@@ -18,7 +17,6 @@ interface Props {
   activeStep: boolean
   currentOrPassed: boolean
   index: number
-  firstIndex: boolean
   step: IStep
   color?: string
   /**
@@ -27,6 +25,7 @@ interface Props {
   selectIndex?: Function
   handleKeyDown: (e: KeyboardEvent<HTMLDivElement>, index: number) => void
   stepClass?: string
+  theNextActive?: boolean
   vertical?: boolean
 }
 
@@ -36,18 +35,21 @@ const Step: FunctionComponent<Props> = ({
   handleKeyDown,
   step,
   index,
-  firstIndex,
   selectIndex,
   stepClass,
+  theNextActive,
   vertical
 }) => {
-  const { color = '#d63426', icon, label, dividerClass } = step
+  const { color = '#d63426', icon, label } = step
   const verticalClass = vertical && styles.vertical
-  const currentOrPassedClass = currentOrPassed ? null : styles['not-passed']
+  const currentOrPassedClass = currentOrPassed ? styles.passed : styles['not-passed']
+  const activeStepClass = theNextActive && styles['next-active']
 
   return (
-    <li className={clsx(styles['progress-step'], verticalClass, currentOrPassedClass, stepClass)}>
-      {!firstIndex && <div style={{ borderColor: color }} className={clsx(styles.line, verticalClass, dividerClass)} />}
+    <li
+      style={{ borderColor: color }}
+      className={clsx(styles['progress-step'], verticalClass, currentOrPassedClass, activeStepClass, stepClass)}
+    >
       <div
         onClick={selectIndex ? () => selectIndex(index) : undefined}
         onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => handleKeyDown(e, index)}

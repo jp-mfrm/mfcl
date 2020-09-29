@@ -25,12 +25,110 @@
   padding: 0;
   position: relative;
   text-align: center;
+
+  &::after {
+    content: '';
+    border: 1px dashed;
+    border-color: inherit;
+    box-sizing: border-box;
+    display: block;
+    height: 0px;
+    right: 0%;
+    position: absolute;
+    top: 11px;
+    width: 99%;
+  }
+
+  &:first-child {
+    &::after {
+      display: none;
+    }
+  }
+
+  &:last-child {
+    &::after {
+      right: 50%;
+      width: 50%;
+    }
+  }
+
+  &.passed {
+    &::after {
+      right: 50%;
+      width: 100%;
+    }
+
+    &:last-child {
+      &::after {
+        right: 50%;
+        width: 100%;
+      }
+    }
+  }
+
+  &.next-active {
+    &::after {
+      right: 1%;
+      width: 150%;
+    }
+
+    &:last-child {
+      &::after {
+        right: 50%;
+        width: 100%;
+      }
+    }
+  }
 }
 
 .progress-step.vertical {
   min-height: 65px;
   flex: 1 1 auto;
   text-align: inherit;
+
+  &::after {
+    height: 100%;
+    left: 10px;
+    right: auto;
+    bottom: 0%;
+    top: inherit;
+    width: 0px !important;
+  }
+
+  &:last-child {
+    &::after {
+      bottom: 50%;
+      height: 50%;
+    }
+  }
+
+  &.passed {
+    &::after {
+      bottom: 50%;
+      height: 100%;
+    }
+
+    &:last-child {
+      &::after {
+        bottom: 50%;
+        height: 100%;
+      }
+    }
+  }
+
+  &.next-active {
+    &::after {
+      bottom: 1%;
+      height: 150%;
+    }
+
+    &:last-child {
+      &::after {
+        bottom: 50%;
+        height: 100%;
+      }
+    }
+  }
 }
 
 .not-passed {
@@ -59,27 +157,6 @@
   margin: 0;
   position: absolute;
   top: 10px;
-}
-
-.line {
-  border: 1px dashed;
-  border-color: inherit;
-  box-sizing: border-box;
-  display: block;
-  height: 0px;
-  right: 50%;
-  position: absolute;
-  top: 11px;
-  transition: all 0.3s;
-  width: 100%;
-}
-
-.line.vertical {
-  height: 100%;
-  left: 10px;
-  right: auto;
-  top: -100%;
-  width: 0px;
 }
 
 .label {

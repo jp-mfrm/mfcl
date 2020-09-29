@@ -7,7 +7,7 @@ interface Props {
   /** Index that controls the current active step */
   activeStep: number
   /**
-   * An array of objects that can have color, icon, label, dividerStyle
+   * An array of objects that can have color, icon, label, className
    * If you don't want labels, do an array of empty objects [{}, {}, {}]
    */
   steps: {
@@ -15,7 +15,6 @@ interface Props {
     color?: string
     icon?: ReactNode
     label?: ReactNode
-    dividerClass?: string
   }[]
   /** className to be applied to the ul container element */
   className?: string
@@ -57,17 +56,17 @@ const Stepper: FunctionComponent<Props> = ({ activeStep, className, color, steps
     <ul className={clsx(styles['stepper-wrapper'], vertical && styles.vertical, className)} {...rest}>
       {steps.map((step: any, index) => {
         const currentOrPassed = activeStep >= index
-        const firstIndex = index === 0
+        const theNextActive = activeStep + 1 === index
         return (
           <Step
             key={index}
             activeStep={activeStep === index}
             currentOrPassed={currentOrPassed}
-            firstIndex={firstIndex}
             handleKeyDown={handleKeyDown}
             index={index}
             selectIndex={selectIndex}
             step={step}
+            theNextActive={theNextActive}
             vertical={vertical}
           />
         )
