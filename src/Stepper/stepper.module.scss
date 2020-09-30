@@ -25,93 +25,155 @@
   padding: 0;
   position: relative;
   text-align: center;
+
+  &::after {
+    content: '';
+    border: 1px dashed;
+    border-color: $red;
+    box-sizing: border-box;
+    display: block;
+    height: 0px;
+    right: 0%;
+    position: absolute;
+    top: 11px;
+    width: 99%;
+  }
+
+  &:first-child {
+    &::after {
+      display: none;
+    }
+  }
+
+  &:last-child {
+    &::after {
+      right: 50%;
+      width: 50%;
+    }
+  }
+
+  &.passed {
+    &::after {
+      right: 50%;
+      width: 100%;
+    }
+
+    &:last-child {
+      &::after {
+        right: 50%;
+        width: 100%;
+      }
+    }
+  }
+
+  &.next-active {
+    &::after {
+      right: 1%;
+      width: 150%;
+    }
+
+    &:last-child {
+      &::after {
+        right: 50%;
+        width: 100%;
+      }
+    }
+  }
 }
 
 .progress-step.vertical {
   min-height: 65px;
   flex: 1 1 auto;
   text-align: inherit;
+
+  &::after {
+    height: 100%;
+    left: 10px;
+    right: auto;
+    bottom: 0%;
+    top: inherit;
+    width: 0px !important;
+  }
+
+  &:last-child {
+    &::after {
+      bottom: 50%;
+      height: 50%;
+    }
+  }
+
+  &.passed {
+    &::after {
+      bottom: 50%;
+      height: 100%;
+    }
+
+    &:last-child {
+      &::after {
+        bottom: 50%;
+        height: 100%;
+      }
+    }
+  }
+
+  &.next-active {
+    &::after {
+      bottom: 1%;
+      height: 150%;
+    }
+
+    &:last-child {
+      &::after {
+        bottom: 50%;
+        height: 100%;
+      }
+    }
+  }
 }
 
-.outer-circle {
-  min-height: 20px;
+.not-passed {
+  opacity: 0.3;
 }
 
-.outer-circle.vertical {
-  min-height: 0px;
+.current-or-passed {
+  opacity: 1;
 }
 
 .circle {
+  align-items: center;
+  background-color: $white;
   border-radius: 50%;
-  bottom: 3px;
+  box-shadow: 0 0 0 10px $white;
   box-sizing: border-box;
-  height: 8px;
+  display: flex;
+  height: 22px;
+  justify-content: center;
   margin: 0 auto;
   position: relative;
   transition: all 0.3s;
-  width: 8px;
+  width: 22px;
   z-index: 20;
 }
 
-.circle-active {
-  background-color: $white;
-  bottom: 10px;
-  height: 20px;
-  width: 20px;
-}
-
-.circle-label {
-  bottom: 23px;
-}
-
-.circle-active.circle-label {
-  bottom: 28px;
-}
-
 .circle.vertical {
-  left: 6px;
+  left: 0px;
   margin: 0;
   position: absolute;
   top: 10px;
 }
 
-.circle-active.vertical {
-  left: 0px;
-}
-
-.word {
+.label {
   box-sizing: border-box;
   display: block;
   font-size: 14px;
+  font-weight: 500;
   height: 100%;
-  line-height: initial;
-  overflow: hidden;
+  line-height: 20px;
   padding: 14px 9.3px;
-  text-overflow: ellipsis;
 }
 
-.word.vertical {
+.label.vertical {
   height: initial;
-  padding: 10px 0px 10px 40px;
-}
-
-.line {
-  background: $gray-4;
-  bottom: 18px;
-  box-sizing: border-box;
-  display: block;
-  height: 2px;
-  left: 50%;
-  position: absolute;
-  top: auto;
-  transition: all 0.3s;
-  width: 100%;
-}
-
-.line.vertical {
-  height: 100%;
-  left: 9px;
-  right: auto;
-  top: 10px;
-  width: 2px;
+  line-height: initial;
+  padding: 13px 0px 10px 40px;
 }
