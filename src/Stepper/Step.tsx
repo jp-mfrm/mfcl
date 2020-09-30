@@ -24,7 +24,6 @@ interface Props {
    */
   selectIndex?: Function
   handleKeyDown: (e: KeyboardEvent<HTMLDivElement>, index: number) => void
-  stepClass?: string
   theNextActive?: boolean
   vertical?: boolean
 }
@@ -36,20 +35,16 @@ const Step: FunctionComponent<Props> = ({
   step,
   index,
   selectIndex,
-  stepClass,
   theNextActive,
   vertical
 }) => {
-  const { color = '#d63426', icon, label } = step
+  const { color = '#d63426', icon, label, className } = step
   const verticalClass = vertical && styles.vertical
   const currentOrPassedClass = currentOrPassed ? styles.passed : styles['not-passed']
   const activeStepClass = theNextActive && styles['next-active']
 
   return (
-    <li
-      style={{ borderColor: color }}
-      className={clsx(styles['progress-step'], verticalClass, currentOrPassedClass, activeStepClass, stepClass)}
-    >
+    <li className={clsx(styles['progress-step'], verticalClass, currentOrPassedClass, activeStepClass, className)}>
       <div
         onClick={selectIndex ? () => selectIndex(index) : undefined}
         onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => handleKeyDown(e, index)}
@@ -59,7 +54,7 @@ const Step: FunctionComponent<Props> = ({
         style={
           activeStep
             ? { border: `2px solid ${color}` }
-            : { border: `2px solid ${color}`, background: color, cursor: selectIndex ? 'pointer' : '' }
+            : { border: `2px solid ${color}`, cursor: selectIndex ? 'pointer' : '' }
         }
       >
         {icon}

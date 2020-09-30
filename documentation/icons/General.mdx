@@ -7,7 +7,9 @@ route: /icons-general
 import { Playground, Props } from 'docz'
 
 import { Row } from '../components/helpers'
-import Arrow from '../../src/Icons/Arrow'
+import Check from '../../src/Icons/Check'
+import ChevronLeft from '../../src/Icons/ChevronLeft'
+import ChevronRight from '../../src/Icons/ChevronRight'
 import MapMarker from '../../src/Icons/MapMarker'
 import Minus from '../../src/Icons/Minus'
 import Plus from '../../src/Icons/Plus'
@@ -31,12 +33,18 @@ import Icon from 'mfcl/icons/[Icon Name]'
 
 <Playground>
   <Row>
-    <Arrow />
+    <Check height={20} width={22} />
+    <ChevronLeft height={34} width={34} />
+    <ChevronRight height={34} width={34} />
     <MapMarker />
     <Minus />
     <Plus />
     <Search />
     <Laptop />
+  </Row>
+  <br />
+  <br />
+  <Row>
     <QuestionMark />
     <ShoppingCart />
     <Person />

@@ -8,6 +8,7 @@ import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
 import { Stepper, Button } from '../../src'
 import { Row } from './helpers'
+import CustomStepper from './helpers/CustomStepper'
 
 # Stepper
 
@@ -35,7 +36,7 @@ Steppers display progress through a sequence of logical and numbered steps. They
   <Stepper vertical activeStep={2} steps={[false, false, false, false]} />
 </Playground>
 
-## Labels, Different Color
+## Labels
 
 <Playground>
   <Stepper
@@ -51,13 +52,19 @@ Steppers display progress through a sequence of logical and numbered steps. They
   />
 </Playground>
 
-## Dynamic and Controlled
+## Custom CSS Stepper
+
+<Playground>
+  <CustomStepper />
+</Playground>
+
+## Controlled and Dynamic Stepper
 
 <Playground>
   <Component
     initialState={{
       activeStep: 0,
-      steps: [{ label: 'Preparing Order' }, { label: 'In Transit' }, { label: 'Delivered' }]
+      steps: [{ label: 'Label 1' }, { label: 'Label 2' }, { label: 'Label 3' }]
     }}
   >
     {({ setState, state }) => (

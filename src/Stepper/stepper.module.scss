@@ -29,7 +29,7 @@
   &::after {
     content: '';
     border: 1px dashed;
-    border-color: inherit;
+    border-color: $red;
     box-sizing: border-box;
     display: block;
     height: 0px;
@@ -140,11 +140,14 @@
 }
 
 .circle {
+  align-items: center;
   background-color: $white;
   border-radius: 50%;
   box-shadow: 0 0 0 10px $white;
   box-sizing: border-box;
+  display: flex;
   height: 22px;
+  justify-content: center;
   margin: 0 auto;
   position: relative;
   transition: all 0.3s;
