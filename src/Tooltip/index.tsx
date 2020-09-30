@@ -27,7 +27,7 @@ export interface Props {
   onOpen?: Function | null
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
   tipContainerClassName?: string,
-  header?: string,
+  header: string,
   [rest: string]: unknown
 }
 

@@ -40,7 +40,7 @@ const TipContainer: FunctionComponent<Props> = ({
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
-            top: top + window.scrollY - 84,
+            top: top + window.scrollY - 168,
             bottom,
             left: left - 10,
             right
@@ -50,7 +50,7 @@ const TipContainer: FunctionComponent<Props> = ({
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
-            top: top + window.scrollY - 84,
+            top: top + window.scrollY - 168,
             bottom,
             left: left - width - 5,
             right
@@ -60,7 +60,7 @@ const TipContainer: FunctionComponent<Props> = ({
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
-            top: top + window.scrollY - 84,
+            top: top + window.scrollY - 168,
             bottom,
             left: left + width / 2 - 7,
             right
@@ -161,7 +161,7 @@ const TipContainer: FunctionComponent<Props> = ({
             enter: {
               ...getAnimationStyleByPosition('top').enter,
               transform: 'translate3d(calc(-100% + 16px), 0, 0)',
-              left: left + width - width / 2
+              left: left + width + 10 - width / 2 
             },
             active: {
               transform: 'translate3d(calc(-100% + 16px), -3px, 0)'
@@ -184,7 +184,7 @@ const TipContainer: FunctionComponent<Props> = ({
           return {
             enter: {
               transform: 'translate3d(-50%, 0, 0)',
-              top: top + window.scrollY + height - 25,
+              top: top + window.scrollY + height - 15,
               left: left + width / 2
             },
             active: {
@@ -197,8 +197,8 @@ const TipContainer: FunctionComponent<Props> = ({
             enter: {
               ...getAnimationStyleByPosition('bottom').enter,
               transform: 'translate3d(calc(-100% + 16px), 0, 0)',
-              top: top + window.scrollY - 3,
-              left: left + width - width / 2
+              top: top + window.scrollY + 5,
+              left: left + 22 + width - width / 2
             },
             active: {
               transform: 'translate3d(calc(-100% + 16px), 10px, 0)'
@@ -210,8 +210,8 @@ const TipContainer: FunctionComponent<Props> = ({
             enter: {
               ...getAnimationStyleByPosition('bottom').enter,
               transform: 'translate3d(calc(0% + -16px), 0, 0)',
-              top: top + window.scrollY - 3,
-              left: left + width - width / 2
+              top: top + window.scrollY + 5,
+              left: left - 22 + width - width / 2
             },
             active: {
               transform: 'translate3d(calc(0% + -16px), 10px, 0)'
@@ -225,7 +225,7 @@ const TipContainer: FunctionComponent<Props> = ({
               top: top + window.scrollY - height / 2,
               marginRight: 10,
               transform: `translate3d(calc(-100% + -${width}), -50%, 0)`,
-              left: left + width - width / 2
+              left: left - 10 + width - width / 2
             },
             active: {
               transform: `translate3d(calc(-100% + -${width}px + ${width / 2}px - 13px), -50%, 0)`
@@ -236,7 +236,7 @@ const TipContainer: FunctionComponent<Props> = ({
           return {
             enter: {
               bottom: 'auto',
-              left: left + width + 5,
+              left: left + width + 15,
               top: top + window.scrollY - height / 2,
               transform: 'translate3d(-10px, -50%, 0)',
               marginLeft: 10
