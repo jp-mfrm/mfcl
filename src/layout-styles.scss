@@ -1,6 +1,8 @@
 .container {
   margin-right: auto;
   margin-left: auto;
+}
+.container.fixed {
   max-width: 1440px;
 }
 
