@@ -1,7 +1,6 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { FunctionComponent, ReactNode, ReactChild } from 'react'
 import Typography from '../Typography'
 import Button from '../Button'
-import SleepysBrand from '../Icons/SleepysBrand'
 import clsx from 'clsx'
 
 import styles from './heroBanner.module.scss'
@@ -10,8 +9,8 @@ interface Props {
   backgroundColor?: string
   imageSrc?: string
   brandLogo?: ReactNode
-  title?: string
-  text?: string
+  title: string
+  body: string
   btnText?: string
   btnLink?: string
   bgSize?: 'contain' | 'repeat' | 'cover'
@@ -22,35 +21,50 @@ const HeroBanner: FunctionComponent<Props> = ({
   bgColor = '#0A1232',
   imageSrc,
   title,
-  text,
+  body,
   btnText,
   btnLink,
-  bgSize = 'cover',
   brandLogo,
   ...rest
 }) => {
   let infoPanelStyles = { backgroundColor: `${bgColor}` }
-  let customHeroStyle = { backgroundImage: `url(${imageSrc})`, backgroundSize: bgSize, backgroundPosition: 'center' }
+
+  let imageTile
+  if (imageSrc) {
+    imageTile = (
+      <div className={styles.imgContainer}>
+        <img src={imageSrc} alt="wowie zowie" />
+      </div>
+    )
+  }
+
+  let brandIcon
+  if (brandLogo) {
+    brandIcon = <span className={styles.brandLogo}>{brandLogo}</span>
+  }
+
+  let heroBtn
+  if (btnText) {
+    heroBtn = (
+      <Button type="button" className={styles.btnStyles} size="md" href={btnLink}>
+        {btnText}
+      </Button>
+    )
+  }
 
   return (
     <div className={clsx(styles['hero-banner-wrapper'])} {...rest}>
       <div className={styles.infoPanelContainer} style={infoPanelStyles}>
-        <span className={styles.brandLogo}>
-          <SleepysBrand />
-        </span>
+        {brandIcon}
         <Typography className={styles.title} variant="h4" color="white">
           {title}
         </Typography>
         <Typography variant="paragraph" color="white">
-          {text}
+          {body}
         </Typography>
-        <Button className={styles.btnStyles} size="md" href={btnLink}>
-          {btnText}
-        </Button>
+        {heroBtn}
       </div>
-      <div className={styles.imgContainer}>
-        <img src={imageSrc} alt="wowie zowie" />
-      </div>
+      {imageTile}
     </div>
   )
 }
