@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactSVG } from 'react'
+import React, { FunctionComponent, ReactNode } from 'react'
 import Typography from '../Typography'
 import Button from '../Button'
 import clsx from 'clsx'
@@ -10,12 +10,13 @@ interface Props {
   body: string
   imageSrc?: string
   imageAlt?: string
-  brandLogo?: ReactSVG
+  brandLogo?: ReactNode
   btnText?: string
   btnLink?: string
   fullSizeImg?: boolean
   bgColor?: string
   bgSize?: 'contain' | 'repeat' | 'cover'
+  bgPosition?: 'center' | string
   textColor?: 'primary' | 'secondary' | 'error' | 'alert' | 'success' | 'white'
   className?: string
   [rest: string]: unknown // ...rest property
@@ -23,6 +24,9 @@ interface Props {
 
 const HeroBanner: FunctionComponent<Props> = ({
   bgColor = '#0A1232',
+  bgSize = 'cover',
+  bgPosition = 'center',
+  textColor = 'white',
   imageSrc,
   imageAlt,
   title,
@@ -31,14 +35,11 @@ const HeroBanner: FunctionComponent<Props> = ({
   btnLink,
   brandLogo,
   fullSizeImg,
-  bgSize = 'cover',
-  textColor = 'white',
   className,
   ...rest
 }) => {
   let infoPanelStyles = { backgroundColor: `${bgColor}` }
-  let heroBannerStyles = { background: `url(${imageSrc})`, backgroundSize: bgSize }
-
+  let heroBannerStyles = { background: `url(${imageSrc})`, backgroundSize: bgSize, backgroundPosition: bgPosition }
   let imageBg = fullSizeImg ? heroBannerStyles : infoPanelStyles
 
   let imageTile
@@ -53,7 +54,7 @@ const HeroBanner: FunctionComponent<Props> = ({
   //TODO: Get brand logo to render correctly
   let brandIcon
   if (brandLogo) {
-    brandIcon = <span className={styles.brandLogo}>{brandLogo}</span>
+    brandIcon = <div className={styles.brandLogo}>{brandLogo}</div>
   }
 
   let heroBtn
@@ -68,11 +69,11 @@ const HeroBanner: FunctionComponent<Props> = ({
   return (
     <div className={clsx(styles['hero-banner-wrapper'], className)} {...rest}>
       <div className={styles.infoPanelContainer} style={imageBg}>
-        {brandLogo}
+        {brandIcon}
         <Typography className={styles.title} variant="h4" color={textColor}>
           {title}
         </Typography>
-        <Typography variant="paragraph" color={textColor}>
+        <Typography className={styles.body} variant="paragraph" color={textColor}>
           {body}
         </Typography>
         {heroBtn}

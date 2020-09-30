@@ -15,7 +15,7 @@
     "build": "rimraf dist && node ./scripts/buildDist && rollup -c",
     "build:web": "docz build",
     "serve": "docz serve",
-    "dev": "rimraf .docz/.cache && yarn start",
+    "dev": "yarn start",
     "lint": "eslint --fix ./src",
     "plop": "plop",
     "start": "docz dev -o",
