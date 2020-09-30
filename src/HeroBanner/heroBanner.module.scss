@@ -4,6 +4,8 @@
   width: 100%;
   height: 323px;
   display: flex;
+  justify-content: baseline;
+  align-items: stretch;
 
   @media screen and (max-width: $tablet) {
     flex-direction: column-reverse;
@@ -12,7 +14,6 @@
 }
 
 .infoPanelContainer {
-  width: 100%;
   padding: 45px 200px 66px 60px;
   display: flex;
   flex-direction: column;
@@ -26,6 +27,7 @@
   .brandLogo {
     width: 100%;
     height: 100%;
+
     svg {
       margin-bottom: -15px;
     }
@@ -37,7 +39,7 @@
 
   .body {
     @media screen and (max-width: $tablet) {
-      width: 350px;
+      width: 250px;
       text-align: center;
     }
   }
@@ -57,7 +59,12 @@
 }
 
 .imgContainer {
-  width: 100%;
+  width: 50%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+  }
 
   @media screen and (max-width: $tablet) {
     img {

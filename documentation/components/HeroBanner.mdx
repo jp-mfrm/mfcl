@@ -17,7 +17,7 @@ import HeroBanner from 'mfcl/HeroBanner'
 
 ## Description
 
-TODO add description here
+The hero banner allows you to display important information alongside images and buttons.
 
 ## Properties
 
@@ -27,14 +27,125 @@ TODO add description here
 
 <Playground>
   <HeroBanner
-    brandLogo={SleepysBrand}
+    brandLogo={<SleepysBrand />}
     imageSrc={SleepyImg}
-    bgColor="white"
-    imageAlt="woman yawning in bed"
+    imageAlt="i am ironman"
     title="Achieve Better Sleep"
     body="Sign up to get better insider tips & expert advice in your inbox."
     btnText="Vist Sleep.com"
+    btnLink="http://localhost:4000/components-heroBanner"
+  />
+</Playground>
+
+## Single or Dual Hero banner
+
+- You can make this a single banner without the dual sides by simply removing the image. The background color of
+  the left tile can be changed by passing the **bgColor** prop.
+
+<Playground>
+  <HeroBanner
+    brandLogo={<SleepysBrand />}
+    imageSrc={SleepyImg}
+    imageAlt="i am ironman"
+    title="Achieve Better Sleep"
+    body="Sign up to get better insider tips & expert advice in your inbox."
+    btnText="Vist Sleep.com"
+    btnLink="http://localhost:4000/components-heroBanner"
+  />
+  <br />
+  <br />
+  <HeroBanner
+    brandLogo={<SleepysBrand />}
+    title="Achieve Better Sleep"
+    bgColor="salmon"
+    body="Sign up to get better insider tips & expert advice in your inbox."
+    btnText="Vist Sleep.com"
+    btnLink="http://localhost:4000/components-heroBanner"
+  />
+</Playground>
+
+## Background Image
+
+- If you wish to display the background as an image instead, add the prop **fullSizeImg** to the the component.
+  You can also change the way the background image renders by setting the **bgSize** and **bgPosition** props.
+
+<Playground>
+  <HeroBanner
+    brandLogo={<SleepysBrand fillColor="#000" />}
+    imageSrc={SleepyImg}
+    imageAlt="i am ironman"
+    fullSizeImg
     textColor="primary"
+    title="Achieve Better Sleep"
+    body="Sign up to get better insider tips & expert advice in your inbox."
+    btnText="Vist Sleep.com"
+    btnLink="http://localhost:4000/components-heroBanner"
+  />
+  <br />
+  <br />
+  <HeroBanner
+    brandLogo={<SleepysBrand fillColor="#000" />}
+    imageSrc={SleepyImg}
+    imageAlt="i am ironman"
+    fullSizeImg
+    bgSize="repeat"
+    textColor="primary"
+    title="Achieve Better Sleep"
+    body="Sign up to get better insider tips & expert advice in your inbox."
+  />
+  <br />
+  <br />
+  <HeroBanner
+    brandLogo={<SleepysBrand fillColor="#000" />}
+    imageSrc={SleepyImg}
+    imageAlt="i am ironman"
+    fullSizeImg
+    bgPosition="top"
+    textColor="primary"
+    title="Achieve Better Sleep"
+    body="Sign up to get better insider tips & expert advice in your inbox."
+    btnText="Vist Sleep.com"
+    btnLink="http://localhost:4000/components-heroBanner"
+  />
+</Playground>
+
+## Add/Remove a Button
+
+- If the **btnText** is empty, or doesn't exist, the component won't render a button.
+
+<Playground>
+  <HeroBanner
+    brandLogo={<SleepysBrand />}
+    imageSrc={SleepyImg}
+    imageAlt="i am ironman"
+    title="Achieve Better Sleep"
+    body="Sign up to get better insider tips & expert advice in your inbox."
+  />
+  <br />
+  <br />
+  <HeroBanner
+    brandLogo={<SleepysBrand />}
+    imageSrc={SleepyImg}
+    imageAlt="i am ironman"
+    title="Achieve Better Sleep"
+    body="Sign up to get better insider tips & expert advice in your inbox."
+    btnText="Click Please"
+    btnLink="/"
+  />
+</Playground>
+
+## Change the Image
+
+- You can change the image by providing the **imageSrc** prop an image string.
+
+<Playground>
+  <HeroBanner
+    brandLogo={<SleepysBrand />}
+    imageSrc="https://daily.jstor.org/wp-content/uploads/2015/11/Sleepy_1050x700.jpg"
+    imageAlt="i am ironman"
+    title="Sleepy Puppy"
+    body="Look at this cute and adorable, squishy faced puppy!"
+    btnText="Click Me"
     btnLink="http://localhost:4000/components-heroBanner"
   />
 </Playground>

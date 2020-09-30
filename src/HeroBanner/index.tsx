@@ -38,8 +38,13 @@ const HeroBanner: FunctionComponent<Props> = ({
   className,
   ...rest
 }) => {
-  let infoPanelStyles = { backgroundColor: `${bgColor}` }
-  let heroBannerStyles = { background: `url(${imageSrc})`, backgroundSize: bgSize, backgroundPosition: bgPosition }
+  let infoPanelStyles = { backgroundColor: `${bgColor}`, width: `${imageSrc ? '50%' : '100%'}` }
+  let heroBannerStyles = {
+    background: `url(${imageSrc})`,
+    backgroundSize: bgSize,
+    backgroundPosition: bgPosition,
+    width: '100%'
+  }
   let imageBg = fullSizeImg ? heroBannerStyles : infoPanelStyles
 
   let imageTile
@@ -51,7 +56,6 @@ const HeroBanner: FunctionComponent<Props> = ({
     )
   }
 
-  //TODO: Get brand logo to render correctly
   let brandIcon
   if (brandLogo) {
     brandIcon = <div className={styles.brandLogo}>{brandLogo}</div>
@@ -65,6 +69,8 @@ const HeroBanner: FunctionComponent<Props> = ({
       </Button>
     )
   }
+
+  console.log(brandIcon)
 
   return (
     <div className={clsx(styles['hero-banner-wrapper'], className)} {...rest}>
