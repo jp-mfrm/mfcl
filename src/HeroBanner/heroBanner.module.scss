@@ -14,6 +14,8 @@
   justify-content: center;
 
   .brandLogo {
+    width: 100%;
+    height: 100%;
     svg {
       margin-bottom: -15px;
     }
@@ -25,14 +27,14 @@
 
   .btnStyles {
     margin-top: 20px;
-    background-color: #3a4367;
-    border: #3a4367;
+    // background-color: #3a4367;
+    // border: #3a4367;
     text-decoration-line: none;
     width: 225px;
 
     &:hover {
-      background-color: darken(#3a4367, 10%);
-      border: darken(#3a4367, 10%);
+      //   background-color: lighten(#3a4367, 5%);
+      //   border: lighten(#3a4367, 5%);
     }
   }
 }
