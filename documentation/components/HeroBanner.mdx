@@ -7,6 +7,8 @@ route: /components-heroBanner
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
 import { HeroBanner } from '../../src'
+import SleepyImg from './helpers/images/sleepy.png'
+import SleepysBrand from '../../src/Icons/SleepysBrand'
 
 # HeroBanner
 
@@ -25,5 +27,12 @@ TODO add description here
 ## Basic Usage
 
 <Playground>
-  <HeroBanner />
+  <HeroBanner
+    brandLogo={SleepysBrand}
+    imageSrc={SleepyImg}
+    title="Achieve Better Sleep"
+    text="Sign up to get better insider tips & expert advice in your inbox."
+    btnText="Vist Sleep.com"
+    btnLink="http://localhost:4000/components-heroBanner"
+  />
 </Playground>

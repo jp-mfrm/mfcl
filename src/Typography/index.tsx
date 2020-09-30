@@ -1,9 +1,9 @@
-import React, { FunctionComponent, createElement } from 'react'
+import React, { FunctionComponent, createElement, ReactNode } from 'react'
 import clsx from 'clsx'
 import styles from './typography.module.scss'
 
 interface Props {
-  children: string
+  children: string | ReactNode
   /** The variations the typography can render */
   variant:
     | 'h1'
@@ -31,7 +31,7 @@ interface Props {
   /** If true, sets the text to not wrpa and instead display elipsis */
   noWrap?: boolean
   /** Sets the color of the text */
-  color?: 'primary' | 'secondary' | 'error' | 'success' | 'alert'
+  color?: 'primary' | 'secondary' | 'error' | 'success' | 'alert' | 'white'
   [rest: string]: unknown // ...rest property
 }
 

@@ -51,12 +51,17 @@
   }
 }
 
+.disableUnderline {
+  text-decoration: none;
+}
+
 .primary {
   background-color: $red;
   border: solid 1px $red;
   color: $white;
 
-  &:hover, &:active {
+  &:hover,
+  &:active {
     background-color: $dark-red;
     color: $white;
     border: solid 1px $dark-red;
@@ -68,7 +73,8 @@
   border: solid 1px $red;
   color: $red;
 
-  &:hover, &:active  {
+  &:hover,
+  &:active {
     background-color: $dark-red;
     color: $white;
     border: solid 1px $dark-red;
@@ -80,7 +86,8 @@
   border: solid 1px $gray-3;
   color: $gray-11;
 
-  &:hover, &:active  {
+  &:hover,
+  &:active {
     background-color: $white;
     color: $gray-11;
     border: solid 1px $gray-8;
@@ -111,7 +118,7 @@
   &.dark {
     color: $white;
   }
-  &:disabled { 
+  &:disabled {
     color: $gray-5 !important;
   }
 }

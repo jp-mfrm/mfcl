@@ -20,6 +20,7 @@ export interface Props {
    *  The default type to be applied to the button
    */
   type?: 'button' | 'submit' | 'reset'
+  disableUnderline?: boolean
   [x: string]: unknown // ...rest property
 }
 
@@ -34,6 +35,7 @@ const Button: FunctionComponent<Props> = ({
   loadingColor = '#fff',
   size = 'lg',
   type = 'button',
+  disableUnderline,
   ...rest
 }) => {
   const load = loading ? styles.loading : ''
@@ -48,7 +50,7 @@ const Button: FunctionComponent<Props> = ({
 
   if (href) {
     return (
-      <a href={href} className={btnClassName} {...rest}>
+      <a href={href} className={clsx(btnClassName, disableUnderline && styles.disableUnderline)} {...rest}>
         {buttonChildren}
       </a>
     )
