@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react'
 
 import Stepper from './index'
 
-const stepperWords = ['Create Account', 'Issuer Info', 'Offering Info', 'Submit']
+const stepperWords = [{ label: 'Create Account' }, { label: 'Order Sent', color: '#000' }, { label: 'Delivered' }, {}]
 
 describe('Stepper Component', () => {
   it('renders a className', () => {
@@ -11,11 +11,10 @@ describe('Stepper Component', () => {
     expect(container.querySelector('.stepper-wrapper')?.classList).toContain('test-class-name')
   })
 
-  it('should add the color prop', () => {
-    const color = '#000'
-    const { container } = render(<Stepper activeStep={1} color={color} steps={stepperWords} />)
-    expect(container.querySelector('.circle')).toHaveStyle(`backgroundColor: ${color}`)
-    expect(container.querySelector('.line')).toHaveStyle(`backgroundColor: ${color}`)
+  it('should add the color key', () => {
+    const { container } = render(<Stepper activeStep={1} steps={stepperWords} />)
+    expect(container.querySelectorAll('.circle')[0]).toHaveStyle(`border: 2px solid #d63426`)
+    expect(container.querySelectorAll('.circle')[1]).toHaveStyle(`border: 2px solid #000`)
   })
 
   it('selects the index using selectIndex when clicked on the number circle and has passed that step', () => {
