@@ -32,6 +32,7 @@ import Textarea from './Textarea'
 import Tooltip from './Tooltip'
 import Pagination from './Pagination'
 import Typography from './Typography'
+import HeroBanner from './HeroBanner'
 
 export {
   Accordion,
@@ -49,6 +50,7 @@ export {
   Grid,
   GridItem,
   GridRow,
+  HeroBanner,
   Input,
   LazyImage,
   Loading,
