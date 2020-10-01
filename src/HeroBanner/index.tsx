@@ -13,6 +13,7 @@ interface Props {
   brandLogo?: ReactNode
   btnText?: string
   btnLink?: string
+  btnSize?: 'sm' | 'md' | 'lg'
   fullSizeImg?: boolean
   bgColor?: string
   bgSize?: 'contain' | 'repeat' | 'cover'
@@ -64,13 +65,11 @@ const HeroBanner: FunctionComponent<Props> = ({
   let heroBtn
   if (btnText) {
     heroBtn = (
-      <Button type="button" className={styles.btnStyles} size="md" href={btnLink}>
+      <Button className={styles.btnStyles} size="md" href={btnLink}>
         {btnText}
       </Button>
     )
   }
-
-  console.log(brandIcon)
 
   return (
     <div className={clsx(styles['hero-banner-wrapper'], className)} {...rest}>

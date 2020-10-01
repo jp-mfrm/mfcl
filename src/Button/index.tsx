@@ -20,7 +20,6 @@ export interface Props {
    *  The default type to be applied to the button
    */
   type?: 'button' | 'submit' | 'reset'
-  disableUnderline?: boolean
   [x: string]: unknown // ...rest property
 }
 
@@ -50,7 +49,7 @@ const Button: FunctionComponent<Props> = ({
 
   if (href) {
     return (
-      <a href={href} className={clsx(btnClassName, disableUnderline && styles.disableUnderline)} {...rest}>
+      <a href={href} className={btnClassName} {...rest}>
         {buttonChildren}
       </a>
     )
