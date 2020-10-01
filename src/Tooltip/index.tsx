@@ -7,6 +7,7 @@ import Arrow from './Arrow'
 import TipContainer from './TipContainer'
 
 import styles from './tooltip.module.scss'
+import wrapper from '../gatsby-theme-docz/wrapper'
 
 export interface Props {
   /** Content elements inside the tooltip container */
@@ -98,12 +99,10 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     if (onClose) {
       onClose()
     }
-
     setIsShowing(false)
   }
 
   const handleTouch = () => {
-    console.log('hanlde touch')
     if (!isShowing) {
       showTooltip()
       assignOutsideTouchHandler()
@@ -111,12 +110,18 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   }
 
   const handleKeys = (e: any) => {
-    console.log('handle keys')
     const key = e.keyCode || e.which
 
     switch (key) {
       // Escape
-      case 27:
+      case 27: {
+          if (isShowing) {
+            hideTooltip()    
+            removeListeners()
+          } 
+        break
+      }
+
       case 13: {
         if (isShowing) {
           hideTooltip()    
