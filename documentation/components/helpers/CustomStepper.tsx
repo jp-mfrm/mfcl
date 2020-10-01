@@ -8,7 +8,7 @@ import styles from './customStepper.module.scss'
 
 const steps = [
   { label: 'Preparing Order', className: styles['first-step'] },
-  { label: 'In Transit', icon: <ChevronRight fillColor="#d63426" width={24} height={24} /> },
+  { label: 'In Transit', icon: <ChevronRight fillColor="#d63426" /> },
   { label: 'Delivered', icon: <Check />, color: '#006601', className: styles['last-step'] }
 ]
 
