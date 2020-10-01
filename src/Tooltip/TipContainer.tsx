@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { FunctionComponent, ReactNode, useRef, useEffect } from 'react'
 import clsx from 'clsx'
 import Typography from '../Typography'
 
@@ -28,6 +28,14 @@ const TipContainer: FunctionComponent<Props> = ({
   tipContainerClassName, 
   header,
 }) => {
+  const closeBtnRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (closeBtnRef.current !== null) {
+      closeBtnRef.current.focus()
+    }
+  }, [isShowing]) 
+
   const getBaseStyle = () => {
     const opacity = isShowing ? 1 : 0
     const pointerEvents = isShowing ? 'auto' : 'none'
@@ -293,6 +301,7 @@ const TipContainer: FunctionComponent<Props> = ({
             tabIndex={0}
             className={clsx(styles.close)}
             aria-label="Close Alert"
+            ref={closeBtnRef}
             // onClick={hideTooltip}
           >
             <span aria-hidden="true" className={styles['close-icon']}>
