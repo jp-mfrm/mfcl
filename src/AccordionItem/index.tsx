@@ -14,7 +14,8 @@ type Props = {
   setFocus?: Function
   setIndex?: Function
   index?: number
-  titleStyles?: CSSProperties
+  titleInlineStyle?: CSSProperties
+  centerInlineStyle?: CSSProperties
   initialOpen?: boolean
   onOpen?: Function
   onClose?: Function
@@ -32,7 +33,8 @@ const AccordionItem: FunctionComponent<Props> = ({
   setFocus = () => {},
   setIndex = () => {},
   hidePreview = false,
-  titleStyles = {},
+  titleInlineStyle = {},
+  centerInlineStyle = {},
   initialOpen = false,
   onOpen = () => {},
   onClose = () => {},
@@ -100,7 +102,7 @@ const AccordionItem: FunctionComponent<Props> = ({
         aria-controls={sectionId}
         tabIndex={0}
         id={labelId}
-        style={titleStyles}
+        style={titleInlineStyle}
         role="button"
         ref={labelRef}
         onClick={handleClick}
@@ -114,7 +116,7 @@ const AccordionItem: FunctionComponent<Props> = ({
         data-testid="accordion-title"
       >
         {icon && <div className={styles.icon}>{icon}</div>}
-        <div className={centerStyles}>
+        <div className={centerStyles} style={centerInlineStyle}>
           <div className={styles.title}>{title}</div>
           {preview && <span className={previewStyles}>{preview} </span>}
         </div>
