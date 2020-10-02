@@ -51,40 +51,36 @@ const Arrow: FunctionComponent<Props> = ({
         case 'top-right':
           return {
             bottom: '100%',
-            borderLeft: 'solid 1px',
-            borderBottom: 'solid 1px',
-            top: top + window.scrollY - 19,
-            left: left - 5 + width / 2
+            top: top + window.scrollY - 29,
+            left: left - 5 + width / 2,
+            boxShadow: '-4px 4px 5px 0px rgba(45, 41, 38, 0.5)'
           }
 
         case 'bottom':
         case 'bottom-left':
         case 'bottom-right':
           return {
-            borderRight: 'solid 1px',
-            borderTop: 'solid 1px',
             bottom: 'auto',
-            top: top + window.scrollY + height - 1,
-            left: left - 5 + width / 2
+            top: top + window.scrollY + height + 9,
+            left: left - 5 + width / 2,
+            boxShadow: '4px -4px 5px 0px rgba(45, 41, 38, 0.5)'
           }
 
         case 'left':
           return {
-            left: left - 21,
+            left: left - 31,
             top: top + window.scrollY + 9,
-            borderRight: 'solid 1px',
-            borderBottom: 'solid 1px',
             bottom: 'auto',
-            right: '102%'
+            right: '102%',
+            boxShadow: '4px 4px 5px 0px rgba(45, 41, 38, 0.5)'
           }
 
         case 'right':
           return {
-            left: left + width + 8,
+            left: left + width + 18,
             top: top + window.scrollY + 11,
-            borderTop: 'solid 1px',
-            borderLeft: 'solid 1px',
-            bottom: 'auto'
+            bottom: 'auto',
+            boxShadow: '-4px -4px 5px 0px rgba(45, 41, 38, 0.5)'
           }
 
         default:
@@ -99,12 +95,9 @@ const Arrow: FunctionComponent<Props> = ({
       const { left, width } = dimensions
       switch (position) {
         case 'bottom-left':
-          return {
-            left: left - 20 + width / 2
-          }
         case 'top-left':
           return {
-            left: left - 20 + width / 2
+            left: left - 7 + width / 2
           }
         default:
           return {}
