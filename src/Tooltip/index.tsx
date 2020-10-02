@@ -27,8 +27,8 @@ export interface Props {
   onClose?: Function | null
   onOpen?: Function | null
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
-  tipContainerClassName?: string,
-  header: string,
+  tipContainerClassName?: string
+  header: string
   [rest: string]: unknown
 }
 
@@ -115,16 +115,16 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     switch (key) {
       // Escape
       case 27: {
-          if (isShowing) {
-            hideTooltip()    
-            removeListeners()
-          } 
+        if (isShowing) {
+          hideTooltip()
+          removeListeners()
+        }
         break
       }
 
       case 13: {
         if (isShowing) {
-          hideTooltip()    
+          hideTooltip()
           removeListeners()
         } else {
           showTooltip()
@@ -132,8 +132,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
         }
         break
       }
-  
-    
+
       default:
         break
     }
