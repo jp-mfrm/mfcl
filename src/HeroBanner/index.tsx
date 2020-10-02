@@ -6,84 +6,67 @@ import clsx from 'clsx'
 import styles from './heroBanner.module.scss'
 
 interface Props {
+  /** title of the hero banner */
   title: string
+  /** paragraph of the hero banner */
   body: string
+  /** image link */
   imageSrc?: string
+  /** alt attribute for the img tag  */
   imageAlt?: string
+  /** the svg logo right above the title  */
   brandLogo?: ReactNode
-  btnText?: string
-  btnLink?: string
-  btnSize?: 'sm' | 'md' | 'lg'
+  /** props for the button component */
+  btnProps?: Object
+  /** Sets the color of the text */
+  textColor?: 'primary' | 'secondary' | 'error' | 'success' | 'alert' | 'white'
+  /** image will take up the entire width */
   fullSizeImg?: boolean
-  bgColor?: string
-  bgSize?: 'contain' | 'repeat' | 'cover'
-  bgPosition?: 'center' | string
-  textColor?: 'primary' | 'secondary' | 'error' | 'alert' | 'success' | 'white'
+  /** style of the HeroBanner div wrapper */
+  heroBannerStyle?: any
   className?: string
-  [rest: string]: unknown // ...rest property
+  [rest: string]: unknown
 }
 
 const HeroBanner: FunctionComponent<Props> = ({
-  bgColor = '#0A1232',
   bgSize = 'cover',
   bgPosition = 'center',
+  heroBannerStyle = {},
   textColor = 'white',
   imageSrc,
   imageAlt,
   title,
   body,
-  btnText,
-  btnLink,
+  btnProps,
   brandLogo,
   fullSizeImg,
   className,
   ...rest
 }) => {
-  let infoPanelStyles = { backgroundColor: `${bgColor}`, width: `${imageSrc ? '50%' : '100%'}` }
+  let infoPanelStyles = { width: `${imageSrc ? '50%' : '100%'}`, ...heroBannerStyle }
   let heroBannerStyles = {
     background: `url(${imageSrc})`,
-    backgroundSize: bgSize,
-    backgroundPosition: bgPosition,
-    width: '100%'
+    ...heroBannerStyle
   }
   let imageBg = fullSizeImg ? heroBannerStyles : infoPanelStyles
-
-  let imageTile
-  if (!fullSizeImg && imageSrc) {
-    imageTile = (
-      <div className={styles.imgContainer}>
-        <img src={imageSrc} alt={imageAlt} />
-      </div>
-    )
-  }
-
-  let brandIcon
-  if (brandLogo) {
-    brandIcon = <div className={styles.brandLogo}>{brandLogo}</div>
-  }
-
-  let heroBtn
-  if (btnText) {
-    heroBtn = (
-      <Button className={styles.btnStyles} size="md" href={btnLink}>
-        {btnText}
-      </Button>
-    )
-  }
 
   return (
     <div className={clsx(styles['hero-banner-wrapper'], className)} {...rest}>
       <div className={styles.infoPanelContainer} style={imageBg}>
-        {brandIcon}
+        {brandLogo && <div className={styles.brandLogo}>{brandLogo}</div>}
         <Typography className={styles.title} variant="h4" color={textColor}>
           {title}
         </Typography>
         <Typography className={styles.body} variant="paragraph" color={textColor}>
           {body}
         </Typography>
-        {heroBtn}
+        {btnProps && <Button className={styles.btnStyles} {...btnProps} />}
       </div>
-      {imageTile}
+      {!fullSizeImg && imageSrc && (
+        <div className={styles.imgContainer}>
+          <img src={imageSrc} alt={imageAlt} />
+        </div>
+      )}
     </div>
   )
 }
