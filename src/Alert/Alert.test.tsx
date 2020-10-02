@@ -40,7 +40,7 @@ describe('Alert Component', () => {
         Alert
       </Alert>
     )
-    const closeIcon = container.querySelector('button')
+    const closeIcon = container.querySelector('.close')
     // @ts-ignore
     fireEvent.click(closeIcon)
     jest.runAllTimers()

@@ -16,9 +16,8 @@ describe('Drawer', () => {
   it('should render children', () => {
     const { getByTestId, getByRole } = render(<Drawer isOpen>{children}</Drawer>)
     // @ts-ignore
-      fireEvent.click(getByRole('dialog').querySelector('.close'))
+    fireEvent.click(getByRole('dialog').querySelector('.close'))
     expect(getByTestId('yo')?.textContent).toBe('Yo')
-
   })
 
   it('should render the className prop correctly', () => {
