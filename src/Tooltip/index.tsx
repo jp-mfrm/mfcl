@@ -176,6 +176,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       onMouseLeave={hover ? hideTooltip : undefined}
       ref={wrapperRef}
       {...rest}
+      tabIndex={0}
     >
       {trigger}
       {/* @ts-ignore */}
