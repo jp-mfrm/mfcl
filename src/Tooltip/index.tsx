@@ -11,7 +11,7 @@ import wrapper from '../gatsby-theme-docz/wrapper'
 
 export interface Props {
   /** Content elements inside the tooltip container */
-  children: ReactNode
+  children?: ReactNode
   /** The display for the user to hover/click on */
   trigger: string | ReactNode
   arrow?: boolean
