@@ -34,7 +34,6 @@ const Button: FunctionComponent<Props> = ({
   loadingColor = '#fff',
   size = 'lg',
   type = 'button',
-  disableUnderline,
   ...rest
 }) => {
   const load = loading ? styles.loading : ''
