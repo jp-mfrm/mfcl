@@ -99,6 +99,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     if (onClose) {
       onClose()
     }
+
     setIsShowing(false)
   }
 
@@ -174,8 +175,9 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       onMouseEnter={hover ? showTooltip : undefined}
       onMouseLeave={hover ? hideTooltip : undefined}
       ref={wrapperRef}
-      {...rest}
       tabIndex={0}
+      aria-expanded={isShowing}
+      {...rest}
     >
       {trigger}
       {/* @ts-ignore */}
