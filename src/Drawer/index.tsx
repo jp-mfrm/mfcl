@@ -19,7 +19,6 @@ export interface Props {
   className?: string
   /** Include the (x) icon to close */
   close?: boolean
-  closeClassName?: string
   duration?: number
   headerClassName?: string
   isOpen?: boolean
@@ -66,7 +65,6 @@ const Drawer: React.FunctionComponent<Props> = ({
   children = null,
   className = '',
   close = true,
-  closeClassName = '',
   duration = 100,
   position = 'right',
   onClose = null,
@@ -170,7 +168,7 @@ const Drawer: React.FunctionComponent<Props> = ({
                     role="button"
                     tabIndex={0}
                     onClick={hideDrawer}
-                    className={clsx(styles.close, closeClassName)}
+                    className={styles.close}
                     aria-label="Close Drawer"
                     ref={closeBtnRef}
                   >

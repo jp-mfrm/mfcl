@@ -1,55 +1,72 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { FunctionComponent, KeyboardEvent, ReactNode } from 'react'
 import clsx from 'clsx'
 import Step from './Step'
 import styles from './stepper.module.scss'
 
 interface Props {
-  /**
-   * Index that controls the current active step
-   */
+  /** Index that controls the current active step */
   activeStep: number
   /**
-   * Any array. If you have strings or react components, they will be displayed next to the step
-   * If you don't want labels, do an array of falsey values: [false, false, false]
+   * An array of objects that can have color, icon, label, className
+   * If you don't want labels, do an array of empty objects [{}, {}, {}]
    */
-  steps: any[]
+  steps: {
+    className?: string
+    color?: string
+    icon?: ReactNode
+    label?: ReactNode
+  }[]
+  /** className to be applied to the ul container element */
   className?: string
-  color?: string
-  /**
-   * Use this function to save the selected index
-   */
-  selectIndex?: Function
-  stepClass?: string
+  /** Use this function to save the new selected index to state when clicked or arrow keyed a new step */
+  selectIndex?: (index: number) => void
+  /** Turns the entire stepper vertical */
   vertical?: boolean
   [rest: string]: unknown
 }
 
-const Stepper: FunctionComponent<Props> = ({
-  activeStep,
-  className,
-  color,
-  steps,
-  selectIndex,
-  stepClass,
-  vertical,
-  ...rest
-}) => {
+const Stepper: FunctionComponent<Props> = ({ activeStep, className, color, steps, selectIndex, vertical, ...rest }) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>, index: number) => {
+    if (selectIndex) {
+      switch (e.key) {
+        case 'Enter':
+          selectIndex(index)
+          break
+        case 'ArrowLeft': {
+          const newIndex = activeStep - 1
+          if (newIndex >= 0) {
+            selectIndex(newIndex)
+          }
+          break
+        }
+        case 'ArrowRight': {
+          const newIndex = activeStep + 1
+          if (newIndex < steps.length) {
+            selectIndex(newIndex)
+          }
+          break
+        }
+
+        default:
+          break
+      }
+    }
+  }
   return (
     <ul className={clsx(styles['stepper-wrapper'], vertical && styles.vertical, className)} {...rest}>
-      {steps.map((content: any, index) => {
-        const alreadyPassed = activeStep >= index + 1
-        const lastIndex = index === steps.length - 1
+      {steps.map((step: any, index) => {
+        const currentOrPassed = activeStep >= index
+        const theNextActive = activeStep + 1 === index
         return (
           <Step
             key={index}
             activeStep={activeStep === index}
-            alreadyPassed={alreadyPassed}
-            color={color}
-            content={content}
+            currentOrPassed={currentOrPassed}
+            handleKeyDown={handleKeyDown}
             index={index}
-            lastIndex={lastIndex}
             selectIndex={selectIndex}
-            stepClass={stepClass}
+            step={step}
+            theNextActive={theNextActive}
             vertical={vertical}
           />
         )

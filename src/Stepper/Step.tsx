@@ -1,74 +1,65 @@
-import React, { FunctionComponent, memo } from 'react'
+import React, { FunctionComponent, ReactNode, memo, KeyboardEvent } from 'react'
 import clsx from 'clsx'
 
 import styles from './stepper.module.scss'
 
-const empty = {}
+export interface IStep {
+  className?: string
+  color?: string
+  icon?: ReactNode
+  label?: string | ReactNode
+}
 
 interface Props {
   /**
    * Controls the current active step
    */
   activeStep: boolean
+  currentOrPassed: boolean
   index: number
-  alreadyPassed: boolean
-  lastIndex: boolean
-  content?: any
+  step: IStep
   color?: string
   /**
    * Use this function to save the selected index
    */
   selectIndex?: Function
-  stepClass?: string
+  handleKeyDown: (e: KeyboardEvent<HTMLDivElement>, index: number) => void
+  theNextActive?: boolean
   vertical?: boolean
 }
 
 const Step: FunctionComponent<Props> = ({
   activeStep,
-  alreadyPassed,
-  color,
-  content,
+  currentOrPassed,
+  handleKeyDown,
+  step,
   index,
-  lastIndex,
   selectIndex,
-  stepClass,
+  theNextActive,
   vertical
 }) => {
+  const { color = '#d63426', icon, label, className } = step
   const verticalClass = vertical && styles.vertical
-  const circleNumber = (
-    <div className={clsx(styles['outer-circle'], verticalClass)}>
-      <div
-        onClick={selectIndex ? () => selectIndex(index) : undefined}
-        onKeyPress={selectIndex ? () => selectIndex(index) : undefined}
-        role="button"
-        tabIndex={0}
-        style={
-          activeStep ? { border: `2px solid ${color}` } : { background: color, cursor: selectIndex ? 'pointer' : '' }
-        }
-        className={clsx(
-          styles.circle,
-          activeStep && styles['circle-active'],
-          content && styles['circle-label'],
-          verticalClass
-        )}
-      />
-    </div>
-  )
+  const currentOrPassedClass = currentOrPassed ? styles.passed : styles['not-passed']
+  const activeStepClass = theNextActive && styles['next-active']
 
   return (
-    <li className={clsx(styles['progress-step'], verticalClass, stepClass)}>
-      {vertical ? (
-        <>
-          {circleNumber}
-          {content && <div className={clsx(styles.word, verticalClass)}>{content}</div>}
-        </>
-      ) : (
-        <>
-          {content && <div className={styles.word}>{content}</div>}
-          {circleNumber}
-        </>
-      )}
-      {!lastIndex && <div style={{ backgroundColor: color }} className={clsx(styles.line, verticalClass)} />}
+    <li className={clsx(styles['progress-step'], verticalClass, currentOrPassedClass, activeStepClass, className)}>
+      <div
+        onClick={selectIndex ? () => selectIndex(index) : undefined}
+        onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => handleKeyDown(e, index)}
+        role="button"
+        tabIndex={selectIndex ? 0 : -1}
+        className={clsx(styles.circle, verticalClass)}
+        style={
+          activeStep
+            ? { border: `2px solid ${color}` }
+            : { border: `2px solid ${color}`, cursor: selectIndex ? 'pointer' : '' }
+        }
+      >
+        {icon}
+      </div>
+      {label && <div className={clsx(styles.label, verticalClass)}>{label}</div>}
     </li>
   )
 }

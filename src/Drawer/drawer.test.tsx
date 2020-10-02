@@ -47,15 +47,6 @@ describe('Drawer', () => {
     expect(getByRole('dialog').querySelector('.drawer-body')?.classList).toContain('test-class-name')
   })
 
-  it('should pass closeClassName down', () => {
-    const { getByRole } = render(
-      <Drawer isOpen closeClassName="test-class-name">
-        {children}
-      </Drawer>
-    )
-    expect(getByRole('dialog').querySelector('.close')?.classList).toContain('test-class-name')
-  })
-
   it('should pass backdropClassName down', () => {
     const { getByTestId } = render(
       <Drawer isOpen backdropClassName="test-class-name">
