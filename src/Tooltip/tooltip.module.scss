@@ -15,7 +15,7 @@
   align-items: center;
   line-height: 0;
   cursor: pointer;
-  //why does this wrapper have a z-index? 
+  //why does this wrapper have a z-index?
   z-index: 98;
 }
 
@@ -48,7 +48,6 @@
   white-space: nowrap;
   z-index: 99;
   box-shadow: 0px 0px 8px $gray-11;
-  
 }
 
 .gap {
@@ -59,20 +58,21 @@
 }
 
 .header-wrapper {
-
   h6 {
-      line-height: 0;
-      margin-top: 20px;
-      margin-bottom: 0px;
+    line-height: 0;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    text-transform: uppercase;
+    font-weight: 900;
   }
 }
-
 
 .close {
   @include closeX();
   position: absolute;
   right: 0px;
   top: 0px;
+  font-size: 35px;
 }
 
 .tooltip-content {
@@ -81,4 +81,6 @@
   height: 60px;
   display: flex;
   align-items: center;
+  line-height: 23px;
+  padding-top: 10px;
 }
