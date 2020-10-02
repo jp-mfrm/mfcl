@@ -2,7 +2,6 @@ import React, { FunctionComponent, ReactNode, useRef, useEffect } from 'react'
 import clsx from 'clsx'
 import Typography from '../Typography'
 
-
 import styles from './tooltip.module.scss'
 
 export interface Props {
@@ -25,8 +24,8 @@ const TipContainer: FunctionComponent<Props> = ({
   easing,
   isShowing,
   position,
-  tipContainerClassName, 
-  header,
+  tipContainerClassName,
+  header
 }) => {
   const closeBtnRef = useRef<HTMLDivElement>(null)
 
@@ -34,7 +33,7 @@ const TipContainer: FunctionComponent<Props> = ({
     if (closeBtnRef.current !== null) {
       closeBtnRef.current.focus()
     }
-  }, [isShowing]) 
+  }, [isShowing])
 
   const getBaseStyle = () => {
     const opacity = isShowing ? 1 : 0
@@ -169,7 +168,7 @@ const TipContainer: FunctionComponent<Props> = ({
             enter: {
               ...getAnimationStyleByPosition('top').enter,
               transform: 'translate3d(calc(-100% + 16px), 0, 0)',
-              left: left + width + 10 - width / 2 
+              left: left + width + 10 - width / 2
             },
             active: {
               transform: 'translate3d(calc(-100% + 16px), -3px, 0)'
@@ -295,22 +294,21 @@ const TipContainer: FunctionComponent<Props> = ({
     >
       <div className={styles.gap} style={getGap()} />
       <div className={styles['header-wrapper']}>
-        <Typography className={styles['header']} variant="h6"> {header} </Typography>
-        <div
-            role="button"
-            tabIndex={0}
-            className={clsx(styles.close)}
-            aria-label="Close Alert"
-            ref={closeBtnRef}
-            // onClick={hideTooltip}
-          >
-            <span aria-hidden="true" className={styles['close-icon']}>
-              &times;
-            </span>
-          </div>
+        <Typography className={styles['header']} variant="h6">
+          {/* @ts-ignore */}
+          {header}
+        </Typography>
+        <div role="button" tabIndex={0} className={clsx(styles.close)} aria-label="Close Alert" ref={closeBtnRef}>
+          <span aria-hidden="true" className={styles['close-icon']}>
+            &times;
+          </span>
+        </div>
       </div>
-    
-      <Typography className={styles['tooltip-content']} variant="paragraph-sm">{children}</Typography>
+
+      <Typography className={styles['tooltip-content']} variant="paragraph-sm">
+        {/* @ts-ignore */}
+        {children}
+      </Typography>
     </div>
   )
 }
