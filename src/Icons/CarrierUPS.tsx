@@ -3,12 +3,13 @@ import React from 'react'
 interface Props {
   width?: string | number
   height?: string | number
+  transform?: string
   fillColor?: string
   [x: string]: unknown // for the rest property
 }
 
-const UPS: React.FunctionComponent<Props> = ({ width = '54', height = '54', fillColor = '#2D2926', ...rest }) => (
-<svg width={width} height={height} viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+const UPS: React.FunctionComponent<Props> = ({ width = '54', height = '54', fillColor = '#2D2926', transform = "", ...rest }) => (
+<svg width={width} height={height} viewBox="0 0 54 54" transform={transform} fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
   <rect opacity="0.1" width={width} height={height} fill="url(#pattern0)"/>
   <defs>
     <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">

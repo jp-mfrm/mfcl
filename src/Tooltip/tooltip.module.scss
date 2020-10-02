@@ -1,15 +1,27 @@
 @import '../variables';
+@import '../mixins/closeX';
 
 .tooltip-wrapper {
-  display: inline-block;
+  display: flex;
   position: relative;
+  width: 10px;
+  height: 10px;
+  padding: 10px;
+  background: orange;
+  text-align: center;
+  border-radius: 100%;
+  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+  line-height: 0;
+  cursor: pointer;
+  //why does this wrapper have a z-index?
   z-index: 98;
 }
 
 .tooltip-arrow {
   backface-visibility: hidden;
   box-sizing: border-box;
-  border-color: $gray-11;
   position: absolute;
   transform: translate3d(0, 0, 0);
   transform-origin: top;
@@ -22,7 +34,6 @@
 .tip-container {
   backface-visibility: hidden;
   background-color: $white;
-  border: 1px solid $gray-11;
   border-radius: 4px;
   box-sizing: content-box;
   color: $gray-11;
@@ -36,6 +47,7 @@
   transform-origin: top;
   white-space: nowrap;
   z-index: 99;
+  box-shadow: 0px 0px 8px $gray-11;
 }
 
 .gap {
@@ -43,4 +55,32 @@
   margin-top: 10px;
   position: absolute;
   width: 100%;
+}
+
+.header-wrapper {
+  h6 {
+    line-height: 0;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+}
+
+.close {
+  @include closeX();
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  font-size: 35px;
+}
+
+.tooltip-content {
+  max-width: 290px;
+  white-space: initial;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  line-height: 23px;
+  padding-top: 10px;
 }
