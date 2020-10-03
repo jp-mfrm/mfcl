@@ -7,10 +7,11 @@ import Arrow from './Arrow'
 import TipContainer from './TipContainer'
 
 import styles from './tooltip.module.scss'
+import wrapper from '../gatsby-theme-docz/wrapper'
 
 export interface Props {
   /** Content elements inside the tooltip container */
-  children: ReactNode
+  children?: ReactNode
   /** The display for the user to hover/click on */
   trigger: string | ReactNode
   arrow?: boolean
@@ -27,6 +28,7 @@ export interface Props {
   onOpen?: Function | null
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
   tipContainerClassName?: string
+  header: string
   [rest: string]: unknown
 }
 
@@ -47,12 +49,12 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     position,
     tipContainerClassName,
     isOpen,
+    header,
     ...rest
   } = props
   const [isShowing, setIsShowing] = useState(isOpen)
   // @ts-ignore
   const [wrapperRef, dimensions] = useDimensions(true, 250, initialDimensions, [isShowing])
-
   useEffect(() => {
     if (isOpen) {
       handleTouch()
@@ -62,12 +64,12 @@ const Tooltip: FunctionComponent<Props> = (props) => {
 
   const assignOutsideTouchHandler = () => {
     document.addEventListener('click', handler)
-    document.addEventListener('keypress', handleEscape)
+    document.addEventListener('keydown', handleEscape)
   }
 
   const removeListeners = () => {
     document.removeEventListener('click', handler)
-    document.removeEventListener('keypress', handleEscape)
+    document.removeEventListener('keydown', handleEscape)
   }
 
   const handleEscape = (e: any) => {
@@ -81,13 +83,6 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   }
 
   const handler = (e: any) => {
-    let currentNode = e.target
-    const componentNode = wrapperRef.current
-    while (currentNode.parentNode) {
-      if (currentNode === componentNode) return
-      currentNode = currentNode.parentNode
-    }
-    if (currentNode !== document) return
     hideTooltip()
     removeListeners()
   }
@@ -109,8 +104,39 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   }
 
   const handleTouch = () => {
-    showTooltip()
-    assignOutsideTouchHandler()
+    if (!isShowing) {
+      showTooltip()
+      assignOutsideTouchHandler()
+    }
+  }
+
+  const handleKeys = (e: any) => {
+    const key = e.keyCode || e.which
+
+    switch (key) {
+      // Escape
+      case 27: {
+        if (isShowing) {
+          hideTooltip()
+          removeListeners()
+        }
+        break
+      }
+
+      case 13: {
+        if (isShowing) {
+          hideTooltip()
+          removeListeners()
+        } else {
+          showTooltip()
+          assignOutsideTouchHandler()
+        }
+        break
+      }
+
+      default:
+        break
+    }
   }
 
   const tooltipContent = (
@@ -127,6 +153,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
         />
       )}
       <TipContainer
+        header={header}
         delay={delay}
         dimensions={dimensions}
         duration={duration}
@@ -144,13 +171,16 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     <div
       className={clsx(styles['tooltip-wrapper'], className)}
       onClick={hover ? undefined : handleTouch}
-      onKeyPress={hover ? undefined : handleTouch}
+      onKeyDown={hover ? undefined : handleKeys}
       onMouseEnter={hover ? showTooltip : undefined}
       onMouseLeave={hover ? hideTooltip : undefined}
       ref={wrapperRef}
+      tabIndex={0}
+      aria-expanded={isShowing}
       {...rest}
     >
       {trigger}
+      {/* @ts-ignore */}
       <Portal>
         <>{tooltipContent}</>
       </Portal>

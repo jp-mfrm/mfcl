@@ -139,6 +139,10 @@
   color: $green;
 }
 
+.white {
+  color: $white;
+}
+
 @media screen and (max-width: $tablet) {
   .h1 {
     font-size: 36px;
