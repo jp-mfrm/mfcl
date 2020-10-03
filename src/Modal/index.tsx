@@ -1,13 +1,42 @@
-import React, { useState, useEffect, useRef, FunctionComponent } from 'react'
-import clsx from 'clsx'
-import styles from './modal.module.scss'
-import Portal from '../Portal'
-import isClient from '../utils/isClient'
-import trapFocus from '../utils/trapFocus'
+import React, { CSSProperties, FunctionComponent, useEffect, useRef, useState } from 'react'
+
+import Close from '../Icons/Close'
 import Fade from '../Fade'
+import Portal from '../Portal'
+import Typography from '../Typography'
+import clsx from 'clsx'
+import isClient from '../utils/isClient'
+import styles from './modal.module.scss'
+import trapFocus from '../utils/trapFocus'
+
+interface HeaderProps {
+  title: string
+  variant?:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'subtitle'
+    | 'paragraph'
+    | 'paragraph-sm'
+    | 'paragraph-lg'
+    | 'price-lg'
+    | 'price'
+    | 'price-sale'
+    | 'eyebrow'
+    | 'byline'
+  align?: 'left' | 'center' | 'right'
+}
 
 interface Props {
-  header?: string
+  header?: HeaderProps
+  subheader?: HeaderProps
+  /** style to indicate modal border setting */
+  borderStyle?: 'round' | 'square'
+  /** styles to pass to modal center wrapper */
+  contentStyles?: CSSProperties
   isOpen?: boolean
   onClose?: Function | null
   duration?: number
@@ -16,7 +45,18 @@ interface Props {
 }
 
 const Modal: FunctionComponent<Props> = ({
-  header = '',
+  header = {
+    title: '',
+    variant: 'h1',
+    align: 'left'
+  },
+  subheader = {
+    title: '',
+    variant: 'h2',
+    align: 'left'
+  },
+  borderStyle = 'square',
+  contentStyles = {},
   isOpen = false,
   onClose = null,
   duration = 100,
@@ -88,36 +128,47 @@ const Modal: FunctionComponent<Props> = ({
     }
   }
 
+  const headerProps = {
+    variant: header.variant || 'h1',
+    align: header.align || 'left',
+    className: styles['modal-header']
+  }
+
+  const subheaderProps = {
+    variant: subheader.variant || 'h2',
+    align: subheader.align || 'left',
+    className: styles['modal-subheader']
+  }
+
+  const modalWrapperClasses = clsx(styles['modal-wrapper'], isShowing && styles['active'])
+  const modalClasses = clsx(styles['modal'], isShowing && styles['active'], styles[borderStyle])
+
   return (
     <Portal>
-      <div className={clsx(styles['modal-wrapper'], isShowing && styles['active'])}>
+      <div className={modalWrapperClasses}>
         <Fade duration={duration} in={isOpen}>
           <div className={styles['modal-overlay']} onClick={hideModal} onKeyDown={handleKeys} />
-            <div
-              className={clsx(styles['modal'], isShowing && styles['active'])}
-              role="dialog"
-              aria-modal="true"
-              onKeyDown={handleKeys}
-              ref={modalRef}
-              {...rest}
-            >
-              <>
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={hideModal}
-                  className={styles.close}
-                  aria-label="Close Modal"
-                  ref={closeBtnRef}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </div>
-              </>
-              <div className="modal-content">
-                <h1>{header}</h1>
-                {children}
+          <div className={modalClasses} role="dialog" aria-modal="true" onKeyDown={handleKeys} ref={modalRef} {...rest}>
+            <>
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={hideModal}
+                className={styles.close}
+                aria-label="Close Modal"
+                ref={closeBtnRef}
+              >
+                <span className={styles['close-icon-wrapper']} aria-hidden="true">
+                  <Close width="10" height="10" stroke="#2D2926" strokeWidth="2" />
+                </span>
               </div>
+            </>
+            <div className={styles['modal-content']} style={contentStyles}>
+              {header && header.title !== '' && <Typography {...headerProps}>{header.title}</Typography>}
+              {subheader && subheader.title !== '' && <Typography {...subheaderProps}>{subheader.title}</Typography>}
+              {children}
             </div>
+          </div>
         </Fade>
       </div>
     </Portal>
