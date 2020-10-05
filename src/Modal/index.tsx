@@ -140,15 +140,16 @@ const Modal: FunctionComponent<Props> = ({
     className: styles['modal-subheader']
   }
 
+  const customModalClasses = rest.className ? rest.className + '' : ''
+  const modalClasses = clsx(styles['modal'], isShowing && styles['active'], styles[borderStyle], customModalClasses)
   const modalWrapperClasses = clsx(styles['modal-wrapper'], isShowing && styles['active'])
-  const modalClasses = clsx(styles['modal'], isShowing && styles['active'], styles[borderStyle])
 
   return (
     <Portal>
       <div className={modalWrapperClasses}>
         <Fade duration={duration} in={isOpen}>
           <div className={styles['modal-overlay']} onClick={hideModal} onKeyDown={handleKeys} />
-          <div className={modalClasses} role="dialog" aria-modal="true" onKeyDown={handleKeys} ref={modalRef} {...rest}>
+          <div role="dialog" aria-modal="true" onKeyDown={handleKeys} ref={modalRef} {...rest} className={modalClasses}>
             <>
               <div
                 role="button"

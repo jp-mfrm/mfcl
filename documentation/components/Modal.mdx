@@ -20,6 +20,10 @@ import Modal from 'mfcl/Modal'
 
 ## Basic Usage
 
+To use the isOpen / onClose events, use the useState hook. <br />
+
+NOTE: The Modal component does not necessarily need to be a child of a 'Component' component.
+
 <Playground>
   <Component initialState={{ isOpen: false }}>
     {({ setState, state }) => {
