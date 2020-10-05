@@ -32,27 +32,24 @@ const items = [
 ]
 
 describe('Tabs Component', () => {
-
   it('should render component', () => {
-    const { container } = render(<Tabs items={items} />)
+    const { container } = render(<Tabs name="test" items={items} />)
     expect(container.querySelector('.tabs-wrapper')).toBeInTheDocument()
   })
 
   it('should render a tablist', () => {
-    const { getByText } = render(<Tabs items={items} />)
+    const { getByText } = render(<Tabs name="test" items={items} />)
     expect(getByText('About Beautyrest')).toBeInTheDocument()
   })
 
   it('should render panel content', () => {
-    const { container } = render(<Tabs items={items} />)
+    const { container } = render(<Tabs name="test" items={items} />)
     expect(container.querySelector('.panel')).toBeInTheDocument()
   })
 
   it('should change tab on click', () => {
     const onClick = jest.fn()
-    const { container } = render(
-      <Tabs items={items} onClick={onClick}/>
-    )
+    const { container } = render(<Tabs name="test" items={items} onClick={onClick} />)
     // @ts-ignore
     fireEvent.click(container.querySelector('.tab-item'))
     expect(onClick).toHaveBeenCalled()
@@ -61,12 +58,10 @@ describe('Tabs Component', () => {
   it('should change tab on left arrow', () => {
     const onKeyDown = jest.fn()
 
-    const { getAllByRole } = render(
-      <Tabs items={items} onKeyDown={onKeyDown}/>
-    )
-    
+    const { getAllByRole } = render(<Tabs name="test" items={items} onKeyDown={onKeyDown} />)
+
     // @ts-ignore
-    fireEvent.keyDown(getAllByRole('tab')[2], { keyCode: 39})
+    fireEvent.keyDown(getAllByRole('tab')[2], { keyCode: 39 })
     expect(getAllByRole('tab')[1]?.classList).toContain('active')
     expect(onKeyDown).toHaveBeenCalled()
   })
@@ -74,20 +69,16 @@ describe('Tabs Component', () => {
   it('should change tab on right arrow', () => {
     const onKeyDown2 = jest.fn()
 
-    const { getAllByRole } = render(
-      <Tabs items={items} onKeyDown={onKeyDown2}/>
-    )
-    
+    const { getAllByRole } = render(<Tabs name="test" items={items} onKeyDown={onKeyDown2} />)
+
     // @ts-ignore
-    fireEvent.keyDown(getAllByRole('tab')[0], { keyCode: 39})
+    fireEvent.keyDown(getAllByRole('tab')[0], { keyCode: 39 })
     expect(getAllByRole('tab')[1]?.classList).toContain('active')
     expect(onKeyDown2).toHaveBeenCalled()
   })
 
   it('should be vertical if position="left"', () => {
-    const { container } = render(<Tabs items={items} position="left" />)
+    const { container } = render(<Tabs name="test" items={items} position="left" />)
     expect(container.querySelector('.tabs-wrapper')?.classList).toContain('left')
   })
-
-
 })

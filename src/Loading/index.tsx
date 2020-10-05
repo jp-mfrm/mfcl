@@ -4,9 +4,13 @@ import Spinner from '../Icons/Spinner'
 import styles from './loading.module.scss'
 
 export interface Props {
+  /** Override styles on wrapper */
   className?: string
+  /** RBA or HEX value of spinner */
   color?: string
-  size?: string
+  /** Size of height/width of spinner */
+  size?: 'sm' | 'md' | 'lg'
+  /** Different types of spinners */
   type?: 'ring' | 'dots' // Pass "ring" for loading circle or "dots" for loading dots
   [x: string]: unknown // ...rest property
 }

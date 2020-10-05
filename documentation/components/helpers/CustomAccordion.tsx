@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import mattressIpsum from 'mattress-ipsum'
 import { Accordion, Alert, Checkbox } from '../../../src'
 
 const CustomAccordion = () => {
@@ -9,8 +10,7 @@ const CustomAccordion = () => {
         {
           title: 'Example title',
           id: 'example_title',
-          content:
-            'Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen'
+          content: mattressIpsum()
         },
         {
           title: 'Another Title',

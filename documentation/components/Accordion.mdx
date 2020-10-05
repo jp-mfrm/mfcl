@@ -5,6 +5,7 @@ route: /components-accordion
 ---
 
 import { Playground, Props } from 'docz'
+import mattressIpsum from 'mattress-ipsum'
 import { Accordion, AccordionItem } from '../../src'
 import MediumBed from '../../src/Icons/MediumBed'
 import PlushBed from '../../src/Icons/PlushBed'
@@ -32,8 +33,7 @@ Accordion Component can be used to display a list of collapsable content panels 
       {
         title: 'Title 1',
         id: 'title1',
-        content:
-          'Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen'
+        content: mattressIpsum(2)
       },
       { title: 'Title 2', id: 'title2', content: 'Less interesting content' }
     ]}
@@ -49,8 +49,7 @@ Accordion Component can be used to display a list of collapsable content panels 
         preview: 'title 1 Description',
         title: 'Title 1',
         id: 'title1',
-        content:
-          'Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen'
+        content: mattressIpsum(2)
       },
       { preview: 'more description', title: 'Title 2', id: 'title2', content: 'Less interesting content' }
     ]}
@@ -66,7 +65,7 @@ Accordion Component can be used to display a list of collapsable content panels 
         initialOpen: true,
         title: 'Product Description',
         id: 'productDescription',
-        content: 'Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen'
+        content: mattressIpsum(2)
       },
       { title: 'Questions & Answers', id: 'questionAnswer', content: 'Questions and Answers here' },
       { title: 'Reviews', id: 'reviews', content: 'Be the first to review here' }
@@ -90,8 +89,7 @@ Accordion Component can be used to display a list of collapsable content panels 
         icon: <MediumBed />,
         title: 'Title 1',
         id: 'title1',
-        content:
-          'Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen'
+        content: mattressIpsum(2)
       },
       {
         icon: <PlushBed />,
@@ -114,16 +112,14 @@ Accordion Component can be used to display a list of collapsable content panels 
         title: 'Title 1',
         id: 'title1',
         icon: <MediumBed />,
-        content:
-          'Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen'
+        content: mattressIpsum(2)
       },
       {
         preview: 'Example1, Example2',
         title: 'Title 2',
         id: 'title2',
         icon: <PlushBed />,
-        content:
-          'Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand comfy nap plush medium side innerspring hot bunk bed queen'
+        content: mattressIpsum(2)
       }
     ]}
   />
@@ -133,8 +129,8 @@ Accordion Component can be used to display a list of collapsable content panels 
 
 <Playground>
   <Accordion> 
-    <AccordionItem title={"Test"} id={"test_1"} content={"Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep"}/>
-    <AccordionItem title={"Test 2"} id={"test_2"} content={"Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial customized shopping options shut eye Americas top-rated brands snoring soft ultra plush latex brand"}/>
+    <AccordionItem title={"Test"} id={"test_1"} content={mattressIpsum(2)} />
+    <AccordionItem title={"Test 2"} id={"test_2"} content={mattressIpsum(2)}/>
   </Accordion>
 
 </Playground>

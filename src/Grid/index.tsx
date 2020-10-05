@@ -3,6 +3,7 @@ import GridItem from '../GridItem'
 import clsx from 'clsx'
 
 interface Props {
+  /** Override styles on wrapper */
   className?: string
   /** Child elements of the grid */
   children: React.ReactNode
