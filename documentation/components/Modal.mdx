@@ -30,8 +30,8 @@ NOTE: The Modal component does not necessarily need to be a child of a 'Componen
       return (
         <div>
           <Modal
-            header={{ title: 'Basic Modal' }}
-            subheader={{ title: 'Subheader Details' }}
+            header="Basic Modal"
+            subheader="Subheader Details"
             isOpen={state.isOpen}
             onClose={(isOpen) => setState({ isOpen: false })}
           >
@@ -74,48 +74,10 @@ NOTE: The Modal component does not necessarily need to be a child of a 'Componen
       return (
         <div>
           <Modal
-            header={{ title: 'Basic Modal' }}
-            subheader={{ title: 'Subheader details.' }}
+            header="Basic Modal"
+            subheader="Subheader Details"
             borderStyle="round"
-            contentStyles={{
-              margin: '60px 0'
-            }}
-            isOpen={state.isOpen}
-            onClose={(isOpen) => setState({ isOpen: false })}
-          >
-            Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial
-            customized shopping options shut eye America's top-rated brands snoring soft ultra plush latex brand comfy
-            nap plush medium side innerspring hot bunk bed queen best prices extra firm special financing full back low
-            price guarantee size sleep expert Sterns & Foster comforters loft dreams linens twin pain memory foam
-            Tempur-pedic Beautyrest neck free delivery tulo mattress Sleepy's king Purple Bed sets pillow top malouf
-            wrap zzzzzz box spring snuggle pillow protectors bed sheets pillowcases 50% headboards encased coil bed
-            frames save hypoallergenic bundle firm hybrid stomach california king gel memory foam position crib
-            adjustable bed futon snoring dreams latex Seally soft medium plush brand nap adjustable bed mattress toppers
-            50% customized shopping options comfort crib
-          </Modal>
-          <Button btnType="primary" onClick={() => setState({ isOpen: !state.isOpen })} size="lg">
-            Open Modal
-          </Button>
-        </div>
-      )
-    }}
-  </Component>
-</Playground>
-
-### Header Variations w/Alignment
-
-<Playground>
-  <Component initialState={{ isOpen: false }}>
-    {({ setState, state }) => {
-      return (
-        <div>
-          <Modal
-            header={{ title: 'Basic Modal', variant: 'h4', align: 'center' }}
-            subheader={{ title: 'Subheader details.', variant: 'paragraph', align: 'center' }}
-            contentStyles={{
-              margin: '60px 0'
-            }}
-            borderStyle="round"
+            contentClass="my-custom-class"
             isOpen={state.isOpen}
             onClose={(isOpen) => setState({ isOpen: false })}
           >

@@ -1,4 +1,4 @@
-import React, { CSSProperties, FunctionComponent, useEffect, useRef, useState } from 'react'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 
 import Close from '../Icons/Close'
 import Fade from '../Fade'
@@ -9,54 +9,31 @@ import isClient from '../utils/isClient'
 import styles from './modal.module.scss'
 import trapFocus from '../utils/trapFocus'
 
-interface HeaderProps {
-  title: string
-  variant?:
-    | 'h1'
-    | 'h2'
-    | 'h3'
-    | 'h4'
-    | 'h5'
-    | 'h6'
-    | 'subtitle'
-    | 'paragraph'
-    | 'paragraph-sm'
-    | 'paragraph-lg'
-    | 'price-lg'
-    | 'price'
-    | 'price-sale'
-    | 'eyebrow'
-    | 'byline'
-  align?: 'left' | 'center' | 'right'
-}
-
 interface Props {
-  header?: HeaderProps
-  subheader?: HeaderProps
-  /** style to indicate modal border setting */
+  /** Header title for the modal  */
+  header?: string
+  /** Subheader title for the modal */
+  subheader?: string
+  /** Style to indicate modal border setting */
   borderStyle?: 'round' | 'square'
-  /** styles to pass to modal center wrapper */
-  contentStyles?: CSSProperties
+  /** Class to pass to the modal center wrapper */
+  contentClass?: string
+  /** Whether or not the modal is open */
   isOpen?: boolean
+  /** Callback function after the modal is hidden */
   onClose?: Function | null
+  /** Transition speed when the modal appears */
   duration?: number
+  /** Child elements of the modal  */
   children?: React.ReactNode
   [rest: string]: unknown // ...rest property
 }
 
 const Modal: FunctionComponent<Props> = ({
-  header = {
-    title: '',
-    variant: 'h1',
-    align: 'left'
-  },
-  subheader = {
-    title: '',
-    variant: 'h2',
-    align: 'left'
-  },
+  header = '',
+  subheader = '',
   borderStyle = 'square',
-  contentStyles = {},
+  contentClass = '',
   isOpen = false,
   onClose = null,
   duration = 100,
@@ -128,20 +105,13 @@ const Modal: FunctionComponent<Props> = ({
     }
   }
 
-  const headerProps = {
-    variant: header.variant || 'h1',
-    align: header.align || 'left',
-    className: styles['modal-header']
-  }
-
-  const subheaderProps = {
-    variant: subheader.variant || 'h2',
-    align: subheader.align || 'left',
-    className: styles['modal-subheader']
-  }
-
-  const customModalClasses = rest.className ? rest.className + '' : ''
-  const modalClasses = clsx(styles['modal'], isShowing && styles['active'], styles[borderStyle], customModalClasses)
+  const modalClasses = clsx(
+    styles['modal'],
+    isShowing && styles['active'],
+    styles[borderStyle],
+    rest.className as string
+  )
+  const modalContentClasses = clsx(styles['modal-content'], contentClass)
   const modalWrapperClasses = clsx(styles['modal-wrapper'], isShowing && styles['active'])
 
   return (
@@ -164,9 +134,17 @@ const Modal: FunctionComponent<Props> = ({
                 </span>
               </div>
             </>
-            <div className={styles['modal-content']} style={contentStyles}>
-              {header && header.title !== '' && <Typography {...headerProps}>{header.title}</Typography>}
-              {subheader && subheader.title !== '' && <Typography {...subheaderProps}>{subheader.title}</Typography>}
+            <div className={modalContentClasses}>
+              {header && header !== '' && (
+                <Typography className={clsx(styles['modal-header'])} variant="h4" align="center">
+                  {header}
+                </Typography>
+              )}
+              {subheader && subheader !== '' && (
+                <Typography className={clsx(styles['modal-subheader'])} variant="paragraph" align="center">
+                  {subheader}
+                </Typography>
+              )}
               {children}
             </div>
           </div>
