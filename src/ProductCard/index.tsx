@@ -35,7 +35,7 @@ const ProductCard: FunctionComponent<Props> = ({
 
   return (
     <div className={styles['product-card-container']} {...rest}>
-      <div className={styles.contentRow}>
+      <div className={styles.contentCol}>
         <div className={styles['product-image']}>
           {productMatch}
           <img src={productImg} />
@@ -45,20 +45,19 @@ const ProductCard: FunctionComponent<Props> = ({
             <span className={styles['brand-logo']}>
               <img src={brandImg} />
             </span>
-            <div className={styles['rating-row']}>
-              <Rating data-testid="star-rating" name="product-rating" value={rating} readOnly size="sm" />
-              <p className={styles.reviews}>
-                <small className={styles['average-rating']}>{rating}/5</small>{' '}
-                <small data-testid="review-count">({reviews})</small>
-              </p>
-            </div>
           </div>
           <p>{title}</p>
+          <div className={styles['rating-row']}>
+            <Rating data-testid="star-rating" name="product-rating" value={rating} readOnly size="sm" />
+            <span className={styles.reviews}>
+              <small className={styles['average-rating']}>{rating}/5</small>{' '}
+              <small data-testid="review-count">({reviews})</small>
+            </span>
+          </div>
         </div>
       </div>
       <div className={styles['price-container']}>
-        <span className={styles.placeholder} />
-        <Price data-testid="price" text="Wumbo" divider price={price} discountPrice={discountPrice} />
+        <Price data-testid="price" text={size} divider price={price} discountPrice={discountPrice} />
       </div>
     </div>
   )
