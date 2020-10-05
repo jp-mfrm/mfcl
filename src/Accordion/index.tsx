@@ -7,38 +7,22 @@ import React, {
   isValidElement,
   cloneElement
 } from 'react'
-import AccordionItem from '../AccordionItem'
-
-interface AccordionItem {
-  title: string
-  content: string | ReactNode
-  id?: string
-  preview?: string
-  icon?: string | ReactNode
-  /* Option to have accordionItem already open */
-  initialOpen?: boolean
-  /* Function to be called when accordionItem is opened */
-  onOpen?: Function
-  /* Function to be called when accordionItem is closed */
-  onClose?: Function
-  /* Function to be called when accordionItem is focused */
-  onFocus?: Function
-}
+import AccordionItem, { AccordionItemProps } from '../AccordionItem'
 
 type Props = {
-  /* class to pass to the accordion wrapper */
+  /** class to pass to the accordion wrapper */
   className?: string
-  /* Option to hide preview text of AccordionItem on it's open state */
+  /** Option to hide preview text of AccordionItem on it's open state */
   hidePreview?: boolean
-  /* list of AccordionItems to be rendered */
-  items?: AccordionItem[]
+  /** list of AccordionItems to be rendered */
+  items?: AccordionItemProps[]
   /** styles to pass to each section title wrapper */
   titleStyles?: CSSProperties
   /** styles to pass to each section center wrapper */
   centerStyles?: CSSProperties
-  /* width of the Accordion */
+  /** width of the Accordion */
   width?: string
-  /* Optional children to use instead of items prop */
+  /** Optional children to use instead of items prop */
   children?: ReactNode | null
 }
 
