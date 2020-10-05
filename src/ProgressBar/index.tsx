@@ -3,11 +3,15 @@ import clsx from 'clsx'
 import styles from './progressBar.module.scss'
 
 export interface Props {
+  /** Override styles to wrapper */
   className?: string
-  innerRef?: any
+  /** Max number the progress bar goes */
   max?: number
+  /** The number the progress bar starts at */
   min?: number
+  /** the duration of the animation */
   transitionDuration?: number
+  /** the current progress value */
   value?: number
   [rest: string]: unknown
 }
@@ -15,7 +19,6 @@ export interface Props {
 const ProgressBar: FunctionComponent<Props> = ({
   className = '',
   value = 0,
-  innerRef = null,
   max = 100,
   min = 0,
   transitionDuration = 0.2,
@@ -27,7 +30,6 @@ const ProgressBar: FunctionComponent<Props> = ({
     aria-valuenow={Math.round(value)}
     aria-valuemin={min}
     aria-valuemax={max}
-    ref={innerRef}
     {...rest}
   >
     <div

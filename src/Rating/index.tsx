@@ -43,23 +43,16 @@ interface Props {
    * If `readOnly` is false, the prop is required,
    * this input name`should be unique within the parent form.
    */
-  name: String
-  /**
-   * The rating value.
-   */
+  name: string
+  /** The rating value. */
   value?: number | null
+  /** Override styles of wrapper */
   className?: string
-  /**
-   * The default value. Use when the component is not controlled.
-   */
+  /** The default value. Use when the component is not controlled. */
   defaultValue?: number
-  /**
-   * If `true`, the rating will be disabled.
-   */
+  /** If true, the rating will be disabled. */
   disabled?: boolean
-  /**
-   * The label read when the rating input is empty.
-   */
+  /** The label read when the rating input is empty. */
   emptyLabelText?: ReactNode
   /**
    * Accepts a function which returns a string value that provides a user-friendly name for the current value of the rating.
@@ -67,10 +60,8 @@ interface Props {
    * @param {number} value The rating label's value to format.
    * @returns {string}
    */
-  getLabelText?: Function
-  /**
-   * Maximum rating.
-   */
+  getLabelText?: (value: number) => string
+  /** Maximum rating. */
   max?: number
   /**
    * Callback fired when the value changes.
@@ -78,27 +69,23 @@ interface Props {
    * @param {object} event The event source of the callback.
    * @param {number} value The new value.
    */
-  onChange?: Function
+  onChange?: (event: any, value: number) => void
   /**
    * Callback function that is fired when the hover state changes.
    *
    * @param {object} event The event source of the callback.
    * @param {number} value The new value.
    */
-  onChangeActive?: Function
-  onMouseLeave?: Function
-  onMouseMove?: Function
-  /**
-   * The minimum increment value change allowed. Should be above 0.1
-   */
+  onChangeActive?: (event: any, value: number) => void
+  /** Callback given onMouseLeave */
+  onMouseLeave?: (event: any) => void
+  /** Callback given onMouseMove */
+  onMouseMove?: (event: any) => void
+  /** The minimum increment value change allowed. Should be above 0.1 */
   precision?: number
-  /**
-   * Removes all hover effects and pointer events.
-   */
+  /** Removes all hover effects and pointer events. */
   readOnly?: boolean
-  /**
-   * The size of the rating.
-   */
+  /** The size of the rating.*/
   size?: 'lg' | 'md' | 'sm'
 }
 

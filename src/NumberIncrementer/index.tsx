@@ -6,12 +6,17 @@ import useControlled from '../utils/useControlled'
 import styles from './numberIncrementer.module.scss'
 
 interface Props {
+  /** form name */
   name: string
+  /** form label to describe it */
   label: string
-  showLabel?: boolean
+  /** Override styles to the wrapper */
   className?: string
+  /** Control the input by passing a value */
   value?: number | null
+  /** Make the input uncontrolled with defaultValue */
   defaultValue?: number
+  /** callback for when plus or minus is clicked */
   onChange?: Function
   [rest: string]: unknown // ...rest property
 }
@@ -19,16 +24,12 @@ interface Props {
 const NumberIncrementer: FunctionComponent<Props> = ({
   name,
   label,
-  showLabel,
   onChange,
   className,
   value: valueProp,
   defaultValue = 1,
   ...rest
 }) => {
-  let inputName = name ? name : 'Quantity'
-  let labelName = label ? label : 'Qty:'
-
   const [valueDerived, setNumber] = useControlled({
     controlled: valueProp,
     defaultValue
@@ -52,21 +53,14 @@ const NumberIncrementer: FunctionComponent<Props> = ({
 
   return (
     <div className={clsx(styles['number-incrementer-wrapper'], className)} {...rest}>
-      <label className={clsx(styles.hidden, showLabel && styles['show-label'])} htmlFor={inputName}>
-        {labelName}
+      <label className={clsx(styles.hidden, !!label && styles['show-label'])} htmlFor={name}>
+        {label}
       </label>
       <div className={styles['number-incrementer']}>
         <button className={styles.button} onClick={subtractNumber} aria-label="Subtract Number">
           &#8722;
         </button>
-        <input
-          className={styles.input}
-          data-testid="number"
-          type="text"
-          readOnly
-          value={valueDerived}
-          name={inputName}
-        />
+        <input className={styles.input} data-testid="number" type="text" readOnly value={valueDerived} name={name} />
         <button className={styles.button} onClick={addNumber} aria-label="Add Number">
           &#43;
         </button>

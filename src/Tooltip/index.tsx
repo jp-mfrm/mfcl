@@ -7,27 +7,39 @@ import Arrow from './Arrow'
 import TipContainer from './TipContainer'
 
 import styles from './tooltip.module.scss'
-import wrapper from '../gatsby-theme-docz/wrapper'
 
 export interface Props {
   /** Content elements inside the tooltip container */
   children?: ReactNode
   /** The display for the user to hover/click on */
   trigger: string | ReactNode
+  /** If true, shows an arrow pointing to the trigger */
   arrow?: boolean
+  /** Override styles to arrow */
   arrowClassName?: string
+  /** Override styles to wrapper */
   className?: string
+  /** Delay of transition animation */
   delay?: number
+  /** How long the transition animation should go */
   duration?: number
+  /** Type of easing animtation applied */
   easing?: string
+  /** If true, the tooltip will open on hover */
   hover?: boolean
-  /* don't use. For testing only*/
+  /** DON'T USE. For testing purposes only */
   initialDimensions?: any
+  /** Whether the tooltip is open or not */
   isOpen?: boolean
+  /** Callback when tooltip is closed */
   onClose?: Function | null
+  /** Callback when tooltip is opened */
   onOpen?: Function | null
+  /** Position of tooltip in relation to the trigger */
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
+  /** Override styles to the content */
   tipContainerClassName?: string
+  /** Title to be shown at top of tooltip content */
   header: string
   [rest: string]: unknown
 }

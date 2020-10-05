@@ -6,32 +6,39 @@ import DropdownItem, { Option } from './DropdownItem'
 import styles from './dropdown.module.scss'
 
 export interface Props {
-  /* Dropdown options */
+  /** Array of options with name: string value: string | number, disabled?: boolean */
   options: Option[]
-  /* Open or close dropdown. For controlled effect */
+  /** Open or close dropdown. For controlled effect */
   open?: boolean
+  /** Override styles on wrapper */
   className?: string
+  /** Dom element id */
   id?: string
   /** Whether or not the json should close when the dropdown is blurred. */
   closeOnBlur?: boolean
+  /** Disable the entire dropdown */
   disabled?: boolean
-  /* Label Text (if any) */
+  /** Label Text (if any) */
   label?: string | ReactNode
+  /** Override styles on the menu list */
   listClass?: string
-  /* class to pass to the menu options wrapper */
+  /** Override styles on the menu options wrapper */
   menuClass?: string
-  /* Click function on dropdown header */
+  /** Click function on dropdown header */
   onClick?: Function
-  /* Change function when a dropdown item is selected */
+  /** Change function when a dropdown item is selected */
   onChange?: Function
+  /** Default text when nothing is selected */
   placeholder?: string
-  /* Select item when tabing out of dropdown */
+  /** Select item when tabing out of dropdown */
   selectOnTab?: boolean
-  /* size of the dropdown */
+  /** size of the dropdown */
   size?: string
+  /** Override styles on wrapper */
   style?: object
+  /** Object of the option passed to the dropdown */
   value?: Option | null
-  /* Width of dropdown */
+  /** Width of dropdown */
   width?: string | number
   [rest: string]: unknown
 }

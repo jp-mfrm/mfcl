@@ -25,7 +25,14 @@ interface Props {
   [rest: string]: unknown
 }
 
-const Stepper: FunctionComponent<Props> = ({ activeStep, className, color, steps, selectIndex, vertical, ...rest }) => {
+const Stepper: FunctionComponent<Props> = ({
+  activeStep,
+  className,
+  steps,
+  selectIndex,
+  vertical = false,
+  ...rest
+}) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>, index: number) => {
     if (selectIndex) {
       switch (e.key) {
@@ -73,12 +80,6 @@ const Stepper: FunctionComponent<Props> = ({ activeStep, className, color, steps
       })}
     </ul>
   )
-}
-
-Stepper.defaultProps = {
-  className: '',
-  color: '#302926',
-  vertical: false
 }
 
 export default Stepper

@@ -5,26 +5,26 @@ import styles from './badge.module.scss'
 
 interface Props {
   children: string
+  /** Applies a primary or secondary style to the badge */
   type?: 'primary' | 'secondary'
+  /** Overrides styles */
   className?: string
+  /** Overrides wrapper DOM element */
   component?: ElementType
   [rest: string]: unknown // ...rest property
 }
 
 const Badge: FunctionComponent<Props> = ({
+  className,
   children,
-  width = '',
-  height = '',
   type = 'primary',
-  className = '',
-  component: Component = 'div',
+  component: Component = 'span',
   ...rest
 }) => {
-  const badgeClassName = clsx(styles.root, styles.badge, styles[type], rest.href && styles.link, className)
-  const badgeSizeStyles = { width: `${width}`, height: `${height}` }
+  const badgeClassName = clsx(styles.badge, styles[type], (rest.href || rest.to) && styles.link, className)
 
   return (
-    <Component className={badgeClassName} style={badgeSizeStyles} {...rest}>
+    <Component className={badgeClassName} {...rest}>
       {children}
     </Component>
   )

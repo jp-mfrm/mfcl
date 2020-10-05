@@ -21,31 +21,7 @@ import Rating from 'mfcl/Rating'
 ## Basic Usage
 
 <Playground>
-  <Component initialState={{ value: 2 }}>
-    {({ setState, state }) => (
-      <>
-        <div>
-          Controlled
-          <Rating
-            name="simple-controlled"
-            value={state.value}
-            onChange={(event, newValue) => {
-              setState({ value: newValue })
-            }}
-          />
-        </div>
-        <div>
-          Read Only
-          <Rating name="read-only" value={3} readOnly />
-        </div>
-        <div>
-          Disabled
-          <Rating name="disabled" value={2} disabled />
-        </div>
-      </>
-    )}
-
-  </Component>
+  <Rating name="basic" defaultValue={2} />
 </Playground>
 
 ## Precision
@@ -73,4 +49,36 @@ Use precision to create half ratings
   <div>
     <Rating name="size-lg" defaultValue={2} size="lg" />
   </div>
+</Playground>
+
+## Disabled and readOnly
+
+<Playground>
+  <div>
+    Read Only
+    <Rating name="read-only" value={3} readOnly />
+  </div>
+  <div>
+    Disabled
+    <Rating name="disabled" value={2} disabled />
+  </div>
+</Playground>
+
+## Controlled Rating
+
+<Playground>
+  <Component initialState={{ value: 2 }}>
+    {({ setState, state }) => (
+      <div>
+        Controlled
+        <Rating
+          name="simple-controlled"
+          value={state.value}
+          onChange={(event, newValue) => {
+            setState({ value: newValue })
+          }}
+        />
+      </div>
+    )}
+  </Component>
 </Playground>

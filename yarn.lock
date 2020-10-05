@@ -11840,6 +11840,11 @@ match-sorter@^3.1.1:
   dependencies:
     remove-accents "0.4.2"
 
+mattress-ipsum@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/mattress-ipsum/-/mattress-ipsum-1.0.1.tgz#c70e9d9bd40750f3bc144eea1053167e05b34c6b"
+  integrity sha512-hpVROSRgd2A8Fi9gfF93bm9uUNRATYLF1nqEX3xLUoblnWDZVuCI5ZJ7O3D78NpYiiO/lXzGrD/GlrNv5+RAKA==
+
 md5-file@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/md5-file/-/md5-file-3.2.3.tgz#f9bceb941eca2214a4c0727f5e700314e770f06f"
