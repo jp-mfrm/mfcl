@@ -6,6 +6,7 @@ route: /components-tooltip
 
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
+import mattressIpsum from 'mattress-ipsum'
 import { Tooltip, Button, Select } from '../../src'
 import { Row } from './helpers'
 
@@ -25,48 +26,39 @@ Tooltips help clarify what certain features do.
 
 ## Basic Usage
 
-**Note:** Hover only tooltips are not WCAG 2.0 / ADA compliant. 
+**Note:** Hover only tooltips are not WCAG 2.0 / ADA compliant.
 
 <Playground>
-  {() => {
-    return (
-      <Row>
-        <Tooltip header="header" hover={false} trigger={'i'} position="bottom">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.
-        </Tooltip>
-        <Tooltip header="header" hover={false} trigger={'?'} position="top">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </Tooltip>
-      </Row>
-    )
-  }}
+  <Row>
+    <Tooltip header="header" hover={false} trigger={'i'} position="bottom">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna.
+    </Tooltip>
+    <Tooltip header="header" hover={false} trigger={'?'} position="top">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </Tooltip>
+  </Row>
 </Playground>
-
 
 ## No Arrow
 
 <Playground>
-  {() => {
-    return (
-      <Row>
-        <Tooltip header="header" arrow={false} hover={false}  trigger={'i'}  position="bottom">
-          Where did my arrow go?
-        </Tooltip>
-            <Tooltip header="header" arrow={false} hover={false} trigger={'?'} position="top">
-          Where did my arrow go?
-        </Tooltip>
-      </Row>
-    )
-  }}
+  <Row>
+    <Tooltip header="header" arrow={false} hover={false} trigger={'i'} position="bottom">
+      Where did my arrow go?
+    </Tooltip>
+    <Tooltip header="header" arrow={false} hover={false} trigger={'?'} position="top">
+      Where did my arrow go?
+    </Tooltip>
+  </Row>
 </Playground>
-
 
 ## Positions
 
 <Playground>
   {() => {
     const margin = { marginBottom: 5 }
-    const positions = ['top', 'top-left', 'top-right', 'bottom', 'bottom-left', 'bottom-right', 'left', 'right']
+    const positions = ['right', 'left', 'top', 'top-left', 'top-right', 'bottom-right', 'bottom-left', 'bottom']
     return (
       <Row>
         {positions.map((position) => (
@@ -78,7 +70,8 @@ Tooltips help clarify what certain features do.
             hover={false}
             header="header"
           >
-            {position.toUpperCase()}  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.
+            {position.toUpperCase()} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna.
           </Tooltip>
         ))}
       </Row>
