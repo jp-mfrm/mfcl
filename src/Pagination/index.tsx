@@ -9,12 +9,15 @@ interface Props {
   totalPages: number
   /** Which page is currently selected */
   activePage?: number
+  /** How many items will show per page */
   itemsPerPage?: number
   /** Adds a name to the count if shown */
   countName?: string
   /** Shows the count of the items in the pagination list */
   showItemCount?: boolean
+  /** callback when a number or arrow is clicked */
   onChange?: Function
+  /** Override styles to Wrapper */
   className?: string
   [rest: string]: unknown // ...rest property
 }
@@ -36,7 +39,7 @@ const Pagination: FunctionComponent<Props> = ({
   const indexOfFirstPage = indexOfLastPage - totalPages + 1
 
   const setNumberOfPage = (number: number) => {
-    if(onChange){
+    if (onChange) {
       onChange()
     }
     setCurrentPage(number)
@@ -44,7 +47,7 @@ const Pagination: FunctionComponent<Props> = ({
   }
 
   const setPreviousPage = () => {
-    if(onChange){
+    if (onChange) {
       onChange()
     }
     setCurrentPage(currentPage - 1)
@@ -52,17 +55,17 @@ const Pagination: FunctionComponent<Props> = ({
   }
 
   const setNextPage = () => {
-    if(onChange){
+    if (onChange) {
       onChange()
     }
     setCurrentPage(currentPage + 1)
     setCurrentItems((currentPage + 1) * itemsPerPage)
   }
 
-  /** Creates an array based of the number 
+  /** Creates an array based of the number
    * given to the totalPages prop */
   const pages = useMemo(() => {
-      const newPages = []
+    const newPages = []
     for (let i = 0; i < totalPages; i++) {
       newPages.push(i + 1)
     }
@@ -85,11 +88,15 @@ const Pagination: FunctionComponent<Props> = ({
   return (
     <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
       <div className={styles['button-wrapper']}>
-        {currentPage > indexOfFirstPage && <PaginationArrow arrowType='Previous' onClick={setPreviousPage}/>}
+        {currentPage > indexOfFirstPage && <PaginationArrow arrowType="Previous" onClick={setPreviousPage} />}
         <div className={styles['button-wrapper']}>{paginationNumbers}</div>
-        {currentPage < indexOfLastPage && <PaginationArrow arrowType='Next' onClick={setNextPage}/>}
+        {currentPage < indexOfLastPage && <PaginationArrow arrowType="Next" onClick={setNextPage} />}
       </div>
-      {showItemCount && <div className={styles.numText}>{currentItems} out of {totalItems} {countName}</div>}
+      {showItemCount && (
+        <div className={styles.numText}>
+          {currentItems} out of {totalItems} {countName}
+        </div>
+      )}
     </div>
   )
 }

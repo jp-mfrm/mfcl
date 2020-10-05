@@ -3,10 +3,7 @@ import { render, fireEvent, getByTestId } from '@testing-library/react'
 
 import NumberIncrementer from './index'
 
-const defaultProps = {
-  name: '',
-  label: ''
-}
+const defaultProps = { name: '', label: '' }
 
 describe('NumberIncrementer Component', () => {
   let mock = jest.fn()
@@ -28,33 +25,25 @@ describe('NumberIncrementer Component', () => {
   })
 
   it('should render the onChange prop correctly on add', () => {
-    const { getByLabelText, getByTestId } = render(
-      <NumberIncrementer {...defaultProps} name="number" onChange={mock} />
-    )
+    const { getByLabelText } = render(<NumberIncrementer {...defaultProps} name="number" onChange={mock} />)
     fireEvent.click(getByLabelText('Add Number'))
     expect(mock).toBeCalled
   })
 
   it('should render the onChange prop correctly on subtract', () => {
-    const { getByLabelText, getByTestId } = render(
-      <NumberIncrementer {...defaultProps} name="number" onChange={mock} />
-    )
+    const { getByLabelText } = render(<NumberIncrementer {...defaultProps} name="number" onChange={mock} />)
     fireEvent.click(getByLabelText('Subtract Number'))
     expect(mock).toBeCalled
   })
 
   it('should display a label', () => {
-    const { container } = render(<NumberIncrementer {...defaultProps} showLabel />)
+    const { container } = render(<NumberIncrementer {...defaultProps} label="Quantity" />)
     expect(container.querySelector('.hidden')?.classList).toContain('show-label')
   })
 
-  it('should handle the name prop correcttly', () => {
-    const { getByTestId } = render(<NumberIncrementer {...defaultProps} name="hello" />)
+  it('should handle the name prop correctly', () => {
+    const { getByTestId, container } = render(<NumberIncrementer {...defaultProps} name="hello" />)
     expect(getByTestId('number').getAttribute('name')).toContain('hello')
-  })
-
-  it('should handle the name prop correcttly', () => {
-    const { container } = render(<NumberIncrementer {...defaultProps} label="howdy" />)
     expect(container.querySelector('.hidden')?.textContent).toContain('howdy')
   })
 })

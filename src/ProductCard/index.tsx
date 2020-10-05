@@ -5,21 +5,28 @@ import Price from '../Price'
 import styles from './productCard.module.scss'
 
 interface Props {
+  /** image of brand name that will appear below product image */
   brandImg: string
+  /** Image of product */
   productImg: string
+  /** The description of the product */
   title: string
+  /** The size of the mattress */
   size: string
+  /** Price of product */
   price: number
+  /** Rating of product out of 5 */
   rating: number
+  /** How many reviews product has */
   reviews: number
-  brand?: string
+  /** Match of product with user, will appear at top */
   matchPercentage?: number
+  /** discounted price if any */
   discountPrice?: number
   [rest: string]: unknown // ...rest property
 }
 
 const ProductCard: FunctionComponent<Props> = ({
-  brand,
   brandImg,
   productImg,
   title,
