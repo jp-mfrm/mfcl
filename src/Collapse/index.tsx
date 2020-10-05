@@ -9,8 +9,8 @@ interface ChildProps {
 }
 
 export interface Props {
+  isOpen: boolean
   children?: ReactNode | string
-  isOpen?: boolean
   appear?: boolean
   enter?: boolean
   exit?: boolean

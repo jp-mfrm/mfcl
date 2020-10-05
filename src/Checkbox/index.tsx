@@ -1,24 +1,26 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { memo } from 'react'
+import React from 'react'
 import clsx from 'clsx'
 import styles from './checkbox.module.scss'
 
 export interface Props {
+  /** This is the label, htmlFor, aria-label, and name of the checkbox */
   title: string
+  /** callback for when the checkbox is clicked */
   handleClick?: () => void
-  wrapperClass?: string
-  checked?: boolean
+  /** Overrides wrapper styles */
+  className?: string
   [rest: string]: unknown
 }
 
-const Checkbox: React.FunctionComponent<Props> = ({ wrapperClass, handleClick, checked, title, ...rest }) => {
+const Checkbox: React.FunctionComponent<Props> = ({ className, handleClick, title, ...rest }) => {
   return (
     <div
       onClick={handleClick}
       onKeyPress={handleClick}
       tabIndex={0}
-      className={clsx(styles['checkbox-container'], wrapperClass)}
+      className={clsx(styles['checkbox-container'], className)}
     >
       <input
         type="checkbox"
@@ -36,4 +38,4 @@ const Checkbox: React.FunctionComponent<Props> = ({ wrapperClass, handleClick, c
   )
 }
 
-export default memo(Checkbox)
+export default Checkbox
