@@ -25,19 +25,34 @@ Tooltips help clarify what certain features do.
 
 ## Basic Usage
 
+**Note:** Hover only tooltips are not WCAG 2.0 / ADA compliant. 
+
 <Playground>
   {() => {
-    const margin = { marginBottom: 5 }
     return (
       <Row>
-        <Tooltip trigger={<Button style={margin}>Hover Me</Button>}>Now you see me!</Tooltip>
-        <Tooltip hover={false} trigger={<Button style={margin}>Click Me</Button>} position="bottom">
-          Now you see me!
+        <Tooltip header="header" hover={false} trigger={'i'} position="bottom">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.
         </Tooltip>
-        <Tooltip arrow={false} trigger={<Button style={margin}>No arrow</Button>} position="bottom">
+        <Tooltip header="header" hover={false} trigger={'?'} position="top">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </Tooltip>
+      </Row>
+    )
+  }}
+</Playground>
+
+
+## No Arrow
+
+<Playground>
+  {() => {
+    return (
+      <Row>
+        <Tooltip header="header" arrow={false} hover={false}  trigger={'i'}  position="bottom">
           Where did my arrow go?
         </Tooltip>
-        <Tooltip arrow={false} hover={false} trigger={<Button style={margin}>No arrow Click</Button>} position="bottom">
+            <Tooltip header="header" arrow={false} hover={false} trigger={'?'} position="top">
           Where did my arrow go?
         </Tooltip>
       </Row>
@@ -45,10 +60,12 @@ Tooltips help clarify what certain features do.
   }}
 </Playground>
 
+
 ## Positions
 
 <Playground>
   {() => {
+    const margin = { marginBottom: 5 }
     const positions = ['top', 'top-left', 'top-right', 'bottom', 'bottom-left', 'bottom-right', 'left', 'right']
     return (
       <Row>
@@ -56,10 +73,12 @@ Tooltips help clarify what certain features do.
           <Tooltip
             key={position}
             position={position}
-            trigger={`I am on the ${position}`}
+            trigger={'i'}
             style={{ margin: '0px 10px' }}
+            hover={false}
+            header="header"
           >
-            {position.toUpperCase()}
+            {position.toUpperCase()}  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.
           </Tooltip>
         ))}
       </Row>
@@ -119,7 +138,9 @@ Tooltips help clarify what certain features do.
           </Row>
           <div style={{ marginTop: '100px', textAlign: 'center' }}>
             <Tooltip
-              trigger={<Button style={{ marginBottom: 5 }}>Hover Me</Button>}
+              header='header'
+              hover={false}
+              trigger={'i'}
               delay={state.delay}
               duration={state.duration}
               easing={state.easing}

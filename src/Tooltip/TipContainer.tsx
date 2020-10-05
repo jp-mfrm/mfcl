@@ -1,5 +1,6 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { FunctionComponent, ReactNode, useRef, useEffect } from 'react'
 import clsx from 'clsx'
+import Typography from '../Typography'
 
 import styles from './tooltip.module.scss'
 
@@ -12,6 +13,7 @@ export interface Props {
   isShowing?: boolean
   position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
   tipContainerClassName?: string
+  header?: string
 }
 
 const TipContainer: FunctionComponent<Props> = ({
@@ -22,8 +24,17 @@ const TipContainer: FunctionComponent<Props> = ({
   easing,
   isShowing,
   position,
-  tipContainerClassName
+  tipContainerClassName,
+  header
 }) => {
+  const closeBtnRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (closeBtnRef.current !== null) {
+      closeBtnRef.current.focus()
+    }
+  }, [isShowing])
+
   const getBaseStyle = () => {
     const opacity = isShowing ? 1 : 0
     const pointerEvents = isShowing ? 'auto' : 'none'
@@ -36,7 +47,7 @@ const TipContainer: FunctionComponent<Props> = ({
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
-            top: top + window.scrollY - 84,
+            top: top + window.scrollY - 168,
             bottom,
             left: left - 10,
             right
@@ -46,7 +57,7 @@ const TipContainer: FunctionComponent<Props> = ({
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
-            top: top + window.scrollY - 84,
+            top: top + window.scrollY - 168,
             bottom,
             left: left - width - 5,
             right
@@ -56,7 +67,7 @@ const TipContainer: FunctionComponent<Props> = ({
             transition: `all ${duration}ms ${easing} ${delay}ms`,
             opacity,
             pointerEvents,
-            top: top + window.scrollY - 84,
+            top: top + window.scrollY - 168,
             bottom,
             left: left + width / 2 - 7,
             right
@@ -157,7 +168,7 @@ const TipContainer: FunctionComponent<Props> = ({
             enter: {
               ...getAnimationStyleByPosition('top').enter,
               transform: 'translate3d(calc(-100% + 16px), 0, 0)',
-              left: left + width - width / 2
+              left: left + width + 10 - width / 2
             },
             active: {
               transform: 'translate3d(calc(-100% + 16px), -3px, 0)'
@@ -180,7 +191,7 @@ const TipContainer: FunctionComponent<Props> = ({
           return {
             enter: {
               transform: 'translate3d(-50%, 0, 0)',
-              top: top + window.scrollY + height - 25,
+              top: top + window.scrollY + height - 15,
               left: left + width / 2
             },
             active: {
@@ -194,7 +205,7 @@ const TipContainer: FunctionComponent<Props> = ({
               ...getAnimationStyleByPosition('bottom').enter,
               transform: 'translate3d(calc(-100% + 16px), 0, 0)',
               top: top + window.scrollY + 5,
-              left: left + width - width / 2
+              left: left + 22 + width - width / 2
             },
             active: {
               transform: 'translate3d(calc(-100% + 16px), 10px, 0)'
@@ -207,7 +218,7 @@ const TipContainer: FunctionComponent<Props> = ({
               ...getAnimationStyleByPosition('bottom').enter,
               transform: 'translate3d(calc(0% + -16px), 0, 0)',
               top: top + window.scrollY + 5,
-              left: left + width - width / 2
+              left: left - 22 + width - width / 2
             },
             active: {
               transform: 'translate3d(calc(0% + -16px), 10px, 0)'
@@ -221,7 +232,7 @@ const TipContainer: FunctionComponent<Props> = ({
               top: top + window.scrollY - height / 2,
               marginRight: 10,
               transform: `translate3d(calc(-100% + -${width}), -50%, 0)`,
-              left: left + width - width / 2
+              left: left - 10 + width - width / 2
             },
             active: {
               transform: `translate3d(calc(-100% + -${width}px + ${width / 2}px - 13px), -50%, 0)`
@@ -232,7 +243,7 @@ const TipContainer: FunctionComponent<Props> = ({
           return {
             enter: {
               bottom: 'auto',
-              left: left + width + 5,
+              left: left + width + 15,
               top: top + window.scrollY - height / 2,
               transform: 'translate3d(-10px, -50%, 0)',
               marginLeft: 10
@@ -282,7 +293,22 @@ const TipContainer: FunctionComponent<Props> = ({
       }}
     >
       <div className={styles.gap} style={getGap()} />
-      {children}
+      <div className={styles['header-wrapper']}>
+        <Typography className={styles['header']} variant="h6">
+          {/* @ts-ignore */}
+          {header}
+        </Typography>
+        <div role="button" tabIndex={0} className={clsx(styles.close)} aria-label="Close Alert" ref={closeBtnRef}>
+          <span aria-hidden="true" className={styles['close-icon']}>
+            &times;
+          </span>
+        </div>
+      </div>
+
+      <Typography className={styles['tooltip-content']} variant="paragraph-sm">
+        {/* @ts-ignore */}
+        {children}
+      </Typography>
     </div>
   )
 }

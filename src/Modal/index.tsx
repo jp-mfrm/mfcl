@@ -1,22 +1,39 @@
-import React, { useState, useEffect, useRef, FunctionComponent } from 'react'
-import clsx from 'clsx'
-import styles from './modal.module.scss'
-import Portal from '../Portal'
-import isClient from '../utils/isClient'
-import trapFocus from '../utils/trapFocus'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+
+import Close from '../Icons/Close'
 import Fade from '../Fade'
+import Portal from '../Portal'
+import Typography from '../Typography'
+import clsx from 'clsx'
+import isClient from '../utils/isClient'
+import styles from './modal.module.scss'
+import trapFocus from '../utils/trapFocus'
 
 interface Props {
+  /** Header title for the modal  */
   header?: string
+  /** Subheader title for the modal */
+  subheader?: string
+  /** Style to indicate modal border setting */
+  borderStyle?: 'round' | 'square'
+  /** Class to pass to the modal center wrapper */
+  contentClass?: string
+  /** Whether or not the modal is open */
   isOpen?: boolean
+  /** Callback function after the modal is hidden */
   onClose?: Function | null
+  /** Transition speed when the modal appears */
   duration?: number
+  /** Child elements of the modal  */
   children?: React.ReactNode
   [rest: string]: unknown // ...rest property
 }
 
 const Modal: FunctionComponent<Props> = ({
   header = '',
+  subheader = '',
+  borderStyle = 'square',
+  contentClass = '',
   isOpen = false,
   onClose = null,
   duration = 100,
@@ -88,36 +105,49 @@ const Modal: FunctionComponent<Props> = ({
     }
   }
 
+  const modalClasses = clsx(
+    styles['modal'],
+    isShowing && styles['active'],
+    styles[borderStyle],
+    rest.className as string
+  )
+  const modalContentClasses = clsx(styles['modal-content'], contentClass)
+  const modalWrapperClasses = clsx(styles['modal-wrapper'], isShowing && styles['active'])
+
   return (
     <Portal>
-      <div className={clsx(styles['modal-wrapper'], isShowing && styles['active'])}>
+      <div className={modalWrapperClasses}>
         <Fade duration={duration} in={isOpen}>
           <div className={styles['modal-overlay']} onClick={hideModal} onKeyDown={handleKeys} />
-            <div
-              className={clsx(styles['modal'], isShowing && styles['active'])}
-              role="dialog"
-              aria-modal="true"
-              onKeyDown={handleKeys}
-              ref={modalRef}
-              {...rest}
-            >
-              <>
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={hideModal}
-                  className={styles.close}
-                  aria-label="Close Modal"
-                  ref={closeBtnRef}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </div>
-              </>
-              <div className="modal-content">
-                <h1>{header}</h1>
-                {children}
+          <div role="dialog" aria-modal="true" onKeyDown={handleKeys} ref={modalRef} {...rest} className={modalClasses}>
+            <>
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={hideModal}
+                className={styles.close}
+                aria-label="Close Modal"
+                ref={closeBtnRef}
+              >
+                <span className={styles['close-icon-wrapper']} aria-hidden="true">
+                  <Close width="10" height="10" stroke="#2D2926" strokeWidth="2" />
+                </span>
               </div>
+            </>
+            <div className={modalContentClasses}>
+              {header && header !== '' && (
+                <Typography className={clsx(styles['modal-header'])} variant="h4" align="center">
+                  {header}
+                </Typography>
+              )}
+              {subheader && subheader !== '' && (
+                <Typography className={clsx(styles['modal-subheader'])} variant="paragraph" align="center">
+                  {subheader}
+                </Typography>
+              )}
+              {children}
             </div>
+          </div>
         </Fade>
       </div>
     </Portal>
