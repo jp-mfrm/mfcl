@@ -28,7 +28,7 @@ the Prices render and look.
 The Price component requires the Price prop to render.
 
 <Playground>
-  <Price price={3500} />
+  <Price price={[3500]} />
 </Playground>
 
 ## Discounted Price
@@ -36,7 +36,7 @@ The Price component requires the Price prop to render.
 Allows a price markdown below the discount price
 
 <Playground>
-  <Price discountPrice={1400} price={3500} />
+  <Price discountPrice={[1400]} price={[3500]} />
 </Playground>
 
 ### Optional Props
@@ -44,8 +44,8 @@ Allows a price markdown below the discount price
 A price can be discounted without the price markdown below it by adding the optional Discount prop. This also works with the Text and Divider prop. The content can also be center aligned by using the Center prop.
 
 <Playground>
-  <Price discount price={3500} />
-  <Price text="Queen For" discount price={3500} />
-  <Price text="Queen" divider discount price={3500} />
-  <Price center text="Queen" divider discountPrice={1400} price={3500} />
+  <Price discount price={[3500]} />
+  <Price text="Queen For" discount price={[3500]} />
+  <Price text="Queen" divider discount price={[3500]} />
+  <Price center text="Queen" divider discountPrice={[1400]} price={[3500]} />
 </Playground>

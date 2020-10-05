@@ -3,12 +3,12 @@ import clsx from 'clsx'
 import styles from './price.module.scss';
 
 interface Props {
-  price: number
+  price: number[]
   divider?: boolean
   text?: string
   center?: boolean
   discount?: boolean
-  discountPrice?: number
+  discountPrice?: number[]
   className?: string
   [rest: string]: unknown; // ...rest property
 };
@@ -23,14 +23,21 @@ const Price: FunctionComponent<Props> = ({
   className,
   ...rest
 }) => {
-  const formatPrice = useCallback((n: number) => {
+  const formatPrice = useCallback((nums: number[]) => {
     if(price) {
       let p = new Intl.NumberFormat('en-US', { 
         style: 'currency',
-        currency: 'USD',}).format(n)
-  
-        return p
+        currency: 'USD',}).format(nums[0])
+
+      if(nums[1]) {
+        p += " - " + new Intl.NumberFormat('en-US', { 
+          style: 'currency',
+          currency: 'USD',}).format(nums[1])
+      }
+      return p;
     }
+    
+    
   }, [price, discountPrice])
 
   let productPrice = discountPrice ? formatPrice(discountPrice) : formatPrice(price)
