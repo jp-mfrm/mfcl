@@ -8,8 +8,8 @@ const defaultProps = {
   brandImg: '',
   productImg: '',
   title: '',
-  size: '',
-  price: 0,
+  pricePrefix: '',
+  price: [5, 10],
   rating: 1,
   reviews: 1
 }
@@ -47,7 +47,7 @@ describe('ProductCard Component', () => {
 
   it('should render the brand img', () => {
     let image = 'image/choo-choo'
-    const { container } = render(<ProductCard {...defaultProps} brandImg={image} />)
+    const { container } = render(<ProductCard {...defaultProps} brand="brand" brandImg={image} />)
     expect(container.querySelector('.brand-logo > img')?.getAttribute('src')).toEqual(image)
   })
 
