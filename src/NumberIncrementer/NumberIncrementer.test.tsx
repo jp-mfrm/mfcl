@@ -44,6 +44,5 @@ describe('NumberIncrementer Component', () => {
   it('should handle the name prop correctly', () => {
     const { getByTestId, container } = render(<NumberIncrementer {...defaultProps} name="hello" />)
     expect(getByTestId('number').getAttribute('name')).toContain('hello')
-    expect(container.querySelector('.hidden')?.textContent).toContain('howdy')
   })
 })
