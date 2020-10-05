@@ -10,27 +10,42 @@ interface Props {
   type?: 'header' | 'body' | 'footer' | 'link'
   /** Class to pass to the panel item */
   itemClass?: string
-  /* index & selectedIndex required when using a panel for a tabs component */
+  /** index & selectedIndex required when using a panel for a tabs component */
   index?: number
+  /** The currently selected index */
   selectedIndex?: number
   /** Set custom inline css */
   customStyling?: CSSProperties
   [rest: string]: unknown // ...rest property
 }
 
-const PanelItem: FunctionComponent<Props> = ({ name, type, index, selectedIndex, itemClass, customStyling, ...rest }) => {
+const PanelItem: FunctionComponent<Props> = ({
+  name,
+  type,
+  index,
+  selectedIndex,
+  itemClass,
+  customStyling,
+  ...rest
+}) => {
   let Component = 'div'
   if (type == 'link') {
     Component = 'a'
   }
 
-  const isSelected = index === selectedIndex;
+  const isSelected = index === selectedIndex
 
   return (
     <Component
       id={`panel-${name}-${index}`}
       // @ts-ignore
-      className={clsx(styles['panel-item'], isSelected && styles['active'], !isSelected && styles['hidden'], type && styles[type], itemClass)}
+      className={clsx(
+        styles['panel-item'],
+        isSelected && styles['active'],
+        !isSelected && styles['hidden'],
+        type && styles[type],
+        itemClass
+      )}
       style={customStyling}
       {...rest}
       aria-hidden={!isSelected}

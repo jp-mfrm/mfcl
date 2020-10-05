@@ -3,26 +3,39 @@ import Collapse from '../Collapse'
 import styles from './accordionItem.module.scss'
 import clsx from 'clsx'
 
-type Props = {
+export type AccordionItemProps = {
+  /** the header of the accordion */
   title: string
+  /** the content that is shown when the title is clicked */
   content: string | ReactNode
+  /** the subtitle of the accordion */
   preview?: string | ReactNode
   hidePreview?: boolean
+  /** Gives the accordion an icon */
   icon?: string | ReactNode
+  /** DOM element's id */
   id: string
+  /** focuses the accordion item */
   focused?: number
+  /** sets focus of item */
   setFocus?: Function
+  /** sets index of item */
   setIndex?: Function
+  /** Order number of item in array of items */
   index?: number
   titleInlineStyle?: CSSProperties
   centerInlineStyle?: CSSProperties
+  /** Option to have accordionItem already open */
   initialOpen?: boolean
+  /** Function to be called when accordionItem is opened */
   onOpen?: Function
+  /** Function to be called when accordionItem is closed */
   onClose?: Function
+  /** Function to be called when accordionItem is focused */
   onFocus?: Function
 }
 
-const AccordionItem: FunctionComponent<Props> = ({
+const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   title = '',
   content = '',
   icon,

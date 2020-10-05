@@ -11,18 +11,26 @@ import Portal from '../Portal'
 export interface Props {
   /** Show a backdrop */
   backdrop?: boolean
+  /** Override styles on backdrop */
   backdropClassName?: string
   /** Duration of backdrop fade */
   backdropDuration?: number
+  /** Override styles on the body of the drawer */
   bodyClassName?: string
   children?: React.ReactNode
+  /** Override styles on wrapper */
   className?: string
   /** Include the (x) icon to close */
   close?: boolean
+  /** duration of the transition animation */
   duration?: number
+  /** Override styles on the header */
   headerClassName?: string
+  /** Controls whether the drawer is open or not */
   isOpen?: boolean
+  /** Callback when the drawer is closed */
   onClose?: Function | null
+  /** The position on the screen the drawer will open */
   position?: 'top' | 'bottom' | 'right' | 'left'
   [rest: string]: unknown
 }

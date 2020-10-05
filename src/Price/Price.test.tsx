@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import Price from './index';
 
 describe('Price Component', () => {
-  const price = 1500
+  const price = [1500]
 
   it('renders a className', () => {
   const { container } = render(<Price price={price} className="test-class-name" />);
@@ -18,7 +18,7 @@ describe('Price Component', () => {
   })
 
   it('should render the discounted price', () => {
-    const { container } = render(<Price price={price} discountPrice={200} />)
+    const { container } = render(<Price price={price} discountPrice={[200]} />)
     expect(container.querySelector('.discounted-price')?.classList).toBeTruthy()
   })
 

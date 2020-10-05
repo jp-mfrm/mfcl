@@ -5,17 +5,25 @@ import Price from '../Price'
 import styles from './productCard.module.scss'
 
 interface Props {
+  /** image of brand name that will appear below product image */  
   brandImg?: string
+  /** badge text to appear above product image */
   badge?: string
   productImg: string
+  /** The description of the product */
   title: string
+  /** The text that appears before the product price */
   pricePrefix?: string
+  /** Price or price range of product */
   price: number[]
+  /** Rating of product out of 5 */
   rating?: number
+  /** Position of where the ratings are shown in the card */
   ratingPosition?: 'top'|'bottom'
   reviews: number
-  brand?: string
+  /** Match of product with user, will appear at top */
   matchPercentage?: number
+  /** discounted price or range of discounted prices if any */
   discountPrice?: number[]
   [rest: string]: unknown // ...rest property
 }

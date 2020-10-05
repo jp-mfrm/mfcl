@@ -38,12 +38,38 @@
     overflow: auto;
     width: 50%;
 
-    h1 {
-      margin-top: 0;
+    &.round {
+      border-radius: 20px;
+    }
+
+    &-content {
+      padding: 60px 0 0;
+    }
+
+    &-header,
+    &-subheader {
+      margin: 0 0 15px;
     }
   }
 
   .close {
     @include closeX();
+    padding: 0px;
+
+    &-icon-wrapper {
+      display: flex;
+      padding: 10px;
+      border-radius: 50px;
+      border: 1px solid $gray-6;
+    }
+  }
+
+  .close:focus {
+    box-shadow: 0 0 0 2px $red;
+    border-radius: 50px;
+    outline: 0;
+    padding: 2px;
+    margin-top: -2px;
+    margin-right: -2px;
   }
 }

@@ -6,19 +6,20 @@ import Loading from '../Loading'
 import styles from './button.module.scss'
 
 export interface Props {
+  /** Different style types */
   btnType?: 'primary' | 'link' | 'secondary' | 'tertiary'
   children?: ReactNode
+  /** Overrides styles */
   className?: string
-  /**
-   * Link to leave page. Turns the button into an "a" tag.
-   */
+  /** Link to leave page. Turns the button into an "a" tag. */
   href?: string
+  /** Adds a loading icon and disables the button. Use for submitting forms. */
   loading?: boolean
+  /** color of the loader */
   loadingColor?: string
+  /** Size of button */
   size?: 'lg' | 'md' | 'sm'
-  /**
-   *  The default type to be applied to the button
-   */
+  /** The default type to be applied to the button */
   type?: 'button' | 'submit' | 'reset'
   [x: string]: unknown // ...rest property
 }

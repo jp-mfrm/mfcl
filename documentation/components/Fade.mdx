@@ -6,6 +6,7 @@ route: /components-fade
 
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
+import mattressIpsum from 'mattress-ipsum'
 import { Row } from './helpers'
 import { Fade, Button } from '../../src'
 
@@ -46,12 +47,7 @@ import Fade from 'mfcl/Fade'
             Click Me
           </Button>
           <Fade in={state.in} duration={state.duration}>
-            Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial
-            customized shopping options shut eye America's top-rated brands snoring soft ultra plush latex brand comfy
-            nap plush medium side innerspring hot bunk bed queen best prices extra firm special financing full back low
-            price guarantee size sleep expert Sterns & Foster comforters loft dreams linens twin pain memory foam
-            Tempur-pedic Beautyrest neck free delivery tulo mattress Sleepy's king Purple Bed sets pillow top malouf
-            wrap zzzzzz box spring snuggle pillow protectors bed sheets pillowcases 50% headboards encased coil bed
+            {mattressIpsum()}
           </Fade>
         </>
       )
@@ -88,12 +84,7 @@ import Fade from 'mfcl/Fade'
             onExiting={() => setState({ text: 'Exiting!' })}
             onExited={() => setState({ text: 'Exited!' })}
           >
-            Mattress ipsum dolor amet Cooling Seally down snooze mattress toppers comfort spine Serta sleep trial
-            customized shopping options shut eye America's top-rated brands snoring soft ultra plush latex brand comfy
-            nap plush medium side innerspring hot bunk bed queen best prices extra firm special financing full back low
-            price guarantee size sleep expert Sterns & Foster comforters loft dreams linens twin pain memory foam
-            Tempur-pedic Beautyrest neck free delivery tulo mattress Sleepy's king Purple Bed sets pillow top malouf
-            wrap zzzzzz box spring snuggle pillow protectors bed sheets pillowcases 50% headboards encased coil bed
+            {mattressIpsum()}
           </Fade>
         </>
       )
