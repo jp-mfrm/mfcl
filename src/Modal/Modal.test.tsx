@@ -27,7 +27,7 @@ describe('Modal', () => {
 
   it('should render border style properly', () => {
     const { rerender, getByRole } = render(
-      <Modal isOpen borderStyle='round'>
+      <Modal isOpen borderStyle="round">
         {children}
       </Modal>
     )
@@ -35,53 +35,47 @@ describe('Modal', () => {
     expect(getByRole('dialog')?.classList).toContain('round')
 
     rerender(
-      <Modal isOpen borderStyle='square'>
+      <Modal isOpen borderStyle="square">
         {children}
       </Modal>
     )
 
     expect(getByRole('dialog')?.classList).toContain('square')
 
-    rerender(
-      <Modal isOpen>
-        {children}
-      </Modal>
-    )
+    rerender(<Modal isOpen>{children}</Modal>)
 
     expect(getByRole('dialog')?.classList).toContain('square')
   })
 
   it('it should render header properly', () => {
-    const { rerender, getByText, queryByText } = render(
+    const { rerender, getByText, queryByText, getByRole } = render(
       <Modal isOpen header={{ title: 'Header' }}>
         {children}
       </Modal>
     )
+
+    expect(getByRole('dialog').querySelector('.h1')).toBeInTheDocument()
     expect(getByText('Header')).toBeInTheDocument()
 
-    rerender(
-      <Modal isOpen>
-        {children}
-      </Modal>
-    )
+    rerender(<Modal isOpen>{children}</Modal>)
 
+    expect(getByRole('dialog').querySelector('.h1')).not.toBeInTheDocument()
     expect(queryByText('Header')).not.toBeInTheDocument()
   })
 
   it('it should render subheader properly', () => {
-    const { rerender, getByText, queryByText } = render(
+    const { rerender, getByText, queryByText, getByRole } = render(
       <Modal isOpen subheader={{ title: 'Subheader' }}>
         {children}
       </Modal>
     )
-    expect(getByText('Subheader')).toBeInTheDocument()
-    
-    rerender(
-      <Modal isOpen>
-        {children}
-      </Modal>
-    )
 
+    expect(getByRole('dialog').querySelector('.h2')).toBeInTheDocument()
+    expect(getByText('Subheader')).toBeInTheDocument()
+
+    rerender(<Modal isOpen>{children}</Modal>)
+
+    expect(getByRole('dialog').querySelector('.h2')).not.toBeInTheDocument()
     expect(queryByText('Subheader')).not.toBeInTheDocument()
   })
 
@@ -96,20 +90,20 @@ describe('Modal', () => {
     expect(getByRole('dialog').querySelector('.h2')?.classList).toContain('left')
 
     rerender(
-      <Modal isOpen header={{ title: 'Header', align: 'center' }} subheader={{ title: 'Subheader', align: 'center'}}>
+      <Modal isOpen header={{ title: 'Header', align: 'center' }} subheader={{ title: 'Subheader', align: 'center' }}>
         {children}
       </Modal>
     )
-    
+
     expect(getByRole('dialog').querySelector('.h1')?.classList).toContain('center')
     expect(getByRole('dialog').querySelector('.h2')?.classList).toContain('center')
 
     rerender(
-      <Modal isOpen header={{ title: 'Header', align: 'right' }} subheader={{ title: 'Subheader', align: 'right'}}>
+      <Modal isOpen header={{ title: 'Header', align: 'right' }} subheader={{ title: 'Subheader', align: 'right' }}>
         {children}
       </Modal>
     )
-    
+
     expect(getByRole('dialog').querySelector('.h1')?.classList).toContain('right')
     expect(getByRole('dialog').querySelector('.h2')?.classList).toContain('right')
   })
@@ -125,11 +119,15 @@ describe('Modal', () => {
     expect(getByRole('dialog').querySelector('.h2')).toBeInTheDocument()
 
     rerender(
-      <Modal isOpen header={{ title: 'Header', variant: 'h4' }} subheader={{ title: 'Subheader', variant: 'paragraph' }}>
+      <Modal
+        isOpen
+        header={{ title: 'Header', variant: 'h4' }}
+        subheader={{ title: 'Subheader', variant: 'paragraph' }}
+      >
         {children}
       </Modal>
     )
-    
+
     expect(getByRole('dialog').querySelector('.h4')).toBeInTheDocument()
     expect(getByRole('dialog').querySelector('.paragraph')).toBeInTheDocument()
 
@@ -138,7 +136,7 @@ describe('Modal', () => {
         {children}
       </Modal>
     )
-    
+
     expect(getByRole('dialog').querySelector('.h3')).toBeInTheDocument()
     expect(getByRole('dialog').querySelector('.subtitle')).toBeInTheDocument()
 
@@ -147,7 +145,7 @@ describe('Modal', () => {
         {children}
       </Modal>
     )
-    
+
     expect(getByRole('dialog').querySelector('.h5')).toBeInTheDocument()
   })
 
@@ -162,13 +160,17 @@ describe('Modal', () => {
     expect(getByRole('dialog').querySelector('.h2')).toBeInTheDocument()
     expect(getByRole('dialog').querySelector('.h1')?.classList).toContain('left')
     expect(getByRole('dialog').querySelector('.h2')?.classList).toContain('left')
-    
+
     rerender(
-      <Modal isOpen header={{ title: 'Header', align: 'right', variant: 'h4' }} subheader={{ title: 'Subheader', align: 'right', variant: 'paragraph' }}>
+      <Modal
+        isOpen
+        header={{ title: 'Header', align: 'right', variant: 'h4' }}
+        subheader={{ title: 'Subheader', align: 'right', variant: 'paragraph' }}
+      >
         {children}
       </Modal>
     )
-    
+
     expect(getByRole('dialog').querySelector('.h4')).toBeInTheDocument()
     expect(getByRole('dialog').querySelector('.paragraph')).toBeInTheDocument()
     expect(getByRole('dialog').querySelector('.h4')?.classList).toContain('right')
