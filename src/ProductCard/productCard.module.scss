@@ -2,17 +2,42 @@
 
 .product-card-container {
   border: 1px solid #f1f1f2;
-  width: 380px;
+  width: 255px;
+  margin: auto;
+  border-radius: 2px;
 
-  @media screen and (max-width: $tablet) {
-    width: 315px;
+  @media screen and (max-width: 320px) {
+    width: 218px;
+  }
+
+  @media screen and (min-width: 285px) {
+    width: 285px;
   }
 }
 
+.product-badge {
+  border: 1px solid $red;
+  border-radius: 10px;
+  color: $red;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 10px;
+  text-transform: uppercase;
+  padding: 5px 10px;  
+  margin: 15px;
+}
+
 .price-container {
-  padding-top: 11px;
-  padding-left: 10px;
   display: flex;
+  flex-direction: column;  
+
+  @media screen and (min-width: $tablet) {
+    padding: 0 10px;
+  }
+}
+
+.brand-logo {
+  padding: 0;
 }
 
 .product-image {
@@ -20,13 +45,6 @@
 
   img {
     width: 100%;
-  }
-
-  @media screen and (max-width: $mobile) {
-    img {
-      width: 151px;
-      height: 124px;
-    }
   }
 }
 
@@ -40,8 +58,9 @@
   line-height: 21px;
 }
 
-.contentRow {
+.contentCol {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
 
@@ -54,14 +73,15 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  margin: 15px 0;
 }
 
 .details-container {
   padding: 0 10px;
 
-  p {
+  &-title {
     font-size: 14px;
-    margin-bottom: 0;
+    margin: 0 0 15px;
 
     @media screen and (min-width: $tablet) {
       font-size: 18px;
@@ -70,7 +90,7 @@
 }
 
 .brand-logo {
-  padding-top: 8px;
+  padding: 0
 }
 
 .reviews {
@@ -89,23 +109,14 @@
 }
 
 .rating-row {
-  @media screen and (min-width: $mobile) {
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  // margin: 15px 0;
 }
 
 .average-rating {
   font-weight: bold;
-
-  @media screen and (min-width: $mobile) {
-    display: none;
-  }
-}
-
-.placeholder {
-  width: 136px;
-  height: 32px;
 
   @media screen and (min-width: $mobile) {
     display: none;

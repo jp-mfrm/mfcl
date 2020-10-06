@@ -3,9 +3,8 @@ import clsx from 'clsx'
 import styles from './price.module.scss'
 
 interface Props {
-  /** The original price to be formatted */
-  price: number
-  /** a divider bar will be added between the text and price */
+  /** The array of original price(s) to be formatted */
+  price: number[]
   divider?: boolean
   /** text to be added before price */
   text?: string
@@ -13,9 +12,8 @@ interface Props {
   center?: boolean
   /** will add new styling to the price */
   discount?: boolean
-  /** will cross out the price and add a new price above the old price */
-  discountPrice?: number
-  /** Override styles to the wrapper */
+  /** will cross out the price(s) and add new price(s) above the old price */  
+  discountPrice?: number[]
   className?: string
   [rest: string]: unknown // ...rest property
 }
@@ -30,19 +28,22 @@ const Price: FunctionComponent<Props> = ({
   className,
   ...rest
 }) => {
-  const formatPrice = useCallback(
-    (n: number) => {
-      if (price) {
-        let p = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD'
-        }).format(n)
+  const formatPrice = useCallback((nums: number[]) => {
+    if(price) {
+      let p = new Intl.NumberFormat('en-US', { 
+        style: 'currency',
+        currency: 'USD',}).format(nums[0])
 
-        return p
+      if(nums[1]) {
+        p += " - " + new Intl.NumberFormat('en-US', { 
+          style: 'currency',
+          currency: 'USD',}).format(nums[1])
       }
-    },
-    [price, discountPrice]
-  )
+      return p;
+    }
+    
+    
+  }, [price, discountPrice])
 
   let productPrice = discountPrice ? formatPrice(discountPrice) : formatPrice(price)
   let productText = text && (
