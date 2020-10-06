@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Calendar: React.FunctionComponent<Props> = ({ width = '30', height = '30', fillColor = '#2D2926', ...rest }) => (
-  <svg width={width} height={height} fill="none" viewBox="0 0 30 30" {...rest}>
+  <svg width={width} height={height} viewBox="0 0 30 30" {...rest}>
     <path
       fill={fillColor}
       fillRule="evenodd"

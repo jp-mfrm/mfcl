@@ -15,7 +15,7 @@ const UPS: React.FunctionComponent<Props> = ({
   transform = '',
   ...rest
 }) => (
-  <svg width={width} height={height} viewBox="0 0 54 54" transform={transform} fill="none">
+  <svg width={width} height={height} viewBox="0 0 54 54" transform={transform}>
     <path
       fill="none"
       d="M19.7 46.5c.4-.2 10.8-4.7 14.1-7.4 3.4-2.8 5.2-6.8 5.2-11.6V5l-.3-.1C30.4.4 20.1.7 19.6.7 19.2.7 8.9.4.6 4.9L.4 5v22.6c0 4.8 1.8 8.8 5.2 11.6 3.3 2.7 13.7 7.2 14.1 7.3"

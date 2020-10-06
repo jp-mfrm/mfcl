@@ -8,7 +8,7 @@ interface Props {
 }
 
 const BoxSpring: React.FunctionComponent<Props> = ({ width = '24', height = '8', fillColor = '#2D2926', ...rest }) => (
-  <svg width={width} height={height} fill="none" viewBox="0 0 24 8" {...rest}>
+  <svg width={width} height={height} viewBox="0 0 24 8" {...rest}>
     <path
       fill={fillColor}
       fillRule="evenodd"

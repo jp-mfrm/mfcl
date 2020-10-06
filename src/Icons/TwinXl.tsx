@@ -8,7 +8,7 @@ interface Props {
 }
 
 const TwinXl: React.FunctionComponent<Props> = ({ width = '12', height = '24', fillColor = '#2D2926', ...rest }) => (
-  <svg width={width} height={height} fill="none" viewBox="0 0 12 24" {...rest}>
+  <svg width={width} height={height} viewBox="0 0 12 24" {...rest}>
     <path
       fill={fillColor}
       fillRule="evenodd"

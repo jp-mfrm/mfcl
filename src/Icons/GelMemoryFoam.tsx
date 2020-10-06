@@ -13,7 +13,7 @@ const GelMemoryFoam: React.FunctionComponent<Props> = ({
   fillColor = '#2D2926',
   ...rest
 }) => (
-  <svg width={width} height={height} fill="none" viewBox="0 0 25 24" {...rest}>
+  <svg width={width} height={height} viewBox="0 0 25 24" {...rest}>
     <path
       fill={fillColor}
       fillRule="evenodd"

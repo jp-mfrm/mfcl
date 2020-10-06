@@ -8,7 +8,7 @@ interface Props {
 }
 
 const ExtraFirm: React.FunctionComponent<Props> = ({ width = '24', height = '15', fillColor = '#2D2926', ...rest }) => (
-  <svg width="28" height="38" viewBox="0 0 28 38" fill="none">
+  <svg width="28" height="38" viewBox="0 0 28 38">
     <path
       d="M24.5163 17.4417H4.24328C3.99303 17.4417 3.80603 17.6287 3.80603 17.8789C3.80603 18.1292 3.99303 18.3162 4.24328 18.3162H24.5163C24.7665 18.3162 24.9535 18.1292 24.9535 17.8789C24.9563 17.6919 24.7665 17.4417 24.5163 17.4417Z"
       fill={fillColor}

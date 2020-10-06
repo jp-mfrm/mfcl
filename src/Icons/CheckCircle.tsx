@@ -14,7 +14,7 @@ const CheckCircle: React.FunctionComponent<Props> = ({
   fillColor = '#006601',
   ...rest
 }) => (
-  <svg className={rest.className} width={width} height={height} viewBox="0 0 24 24" fill="none">
+  <svg className={rest.className} width={width} height={height} viewBox="0 0 24 24">
     <circle cx="12" cy="12" r="12" fill={fillColor} />
     <circle cx="12" cy="12" r="11" fill="white" />
     <path

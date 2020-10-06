@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Chair: React.FunctionComponent<Props> = ({ width = '26', height = '22', fillColor = '#2D2926', ...rest }) => (
-  <svg width={width} height={height} fill="none" viewBox="0 0 26 22" {...rest}>
+  <svg width={width} height={height} viewBox="0 0 26 22" {...rest}>
     <path
       fill={fillColor}
       fillRule="evenodd"

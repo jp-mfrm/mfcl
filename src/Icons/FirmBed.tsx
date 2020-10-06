@@ -8,7 +8,7 @@ interface Props {
 }
 
 const FirmBed: React.FunctionComponent<Props> = ({ width = '24', height = '11', fillColor = '#2D2926', ...rest }) => (
-  <svg width={width} height={height} fill="none" viewBox="0 0 24 11" {...rest}>
+  <svg width={width} height={height} viewBox="0 0 24 11" {...rest}>
     <path
       fill={fillColor}
       fillRule="evenodd"

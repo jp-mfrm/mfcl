@@ -16,7 +16,7 @@ const Ellipses: React.FunctionComponent<Props> = ({
   transform = 'translate(0, 12)',
   ...rest
 }) => (
-  <svg className={rest.className} width={width} height={height} viewBox="0 0 92 2" transform={transform} fill="none">
+  <svg className={rest.className} width={width} height={height} viewBox="0 0 92 2" transform={transform}>
     <path d="M-8.74227e-08 1L92 0.999998" stroke={stroke} strokeDasharray="2 5" />
   </svg>
 )

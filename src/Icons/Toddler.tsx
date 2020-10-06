@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Toddler: React.FunctionComponent<Props> = ({ width = '24', height = '14', fillColor = '#2D2926', ...rest }) => (
-  <svg width={width} height={height} fill="none" viewBox="0 0 24 22" {...rest}>
+  <svg width={width} height={height} viewBox="0 0 24 22" {...rest}>
     <path
       fill={fillColor}
       fillRule="evenodd"

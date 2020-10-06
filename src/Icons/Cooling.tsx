@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Cooling: React.FunctionComponent<Props> = ({ width = '22', height = '26', fillColor = '#2D2926', ...rest }) => (
-  <svg width={width} height={height} fill="none" viewBox="0 0 22 26" {...rest}>
+  <svg width={width} height={height} viewBox="0 0 22 26" {...rest}>
     <path
       fill={fillColor}
       fillRule="evenodd"

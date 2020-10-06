@@ -13,7 +13,7 @@ const SleepysBrand: React.FunctionComponent<Props> = ({
   fillColor = 'white',
   ...rest
 }) => (
-  <svg width={width} height={height} viewBox="0 0 111 34" fill="none" {...rest}>
+  <svg width={width} height={height} viewBox="0 0 111 34" {...rest}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"

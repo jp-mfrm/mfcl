@@ -13,7 +13,7 @@ const ExtraPlush: React.FunctionComponent<Props> = ({
   fillColor = '#2D2926',
   ...rest
 }) => (
-  <svg width="28" height="39" viewBox="0 0 28 39" fill="none">
+  <svg width="28" height="39" viewBox="0 0 28 39">
     <path
       d="M4.33225 26.929V27.93H0.328247V21.4263H4.269V22.4273H1.38975V24.1158H4.01875V25.1168H1.38975V26.8685H4.3295L4.33225 26.929C4.33225 26.929 4.3295 26.929 4.33225 26.929Z"
       fill={fillColor}

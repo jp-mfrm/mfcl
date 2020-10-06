@@ -17,7 +17,7 @@ const DefaultCarrier: React.FunctionComponent<Props> = ({
   transform = '',
   ...rest
 }) => (
-  <svg width={width} height={height} viewBox="0 0 54 54" transform={transform} fill="none">
+  <svg width={width} height={height} viewBox="0 0 54 54" transform={transform}>
     <rect opacity="0.1" width={width} height={height} rx="27" fill={secondaryColor} />
     <path
       fillRule="evenodd"

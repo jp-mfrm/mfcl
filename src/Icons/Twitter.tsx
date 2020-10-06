@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Twitter: React.FunctionComponent<Props> = ({ width = '25', height = '21', fillColor = '#2D2926', ...rest }) => (
-  <svg width={width} height={height} fill="none" viewBox="0 0 25 21" {...rest}>
+  <svg width={width} height={height} viewBox="0 0 25 21" {...rest}>
     <path
       fill={fillColor}
       fillRule="evenodd"

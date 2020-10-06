@@ -13,7 +13,7 @@ const DeliveryTruck: React.FunctionComponent<Props> = ({
   fillColor = '#2D2926',
   ...rest
 }) => (
-  <svg width={width} height={height} fill="none" viewBox="0 0 30 30" {...rest}>
+  <svg width={width} height={height} viewBox="0 0 30 30" {...rest}>
     <path
       fill={fillColor}
       fillRule="evenodd"
