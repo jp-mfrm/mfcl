@@ -15,14 +15,7 @@ const USPS: React.FunctionComponent<Props> = ({
   transform = '',
   ...rest
 }) => (
-  <svg
-    width={width}
-    height={height}
-    viewBox="0 0 44 27"
-    transform={transform}
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width={width} height={height} viewBox="0 0 44 27" transform={transform} fill="none">
     <path
       fillRule="evenodd"
       clipRule="evenodd"

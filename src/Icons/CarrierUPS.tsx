@@ -15,15 +15,7 @@ const UPS: React.FunctionComponent<Props> = ({
   transform = '',
   ...rest
 }) => (
-  <svg
-    width={width}
-    height={height}
-    viewBox="0 0 54 54"
-    transform={transform}
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink"
-  >
+  <svg width={width} height={height} viewBox="0 0 54 54" transform={transform} fill="none">
     <rect width={width} height={height} fill="url(#pattern0)" />
     <defs>
       <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">

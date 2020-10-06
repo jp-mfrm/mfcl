@@ -8,10 +8,10 @@ interface Props {
 }
 
 const Plush: React.FunctionComponent<Props> = ({ width = '24', height = '15', fillColor = '#2D2926', ...rest }) => (
-  <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="32" height="33" viewBox="0 0 32 33" fill="none">
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M3.38123 29.4856C4.83041 29.4856 5.91649 28.3262 5.91649 26.9503C5.91649 25.5011 4.83041 24.4119 3.45449 24.4119H0.629395V32.0941H1.86199V29.4856H3.38123ZM3.30798 25.6445C4.10741 25.6445 4.61383 26.1541 4.61383 26.9503C4.61383 27.6733 4.10741 28.253 3.31116 28.3262H1.78873V25.6445H3.30798Z"
       fill={fillColor}
     />
@@ -37,8 +37,8 @@ const Plush: React.FunctionComponent<Props> = ({ width = '24', height = '15', fi
       fill={fillColor}
     />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M11.8948 13.9301C11.8948 14.2199 11.6782 14.4365 11.3884 14.4365C11.1017 14.4365 10.8851 14.1434 10.882 13.9301V1.24738C10.882 0.957547 11.0985 0.740967 11.3884 0.740967H15.806C18.8508 0.740967 20.8797 2.2634 20.8797 4.87191V4.9388C20.8797 7.83715 18.4145 9.28632 15.5894 9.28632H11.8948V13.9301ZM15.7391 1.68054H11.9712V8.34993H15.6658C18.131 8.34993 19.87 7.04408 19.87 5.01524V4.94198C19.87 2.83988 18.2043 1.68054 15.7391 1.68054Z"
       fill={fillColor}
     />

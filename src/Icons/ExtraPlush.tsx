@@ -13,7 +13,7 @@ const ExtraPlush: React.FunctionComponent<Props> = ({
   fillColor = '#2D2926',
   ...rest
 }) => (
-  <svg width="28" height="39" viewBox="0 0 28 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="28" height="39" viewBox="0 0 28 39" fill="none">
     <path
       d="M4.33225 26.929V27.93H0.328247V21.4263H4.269V22.4273H1.38975V24.1158H4.01875V25.1168H1.38975V26.8685H4.3295L4.33225 26.929C4.33225 26.929 4.3295 26.929 4.33225 26.929Z"
       fill={fillColor}
@@ -27,20 +27,20 @@ const ExtraPlush: React.FunctionComponent<Props> = ({
       fill={fillColor}
     />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M17.0978 25.554H18.349L19.79 27.9988H20.978L19.4765 25.433C20.2273 25.1195 20.791 24.3688 20.791 23.5548C20.791 22.364 19.8505 21.4263 18.6625 21.4263H16.0335V27.9328H17.0978V25.554ZM18.6625 24.6135H17.0978V22.3585H18.6625C19.2263 22.3585 19.6635 22.859 19.6635 23.486C19.6635 24.113 19.2263 24.6135 18.6625 24.6135Z"
       fill={fillColor}
     />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M22.7902 26.6183H25.6062L26.0462 27.996H27.2342L24.8555 21.363H23.541L21.1622 27.9328H22.353L22.7902 26.6183ZM24.1652 22.6775L25.2295 25.6173H23.101L24.1652 22.6775Z"
       fill={fillColor}
     />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M2.92697 35.0635C4.17822 35.0635 5.11597 34.123 5.11597 32.935C5.11597 31.6838 4.17822 30.7488 2.98747 30.7488H0.548218V37.3158H1.61247V35.0635H2.92697ZM2.86372 31.8075C3.55397 31.8075 3.99122 32.2475 3.99122 32.935C3.99122 33.562 3.55122 34.0625 2.86372 34.123H1.54922V31.8075H2.86372Z"
       fill={fillColor}
     />
@@ -66,8 +66,8 @@ const ExtraPlush: React.FunctionComponent<Props> = ({
       fill={fillColor}
     />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M15.9703 11.4712C15.9703 11.7214 15.7833 11.9084 15.533 11.9084C15.2828 11.9084 15.0958 11.6609 15.093 11.4739V0.523432C15.093 0.273182 15.28 0.0861816 15.5303 0.0861816H19.3473C21.9763 0.0861816 23.728 1.40068 23.728 3.65293V3.71343C23.728 6.21593 21.5995 7.46718 19.1603 7.46718H15.9703V11.4712ZM19.2868 0.900182H16.0335V6.65593H19.2235C21.352 6.65593 22.8535 5.52843 22.8535 3.77668V3.71618C22.8535 1.90118 21.4153 0.900182 19.2868 0.900182Z"
       fill={fillColor}
     />

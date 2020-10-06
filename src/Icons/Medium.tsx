@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Medium: React.FunctionComponent<Props> = ({ width = '24', height = '15', fillColor = '#2D2926', ...rest }) => (
-  <svg width="38" height="30" viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="38" height="30" viewBox="0 0 38 30" fill="none">
     <path
       d="M7.45964 29.1583H6.32975V24.1745L4.20427 27.6956H4.07289L1.94741 24.1745V29.1554H0.750366V22.1833H2.01164L4.13712 25.6373L6.2626 22.1833H7.45964V29.1583Z"
       fill={fillColor}
@@ -18,8 +18,8 @@ const Medium: React.FunctionComponent<Props> = ({ width = '24', height = '15', f
       fill={fillColor}
     />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M16.8929 29.2255C18.8199 29.2255 20.2155 27.6314 20.2155 25.7044C20.2155 23.7103 18.8199 22.1833 16.8929 22.1833H14.1689V29.2255H16.8929ZM16.8258 23.3132C18.1542 23.3132 19.0856 24.3088 19.0856 25.7044C19.0856 27.0328 18.2214 28.0956 16.8929 28.0956H15.2317V23.3132H16.8258Z"
       fill={fillColor}
     />

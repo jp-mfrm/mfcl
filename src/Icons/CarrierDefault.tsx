@@ -5,6 +5,7 @@ interface Props {
   height?: string | number
   transform?: string
   fillColor?: string
+  secondaryColor?: string
   [x: string]: unknown // for the rest property
 }
 
@@ -12,18 +13,12 @@ const DefaultCarrier: React.FunctionComponent<Props> = ({
   width = '54',
   height = '54',
   fillColor = '#2D2926',
+  secondaryColor = '#C4C4C4',
   transform = '',
   ...rest
 }) => (
-  <svg
-    width={width}
-    height={height}
-    viewBox="0 0 54 54"
-    transform={transform}
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect opacity="0.1" width={width} height={height} rx="27" fill="#C4C4C4" />
+  <svg width={width} height={height} viewBox="0 0 54 54" transform={transform} fill="none">
+    <rect opacity="0.1" width={width} height={height} rx="27" fill={secondaryColor} />
     <path
       fillRule="evenodd"
       clipRule="evenodd"

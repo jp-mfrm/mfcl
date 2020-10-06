@@ -8,7 +8,7 @@ interface Props {
 }
 
 const ExtraFirm: React.FunctionComponent<Props> = ({ width = '24', height = '15', fillColor = '#2D2926', ...rest }) => (
-  <svg width="28" height="38" viewBox="0 0 28 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="28" height="38" viewBox="0 0 28 38" fill="none">
     <path
       d="M24.5163 17.4417H4.24328C3.99303 17.4417 3.80603 17.6287 3.80603 17.8789C3.80603 18.1292 3.99303 18.3162 4.24328 18.3162H24.5163C24.7665 18.3162 24.9535 18.1292 24.9535 17.8789C24.9563 17.6919 24.7665 17.4417 24.5163 17.4417Z"
       fill={fillColor}
@@ -35,14 +35,14 @@ const ExtraFirm: React.FunctionComponent<Props> = ({ width = '24', height = '15'
     />
     <path d="M15.818 22.1524H13.9398V27.6579H12.8755V22.1524H10.9973V21.1514H15.752V22.1524H15.818Z" fill={fillColor} />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M17.6935 25.2791H18.9448L20.3225 27.7239H21.5738L20.0723 25.1581C20.823 24.8446 21.3868 24.0939 21.3868 23.2799C21.3868 22.0891 20.4463 21.1514 19.2583 21.1514H16.6293V27.6579H17.6935V25.2791ZM19.2583 24.3414H17.6935V22.0864H19.2583C19.822 22.0864 20.2593 22.5869 20.2593 23.2139C20.2593 23.8409 19.822 24.3414 19.2583 24.3414Z"
       fill={fillColor}
     />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M23.386 26.3434H26.202L26.6447 27.7211H27.8327L25.454 21.0881H24.1395L21.7607 27.6579H22.9487L23.386 26.3434ZM24.7637 22.4026L25.828 25.3424H23.6995L24.7637 22.4026Z"
       fill={fillColor}
     />
@@ -52,8 +52,8 @@ const ExtraFirm: React.FunctionComponent<Props> = ({ width = '24', height = '15'
     />
     <path d="M10.659 30.4739V37.0436H9.59477V30.4739H10.659Z" fill={fillColor} />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M13.0378 34.6649H14.289L15.6668 37.0464H16.8548L15.4165 34.4806C16.1673 34.1671 16.731 33.4164 16.731 32.6024C16.731 31.4116 15.7905 30.4739 14.6025 30.4739H11.9735V37.0436H13.0378V34.6649ZM14.6025 33.6639H13.0378V31.4089H14.6025C15.1663 31.4089 15.6035 31.9094 15.6035 32.5364C15.6035 33.1634 15.1663 33.6639 14.6025 33.6639Z"
       fill={fillColor}
     />
