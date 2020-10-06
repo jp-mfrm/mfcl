@@ -69,7 +69,7 @@ interface Props {
    * @param {object} event The event source of the callback.
    * @param {number} value The new value.
    */
-  onChange?: (event: any, value: number) => void
+  onChange?: (event: any, value: number | null) => void
   /**
    * Callback function that is fired when the hover state changes.
    *
