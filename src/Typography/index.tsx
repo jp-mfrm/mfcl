@@ -25,6 +25,7 @@ interface Props {
    * For example, this is helpful when you want the typography
    * of an h1 without it being an h1 */
   tag?: string
+  /** Override styles to wrapper */
   className?: string
   /** Which way the text is aligned */
   align?: 'left' | 'center' | 'right'

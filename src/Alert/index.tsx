@@ -8,7 +8,9 @@ import styles from './alert.module.scss'
 export interface Props {
   /** Children to be in the Alert body */
   children?: ReactNode
+  /** ClassName applied to the wrapper div */
   className?: string
+  /** ClassName applied to the close button */
   closeClassName?: string
   /** Include Collapse transition */
   collapse?: boolean
@@ -20,6 +22,7 @@ export interface Props {
   fade?: boolean
   /** Controls if the Alert is displayed or not */
   isOpen?: boolean
+  /** Makes the close button appear and is the callback when the alert closes */
   onClose?: Function
   [rest: string]: unknown
 }

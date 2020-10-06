@@ -28,8 +28,9 @@ A badge can be of two types, primary and secondary.
 
 <Playground>
   <Badge>Save $100</Badge>
-  <span style={{ paddingLeft: '5px' }} />
-  <Badge type="secondary">Save $100</Badge>
+  <Badge type="secondary" style={{ marginLeft: '5px' }}>
+    Save $100
+  </Badge>
 </Playground>
 
 ## Adding Components
@@ -40,20 +41,16 @@ You can pass components to the Badge component to inherit their styles and props
   <Badge component={'a'} href="/">
     Click Me
   </Badge>
-  <span style={{ paddingLeft: '5px' }} />
-  <Badge component={'a'} href="/" type="secondary">
+  <Badge component={'a'} href="/" type="secondary" style={{ marginLeft: '5px' }}>
     Click Me
   </Badge>
 </Playground>
 
-## Custom Width and Height
-
-You can also set a custom width/height using the provided props as well.
+## Custom Width and Height styles
 
 <Playground>
-  <Badge width="200px">WideGuy</Badge>
-  <span style={{ paddingLeft: '5px' }} />
-  <Badge height="50px" type="secondary">
+  <Badge style={{ width: '200px' }}>WideGuy</Badge>
+  <Badge type="secondary" style={{ height: '50px', marginLeft: '5px' }}>
     TallMan
   </Badge>
 </Playground>
