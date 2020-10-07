@@ -5,6 +5,7 @@ interface Props {
   height?: string | number
   transform?: string
   fillColor?: string
+  secondaryColor?: string
   [x: string]: unknown // for the rest property
 }
 
