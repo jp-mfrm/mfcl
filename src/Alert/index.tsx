@@ -80,6 +80,20 @@ const Alert: React.FunctionComponent<Props> = ({
                 }, duration)
               }
             }}
+            onKeyDown={(e: any) => {
+              const key = e.keyCode || e.which
+
+              switch (key) {
+                // enter
+                case 13: {
+                  setIsShowing(false)
+                  onClose()
+                  break
+                }
+                default:
+                  break
+              }
+            }}
           >
             <span aria-hidden="true" className={styles['close-icon']}>
               &times;

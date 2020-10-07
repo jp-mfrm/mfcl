@@ -95,6 +95,11 @@ const Modal: FunctionComponent<Props> = ({
         hideModal()
         break
       }
+      // enter
+      case 13: {
+        hideModal()
+        break
+      }
       // tab
       case 9: {
         trapFocus(e, modalRef)
