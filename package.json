@@ -21,8 +21,8 @@
     "start": "docz dev -o",
     "stylelint": "stylelint ./src",
     "test": "cross-env CI=1 react-scripts test --env=jest-environment-jsdom-sixteen",
-    "test:watch": "npm run test --watch",
-    "test:coverage": "npm run test --coverage --watchAll=false",
+    "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen  --watch",
+    "test:coverage": "react-scripts test --env=jest-environment-jsdom-sixteen --coverage --watchAll=false",
     "watch": "rollup -c -w",
     "build:dist": "rimraf dist && node ./scripts/buildDist"
   },
