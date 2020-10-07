@@ -80,6 +80,7 @@ const Pagination: FunctionComponent<Props> = ({
       key={number}
       onClick={() => setNumberOfPage(number)}
       aria-label={`Page ${number}`}
+      aria-current={currentPage === number}
     >
       {number}
     </button>
