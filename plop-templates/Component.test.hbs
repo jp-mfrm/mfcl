@@ -4,11 +4,10 @@ import { render } from '@testing-library/react';
 import {{componentName}} from './index';
 
 describe('{{componentName}} Component', () => {
-
   it('renders a className', () => {
-  const { container } = render(
-    <{{componentName}} className="test-class-name">Click Me</{{componentName}}>,
-  );
-  expect(container.querySelector('.{{dash-case componentName}}-wrapper')?.classList).toContain('test-class-name')
+    const { container } = render(
+      <{{componentName}} className="test-class-name">Click Me</{{componentName}}>,
+    );
+    expect(container.querySelector('.{{dash-case componentName}}-wrapper')?.classList).toContain('test-class-name')
   })
 });

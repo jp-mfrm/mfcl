@@ -1,0 +1,26 @@
+@import '../variables';
+
+.breadcrumbs-wrapper {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  a {
+    color: $gray-11;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.separator {
+  display: flex;
+  user-select: none;
+  margin-left: 4px;
+  margin-right: 4px;
+}

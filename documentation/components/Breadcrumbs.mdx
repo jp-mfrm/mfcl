@@ -1,0 +1,38 @@
+---
+name: Breadcrumbs
+menu: Components
+route: /components-breadcrumbs
+---
+
+import { Playground, Props } from 'docz'
+import { Breadcrumbs } from '../../src'
+
+# Breadcrumbs
+
+```javascript
+import Breadcrumbs from 'mfcl/Breadcrumbs'
+```
+
+## Properties
+
+<Props of={Breadcrumbs} />
+
+## Basic Usage
+
+<Playground>
+  <Breadcrumbs>
+    <a href="/components-breadcrumbs">Order Tracking</a>
+    <a href="/components-breadcrumbs">Track My Order</a>
+    <a href="/components-breadcrumbs">Order Info</a>
+  </Breadcrumbs>
+</Playground>
+
+## Separator
+
+<Playground>
+  <Breadcrumbs separator=">">
+    <a href="/components-breadcrumbs">Page 1</a>
+    <a href="/components-breadcrumbs">Page 2</a>
+    <a href="/components-breadcrumbs">Page 3</a>
+  </Breadcrumbs>
+</Playground>
