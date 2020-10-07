@@ -86,7 +86,12 @@ const Pagination: FunctionComponent<Props> = ({
   ))
 
   return (
-    <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
+    <div
+      className={clsx(styles['pagination-wrapper'], className)}
+      {...rest}
+      role="region"
+      aria-label="pagination links"
+    >
       <div className={styles['button-wrapper']}>
         {currentPage > indexOfFirstPage && <PaginationArrow arrowType="Previous" onClick={setPreviousPage} />}
         <div className={styles['button-wrapper']}>{paginationNumbers}</div>
