@@ -102,7 +102,7 @@ const Pagination: FunctionComponent<Props> = ({
   }, [currentPage, siblingPages, totalPages])
 
   return (
-    <nav className={clsx(styles['pagination-wrapper'], className)} aria-label="pagination" role="region" {...rest}>
+    <nav className={clsx(styles['pagination-wrapper'], className)} aria-label="pagination" role="navigation" {...rest}>
       <ul className={styles['list-wrapper']}>
         <PaginationArrow arrowType="Previous" onClick={setPreviousPage} show={currentPage > indexOfFirstPage} />
         {pages.map((number) => (

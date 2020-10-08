@@ -29,7 +29,7 @@ describe('Pagination Component', () => {
 
   it('renders the activePage prop', () => {
     const { getByLabelText } = render(<Pagination {...defaultProps} activePage={3} />)
-    expect(getByLabelText('Page 3').classList).toContain('active')
+    expect(getByLabelText('Go to page 3').classList).toContain('active')
   })
 
   it('renders the showItemCount prop', () => {
@@ -41,7 +41,7 @@ describe('Pagination Component', () => {
 
   it('clicks the correct button and sets the correct page', () => {
     const { getByLabelText } = render(<Pagination {...defaultProps} />)
-    const page2 = getByLabelText('Page 2')
+    const page2 = getByLabelText('Go to page 2')
     fireEvent.click(page2)
     expect(page2.classList).toContain('active')
   })
@@ -53,7 +53,7 @@ describe('Pagination Component', () => {
     }
     const { getByLabelText } = render(<Pagination {...defaultProps} onChange={onChange} />)
     expect(activePage).toBe(1)
-    fireEvent.click(getByLabelText('Page 3'))
+    fireEvent.click(getByLabelText('Go to page 3'))
     expect(activePage).toBe(3)
   })
 
