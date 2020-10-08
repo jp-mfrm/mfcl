@@ -80,19 +80,13 @@ const Pagination: FunctionComponent<Props> = ({
       key={number}
       onClick={() => setNumberOfPage(number)}
       aria-label={`Page ${number}`}
-      aria-current={currentPage === number}
     >
       {number}
     </button>
   ))
 
   return (
-    <div
-      className={clsx(styles['pagination-wrapper'], className)}
-      {...rest}
-      role="region"
-      aria-label="pagination links"
-    >
+    <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
       <div className={styles['button-wrapper']}>
         {currentPage > indexOfFirstPage && <PaginationArrow arrowType="Previous" onClick={setPreviousPage} />}
         <div className={styles['button-wrapper']}>{paginationNumbers}</div>
