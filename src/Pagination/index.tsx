@@ -64,21 +64,11 @@ const Pagination: FunctionComponent<Props> = ({
   }
 
   const setPreviousPage = () => {
-    const newPage = currentPage - 1
-    if (onChange) {
-      onChange(newPage)
-    }
-    setCurrentPage(newPage)
-    setCurrentItems(newPage * itemsPerPage)
+    setNumberOfPage(currentPage - 1)
   }
 
   const setNextPage = () => {
-    const newPage = currentPage + 1
-    if (onChange) {
-      onChange(newPage)
-    }
-    setCurrentPage(newPage)
-    setCurrentItems(newPage * itemsPerPage)
+    setNumberOfPage(currentPage + 1)
   }
 
   /** This is the money💰💰💰 logic for pagination */
