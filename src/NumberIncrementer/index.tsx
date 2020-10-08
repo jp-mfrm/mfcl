@@ -60,7 +60,15 @@ const NumberIncrementer: FunctionComponent<Props> = ({
         <button className={styles.button} onClick={subtractNumber} aria-label="Subtract Number">
           &#8722;
         </button>
-        <input className={styles.input} data-testid="number" type="text" readOnly value={valueDerived} name={name} />
+        <input
+          aria-live="polite"
+          className={styles.input}
+          data-testid="number"
+          type="text"
+          readOnly
+          value={valueDerived}
+          name={name}
+        />
         <button className={styles.button} onClick={addNumber} aria-label="Add Number">
           &#43;
         </button>
