@@ -6,23 +6,26 @@
   align-items: center;
 }
 
-.button-wrapper {
+.list-wrapper {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0 19px;
 }
 
 .button {
   background: none;
   border: none;
-  cursor: pointer;
   border-radius: 2px;
-  min-width: 30px;
-  min-height: 30px;
-  margin-right: 11px;
-  margin-left: 11px;
-  padding: 4px 9px;
+  cursor: pointer;
   font-size: 18px;
   font-weight: bold;
+  margin-right: 11px;
+  margin-left: 11px;
+  height: 34px;
+  width: 34px;
 
   &:hover {
     background: $gray-2;
@@ -32,9 +35,10 @@
 .active {
   background: $red;
   color: $white;
+  cursor: default;
 
   &:hover {
-    background: $dark-red;
+    background: $red;
   }
 }
 
@@ -42,18 +46,25 @@
   background: none;
   border: none;
   cursor: pointer;
+  height: 34px;
+  width: 34px;
+  vertical-align: middle;
 
   &:hover {
     svg {
       path {
-        stroke: $dark-red;
+        fill: $dark-red;
       }
     }
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
-.button-wrapper {
-  padding: 0 19px;
+.hideArrow {
+  opacity: 0.3;
 }
 
 .numText {

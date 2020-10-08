@@ -1,27 +1,34 @@
 import React, { FunctionComponent } from 'react'
-import { PreviousArrow, NextArrow } from './arrows'
 import clsx from 'clsx'
+import ChevronRight from '../Icons/ChevronRight'
+import ChevronLeft from '../Icons/ChevronLeft'
 
 import styles from './pagination.module.scss'
 
 interface Props {
   arrowType: 'Previous' | 'Next'
-  className?: string
-  [rest: string]: unknown // ...rest property
+  show: boolean
+  [rest: string]: unknown
 }
 
-const PaginationArrow: FunctionComponent<Props> = ({ arrowType, className, ...rest }) => {
-  let children
-  if (arrowType === 'Previous') {
-    children = <PreviousArrow />
-  }
-  if (arrowType === 'Next') {
-    children = <NextArrow />
-  }
+const PaginationArrow: FunctionComponent<Props> = ({ arrowType, className, show, ...rest }) => {
   return (
-    <button aria-label={arrowType} className={clsx(styles.arrowButton, className)} {...rest}>
-      {children}
-    </button>
+    <li>
+      <button
+        aria-label={`${arrowType} page`}
+        aria-hidden={!show}
+        disabled={!show}
+        className={clsx(styles.arrowButton, !show && styles.hideArrow)}
+        type="button"
+        {...rest}
+      >
+        {arrowType === 'Previous' ? (
+          <ChevronLeft width="13" height="18" fillColor="#D63426" aria-hidden focusable={false} />
+        ) : (
+          <ChevronRight width="13" height="18" fillColor="#D63426" aria-hidden focusable={false} />
+        )}
+      </button>
+    </li>
   )
 }
 

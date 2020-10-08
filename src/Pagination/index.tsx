@@ -1,14 +1,20 @@
 import React, { FunctionComponent, useState, useMemo } from 'react'
-import PaginationArrow from './PaginationArrow'
 import clsx from 'clsx'
+import PaginationNumber from './PaginationNumber'
+import PaginationArrow from './PaginationArrow'
+import useControlled from '../utils/useControlled'
 
 import styles from './pagination.module.scss'
 
 interface Props {
-  /** How many buttons are in the pagination */
+  /** total pages are in the pagination */
   totalPages: number
+  /** Number of always visible pages before and after the current page. */
+  siblingPages?: number
   /** Which page is currently selected */
   activePage?: number
+  /** Number of always visible pages at the beginning and end. */
+  boundaryCount?: number
   /** How many items will show per page */
   itemsPerPage?: number
   /** Adds a name to the count if shown */
@@ -22,82 +28,109 @@ interface Props {
   [rest: string]: unknown // ...rest property
 }
 
+// https://dev.to/namirsab/comment/2050
+export const range = (start: number, end: number) => {
+  const length = end - start + 1
+  return Array.from({ length }, (_, i) => start + i)
+}
+
 const Pagination: FunctionComponent<Props> = ({
-  activePage = 1,
+  activePage,
+  boundaryCount = 0,
+  siblingPages = 1,
   totalPages,
   itemsPerPage = 6,
-  showItemCount = true,
+  showItemCount = false,
   onChange,
   countName = '',
   className,
   ...rest
 }) => {
-  const [currentPage, setCurrentPage] = useState(activePage)
+  const [currentPage, setCurrentPage] = useControlled({
+    controlled: activePage,
+    defaultValue: 1
+  })
+
   const [currentItems, setCurrentItems] = useState(itemsPerPage)
-  const indexOfLastPage = activePage * totalPages
   const totalItems = itemsPerPage * totalPages
-  const indexOfFirstPage = indexOfLastPage - totalPages + 1
+  const indexOfFirstPage = totalPages - totalPages + 1
 
   const setNumberOfPage = (number: number) => {
     if (onChange) {
-      onChange()
+      onChange(number)
     }
     setCurrentPage(number)
     setCurrentItems(number * itemsPerPage)
   }
 
   const setPreviousPage = () => {
+    const newPage = currentPage - 1
     if (onChange) {
-      onChange()
+      onChange(newPage)
     }
-    setCurrentPage(currentPage - 1)
-    setCurrentItems((currentPage - 1) * itemsPerPage)
+    setCurrentPage(newPage)
+    setCurrentItems(newPage * itemsPerPage)
   }
 
   const setNextPage = () => {
+    const newPage = currentPage + 1
     if (onChange) {
-      onChange()
+      onChange(newPage)
     }
-    setCurrentPage(currentPage + 1)
-    setCurrentItems((currentPage + 1) * itemsPerPage)
+    setCurrentPage(newPage)
+    setCurrentItems(newPage * itemsPerPage)
   }
 
-  /** Creates an array based of the number
-   * given to the totalPages prop */
+  /** This is the money💰💰💰 logic for pagination */
   const pages = useMemo(() => {
-    const newPages = []
-    for (let i = 0; i < totalPages; i++) {
-      newPages.push(i + 1)
-    }
-    return newPages
-  }, [totalPages])
+    const startPages = range(1, Math.min(boundaryCount, totalPages))
+    const endPages = range(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages)
 
-  /** The pages array is then mapped over to
-   * create correct number of pagination buttons */
-  let paginationNumbers = pages.map((number) => (
-    <button
-      className={clsx(styles.button, currentPage === number && styles.active)}
-      key={number}
-      onClick={() => setNumberOfPage(number)}
-      aria-label={`Page ${number}`}
-    >
-      {number}
-    </button>
-  ))
+    const siblingsStart = Math.max(
+      Math.min(
+        // Natural start
+        currentPage - siblingPages,
+        // Lower boundary when currentPage is high
+        totalPages - boundaryCount - siblingPages * 2
+      ),
+      // Greater than startPages
+      boundaryCount + 1
+    )
+
+    const siblingsEnd = Math.min(
+      Math.max(
+        // Natural end
+        currentPage + siblingPages,
+        // Upper boundary when currentPage is low
+        boundaryCount + siblingPages * 2 + 1
+      ),
+      // Less than endPages
+      endPages.length > 0 ? endPages[0] - 2 : totalPages
+    )
+
+    return [...startPages, ...range(siblingsStart, siblingsEnd), ...endPages]
+  }, [currentPage, siblingPages, totalPages])
 
   return (
-    <div className={clsx(styles['pagination-wrapper'], className)} {...rest}>
-      <div className={styles['button-wrapper']}>
-        {currentPage > indexOfFirstPage && <PaginationArrow arrowType="Previous" onClick={setPreviousPage} />}
-        <div className={styles['button-wrapper']}>{paginationNumbers}</div>
-        {currentPage < indexOfLastPage && <PaginationArrow arrowType="Next" onClick={setNextPage} />}
-      </div>
+    <nav className={clsx(styles['pagination-wrapper'], className)} aria-label="pagination" {...rest}>
+      <ul className={styles['list-wrapper']}>
+        <PaginationArrow arrowType="Previous" onClick={setPreviousPage} show={currentPage > indexOfFirstPage} />
+        {pages.map((number) => (
+          <PaginationNumber
+            active={currentPage === number}
+            key={number}
+            number={number}
+            setNumberOfPage={setNumberOfPage}
+          />
+        ))}
+        <PaginationArrow arrowType="Next" onClick={setNextPage} show={currentPage < totalPages} />
+      </ul>
       {showItemCount && (
-        <div className={styles.numText}>
+        <span className={styles.numText}>
           {currentItems} out of {totalItems} {countName}
-        </div>
+        </span>
       )}
-    </div>
+    </nav>
   )
 }
 
