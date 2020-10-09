@@ -25,14 +25,15 @@ TODO add description here
 ## Basic Usage
 
 <Playground>
-  <Component initialState={{ values: [0, 5] }}>
+  <Component initialState={{ values: [0, 3] }}>
     {({ setState, state }) => (
       <Slider
         onChange={(values) => {
           setState({ values })
         }}
+        labels={['$100', '$1000', '$2000', '$4000', '$8000']}
         values={state.values}
-        max={10}
+        max={4}
       />
     )}
   </Component>
