@@ -1,0 +1,39 @@
+---
+name: Slider
+menu: Components
+route: /components-slider
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Slider } from '../../src'
+
+# Slider
+
+```javascript
+import Slider from 'mfcl/Slider'
+```
+
+## Description
+
+TODO add description here
+
+## Properties
+
+<Props of={Slider} />
+
+## Basic Usage
+
+<Playground>
+  <Component initialState={{ values: [0, 5] }}>
+    {({ setState, state }) => (
+      <Slider
+        onChange={(values) => {
+          setState({ values })
+        }}
+        values={state.values}
+        max={10}
+      />
+    )}
+  </Component>
+</Playground>
