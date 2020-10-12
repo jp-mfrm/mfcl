@@ -6,13 +6,18 @@ import styles from './slider.module.scss'
 // took ideas from https://css-tricks.com/multi-thumb-sliders-general-case/
 
 interface Props {
-  value1: number
-  value2: number
-  onChange: (name: string, value: number) => void
-  onChangeCommited?: (name: string, value: number) => void
+  values: number[]
+  /**  */
+  onChange: (value: number[]) => void
+  /** callback once the user is done sliding */
+  onChangeCommited?: (value: number[]) => void
+  /** maximum step value allowed */
   max?: number
+  /** minimum step value allowed */
   min?: number
+  /** labels will appear at the bottom and top */
   labels?: string[]
+  /* set a width of the range input */
   width?: string
   /** override styles to wrapper */
   className?: string
@@ -22,80 +27,87 @@ interface Props {
 }
 
 const Slider: FunctionComponent<Props> = ({
-  max = 100,
+  max = 5,
   min = 0,
   labels = [],
   onChange,
   onChangeCommited,
-  value1,
-  value2,
+  values,
   width = '100%',
   className,
   rangeClass,
   ...rest
 }) => {
   const inputClasses = clsx(styles.range, rangeClass)
-  const values = [value1, value2]
   const diff = max - min
   const tpos = values.map((value, i) => `calc((var(--v${i}) - var(--min)) / ${diff} * ${width})`)
   const fill = tpos.map((value) => `linear-gradient(90deg, red ${value}, transparent 0)`)
 
   const handleChange = (index: number) => (e: any) => {
-    onChange(`value${index}`, Number(e.target.value))
+    const newValues = [...values]
+    newValues[index] = Number(e.target.value)
+    onChange(newValues)
   }
 
   const handeChangeCommited = (index: number) => (e: any) => {
     if (onChangeCommited) {
-      onChangeCommited(`value${index}`, Number(e.target.value))
+      const newValues = [...values]
+      newValues[index] = Number(e.target.value)
+      onChangeCommited(newValues)
     }
   }
 
-  const handleLabelClick = (i: number) => () => {
-    onChange('value2', i)
+  const handleLabelClick = (index: number) => () => {
+    const newValues = [...values]
+    newValues[newValues.length - 1] = index
+    onChange(newValues)
 
     if (onChangeCommited) {
-      onChangeCommited('value2', i)
+      onChangeCommited(newValues)
     }
   }
 
   return (
     <>
+      {labels && (
+        <div className={styles.labels}>
+          {labels.map((label, i) => (
+            <div
+              key={`${i}-${label}`}
+              className={clsx(styles['upper-label'], values.includes(i) && styles['active-label'])}
+            >
+              {label}
+            </div>
+          ))}
+        </div>
+      )}
       <div
         className={clsx(styles['slider-wrapper'], className)}
         style={
           {
             width,
-            '--v0': value1,
-            '--v1': value2,
+            ...Object.fromEntries(values.map((value, i) => [`--v${i}`, value])),
             '--min': min,
             '--fill': fill.join(', ')
           } as CSSProperties
         }
       >
-        <input
-          className={inputClasses}
-          style={{ left: tpos[0] }}
-          type="range"
-          min={min}
-          max={max}
-          value={value1}
-          onChange={handleChange(1)}
-          onMouseUp={handeChangeCommited(1)}
-          onTouchEnd={handeChangeCommited(1)}
-          {...rest}
-        />
-        <input
-          className={inputClasses}
-          style={{ left: tpos[1] }}
-          type="range"
-          min={min}
-          max={max}
-          value={value2}
-          onChange={handleChange(2)}
-          onMouseUp={handeChangeCommited(2)}
-          onTouchEnd={handeChangeCommited(2)}
-          {...rest}
-        />
+        {values.map((value, i) => (
+          <input
+            className={inputClasses}
+            key={i}
+            style={{ left: tpos[i] }}
+            type="range"
+            tabIndex={0}
+            min={min}
+            max={max}
+            value={value}
+            onChange={handleChange(i)}
+            onMouseUp={handeChangeCommited(i)}
+            onTouchEnd={handeChangeCommited(i)}
+            {...rest}
+          />
+        ))}
       </div>
       {labels && (
         <ul className={styles.labels}>

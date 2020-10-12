@@ -25,19 +25,35 @@ TODO add description here
 ## Basic Usage
 
 <Playground>
-  <Component initialState={{ value1: 0, value2: 2 }}>
+  <Component initialState={{ values: [4], labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }}>
     {({ setState, state }) => (
       <Slider
-        onChange={(key, value) => {
-          setState({ [key]: value })
+        onChange={(values) => {
+          setState({ values })
         }}
-        onChangeCommited={(key, value) => {
+        labels={state.labels}
+        values={state.values}
+        max={state.labels.length - 1}
+      />
+    )}
+  </Component>
+</Playground>
+
+## Multiple Values
+
+<Playground>
+  <Component initialState={{ values: [1, 3], labels: ['$100', '$1,000', '$2,000', '$4,000', '$8,000'] }}>
+    {({ setState, state }) => (
+      <Slider
+        onChange={(values) => {
+          setState({ values })
+        }}
+        onChangeCommited={(value) => {
           console.log('Change commited. Send to API')
         }}
-        labels={['$100', '$1000', '$2000', '$4000', '$8000']}
-        value1={state.value1}
-        value2={state.value2}
-        max={4}
+        labels={state.labels}
+        values={state.values}
+        max={state.labels.length - 1}
       />
     )}
   </Component>

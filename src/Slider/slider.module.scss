@@ -11,6 +11,8 @@
   border: 1px solid $white;
   border-radius: 5px;
   height: 23px;
+  position: relative;
+  top: -2px;
   pointer-events: auto;
   width: 15px;
 }
@@ -63,7 +65,6 @@
   grid-row: 2;
   margin: 0;
   pointer-events: none;
-  top: -1px;
   z-index: 1;
 
   &::-webkit-slider-runnable-track {
