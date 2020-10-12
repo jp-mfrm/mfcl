@@ -6,77 +6,101 @@ import styles from './slider.module.scss'
 // took ideas from https://css-tricks.com/multi-thumb-sliders-general-case/
 
 interface Props {
-  values: number[]
-  onChange?: Function
+  value1: number
+  value2: number
+  onChange: (name: string, value: number) => void
+  onChangeCommited?: (name: string, value: number) => void
   max?: number
   min?: number
   labels?: string[]
   width?: string
   /** override styles to wrapper */
-  wrapperClass?: string
+  className?: string
+  /** override styles to the input ranges */
+  rangeClass?: string
   [rest: string]: unknown // give to the input component
 }
 
-const Slider: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(function Select(
-  { max = 100, min = 0, labels = [], onChange, step, values, width = '100%', wrapperClass, ...rest },
-  ref
-) {
-  const tpos = values.map((value, i) => `calc((var(--v${i}) - var(--min)) / var(--dif) * calc(${width} - 20px))`)
+const Slider: FunctionComponent<Props> = ({
+  max = 100,
+  min = 0,
+  labels = [],
+  onChange,
+  onChangeCommited,
+  value1,
+  value2,
+  width = '100%',
+  className,
+  rangeClass,
+  ...rest
+}) => {
+  const inputClasses = clsx(styles.range, rangeClass)
+  const values = [value1, value2]
+  const diff = max - min
+  const tpos = values.map((value, i) => `calc((var(--v${i}) - var(--min)) / ${diff} * ${width})`)
   const fill = tpos.map((value) => `linear-gradient(90deg, red ${value}, transparent 0)`)
-  const hole = tpos.map((value) => `radial-gradient(circle at ${value}, red var(--r), transparent 0)`)
-
-  const labelStyle = { width: `calc(${width} / ${max} - 1%)` }
 
   const handleChange = (index: number) => (e: any) => {
-    if (onChange) {
-      const value = e.target.value
-      console.log(value)
-      const newValues = [...values]
-      newValues[index] = Number(value)
-      onChange(newValues)
+    onChange(`value${index}`, Number(e.target.value))
+  }
+
+  const handeChangeCommited = (index: number) => (e: any) => {
+    if (onChangeCommited) {
+      onChangeCommited(`value${index}`, Number(e.target.value))
+    }
+  }
+
+  const handleLabelClick = (i: number) => () => {
+    onChange('value2', i)
+
+    if (onChangeCommited) {
+      onChangeCommited('value2', i)
     }
   }
 
   return (
     <>
       <div
-        className={clsx(styles['slider-wrapper'], wrapperClass)}
+        className={clsx(styles['slider-wrapper'], className)}
         style={
           {
-            ...Object.fromEntries(values.map((value, i) => [`--v${i}`, value])),
             width,
+            '--v0': value1,
+            '--v1': value2,
             '--min': min,
-            '--max': max,
-            '--fill': fill.join(', '),
-            '--hole': hole.join(', ')
+            '--fill': fill.join(', ')
           } as CSSProperties
         }
       >
-        {values.map((value, i) => (
-          <input
-            ref={ref}
-            key={`${i}-${value}`}
-            className={styles.range}
-            style={{ left: tpos[i] }}
-            type="range"
-            min={min}
-            max={max}
-            defaultValue={value}
-            onTouchEnd={handleChange(i)}
-            onMouseUp={handleChange(i)}
-            // onChange={handleChange(i)}
-            {...rest}
-          />
-        ))}
+        <input
+          className={inputClasses}
+          style={{ left: tpos[0] }}
+          type="range"
+          min={min}
+          max={max}
+          value={value1}
+          onChange={handleChange(1)}
+          onMouseUp={handeChangeCommited(1)}
+          onTouchEnd={handeChangeCommited(1)}
+          {...rest}
+        />
+        <input
+          className={inputClasses}
+          style={{ left: tpos[1] }}
+          type="range"
+          min={min}
+          max={max}
+          value={value2}
+          onChange={handleChange(2)}
+          onMouseUp={handeChangeCommited(2)}
+          onTouchEnd={handeChangeCommited(2)}
+          {...rest}
+        />
       </div>
       {labels && (
         <ul className={styles.labels}>
           {labels.map((label, i) => (
-            <li
-              // onChange
-              style={i < labels.length - 1 ? labelStyle : {}}
-              key={`${i}-${label}`}
-            >
+            <li onClick={handleLabelClick(i)} key={`${i}-${label}`}>
               {label}
             </li>
           ))}
@@ -84,6 +108,6 @@ const Slider: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(fun
       )}
     </>
   )
-})
+}
 
 export default Slider

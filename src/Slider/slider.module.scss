@@ -8,16 +8,14 @@
 
 @mixin thumb() {
   background: $red;
-  border: none;
-  border-radius: 0px;
+  border: 1px solid $white;
+  border-radius: 5px;
   height: 23px;
   pointer-events: auto;
   width: 15px;
 }
 
 .slider-wrapper {
-  --r: 10px;
-  --dif: calc(var(--max) - var(--min));
   display: grid;
   grid-gap: 0.625em;
   overflow: hidden;
@@ -65,7 +63,6 @@
   grid-row: 2;
   margin: 0;
   pointer-events: none;
-  // position: absolute;
   top: -1px;
   z-index: 1;
 
@@ -94,15 +91,15 @@
 
 // Labels below slider
 .labels {
+  display: flex;
+  justify-content: space-between;
   margin: 10px 0px 0px;
   padding: 0;
   list-style: none;
 
   li {
-    position: relative;
-    float: left;
-    color: #b2b2b2;
-    font-size: 14px;
+    color: $gray-11;
     cursor: pointer;
+    font-size: 14px;
   }
 }

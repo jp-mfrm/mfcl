@@ -25,14 +25,18 @@ TODO add description here
 ## Basic Usage
 
 <Playground>
-  <Component initialState={{ values: [0, 3] }}>
+  <Component initialState={{ value1: 0, value2: 2 }}>
     {({ setState, state }) => (
       <Slider
-        onChange={(values) => {
-          setState({ values })
+        onChange={(key, value) => {
+          setState({ [key]: value })
+        }}
+        onChangeCommited={(key, value) => {
+          console.log('Change commited. Send to API')
         }}
         labels={['$100', '$1000', '$2000', '$4000', '$8000']}
-        values={state.values}
+        value1={state.value1}
+        value2={state.value2}
         max={4}
       />
     )}
