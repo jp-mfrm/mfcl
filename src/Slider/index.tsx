@@ -6,8 +6,9 @@ import styles from './slider.module.scss'
 // took ideas from https://css-tricks.com/multi-thumb-sliders-general-case/
 
 interface Props {
+  /** the index value on the slide scale. Multiple values mean multiple thumb sliders */
   values: number[]
-  /**  */
+  /** callback for every step touched */
   onChange: (value: number[]) => void
   /** callback once the user is done sliding */
   onChangeCommited?: (value: number[]) => void
@@ -71,14 +72,19 @@ const Slider: FunctionComponent<Props> = ({
     <>
       {labels && (
         <div className={styles.labels}>
-          {labels.map((label, i) => (
-            <div
-              key={`${i}-${label}`}
-              className={clsx(styles['upper-label'], values.includes(i) && styles['active-label'])}
-            >
-              {label}
-            </div>
-          ))}
+          {labels.map((label, i) => {
+            const activeLabel = values.includes(i)
+            return (
+              <div
+                key={`${i}-${label}`}
+                aria-hidden={!activeLabel}
+                className={clsx(styles['upper-label'], activeLabel && styles['active-label'])}
+              >
+                {i === 0 && '<'}
+                {label}
+              </div>
+            )
+          })}
         </div>
       )}
       <div
