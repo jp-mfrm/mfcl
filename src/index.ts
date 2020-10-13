@@ -33,8 +33,10 @@ import Textarea from './Textarea'
 import Tooltip from './Tooltip'
 import Pagination from './Pagination'
 import Typography from './Typography'
+import Slider from './Slider';
 
 export {
+  Slider,
   Accordion,
   AccordionItem,
   Alert,

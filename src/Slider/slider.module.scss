@@ -1,0 +1,116 @@
+@import '../variables';
+
+@mixin track() {
+  width: 100%;
+  height: 100%;
+  background: none; /* get rid of Firefox track background */
+}
+
+@mixin thumb() {
+  background: $red;
+  border: 1px solid $white;
+  border-radius: 5px;
+  height: 23px;
+  position: relative;
+  top: -2px;
+  pointer-events: auto;
+  width: 15px;
+}
+
+.slider-wrapper {
+  display: grid;
+  grid-gap: 0.625em;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  grid-template-rows: max-content 20px max-content;
+
+  &::before,
+  &::after {
+    grid-column: 1;
+    grid-row: 2;
+    content: '';
+    border-radius: 7.5px;
+    height: 15px;
+    margin-top: calc((20px - 15px) / 2);
+  }
+
+  &::before {
+    background: #f1f1f2;
+  }
+
+  &::after {
+    background: $red;
+    /* non-standard WebKit version */
+    -webkit-mask: var(--fill);
+    -webkit-mask-composite: xor;
+    /* standard version, supported in Firefox */
+    mask: var(--fill);
+    mask-composite: exclude;
+  }
+}
+
+.range {
+  &::-webkit-slider-runnable-track,
+  &::-webkit-slider-thumb,
+  & {
+    -webkit-appearance: none;
+  }
+  background: none; /* get rid of white Chrome background */
+  color: #eee;
+  cursor: grab;
+  font: inherit; /* fix too small font-size in both Chrome & Firefox */
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
+  pointer-events: none;
+  z-index: 1;
+
+  &::-webkit-slider-runnable-track {
+    @include track;
+  }
+  &::-moz-range-track {
+    @include track;
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb;
+  }
+  &::-moz-range-thumb {
+    @include thumb;
+  }
+
+  &:focus {
+    outline: solid 0 transparent;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+// Labels below slider
+.labels {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px 0px;
+  padding: 0;
+  list-style: none;
+
+  li {
+    color: $gray-11;
+    cursor: pointer;
+    font-size: 12px;
+  }
+}
+
+.upper-label {
+  font-size: 15px;
+  font-weight: 700;
+  opacity: 0;
+}
+
+.active-label {
+  opacity: 1;
+}
