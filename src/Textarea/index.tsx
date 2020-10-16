@@ -14,6 +14,8 @@ interface Props {
   error?: boolean
   /** Label for textarea field */
   label?: string | ReactNode
+  /** Message for input submission  */
+  textAreaMessage?: string
   /** Field and label name */
   name?: string
   [rest: string]: unknown // ...rest property
@@ -26,8 +28,11 @@ const Textarea: FunctionComponent<Props> = ({
   error = false,
   label,
   name,
+  textAreaMessage,
   ...rest
 }) => {
+  const errorClass = error && styles.error
+
   const handleKeyUp = (e: any) => {
     if (e.target.value.length > 0) return
     e.target.style.height = 'inherit'
@@ -57,18 +62,21 @@ const Textarea: FunctionComponent<Props> = ({
 
   return (
     <div className={clsx(styles['textarea-wrapper'])} style={wrapperStyling}>
-      {label && (
-        <label htmlFor={name} className={styles.label}>
-          {label}
-        </label>
-      )}
-      <textarea
-        className={clsx(styles.textarea, className, error && styles.error)}
-        name={name}
-        onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyUp}
-        {...rest}
-      />
+      <div className={styles.inner}>
+        {label && (
+          <label htmlFor={name} className={styles.label}>
+            {label}
+          </label>
+        )}
+        <textarea
+          className={clsx(styles.textarea, className, error && styles.error)}
+          name={name}
+          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
+          {...rest}
+        />
+      </div>
+      {textAreaMessage && <p className={clsx(styles.footer, errorClass)}>{textAreaMessage}</p>}
     </div>
   )
 }
