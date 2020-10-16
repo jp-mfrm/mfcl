@@ -13,31 +13,10 @@
   font-size: 14px;
 }
 
-.label {
-  font-size: 16px;
-  position: absolute;
-  top: 15px;
-  left: 30px;
-  color: #5b5b5b;
-  transition: all 0.2s ease-out;
-  background: transparent;
-  pointer-events: none;
-
-  &.sm {
-    top: 10px;
-  }
-
-  &.md {
-    top: 14px;
-  }
-
-  &.disabled {
-    color: lighten(#1e1e1e, 70%);
-  }
-
-  @media screen and (min-width: $mobile) {
-    text-align: left;
-  }
+.inner {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 .textarea {
@@ -128,6 +107,33 @@
     line-height: 16px;
     padding-left: 2px;
     padding-right: 4px;
+  }
+}
+
+.label {
+  font-size: 16px;
+  position: absolute;
+  top: 15px;
+  left: 30px;
+  color: #5b5b5b;
+  transition: all 0.2s ease-out;
+  background: transparent;
+  pointer-events: none;
+
+  &.sm {
+    top: 10px;
+  }
+
+  &.md {
+    top: 14px;
+  }
+
+  &.disabled {
+    color: lighten(#1e1e1e, 70%);
+  }
+
+  @media screen and (min-width: $mobile) {
+    text-align: left;
   }
 }
 
