@@ -3,32 +3,21 @@
 .textarea-wrapper {
   display: flex;
   flex-direction: column;
+  font-family: $r-regular;
+  position: relative;
   width: 100%;
-  align-items: center;
-  justify-content: center;
 }
 
-.label {
-  border-bottom: solid 1px $gray-5;
-  display: inline-block;
-  font-size: 12px;
-  line-height: normal;
-  margin-bottom: 15px;
-  padding: 6px 0px;
-  text-overflow: ellipsis;
-  width: 100%;
-
-  @media screen and (min-width: $mobile) {
-    text-align: left;
-  }
+.footer {
+  text-align: center;
+  font-size: 14px;
 }
 
 .textarea {
-  max-width: 95%;
-  width: 100%;
-  border-radius: 25px;
+  text-align: start;
+  border-radius: 3.5px;
   border: solid 1px #939393;
-  padding: $spacing-xs $spacing-s;
+  padding: 15px;
   font-family: $r-regular;
   font-size: 16px;
   font-weight: normal;
@@ -37,23 +26,99 @@
   line-height: 1.25;
   letter-spacing: normal;
   color: #1e1e1e;
-
-  &:disabled {
-    border: solid 1px $gray-3;
-    cursor: not-allowed;
-  }
+  width: 100%;
 
   &::placeholder {
     color: $gray-8;
   }
 
   &:focus {
+    border-width: 1px;
+    border-color: lighten($black, 30%);
     outline: none;
-    border-color: $gray-5;
+    transition: all 0.2s ease-out;
   }
 
-  &.error:not(:disabled) {
+  &:focus + .label,
+  &.has-value + .label {
+    background: $white;
+    top: -8px;
+    left: 33px;
+    font-size: 12px;
+    line-height: 16px;
+    padding-left: 2px;
+    padding-right: 4px;
+  }
+
+  &:disabled {
+    border: solid 1px $gray-3;
+    color: lighten(#1e1e1e, 70%);
+    cursor: not-allowed;
+  }
+
+  &.error {
     outline: 0;
     border-color: $red;
+
+    &:disabled {
+      border-color: lighten($red, 25%);
+      color: lighten($red, 30%);
+    }
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-transition: 'color 9999s ease-out, background-color 9999s ease-out';
+    transition: 'color 9999s ease-out, background-color 9999s ease-out';
+    -webkit-transition-delay: 9999s;
+    transition-delay: 9999s;
+  }
+
+  &:-webkit-autofill::first-line {
+    font-size: 16px;
+    line-height: 1.25;
+    font-family: $r-regular;
+  }
+
+  &:-webkit-autofill + .label,
+  &:-webkit-autofill:hover + .label,
+  &:-webkit-autofill:focus + .label,
+  &:-webkit-autofill:active + .label {
+    background: $white;
+    top: -8px;
+    left: 33px;
+    font-size: 12px;
+    line-height: 16px;
+    padding-left: 2px;
+    padding-right: 4px;
+  }
+}
+
+.label {
+  font-size: 16px;
+  position: absolute;
+  top: 15px;
+  left: 30px;
+  color: #5b5b5b;
+  transition: all 0.2s ease-out;
+  background: transparent;
+  pointer-events: none;
+
+  &.disabled {
+    color: lighten(#1e1e1e, 70%);
+  }
+
+  @media screen and (min-width: $mobile) {
+    text-align: left;
+  }
+}
+
+.error {
+  color: $red !important;
+
+  &.disabled {
+    color: lighten($red, 30%) !important;
   }
 }
