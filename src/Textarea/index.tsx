@@ -91,7 +91,7 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(f
     <div className={styles['textarea-wrapper']} style={wrapperStyling}>
       <div className={styles.inner}>
         <textarea
-          className={clsx(styles.input, errorClass, hasValue && styles['has-value'], className)}
+          className={clsx(styles.textarea, errorClass, hasValue && styles['has-value'], className)}
           name={name}
           onKeyDown={handleKeyDown}
           onKeyUp={handleKeyUp}
