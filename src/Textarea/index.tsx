@@ -6,7 +6,7 @@ import styles from './textarea.module.scss'
 interface Props {
   /** Class to pass to the textarea wrapper */
   className?: string
-  /** Syles to pass to the textarea element */
+  /** Styles to pass to the textarea element */
   fieldStyling?: CSSProperties
   /** Styles to pass to the wrapper element */
   wrapperStyling?: CSSProperties
@@ -97,6 +97,7 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(f
           onKeyUp={handleKeyUp}
           onChange={formControl}
           ref={forwardedRef}
+          style={fieldStyling}
           {...rest}
         />
         {label && (
