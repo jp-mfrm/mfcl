@@ -89,7 +89,7 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(f
 
   return (
     <div className={styles['textarea-wrapper']} style={wrapperStyling}>
-      <div className={styles.inner}>
+      <div>
         <textarea
           className={clsx(styles.textarea, errorClass, hasValue && styles['has-value'], className)}
           name={name}
