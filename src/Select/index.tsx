@@ -1,4 +1,5 @@
-import React, { FunctionComponent, ReactNode, forwardRef } from 'react'
+import React, { FunctionComponent, ReactNode, useState, useEffect, forwardRef } from 'react'
+import useForwardedRef from '../utils/useForwardedRef'
 import clsx from 'clsx'
 
 import styles from './select.module.scss'
@@ -11,30 +12,62 @@ export interface Props {
   label?: string | ReactNode
   /** Name of form element */
   name?: string
-  /** size of the select */
-  size?: 'sm' | 'md' | 'lg'
+  /** Apply error styling */
+  error?: boolean
+  /** Message for input submission  */
+  inputMessage?: string
   /** Override styles to wrapper */
   wrapperClass?: string
+  /** You already know what this is for. Why are you looking up the description? */
+  onChange?: Function
   [x: string]: unknown // ...rest property
 }
 
 const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(function Select(
-  { className = '', children, label, name, size = 'lg', wrapperClass = '', ...rest },
+  { className = '', children, label, name, size = 'lg', wrapperClass = '', inputMessage, error, onChange, ...rest },
   ref
 ) {
+  const [hasValue, setHasValue] = useState(false)
+  const forwardedRef = useForwardedRef(ref)
+
   const wrapperClassName = clsx(styles['form-group'], wrapperClass)
-  const inputClassName = clsx(styles['form-control'], styles[size], className)
+  const inputClassName = clsx(styles['form-control'], className)
+  const errorClass = error && styles.error
+
+  const formControl = (e: any) => {
+    const length = e.target.value.length
+
+    // extra checks to prevent unnecessary rerenders every keystroke
+    if (hasValue && length === 0) {
+      setHasValue(false)
+    } else if (!hasValue && length > 0) {
+      setHasValue(true)
+    }
+
+    if (onChange) {
+      onChange(e)
+    }
+  }
+
+  useEffect(() => {
+    if ((forwardedRef as React.RefObject<HTMLInputElement>)?.current?.value) {
+      setHasValue(true)
+    }
+  }, [])
 
   return (
     <div className={wrapperClassName}>
-      {label && (
-        <label htmlFor={name} className={styles.label}>
-          {label}
-        </label>
-      )}
-      <select name={name} ref={ref} className={inputClassName} {...rest}>
-        {children}
-      </select>
+      <div className={styles['select-group']}>
+        {label && (
+          <label htmlFor={name} className={styles.label}>
+            {label}
+          </label>
+        )}
+        <select name={name} ref={ref} className={inputClassName} onChange={formControl} {...rest}>
+          {children}
+        </select>
+      </div>
+      {inputMessage && <p className={clsx(styles.footer, errorClass)}>{inputMessage}</p>}
     </div>
   )
 })
