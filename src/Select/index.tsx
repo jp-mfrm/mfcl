@@ -1,6 +1,5 @@
 import React, { FunctionComponent, ReactNode, useState, useEffect, forwardRef } from 'react'
 import useForwardedRef from '../utils/useForwardedRef'
-import ChevronLeft from '../Icons/ChevronLeft'
 import clsx from 'clsx'
 
 import styles from './select.module.scss'
@@ -17,6 +16,8 @@ export interface Props {
   error?: boolean
   /** Message for input submission  */
   inputMessage?: string
+  /** Makes the input field disabled */
+  disabled?: boolean
   /** Override styles to wrapper */
   wrapperClass?: string
   /** You already know what this is for. Why are you looking up the description? */
@@ -25,7 +26,19 @@ export interface Props {
 }
 
 const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(function Select(
-  { className = '', children, label, name, size = 'lg', wrapperClass = '', inputMessage, error, onChange, ...rest },
+  {
+    className = '',
+    children,
+    label,
+    name,
+    size = 'lg',
+    wrapperClass = '',
+    inputMessage,
+    error,
+    onChange,
+    disabled,
+    ...rest
+  },
   ref
 ) {
   const [hasValue, setHasValue] = useState(false)
@@ -63,7 +76,7 @@ const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(fu
           {children}
         </select>
         {label && (
-          <label htmlFor={name} className={styles.label}>
+          <label htmlFor={name} className={clsx(styles.label, disabled && styles.disabled, errorClass)}>
             {label}
           </label>
         )}

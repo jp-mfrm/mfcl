@@ -1,12 +1,11 @@
 @import '../variables';
 
+$select-img: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjkiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyOSAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik04LjQyMjI0IDEwTDE0LjM1ODcgMTVMMjAuMjk1MyAxMEg4LjQyMjI0WiIgZmlsbD0iYmxhY2siLz4KPG1hc2sgaWQ9Im1hc2swIiBtYXNrLXR5cGU9ImFscGhhIiBtYXNrVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4PSI4IiB5PSIxMCIgd2lkdGg9IjEzIiBoZWlnaHQ9IjUiPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTguNDIyMjQgMTBMMTQuMzU4NyAxNUwyMC4yOTUzIDEwSDguNDIyMjRaIiBmaWxsPSJ3aGl0ZSIvPgo8L21hc2s+CjxnIG1hc2s9InVybCgjbWFzazApIj4KPC9nPgo8L3N2Zz4K')
+  no-repeat 100% center;
+
 .form-group {
   margin-bottom: 30px;
   position: relative;
-}
-
-.form-group select {
-  min-width: 150px;
 }
 
 .select-group {
@@ -31,6 +30,11 @@
   letter-spacing: normal;
   color: #1e1e1e;
   width: 100%;
+  -moz-appearance: none !important;
+  -webkit-appearance: none !important;
+  background: $select-img;
+  background-clip: padding-box;
+  background-color: $transparent;
 
   &::placeholder {
     color: $gray-4;
@@ -44,6 +48,16 @@
     cursor: not-allowed;
     // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
     opacity: 0.5;
+  }
+
+  &.error {
+    outline: 0;
+    border-color: $red;
+
+    &:disabled {
+      border-color: lighten($red, 25%);
+      color: lighten($red, 30%);
+    }
   }
 }
 
@@ -62,5 +76,13 @@
 
   @media screen and (min-width: $mobile) {
     text-align: left;
+  }
+}
+
+.error {
+  color: $red !important;
+
+  &.disabled {
+    color: lighten($red, 30%) !important;
   }
 }
