@@ -16,8 +16,6 @@ export interface Props {
   error?: boolean
   /** Message for input submission  */
   inputMessage?: string
-  /** Makes the input field disabled */
-  disabled?: boolean
   /** Override styles to wrapper */
   wrapperClass?: string
   /** You already know what this is for. Why are you looking up the description? */
@@ -26,27 +24,15 @@ export interface Props {
 }
 
 const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(function Select(
-  {
-    className = '',
-    children,
-    label,
-    name,
-    size = 'lg',
-    wrapperClass = '',
-    inputMessage,
-    error,
-    onChange,
-    disabled,
-    ...rest
-  },
+  { className = '', children, label, name, size = 'lg', wrapperClass = '', inputMessage, error, onChange, ...rest },
   ref
 ) {
   const [hasValue, setHasValue] = useState(false)
   const forwardedRef = useForwardedRef(ref)
 
-  const wrapperClassName = clsx(styles['form-group'], wrapperClass)
-  const inputClassName = clsx(styles['form-control'], className)
   const errorClass = error && styles.error
+  const wrapperClassName = clsx(styles['form-group'], wrapperClass)
+  const selectClassName = clsx(styles.select, errorClass, className)
 
   const formControl = (e: any) => {
     const length = e.target.value.length
@@ -72,11 +58,11 @@ const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(fu
   return (
     <div className={wrapperClassName}>
       <div className={styles['select-group']}>
-        <select name={name} ref={ref} className={inputClassName} onChange={formControl} {...rest}>
+        <select name={name} ref={ref} className={selectClassName} onChange={formControl} {...rest}>
           {children}
         </select>
         {label && (
-          <label htmlFor={name} className={clsx(styles.label, disabled && styles.disabled, errorClass)}>
+          <label htmlFor={name} className={clsx(styles.label, error && styles.error)}>
             {label}
           </label>
         )}
