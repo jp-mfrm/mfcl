@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactNode, useState, useEffect, forwardRef } from 'react'
 import useForwardedRef from '../utils/useForwardedRef'
+import ChevronLeft from '../Icons/ChevronLeft'
 import clsx from 'clsx'
 
 import styles from './select.module.scss'
@@ -58,14 +59,14 @@ const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(fu
   return (
     <div className={wrapperClassName}>
       <div className={styles['select-group']}>
+        <select name={name} ref={ref} className={inputClassName} onChange={formControl} {...rest}>
+          {children}
+        </select>
         {label && (
           <label htmlFor={name} className={styles.label}>
             {label}
           </label>
         )}
-        <select name={name} ref={ref} className={inputClassName} onChange={formControl} {...rest}>
-          {children}
-        </select>
       </div>
       {inputMessage && <p className={clsx(styles.footer, errorClass)}>{inputMessage}</p>}
     </div>

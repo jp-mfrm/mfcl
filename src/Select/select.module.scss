@@ -33,81 +33,31 @@
   width: 100%;
 
   &::placeholder {
-    color: $gray-8;
+    color: $gray-4;
+    // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
+    opacity: 1;
   }
 
-  &:focus {
-    border-width: 1px;
-    border-color: lighten($black, 30%);
-    outline: none;
-    transition: all 0.2s ease-out;
-  }
-
-  &:focus + .label,
-  &.has-value + .label {
-    background: $white;
-    top: -8px;
-    left: 33px;
-    font-size: 12px;
-    line-height: 16px;
-    padding-left: 2px;
-    padding-right: 4px;
-  }
-
-  &:disabled {
-    border: solid 1px $gray-3;
-    color: lighten(#1e1e1e, 70%);
+  &:disabled,
+  &[readonly] {
+    background-color: $white;
     cursor: not-allowed;
-  }
-
-  &.error {
-    outline: 0;
-    border-color: $red;
-
-    &:disabled {
-      border-color: lighten($red, 25%);
-      color: lighten($red, 30%);
-    }
-  }
-
-  &:-webkit-autofill,
-  &:-webkit-autofill:hover,
-  &:-webkit-autofill:focus,
-  &:-webkit-autofill:active {
-    -webkit-transition: 'color 9999s ease-out, background-color 9999s ease-out';
-    transition: 'color 9999s ease-out, background-color 9999s ease-out';
-    -webkit-transition-delay: 9999s;
-    transition-delay: 9999s;
-  }
-
-  &:-webkit-autofill::first-line {
-    font-size: 16px;
-    line-height: 1.25;
-    font-family: $r-regular;
-  }
-
-  &:-webkit-autofill + .label,
-  &:-webkit-autofill:hover + .label,
-  &:-webkit-autofill:focus + .label,
-  &:-webkit-autofill:active + .label {
-    background: $white;
-    top: -8px;
-    left: 33px;
-    font-size: 12px;
-    line-height: 16px;
-    padding-left: 2px;
-    padding-right: 4px;
+    // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
+    opacity: 0.5;
   }
 }
 
 .label {
-  font-size: 16px;
   position: absolute;
-  top: 18px;
-  left: 30px;
+  background: $white;
+  top: -8px;
+  left: 33px;
+  font-size: 12px;
+  line-height: 16px;
+  padding-left: 2px;
+  padding-right: 4px;
   color: #5b5b5b;
   transition: all 0.2s ease-out;
-  background: transparent;
   pointer-events: none;
 
   @media screen and (min-width: $mobile) {
