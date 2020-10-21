@@ -12,8 +12,12 @@ export interface Props {
   label?: string | ReactNode
   /** Name of form element */
   name?: string
+  /** Size of the Input. Might add "sm" in the future */
+  size?: 'lg' | 'md' | 'sm'
   /** Apply error styling */
   error?: boolean
+  /** Makes the input field disabled */
+  disabled?: boolean
   /** Message for input submission  */
   inputMessage?: string
   /** Override styles to wrapper */
@@ -24,15 +28,26 @@ export interface Props {
 }
 
 const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(function Select(
-  { className = '', children, label, name, size = 'lg', wrapperClass = '', inputMessage, error, onChange, ...rest },
+  {
+    className = '',
+    children,
+    label,
+    name,
+    size = 'lg',
+    wrapperClass = '',
+    inputMessage,
+    error,
+    onChange,
+    disabled,
+    ...rest
+  },
   ref
 ) {
   const [hasValue, setHasValue] = useState(false)
   const forwardedRef = useForwardedRef(ref)
-
   const errorClass = error && styles.error
   const wrapperClassName = clsx(styles['form-group'], wrapperClass)
-  const selectClassName = clsx(styles.select, errorClass, hasValue && styles['has-value'], className)
+  const selectClassName = clsx(styles.select, errorClass, hasValue && styles['has-value'], styles[size], className)
 
   const formControl = (e: any) => {
     const length = e.target.value.length
@@ -50,7 +65,7 @@ const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(fu
   }
 
   useEffect(() => {
-    if ((forwardedRef as React.RefObject<HTMLInputElement>)?.current?.value) {
+    if ((forwardedRef as React.RefObject<HTMLSelectElement>)?.current?.value) {
       setHasValue(true)
     }
   }, [])
@@ -58,11 +73,11 @@ const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(fu
   return (
     <div className={wrapperClassName}>
       <div className={styles['select-group']}>
-        <select name={name} ref={ref} className={selectClassName} onChange={formControl} {...rest}>
+        <select name={name} ref={ref} disabled={disabled} className={selectClassName} onChange={formControl} {...rest}>
           {children}
         </select>
         {label && (
-          <label htmlFor={name} className={clsx(styles.label, error && styles.error)}>
+          <label htmlFor={name} className={clsx(styles.label, styles[size], errorClass, disabled && styles.disabled)}>
             {label}
           </label>
         )}

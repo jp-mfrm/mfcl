@@ -16,6 +16,11 @@ $select-img: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjkiIGhlaWdodD0iMjQi
   width: 100%;
 }
 
+.footer {
+  text-align: center;
+  font-size: 14px;
+}
+
 .select {
   text-align: start;
   border-radius: 25px;
@@ -79,6 +84,14 @@ $select-img: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjkiIGhlaWdodD0iMjQi
     }
   }
 
+  &.sm {
+    padding: 8px 20px;
+  }
+
+  &.md {
+    padding: 12px 25px;
+  }
+
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
@@ -118,6 +131,28 @@ $select-img: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjkiIGhlaWdodD0iMjQi
   color: #5b5b5b;
   transition: all 0.2s ease-out;
   pointer-events: none;
+
+  &.sm {
+    top: 10px;
+  }
+
+  &.md {
+    top: 14px;
+  }
+
+  &.disabled {
+    color: lighten(#1e1e1e, 70%);
+  }
+
+  &.error {
+    outline: 0;
+    border-color: $red;
+
+    &:disabled {
+      border-color: lighten($red, 25%);
+      color: lighten($red, 30%);
+    }
+  }
 
   @media screen and (min-width: $mobile) {
     text-align: left;
