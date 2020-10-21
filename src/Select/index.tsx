@@ -32,7 +32,7 @@ const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(fu
 
   const errorClass = error && styles.error
   const wrapperClassName = clsx(styles['form-group'], wrapperClass)
-  const selectClassName = clsx(styles.select, errorClass, className)
+  const selectClassName = clsx(styles.select, errorClass, hasValue && styles['has-value'], className)
 
   const formControl = (e: any) => {
     const length = e.target.value.length
