@@ -52,8 +52,6 @@ const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(fu
   const formControl = (e: any) => {
     const length = e.target.value.length
 
-    console.log(length)
-
     // extra checks to prevent unnecessary rerenders every keystroke
     if (hasValue && length === 0) {
       setHasValue(false)
