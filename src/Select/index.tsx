@@ -52,6 +52,8 @@ const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(fu
   const formControl = (e: any) => {
     const length = e.target.value.length
 
+    console.log(length)
+
     // extra checks to prevent unnecessary rerenders every keystroke
     if (hasValue && length === 0) {
       setHasValue(false)
@@ -73,7 +75,14 @@ const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(fu
   return (
     <div className={wrapperClassName}>
       <div className={styles['select-group']}>
-        <select name={name} ref={ref} disabled={disabled} className={selectClassName} onChange={formControl} {...rest}>
+        <select
+          name={name}
+          ref={forwardedRef}
+          disabled={disabled}
+          className={selectClassName}
+          onChange={formControl}
+          {...rest}
+        >
           {children}
         </select>
         {label && (
