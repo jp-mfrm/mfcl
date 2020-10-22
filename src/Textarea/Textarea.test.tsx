@@ -73,7 +73,7 @@ describe('Textarea Component', () => {
   })
 
   it('should render the textAreaMessage prop correctly', () => {
-    const { container } = render(<Textarea textAreaMessage="the cake is a lie" />)
+    const { container } = render(<Textarea inputMessage="the cake is a lie" />)
     expect(container.querySelector('.footer')).toBeVisible
   })
 })
