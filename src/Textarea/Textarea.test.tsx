@@ -71,4 +71,9 @@ describe('Textarea Component', () => {
     fireEvent.keyUp(container.querySelector('textarea')!, { keyCode: 48 })
     expect(container.querySelector('textarea')?.style.height).toEqual('inherit')
   })
+
+  it('should render the textAreaMessage prop correctly', () => {
+    const { container } = render(<Textarea textAreaMessage="the cake is a lie" />)
+    expect(container.querySelector('.footer')).toBeVisible
+  })
 })
