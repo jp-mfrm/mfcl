@@ -1,7 +1,7 @@
 @import '../variables';
 
 $select-img: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjkiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyOSAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik04LjQyMjI0IDEwTDE0LjM1ODcgMTVMMjAuMjk1MyAxMEg4LjQyMjI0WiIgZmlsbD0iYmxhY2siLz4KPG1hc2sgaWQ9Im1hc2swIiBtYXNrLXR5cGU9ImFscGhhIiBtYXNrVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4PSI4IiB5PSIxMCIgd2lkdGg9IjEzIiBoZWlnaHQ9IjUiPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTguNDIyMjQgMTBMMTQuMzU4NyAxNUwyMC4yOTUzIDEwSDguNDIyMjRaIiBmaWxsPSJ3aGl0ZSIvPgo8L21hc2s+CjxnIG1hc2s9InVybCgjbWFzazApIj4KPC9nPgo8L3N2Zz4K')
-  no-repeat 95% center;
+  no-repeat 97% center;
 
 .form-group {
   margin-bottom: 30px;
@@ -40,6 +40,14 @@ $select-img: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjkiIGhlaWdodD0iMjQi
   background: $select-img;
   background-clip: padding-box;
   background-color: $transparent;
+
+  @media screen and (max-width: $tablet) {
+    background-position-x: 95%;
+  }
+
+  @media screen and (max-width: $mobile) {
+    background-position-x: 93%;
+  }
 
   &::placeholder {
     color: $gray-4;
