@@ -71,4 +71,14 @@ describe('Textarea Component', () => {
     fireEvent.keyUp(container.querySelector('textarea')!, { keyCode: 48 })
     expect(container.querySelector('textarea')?.style.height).toEqual('inherit')
   })
+
+  it('should render the textAreaMessage prop correctly', () => {
+    const { container } = render(<Textarea inputMessage="the cake is a lie" />)
+    expect(container.querySelector('.footer')).toBeVisible
+  })
+
+  it('should display the label animation properly', () => {
+    const { container } = render(<Textarea label="howdy" value="hi" />)
+    expect(container.querySelector('.textarea')?.classList).toContain('has-value')
+  })
 })

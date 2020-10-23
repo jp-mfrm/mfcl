@@ -15,7 +15,7 @@ interface Props {
   /** Label for textarea field */
   label?: string | ReactNode
   /** Message for input submission  */
-  textAreaMessage?: string
+  inputMessage?: string
   /** Field and label name */
   name?: string
   /** You already know what this is for. Why are you looking up the description? */
@@ -24,17 +24,7 @@ interface Props {
 }
 
 const Textarea: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(function TextField(props, ref) {
-  const {
-    className,
-    fieldStyling,
-    wrapperStyling,
-    error = false,
-    label,
-    name,
-    textAreaMessage,
-    onChange,
-    ...rest
-  } = props
+  const { className, fieldStyling, wrapperStyling, error = false, label, name, inputMessage, onChange, ...rest } = props
   const [hasValue, setHasValue] = useState(false)
   const forwardedRef = useForwardedRef(ref)
   const errorClass = error && styles.error
@@ -106,7 +96,7 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(f
           </label>
         )}
       </div>
-      {textAreaMessage && <p className={clsx(styles.footer, errorClass)}>{textAreaMessage}</p>}
+      {inputMessage && <p className={clsx(styles.footer, errorClass)}>{inputMessage}</p>}
     </div>
   )
 })

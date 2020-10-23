@@ -132,6 +132,16 @@
     color: lighten(#1e1e1e, 70%);
   }
 
+  &.error {
+    outline: 0;
+    border-color: $red;
+
+    &:disabled {
+      border-color: lighten($red, 25%);
+      color: lighten($red, 30%);
+    }
+  }
+
   @media screen and (min-width: $mobile) {
     text-align: left;
   }

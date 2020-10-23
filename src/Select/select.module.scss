@@ -1,37 +1,53 @@
 @import '../variables';
 
-$select-img: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAYAAABxlTA0AAABYWlDQ1BrQ0dDb2xvclNwYWNlRGlzcGxheVAzAAAokWNgYFJJLCjIYWFgYMjNKykKcndSiIiMUmB/yMAOhLwMYgwKicnFBY4BAT5AJQwwGhV8u8bACKIv64LMOiU1tUm1XsDXYqbw1YuvRJsw1aMArpTU4mQg/QeIU5MLikoYGBhTgGzl8pICELsDyBYpAjoKyJ4DYqdD2BtA7CQI+whYTUiQM5B9A8hWSM5IBJrB+API1klCEk9HYkPtBQFul8zigpzESoUAYwKuJQOUpFaUgGjn/ILKosz0jBIFR2AopSp45iXr6SgYGRiaMzCAwhyi+nMgOCwZxc4gxJrvMzDY7v////9uhJjXfgaGjUCdXDsRYhoWDAyC3AwMJ3YWJBYlgoWYgZgpLY2B4dNyBgbeSAYG4QtAPdHFacZGYHlGHicGBtZ7//9/VmNgYJ/MwPB3wv//vxf9//93MVDzHQaGA3kAFSFl7jXH0fsAAAGKSURBVHgB7dpNagJBEAbQGmLOkRzBTcClR/FoHsWlkI1HMOdIglGJMcT8ODqEr+H1Zpqeoah69KK6mSqDAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIEDgKNAdp+3MxpPJfb3UvEY1Wy2X6+TMmwPe4z7XYlObu666p7qtaTJyU8CfcQ+7Nh25GeDvcFtAbgL4N9x05Hjgc3CTkaOB++CmIscCX4KbiBwJfA1uGnIc8BC4ScijQzIxz9eaVlfzbX87TEq7eLU99RkECBAgQIAAgaYEBuqFhqt5/DCZ1abuB4vY1Xr1uJwPFq9noLw++KYW9X6h3rOWk8/3d8WjfR988u6/FuJ28K7wIU5zKRfxkcDXIqfg7uqIBb4UOQk3HrgvchpuE8DnIifiNgP8F3IqblPAPyEn4zYH/BU5HbdJ4A/kRn6d2uVrECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIHATeALkJtJwbn414AAAAAElFTkSuQmCC')
-  no-repeat 100% 50%;
+$select-img: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjkiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyOSAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik04LjQyMjI0IDEwTDE0LjM1ODcgMTVMMjAuMjk1MyAxMEg4LjQyMjI0WiIgZmlsbD0iYmxhY2siLz4KPG1hc2sgaWQ9Im1hc2swIiBtYXNrLXR5cGU9ImFscGhhIiBtYXNrVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4PSI4IiB5PSIxMCIgd2lkdGg9IjEzIiBoZWlnaHQ9IjUiPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTguNDIyMjQgMTBMMTQuMzU4NyAxNUwyMC4yOTUzIDEwSDguNDIyMjRaIiBmaWxsPSJ3aGl0ZSIvPgo8L21hc2s+CjxnIG1hc2s9InVybCgjbWFzazApIj4KPC9nPgo8L3N2Zz4K')
+  no-repeat 97% center;
 
 .form-group {
   margin-bottom: 30px;
   position: relative;
 }
 
-.form-group select {
-  min-width: 150px;
+.select-group {
+  display: flex;
+  flex-direction: column;
+  font-family: $r-regular;
+  position: relative;
+  width: 100%;
 }
 
-.form-control {
+.footer {
+  text-align: center;
+  font-size: 14px;
+}
+
+.select {
+  text-align: start;
+  border-radius: 25px;
+  border: solid 1px #939393;
+  padding: 16px 34px;
+  font-family: $r-regular;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+  color: #1e1e1e;
+  width: 100%;
   -moz-appearance: none !important;
   -webkit-appearance: none !important;
   background: $select-img;
   background-clip: padding-box;
   background-color: $transparent;
-  border: 2px solid $gray-3;
-  border-radius: 12px;
-  box-shadow: inset 0 2px 0 0 rgba(84, 86, 88, 0.06);
-  box-sizing: border-box;
-  color: $gray-11;
-  cursor: pointer;
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.5;
-  padding: 0.375rem 1.35rem 0.375rem 0.75rem;
-  text-indent: 3px;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  width: 100%;
+
+  @media screen and (max-width: $tablet) {
+    background-position-x: 95%;
+  }
+
+  @media screen and (max-width: $mobile) {
+    background-position-x: 93%;
+  }
 
   &::placeholder {
     color: $gray-4;
@@ -39,44 +55,122 @@ $select-img: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAYAAABx
     opacity: 1;
   }
 
+  &:focus {
+    border-width: 1px;
+    border-color: lighten($black, 30%);
+    outline: none;
+    transition: all 0.2s ease-out;
+  }
+
+  &:focus + .label,
+  &.has-value + .label {
+    background: $white;
+    top: -8px;
+    left: 33px;
+    font-size: 12px;
+    line-height: 16px;
+    padding-left: 2px;
+    padding-right: 4px;
+  }
+
   &:disabled,
   &[readonly] {
-    background-color: $white;
+    border: solid 1px $gray-3;
+    color: lighten(#1e1e1e, 70%);
     cursor: not-allowed;
     // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
     opacity: 0.5;
   }
 
-  // sizes
+  &.error {
+    outline: 0;
+    border-color: $red;
+
+    &:disabled {
+      border-color: lighten($red, 25%);
+      color: lighten($red, 30%);
+    }
+  }
+
   &.sm {
-    background-size: 30px;
-    font-size: 14px;
-    height: 30px;
-    padding: 0.25rem 1.25rem 0.25rem 0.5rem;
+    padding: 8px 20px;
   }
 
   &.md {
-    background-size: 34px;
-    height: 40px;
+    padding: 12px 25px;
   }
 
-  &.lg {
-    background-size: 44px;
-    height: 50px;
-    padding: 0px 20px 0px 15px;
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-transition: 'color 9999s ease-out, background-color 9999s ease-out';
+    transition: 'color 9999s ease-out, background-color 9999s ease-out';
+    -webkit-transition-delay: 9999s;
+    transition-delay: 9999s;
+  }
+
+  &:-webkit-autofill::first-line {
+    font-size: 16px;
+    line-height: 1.25;
+    font-family: $r-regular;
+  }
+
+  &:-webkit-autofill + .label,
+  &:-webkit-autofill:hover + .label,
+  &:-webkit-autofill:focus + .label,
+  &:-webkit-autofill:active + .label {
+    background: $white;
+    top: -8px;
+    left: 33px;
+    font-size: 12px;
+    line-height: 16px;
+    padding-left: 2px;
+    padding-right: 4px;
   }
 }
 
 .label {
-  border-bottom: solid 1px $gray-5;
-  display: inline-block;
-  font-size: 12px;
-  line-height: normal;
-  margin-bottom: 15px;
-  padding: 6px 0px;
-  width: 100%;
+  position: absolute;
+  top: 18px;
+  left: 30px;
+  font-size: 16px;
+  background: transparent;
+  color: #5b5b5b;
+  transition: all 0.2s ease-out;
+  pointer-events: none;
+
+  &.sm {
+    top: 10px;
+  }
+
+  &.md {
+    top: 14px;
+  }
+
+  &.disabled {
+    color: lighten(#1e1e1e, 70%);
+  }
+
+  &.error {
+    outline: 0;
+    border-color: $red;
+
+    &:disabled {
+      border-color: lighten($red, 25%);
+      color: lighten($red, 30%);
+    }
+  }
 
   @media screen and (min-width: $mobile) {
     text-align: left;
+  }
+}
+
+.error {
+  color: $red !important;
+
+  &.disabled {
+    color: lighten($red, 30%) !important;
   }
 }
