@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { ElementType, FunctionComponent, ReactNode } from 'react'
 import clsx from 'clsx'
 import Loading from '../Loading'
 
@@ -9,6 +9,8 @@ export interface Props {
   /** Different style types */
   btnType?: 'primary' | 'link' | 'secondary' | 'tertiary'
   children?: ReactNode
+  /** Overrides wrapper DOM element */
+  component?: ElementType
   /** Overrides styles */
   className?: string
   /** Link to leave page. Turns the button into an "a" tag. */
@@ -20,7 +22,7 @@ export interface Props {
   /** Size of button */
   size?: 'lg' | 'md' | 'sm'
   /** The default type to be applied to the button */
-  type?: 'button' | 'submit' | 'reset'
+  type?: 'button' | 'submit' | 'reset' | ''
   [x: string]: unknown // ...rest property
 }
 
@@ -35,6 +37,7 @@ const Button: FunctionComponent<Props> = ({
   loadingColor = '#fff',
   size = 'lg',
   type = 'button',
+  component: Component = 'button',
   ...rest
 }) => {
   const load = loading ? styles.loading : ''
@@ -55,18 +58,10 @@ const Button: FunctionComponent<Props> = ({
     )
   }
 
-  if (btnType === 'link') {
-    return (
-      <button type={type} className={btnClassName} {...rest}>
-        {children}
-      </button>
-    )
-  }
-
   return (
-    <button type={type} className={btnClassName} {...rest}>
+    <Component type={type} className={btnClassName} {...rest}>
       {buttonChildren}
-    </button>
+    </Component>
   )
 }
 
