@@ -7,4 +7,13 @@
   font-size: 30px;
   font-weight: 200;
   padding: 0 5px;
+
+  &:focus {
+    box-shadow: 0 0 0 2px $red;
+    border-radius: 50px;
+    outline: 0;
+    padding: 2px;
+    margin-top: -2px;
+    margin-right: -2px;
+  }
 }

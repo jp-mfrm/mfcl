@@ -63,9 +63,8 @@ $drawer-width: 315px;
   align-items: center;
   background-color: $white;
   display: flex;
-  height: 40px;
   justify-content: flex-end;
-  padding: 10px;
+  padding: 20px 10px 20px;
 }
 
 .drawer-body {
@@ -77,6 +76,14 @@ $drawer-width: 315px;
 
 .close {
   @include closeX();
+  padding: 0px;
+
+  &-icon-wrapper {
+    display: flex;
+    padding: 10px;
+    border-radius: 50px;
+    border: 1px solid $gray-6;
+  }
 }
 
 .drawer-backdrop {
