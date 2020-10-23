@@ -7,6 +7,7 @@ import isClient from '../utils/isClient'
 import trapFocus from '../utils/trapFocus'
 import styles from './drawer.module.scss'
 import Portal from '../Portal'
+import Close from '../Icons/Close'
 
 export interface Props {
   /** Show a backdrop */
@@ -185,7 +186,9 @@ const Drawer: React.FunctionComponent<Props> = ({
                     aria-label="Close Drawer"
                     ref={closeBtnRef}
                   >
-                    <span aria-hidden="true">&times;</span>
+                    <span className={styles['close-icon-wrapper']} aria-hidden="true">
+                      <Close width="10" height="10" stroke="#2D2926" strokeWidth="2" />
+                    </span>
                   </div>
                 )}
               </div>
