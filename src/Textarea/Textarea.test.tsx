@@ -76,4 +76,9 @@ describe('Textarea Component', () => {
     const { container } = render(<Textarea inputMessage="the cake is a lie" />)
     expect(container.querySelector('.footer')).toBeVisible
   })
+
+  it('should display the label animation properly', () => {
+    const { container } = render(<Textarea label="howdy" value="hi" />)
+    expect(container.querySelector('.textarea')?.classList).toContain('has-value')
+  })
 })
