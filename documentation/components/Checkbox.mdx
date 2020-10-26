@@ -40,3 +40,18 @@ import Checkbox from 'mfcl/Checkbox'
 <Playground>
   <Checkbox backgroundColor="red" label="Red Background" labelPlacement="right" />
 </Playground>
+
+## ADA Checkbox Grouping
+
+Wrap "fieldset" around each grouping of checkboxes for ADA.
+
+<Playground>
+  <fieldset>
+    <legend>Pick two</legend>
+    <div className="checkbox-wrapper">
+      <Checkbox label="Option 1" labelPlacement="right" />
+      <Checkbox label="Option 2" labelPlacement="right" />
+      <Checkbox label="Option 3" labelPlacement="right" />
+    </div>
+  </fieldset>
+</Playground>
