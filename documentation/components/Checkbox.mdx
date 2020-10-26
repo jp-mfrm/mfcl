@@ -5,6 +5,7 @@ route: /components-checkbox
 ---
 
 import { Playground, Props } from 'docz'
+import { Row } from './helpers'
 import { Checkbox } from '../../src'
 
 # Checkbox
@@ -20,5 +21,37 @@ import Checkbox from 'mfcl/Checkbox'
 ## Basic usage
 
 <Playground>
-  <Checkbox title="Checkbox" />
+  <Checkbox label="Checkbox" />
+</Playground>
+
+## Label Placement
+
+<Playground>
+  <Row>
+    <Checkbox labelPlacement="top" label="Top label" />
+    <Checkbox labelPlacement="left" label="Left label" />
+    <Checkbox labelPlacement="bottom" label="Bottom label" />
+    <Checkbox labelPlacement="right" label="Right label" />
+  </Row>
+</Playground>
+
+## Background Color
+
+<Playground>
+  <Checkbox backgroundColor="red" label="Red Background" labelPlacement="right" />
+</Playground>
+
+## ADA Checkbox Grouping
+
+Wrap "fieldset" around each grouping of checkboxes for ADA.
+
+<Playground>
+  <fieldset>
+    <legend>Pick two</legend>
+    <div className="checkbox-wrapper">
+      <Checkbox label="Option 1" labelPlacement="right" />
+      <Checkbox label="Option 2" labelPlacement="right" />
+      <Checkbox label="Option 3" labelPlacement="right" />
+    </div>
+  </fieldset>
 </Playground>

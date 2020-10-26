@@ -1,41 +1,70 @@
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-import React from 'react'
+import React, { FunctionComponent, forwardRef, useEffect, ChangeEvent } from 'react'
 import clsx from 'clsx'
 import styles from './checkbox.module.scss'
+import useControlled from '../utils/useControlled'
 
 export interface Props {
-  /** This is the label, htmlFor, aria-label, and name of the checkbox */
-  title: string
+  /** checked or not */
+  checked?: boolean
+  /** default value for uncontrolled */
+  defaultChecked?: boolean
+  /** This is the label and aria-label of the checkbox */
+  label?: string
+  /** Changes the background color of checkbox */
+  backgroundColor?: 'black' | 'red'
+  /** Which side of the checkbox the label is placed */
+  labelPlacement?: 'top' | 'bottom' | 'left' | 'right'
   /** callback for when the checkbox is clicked */
-  handleClick?: () => void
-  /** Overrides wrapper styles */
+  onChange?: (e: ChangeEvent<HTMLInputElement>, checked: boolean) => void
+  /** Overrides input styles */
   className?: string
+  /** Overrides wrapper styles */
+  wrapperClass?: string
+  /** Overrides label styles */
+  labelClass?: string
   [rest: string]: unknown
 }
 
-const Checkbox: React.FunctionComponent<Props> = ({ className, handleClick, title, ...rest }) => {
+const Checkbox: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(function CheckboxField(props, ref) {
+  const {
+    className,
+    backgroundColor = 'black',
+    defaultChecked,
+    onChange,
+    label,
+    labelPlacement = 'bottom',
+    labelClass,
+    checked,
+    wrapperClass,
+    ...rest
+  } = props
+  const [valueDerived, setValueState] = useControlled({
+    controlled: checked,
+    defaultValue: Boolean(defaultChecked)
+  })
+
+  const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
+    const newChecked = event.target.checked
+    setValueState(newChecked)
+
+    if (onChange) {
+      onChange(event, newChecked)
+    }
+  }
+
   return (
-    <div
-      onClick={handleClick}
-      onKeyPress={handleClick}
-      tabIndex={0}
-      className={clsx(styles['checkbox-container'], className)}
-    >
+    <label className={clsx(styles['checkbox-container'], styles[labelPlacement], wrapperClass)}>
       <input
         type="checkbox"
-        onChange={handleClick}
-        className={styles.checkbox}
-        name={title}
-        tabIndex={-1}
-        aria-label={title}
+        onChange={handleCheck}
+        className={clsx(styles.checkbox, styles[backgroundColor], className)}
+        ref={ref}
+        checked={valueDerived}
         {...rest}
       />
-      <label htmlFor={title} aria-hidden="true">
-        {title}
-      </label>
-    </div>
+      {label && <span className={clsx(styles.label, labelClass)}>{label}</span>}
+    </label>
   )
-}
+})
 
 export default Checkbox
