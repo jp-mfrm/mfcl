@@ -1,5 +1,5 @@
-import React, { CSSProperties, forwardRef, useEffect, FunctionComponent, ReactNode, useState } from 'react'
-import useForwardedRef from '../utils/useForwardedRef'
+import React, { CSSProperties, forwardRef, FunctionComponent, ReactNode } from 'react'
+import useForwardRefHasValue from '../utils/useForwardRefHasValue'
 import clsx from 'clsx'
 import styles from './textarea.module.scss'
 
@@ -23,10 +23,9 @@ interface Props {
   [rest: string]: unknown // ...rest property
 }
 
-const Textarea: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(function TextField(props, ref) {
+const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props>(function TextField(props, ref) {
   const { className, fieldStyling, wrapperStyling, error = false, label, name, inputMessage, onChange, ...rest } = props
-  const [hasValue, setHasValue] = useState(false)
-  const forwardedRef = useForwardedRef(ref)
+  const { hasValue, setHasValue, forwardedRef } = useForwardRefHasValue<HTMLTextAreaElement>(ref)
   const errorClass = error && styles.error
 
   const handleKeyUp = (e: any) => {
@@ -35,7 +34,7 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(f
   }
 
   const handleKeyDown = (e: any) => {
-    var scrollTop =
+    const scrollTop =
       window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop
 
     // Reset field height
@@ -70,12 +69,6 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(f
       onChange(e)
     }
   }
-
-  useEffect(() => {
-    if ((forwardedRef as React.RefObject<HTMLInputElement>)?.current?.value) {
-      setHasValue(true)
-    }
-  }, [])
 
   return (
     <div className={styles['textarea-wrapper']} style={wrapperStyling}>

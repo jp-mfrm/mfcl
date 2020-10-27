@@ -1,5 +1,5 @@
-import React, { forwardRef, FunctionComponent, ReactNode, useState, useEffect } from 'react'
-import useForwardedRef from '../utils/useForwardedRef'
+import React, { forwardRef, FunctionComponent, ReactNode } from 'react'
+import useForwardRefHasValue from '../utils/useForwardRefHasValue'
 import clsx from 'clsx'
 import styles from './input.module.scss'
 
@@ -41,9 +41,8 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
     rightSide,
     ...rest
   } = props
-  const [hasValue, setHasValue] = useState(false)
+  const { hasValue, setHasValue, forwardedRef } = useForwardRefHasValue<HTMLInputElement>(ref)
   const errorClass = error && styles.error
-  const forwardedRef = useForwardedRef(ref)
 
   const formControl = (e: any) => {
     const length = e.target.value.length
@@ -59,12 +58,6 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
       onChange(e)
     }
   }
-
-  useEffect(() => {
-    if ((forwardedRef as React.RefObject<HTMLInputElement>)?.current?.value) {
-      setHasValue(true)
-    }
-  }, [])
 
   return (
     <div className={clsx(styles['input-wrapper'], wrapperClass)}>

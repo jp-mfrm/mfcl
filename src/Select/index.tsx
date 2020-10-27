@@ -1,5 +1,5 @@
-import React, { FunctionComponent, ReactNode, useState, useEffect, forwardRef } from 'react'
-import useForwardedRef from '../utils/useForwardedRef'
+import React, { FunctionComponent, ReactNode, forwardRef } from 'react'
+import useForwardRefHasValue from '../utils/useForwardRefHasValue'
 import clsx from 'clsx'
 
 import styles from './select.module.scss'
@@ -43,8 +43,7 @@ const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(fu
   },
   ref
 ) {
-  const [hasValue, setHasValue] = useState(false)
-  const forwardedRef = useForwardedRef(ref)
+  const { hasValue, setHasValue, forwardedRef } = useForwardRefHasValue<HTMLSelectElement>(ref)
   const errorClass = error && styles.error
   const wrapperClassName = clsx(styles['form-group'], wrapperClass)
   const selectClassName = clsx(styles.select, errorClass, hasValue && styles['has-value'], styles[size], className)
@@ -63,12 +62,6 @@ const Select: FunctionComponent<Props> = forwardRef<HTMLSelectElement, Props>(fu
       onChange(e)
     }
   }
-
-  useEffect(() => {
-    if ((forwardedRef as React.RefObject<HTMLSelectElement>)?.current?.value) {
-      setHasValue(true)
-    }
-  }, [])
 
   return (
     <div className={wrapperClassName}>

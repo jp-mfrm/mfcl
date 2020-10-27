@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
-const useForwardedRef = (ref: any) => {
-  const innerRef = React.useRef(null)
+const useForwardedRef = <T>(ref: any) => {
+  const innerRef = React.useRef<T>(null)
   useEffect(() => {
     if (!ref) return
     if (typeof ref === 'function') {

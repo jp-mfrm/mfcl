@@ -14,6 +14,8 @@ export interface Props {
   backgroundColor?: 'black' | 'red'
   /** Which side of the checkbox the label is placed */
   labelPlacement?: 'top' | 'bottom' | 'left' | 'right'
+  /** Which side of the checkbox the label is placed */
+  size?: 'sm' | 'md' | 'lg'
   /** callback for when the checkbox is clicked */
   onChange?: (e: ChangeEvent<HTMLInputElement>, checked: boolean) => void
   /** Overrides input styles */
@@ -32,9 +34,10 @@ const Checkbox: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(f
     defaultChecked,
     onChange,
     label,
-    labelPlacement = 'bottom',
+    labelPlacement = 'right',
     labelClass,
     checked,
+    size = 'lg',
     wrapperClass,
     ...rest
   } = props
@@ -57,7 +60,7 @@ const Checkbox: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(f
       <input
         type="checkbox"
         onChange={handleCheck}
-        className={clsx(styles.checkbox, styles[backgroundColor], className)}
+        className={clsx(styles.checkbox, styles[backgroundColor], styles[size], className)}
         ref={ref}
         checked={valueDerived}
         {...rest}
