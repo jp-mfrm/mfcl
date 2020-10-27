@@ -41,7 +41,7 @@
 
   &:first-child {
     &::after {
-      display: none;
+      width: 50%;
     }
   }
 
@@ -56,6 +56,12 @@
     &::after {
       right: 50%;
       width: 100%;
+    }
+
+    &:first-child {
+      &::after {
+        display: none;
+      }
     }
 
     &:last-child {
