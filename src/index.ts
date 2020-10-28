@@ -15,7 +15,6 @@ import Grid from './Grid'
 import GridItem from './GridItem'
 import GridRow from './GridRow'
 import Input from './Input'
-import LazyImage from './LazyImage'
 import Loading from './Loading'
 import Modal from './Modal'
 import NumberIncrementer from './NumberIncrementer'
@@ -33,7 +32,7 @@ import Textarea from './Textarea'
 import Tooltip from './Tooltip'
 import Pagination from './Pagination'
 import Typography from './Typography'
-import Slider from './Slider';
+import Slider from './Slider'
 
 export {
   Slider,
@@ -54,7 +53,6 @@ export {
   GridItem,
   GridRow,
   Input,
-  LazyImage,
   Loading,
   Modal,
   NumberIncrementer,
