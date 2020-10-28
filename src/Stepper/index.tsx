@@ -6,6 +6,8 @@ import styles from './stepper.module.scss'
 interface Props {
   /** Index that controls the current active step */
   activeStep: number
+  /** Disables all the steps */
+  disabled?: boolean
   /**
    * An array of objects that can have color, icon, label, className
    * If you don't want labels, do an array of empty objects [{}, {}, {}]
@@ -27,6 +29,7 @@ interface Props {
 
 const Stepper: FunctionComponent<Props> = ({
   activeStep,
+  disabled = false,
   className,
   steps,
   selectIndex,
@@ -62,12 +65,12 @@ const Stepper: FunctionComponent<Props> = ({
   return (
     <ul className={clsx(styles['stepper-wrapper'], vertical && styles.vertical, className)} {...rest}>
       {steps.map((step: any, index) => {
-        const currentOrPassed = activeStep >= index
-        const theNextActive = activeStep + 1 === index
+        const currentOrPassed = !disabled && activeStep >= index
+        const theNextActive = !disabled && activeStep + 1 === index
         return (
           <Step
             key={index}
-            activeStep={activeStep === index}
+            activeStep={!disabled && activeStep === index}
             currentOrPassed={currentOrPassed}
             handleKeyDown={handleKeyDown}
             index={index}
