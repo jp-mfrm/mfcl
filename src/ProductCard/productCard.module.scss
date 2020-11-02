@@ -23,17 +23,14 @@
   font-size: 12px;
   line-height: 10px;
   text-transform: uppercase;
-  padding: 5px 10px;  
+  padding: 5px 10px;
   margin: 15px;
 }
 
 .price-container {
   display: flex;
-  flex-direction: column;  
-
-  @media screen and (min-width: $tablet) {
-    padding: 0 10px;
-  }
+  flex-direction: column;
+  padding: 0 15px;
 }
 
 .brand-logo {
@@ -77,11 +74,11 @@
 }
 
 .details-container {
-  padding: 0 10px;
+  padding: 0 15px;
 
   &-title {
     font-size: 14px;
-    margin: 0 0 15px;
+    margin: 0;
 
     @media screen and (min-width: $tablet) {
       font-size: 18px;
@@ -90,7 +87,7 @@
 }
 
 .brand-logo {
-  padding: 0
+  padding: 0;
 }
 
 .reviews {
@@ -112,7 +109,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  // margin: 15px 0;
 }
 
 .average-rating {
@@ -125,5 +121,4 @@
 
 .size {
   display: flex;
-
 }
