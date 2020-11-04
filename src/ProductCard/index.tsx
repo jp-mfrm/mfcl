@@ -32,6 +32,7 @@ interface Props {
   productPage?: string
   deliveryDate?: string
   children?: ReactNode
+  storeLocationBtnText?: string
   [rest: string]: unknown // ...rest property
 }
 
@@ -51,6 +52,7 @@ const ProductCard: FunctionComponent<Props> = ({
   matchPercentage,
   storeLocation = '',
   productPage,
+  storeLocationBtnText = '',
   deliveryDate,
   ...rest
 }) => {
@@ -95,6 +97,8 @@ const ProductCard: FunctionComponent<Props> = ({
     </div>
   )
 
+  let storeBtnText = storeLocation ? 'Available to try in' : 'Online Only'
+
   return (
     <div className={styles['product-card-container']} {...rest}>
       <div className={styles.contentCol}>
@@ -106,11 +110,15 @@ const ProductCard: FunctionComponent<Props> = ({
         {productDetails}
       </div>
       {priceInfo}
-      <p>Special Financing for up to 12 months*</p>
-      {deliveryDate && <p>Delivery as soon as: {deliveryDate}</p>}
+      <p className={styles.financing}>Special Financing for up to 12 months*</p>
+      {deliveryDate && (
+        <p className={styles.delivery}>
+          Delivery as soon as: <span className={styles['delivery-date']}>{deliveryDate}</span>
+        </p>
+      )}
       <div className={styles.btnContainer}>
         <Button>Shop Here</Button>
-        <StoreLocationButton storeLocation={storeLocation} />
+        <StoreLocationButton btnText={storeBtnText} storeLocation={storeLocation} />
       </div>
       {children}
     </div>

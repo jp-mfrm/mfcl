@@ -41,6 +41,23 @@
   height: 44px;
 }
 
+.financing {
+  margin: 0;
+  font-size: 12px;
+  padding: 0 15px;
+}
+
+.delivery {
+  margin: 15px 0 20px 0;
+  padding: 0 15px;
+  font-size: 14px;
+  font-weight: 500;
+
+  &-date {
+    font-weight: initial;
+  }
+}
+
 .brand-logo {
   padding: 0;
 }
