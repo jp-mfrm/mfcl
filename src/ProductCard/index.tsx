@@ -3,7 +3,6 @@ import Rating from '../Rating'
 import Price from '../Price'
 import Button from '../Button'
 import StoreLocationButton from './storeLocationButton'
-import clsx from 'clsx'
 
 import styles from './productCard.module.scss'
 
@@ -31,6 +30,7 @@ interface Props {
   storeLocation?: string
   productPage?: string
   deliveryDate?: string
+  detailsLink?: string
   children?: ReactNode
   storeLocationBtnText?: string
   [rest: string]: unknown // ...rest property
@@ -54,6 +54,7 @@ const ProductCard: FunctionComponent<Props> = ({
   productPage,
   storeLocationBtnText = '',
   deliveryDate,
+  detailsLink,
   ...rest
 }) => {
   const productMatch = matchPercentage && <span className={styles['match-banner']}>{matchPercentage}% Match</span>
@@ -72,6 +73,12 @@ const ProductCard: FunctionComponent<Props> = ({
         <small data-testid="review-count">({reviews})</small>
       </span>
     </div>
+  )
+
+  const deliveryDetails = deliveryDate && (
+    <p className={styles.delivery}>
+      Delivery as soon as: <span className={styles['delivery-date']}>{deliveryDate}</span>
+    </p>
   )
 
   const priceInfo = (
@@ -97,8 +104,6 @@ const ProductCard: FunctionComponent<Props> = ({
     </div>
   )
 
-  let storeBtnText = storeLocation ? 'Available to try in' : 'Online Only'
-
   return (
     <div className={styles['product-card-container']} {...rest}>
       <div className={styles.contentCol}>
@@ -110,15 +115,13 @@ const ProductCard: FunctionComponent<Props> = ({
         {productDetails}
       </div>
       {priceInfo}
-      <p className={styles.financing}>Special Financing for up to 12 months*</p>
-      {deliveryDate && (
-        <p className={styles.delivery}>
-          Delivery as soon as: <span className={styles['delivery-date']}>{deliveryDate}</span>
-        </p>
-      )}
+      <p className={styles.financing}>
+        Special Financing for up to 12 months* <a href={detailsLink}>Details</a>
+      </p>
+      {deliveryDetails}
       <div className={styles.btnContainer}>
         <Button>Shop Here</Button>
-        <StoreLocationButton btnText={storeBtnText} storeLocation={storeLocation} />
+        <StoreLocationButton storeLocation={storeLocation} />
       </div>
       {children}
     </div>

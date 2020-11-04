@@ -36,15 +36,33 @@
   border-radius: 25px;
   border: solid 1px $gray-4;
   margin-top: 15px;
+  margin-bottom: 20px;
   background-color: $white;
   cursor: pointer;
   height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &-filling {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.location {
+  font-weight: bold;
+  margin-left: 4px;
 }
 
 .financing {
   margin: 0;
   font-size: 12px;
   padding: 0 15px;
+
+  > a {
+    color: #2d2926;
+  }
 }
 
 .delivery {
