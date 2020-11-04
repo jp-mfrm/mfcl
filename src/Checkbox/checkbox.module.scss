@@ -6,7 +6,18 @@
   align-items: center;
   padding-bottom: 20px;
   cursor: pointer;
+  &.align-center {
+    justify-content: center;
+  }
 
+  &.align-left {
+    justify-content: flex-start;
+  }
+
+  &.align-right {
+    justify-content: flex-end;
+  }
+  
   &.top {
     flex-direction: column-reverse;
 
@@ -17,7 +28,6 @@
 
   &.left {
     flex-direction: row-reverse;
-    justify-content: center;
 
     & > .label {
       margin-right: 10px;
@@ -26,7 +36,6 @@
 
   &.right {
     flex-direction: row;
-    justify-content: center;
 
     & > .label {
       margin-left: 10px;
