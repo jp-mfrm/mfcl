@@ -23,6 +23,8 @@ export type AccordionItemProps = {
   setIndex?: Function
   /** Order number of item in array of items */
   index?: number
+  /** class to pass to the accordion item wrapper */
+  className?: string
   titleInlineStyle?: CSSProperties
   centerInlineStyle?: CSSProperties
   /** Option to have accordionItem already open */
@@ -43,6 +45,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   id = '',
   index,
   focused,
+  className,
   setFocus = () => {},
   setIndex = () => {},
   hidePreview = false,
@@ -108,7 +111,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   }
 
   return (
-    <div className={clsx(styles['accordionItem'], open && styles['open'])}>
+    <div className={clsx(styles['accordionItem'], open && styles['open'], className)}>
       <div
         className={lineStyles}
         aria-expanded={open}
