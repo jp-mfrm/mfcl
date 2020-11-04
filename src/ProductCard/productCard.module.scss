@@ -2,16 +2,12 @@
 
 .product-card-container {
   border: 1px solid #f1f1f2;
-  width: 255px;
+  width: 380px;
   margin: auto;
   border-radius: 2px;
 
-  @media screen and (max-width: 320px) {
-    width: 218px;
-  }
-
-  @media screen and (min-width: 285px) {
-    width: 285px;
+  @media screen and (max-width: $tablet) {
+    width: 315px;
   }
 }
 
@@ -29,8 +25,20 @@
 
 .price-container {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   padding: 0 15px;
+
+  @media screen and (max-width: $mobile) {
+  }
+}
+
+.store-location-btn {
+  border-radius: 25px;
+  border: solid 1px $gray-4;
+  margin-top: 15px;
+  background-color: $white;
+  cursor: pointer;
+  height: 44px;
 }
 
 .brand-logo {
@@ -63,6 +71,15 @@
 
   @media screen and (min-width: $mobile) {
     flex-direction: column;
+  }
+}
+
+.btnContainer {
+  width: 100%;
+  padding: 0 15px;
+
+  button {
+    width: 100%;
   }
 }
 

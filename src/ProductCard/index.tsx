@@ -1,6 +1,9 @@
 import React, { FunctionComponent, ReactNode } from 'react'
 import Rating from '../Rating'
 import Price from '../Price'
+import Button from '../Button'
+import StoreLocationButton from './storeLocationButton'
+import clsx from 'clsx'
 
 import styles from './productCard.module.scss'
 
@@ -25,6 +28,9 @@ interface Props {
   matchPercentage?: number
   /** discounted price or range of discounted prices if any */
   discountPrice?: number[]
+  storeLocation?: string
+  productPage?: string
+  deliveryDate?: string
   children?: ReactNode
   [rest: string]: unknown // ...rest property
 }
@@ -43,6 +49,9 @@ const ProductCard: FunctionComponent<Props> = ({
   reviews,
   children,
   matchPercentage,
+  storeLocation = '',
+  productPage,
+  deliveryDate,
   ...rest
 }) => {
   const productMatch = matchPercentage && <span className={styles['match-banner']}>{matchPercentage}% Match</span>
@@ -97,6 +106,12 @@ const ProductCard: FunctionComponent<Props> = ({
         {productDetails}
       </div>
       {priceInfo}
+      <p>Special Financing for up to 12 months*</p>
+      {deliveryDate && <p>Delivery as soon as: {deliveryDate}</p>}
+      <div className={styles.btnContainer}>
+        <Button>Shop Here</Button>
+        <StoreLocationButton storeLocation={storeLocation} />
+      </div>
       {children}
     </div>
   )
