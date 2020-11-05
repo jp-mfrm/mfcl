@@ -29,12 +29,8 @@
   padding: 0 15px;
 
   @media screen and (max-width: $mobile) {
+    padding: 0 10px;
   }
-}
-
-.location {
-  font-weight: bold;
-  margin-left: 4px;
 }
 
 .brand-logo {
@@ -93,16 +89,17 @@
 .details-container {
   padding: 0 15px;
 
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $mobile) {
     padding: 0 10px;
   }
 
   &-title {
-    font-size: 14px;
-    margin: -15px 0;
+    font-size: 18px;
+    margin-bottom: 10px;
 
-    @media screen and (min-width: $tablet) {
-      font-size: 18px;
+    @media screen and (max-width: $mobile) {
+      font-size: 14px;
+      margin: -15px 0;
     }
   }
 }
@@ -112,11 +109,18 @@
 
   @media screen and (max-width: $mobile) {
     padding: 0 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
   }
 
   &-financing {
     margin: 0;
     font-size: 12px;
+
+    @media screen and (max-width: $mobile) {
+      width: 142px;
+    }
 
     > a {
       color: #2d2926;
@@ -128,8 +132,18 @@
     font-size: 14px;
     font-weight: 500;
 
+    @media screen and (max-width: $mobile) {
+      margin: 0;
+      width: 129px;
+      font-weight: initial;
+    }
+
     &-date {
       font-weight: initial;
+
+      @media screen and (max-width: $mobile) {
+        font-weight: 500;
+      }
     }
   }
 }
@@ -197,6 +211,10 @@
   justify-content: center;
   font-weight: bold;
 
+  @media screen and (min-width: $mobile) {
+    display: none;
+  }
+
   &.align {
     justify-content: space-between;
     font-weight: initial;
@@ -205,11 +223,41 @@
   &-filling {
     display: flex;
     align-items: center;
+
+    @media screen and (max-width: $mobile) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 
   &-mobile {
+    display: flex;
+    align-items: space-between;
+    width: 136px;
+    width: 100%;
+    border: none;
+    font-size: 12px;
+    padding: 0;
+
+    @media screen and (min-width: $mobile) {
+      display: none;
+    }
+  }
+
+  .mapMarker {
+    margin: 0 5px;
+
     @media screen and (max-width: $mobile) {
-      display: block;
+      display: none;
+    }
+  }
+
+  .location {
+    font-weight: bold;
+    margin-left: 4px;
+
+    @media screen and (max-width: $mobile) {
+      margin: 0;
     }
   }
 }

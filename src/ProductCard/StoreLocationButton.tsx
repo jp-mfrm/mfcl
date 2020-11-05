@@ -18,13 +18,18 @@ const StoreLocationButton: FunctionComponent<Props> = ({ storeLocation, classNam
     }
   }
 
-  const marker = storeLocation && <MapMarker style={{ margin: '0 5px' }} />
+  const marker = storeLocation && <MapMarker fillColor="#d63426" className={styles.mapMarker} />
   const arrow = storeLocation && <ChevronRight style={{ transform: 'rotate(90deg)', marginRight: '10px' }} />
-  const btnText = storeLocation ? 'Available to try in' : 'Online Only'
+  const btnText = storeLocation ? 'Available to try in-store' : 'Online Only'
 
   return (
     <button
-      className={clsx(styles['store-location-btn'], storeLocation && styles.align, className)}
+      className={clsx(
+        styles['store-location-btn'],
+        styles['store-location-btn-mobile'],
+        storeLocation && styles.align,
+        className
+      )}
       onClick={() => handleClick()}
     >
       <span className={clsx(styles['store-location-btn-filling'])}>

@@ -82,6 +82,7 @@ const ProductCard: FunctionComponent<Props> = ({
     </div>
   )
 
+  //TODO add correct link to Special Financing
   const deliveryDetails = (
     <div className={styles['delivery-details']}>
       {detailsLink && (
@@ -99,7 +100,7 @@ const ProductCard: FunctionComponent<Props> = ({
 
   const priceInfo = (
     <div className={styles['price-container']}>
-      <span className={styles['store-location-btn-mobile']}>
+      <span className={styles.mobileBtnContainer}>
         <StoreLocationButton storeLocation={storeLocation} onClick={storeLocationBtnOnClick} />
       </span>
       <Price
