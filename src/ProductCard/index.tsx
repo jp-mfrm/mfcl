@@ -67,7 +67,14 @@ const ProductCard: FunctionComponent<Props> = ({
 
   const ratings = rating && (
     <div className={styles['rating-row']}>
-      <Rating data-testid="star-rating" name="product-rating" value={rating} readOnly size="sm" />
+      <Rating
+        data-testid="star-rating"
+        name="product-rating"
+        value={rating}
+        className={styles['rating-row-stars']}
+        readOnly
+        size="sm"
+      />
       <span className={styles.reviews}>
         <small className={styles['average-rating']}>{rating}/5</small>{' '}
         <small data-testid="review-count">({reviews})</small>
@@ -76,10 +83,12 @@ const ProductCard: FunctionComponent<Props> = ({
   )
 
   const deliveryDetails = (
-    <div>
-      <p className={styles.financing}>
-        Special Financing for up to 12 months* <a href={detailsLink}>Details</a>
-      </p>
+    <div className={styles['delivery-details']}>
+      {detailsLink && (
+        <p className={styles.financing}>
+          Special Financing for up to 12 months* <a href={detailsLink}>Details</a>
+        </p>
+      )}
       {deliveryDate && (
         <p className={styles.delivery}>
           Delivery as soon as: <span className={styles['delivery-date']}>{deliveryDate}</span>
