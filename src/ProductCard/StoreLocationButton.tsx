@@ -23,8 +23,11 @@ const StoreLocationButton: FunctionComponent<Props> = ({ storeLocation, classNam
   const btnText = storeLocation ? 'Available to try in' : 'Online Only'
 
   return (
-    <button className={clsx(styles['store-location-btn'], className)} onClick={() => handleClick()}>
-      <span className={styles['store-location-btn-filling']}>
+    <button
+      className={clsx(styles['store-location-btn'], storeLocation && styles.align, className)}
+      onClick={() => handleClick()}
+    >
+      <span className={clsx(styles['store-location-btn-filling'])}>
         {marker} {btnText} <span className={styles.location}>{storeLocation}</span>
       </span>{' '}
       {arrow}

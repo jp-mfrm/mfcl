@@ -2,7 +2,7 @@ import React, { FunctionComponent, ReactNode } from 'react'
 import Rating from '../Rating'
 import Price from '../Price'
 import Button from '../Button'
-import StoreLocationButton from './storeLocationButton'
+import StoreLocationButton from './StoreLocationButton'
 
 import styles from './productCard.module.scss'
 
@@ -32,7 +32,7 @@ interface Props {
   deliveryDate?: string
   detailsLink?: string
   children?: ReactNode
-  storeLocationBtnText?: string
+  storeLocationBtnOnClick?: Function
   [rest: string]: unknown // ...rest property
 }
 
@@ -52,9 +52,9 @@ const ProductCard: FunctionComponent<Props> = ({
   matchPercentage,
   storeLocation = '',
   productPage,
-  storeLocationBtnText = '',
   deliveryDate,
   detailsLink,
+  storeLocationBtnOnClick,
   ...rest
 }) => {
   const productMatch = matchPercentage && <span className={styles['match-banner']}>{matchPercentage}% Match</span>
@@ -75,10 +75,17 @@ const ProductCard: FunctionComponent<Props> = ({
     </div>
   )
 
-  const deliveryDetails = deliveryDate && (
-    <p className={styles.delivery}>
-      Delivery as soon as: <span className={styles['delivery-date']}>{deliveryDate}</span>
-    </p>
+  const deliveryDetails = (
+    <div>
+      <p className={styles.financing}>
+        Special Financing for up to 12 months* <a href={detailsLink}>Details</a>
+      </p>
+      {deliveryDate && (
+        <p className={styles.delivery}>
+          Delivery as soon as: <span className={styles['delivery-date']}>{deliveryDate}</span>
+        </p>
+      )}
+    </div>
   )
 
   const priceInfo = (
@@ -115,13 +122,10 @@ const ProductCard: FunctionComponent<Props> = ({
         {productDetails}
       </div>
       {priceInfo}
-      <p className={styles.financing}>
-        Special Financing for up to 12 months* <a href={detailsLink}>Details</a>
-      </p>
       {deliveryDetails}
       <div className={styles.btnContainer}>
         <Button>Shop Here</Button>
-        <StoreLocationButton storeLocation={storeLocation} />
+        <StoreLocationButton storeLocation={storeLocation} onClick={storeLocationBtnOnClick} />
       </div>
       {children}
     </div>

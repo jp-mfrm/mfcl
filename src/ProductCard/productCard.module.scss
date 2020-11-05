@@ -41,8 +41,14 @@
   cursor: pointer;
   height: 44px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  font-weight: bold;
+
+  &.align {
+    justify-content: space-between;
+    font-weight: initial;
+  }
 
   &-filling {
     display: flex;
