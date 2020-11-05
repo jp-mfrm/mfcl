@@ -85,7 +85,7 @@ const ProductCard: FunctionComponent<Props> = ({
   const deliveryDetails = (
     <div className={styles['delivery-details']}>
       {detailsLink && (
-        <p className={styles.financing}>
+        <p className={styles['delivery-details-financing']}>
           Special Financing for up to 12 months* <a href={detailsLink}>Details</a>
         </p>
       )}
@@ -99,6 +99,9 @@ const ProductCard: FunctionComponent<Props> = ({
 
   const priceInfo = (
     <div className={styles['price-container']}>
+      <span className={styles['store-location-btn-mobile']}>
+        <StoreLocationButton storeLocation={storeLocation} onClick={storeLocationBtnOnClick} />
+      </span>
       <Price
         data-testid="price"
         text={pricePrefix}

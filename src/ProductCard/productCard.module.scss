@@ -32,54 +32,9 @@
   }
 }
 
-.store-location-btn {
-  border-radius: 25px;
-  border: solid 1px $gray-4;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  background-color: $white;
-  cursor: pointer;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-
-  &.align {
-    justify-content: space-between;
-    font-weight: initial;
-  }
-
-  &-filling {
-    display: flex;
-    align-items: center;
-  }
-}
-
 .location {
   font-weight: bold;
   margin-left: 4px;
-}
-
-.financing {
-  margin: 0;
-  font-size: 12px;
-  padding: 0 15px;
-
-  > a {
-    color: #2d2926;
-  }
-}
-
-.delivery {
-  margin: 15px 0 20px 0;
-  padding: 0 15px;
-  font-size: 14px;
-  font-weight: 500;
-
-  &-date {
-    font-weight: initial;
-  }
 }
 
 .brand-logo {
@@ -122,6 +77,10 @@
   button {
     width: 100%;
   }
+
+  @media screen and (max-width: $mobile) {
+    display: none;
+  }
 }
 
 .reviewRow {
@@ -134,12 +93,43 @@
 .details-container {
   padding: 0 15px;
 
+  @media screen and (max-width: $tablet) {
+    padding: 0 10px;
+  }
+
   &-title {
     font-size: 14px;
-    margin: 0;
+    margin: -15px 0;
 
     @media screen and (min-width: $tablet) {
       font-size: 18px;
+    }
+  }
+}
+
+.delivery-details {
+  padding: 0 15px;
+
+  @media screen and (max-width: $mobile) {
+    padding: 0 10px;
+  }
+
+  &-financing {
+    margin: 0;
+    font-size: 12px;
+
+    > a {
+      color: #2d2926;
+    }
+  }
+
+  .delivery {
+    margin: 15px 0 20px 0;
+    font-size: 14px;
+    font-weight: 500;
+
+    &-date {
+      font-weight: initial;
     }
   }
 }
@@ -192,4 +182,34 @@
 
 .size {
   display: flex;
+}
+
+.store-location-btn {
+  border-radius: 25px;
+  border: solid 1px $gray-4;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  background-color: $white;
+  cursor: pointer;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+
+  &.align {
+    justify-content: space-between;
+    font-weight: initial;
+  }
+
+  &-filling {
+    display: flex;
+    align-items: center;
+  }
+
+  &-mobile {
+    @media screen and (max-width: $mobile) {
+      display: block;
+    }
+  }
 }
