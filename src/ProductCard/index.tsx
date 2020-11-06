@@ -151,4 +151,4 @@ const ProductCard: FunctionComponent<Props> = ({
   )
 }
 
-export default memo(ProductCard)
+export default ProductCard
