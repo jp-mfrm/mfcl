@@ -109,6 +109,7 @@ const ProductCard: FunctionComponent<Props> = ({
         divider={pricePrefix ? true : false}
         price={price}
         discountPrice={discountPrice && discountPrice}
+        className={styles.price}
       />
     </div>
   )
