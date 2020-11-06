@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { FunctionComponent, memo, ReactNode } from 'react'
 import Rating from '../Rating'
 import Price from '../Price'
 import Button from '../Button'
@@ -30,9 +30,9 @@ interface Props {
   storeLocation?: string
   productPage?: string
   deliveryDate?: string
-  detailsLink?: string
-  children?: ReactNode
+  financeLink?: string
   storeLocationBtnOnClick?: Function
+  children?: ReactNode
   [rest: string]: unknown // ...rest property
 }
 
@@ -48,13 +48,13 @@ const ProductCard: FunctionComponent<Props> = ({
   rating,
   ratingPosition = 'top',
   reviews,
-  children,
   matchPercentage,
   storeLocation = '',
   productPage,
   deliveryDate,
-  detailsLink,
+  financeLink,
   storeLocationBtnOnClick,
+  children,
   ...rest
 }) => {
   const productMatch = matchPercentage && <span className={styles['match-banner']}>{matchPercentage}% Match</span>
@@ -82,12 +82,11 @@ const ProductCard: FunctionComponent<Props> = ({
     </div>
   )
 
-  //TODO add correct link to Special Financing
   const deliveryDetails = (
     <div className={styles['delivery-details']}>
-      {detailsLink && (
+      {financeLink && (
         <p className={styles['delivery-details-financing']}>
-          Special Financing for up to 12 months* <a href={detailsLink}>Details</a>
+          Special Financing for up to 12 months* <a href={financeLink}>Details</a>
         </p>
       )}
       {deliveryDate && (
@@ -120,7 +119,9 @@ const ProductCard: FunctionComponent<Props> = ({
         {branding}
         {ratingPosition === 'top' && ratings}
       </div>
-      <p className={styles['details-container-title']}>{title}</p>
+      <a href={productPage} className={styles.link}>
+        <p className={styles['details-container-title']}>{title}</p>
+      </a>
       {ratingPosition === 'bottom' && ratings}
     </div>
   )
@@ -131,14 +132,18 @@ const ProductCard: FunctionComponent<Props> = ({
         {badge && <div className={styles['product-badge']}>{badge}</div>}
         <div className={styles['product-image']}>
           {productMatch}
-          <img src={productImg} />
+          <a href={productPage}>
+            <img src={productImg} />
+          </a>
         </div>
         {productDetails}
       </div>
       {priceInfo}
       {deliveryDetails}
       <div className={styles.btnContainer}>
-        <Button>Shop Here</Button>
+        <Button className={styles.productPageBtn} href={productPage}>
+          Shop Here
+        </Button>
         <StoreLocationButton storeLocation={storeLocation} onClick={storeLocationBtnOnClick} />
       </div>
       {children}
@@ -146,4 +151,4 @@ const ProductCard: FunctionComponent<Props> = ({
   )
 }
 
-export default ProductCard
+export default memo(ProductCard)

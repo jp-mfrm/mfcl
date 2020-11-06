@@ -8,10 +8,9 @@ import styles from './productCard.module.scss'
 interface Props {
   storeLocation?: string
   onClick?: Function
-  className?: string
 }
 
-const StoreLocationButton: FunctionComponent<Props> = ({ storeLocation, className, onClick }) => {
+const StoreLocationButton: FunctionComponent<Props> = ({ storeLocation, onClick }) => {
   const handleClick = () => {
     if (onClick) {
       onClick
@@ -23,10 +22,7 @@ const StoreLocationButton: FunctionComponent<Props> = ({ storeLocation, classNam
   const btnText = storeLocation ? <span className={styles.mobileColor}>Available to try in-store</span> : 'Online Only'
 
   return (
-    <button
-      className={clsx(styles['store-location-btn'], storeLocation && styles.align, className)}
-      onClick={() => handleClick()}
-    >
+    <button className={clsx(styles['store-location-btn'], storeLocation && styles.align)} onClick={() => handleClick()}>
       <span className={clsx(styles['store-location-btn-filling'])}>
         {marker} {btnText} <span className={styles.location}>{storeLocation}</span>
       </span>{' '}

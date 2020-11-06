@@ -79,6 +79,12 @@
 
   button {
     width: 100%;
+    text-decoration: none;
+  }
+
+  .productPageBtn {
+    width: 100%;
+    text-decoration: none;
   }
 
   @media screen and (max-width: $mobile) {
@@ -98,6 +104,11 @@
 
   @media screen and (max-width: $mobile) {
     padding: 0 10px;
+  }
+
+  .link {
+    color: $gray-11;
+    text-decoration: none;
   }
 
   &-title {
