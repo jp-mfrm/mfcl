@@ -51,7 +51,7 @@ const Button: FunctionComponent<Props> = forwardRef<unknown, Props>(function But
     </div>
   )
 
-  if (btnType === 'link') {
+  if (href) {
     return (
       // @ts-ignore
       <a href={href} className={btnClassName} ref={ref} {...rest}>
