@@ -95,13 +95,31 @@
   border-radius: 0px;
   color: $red;
   font-weight: 600;
-  height: initial;
+  height: auto;
   line-height: 1.13;
   font-size: 16px;
-  padding: initial;
+  padding: auto;
   width: initial;
   text-transform: initial;
   text-decoration: none;
+
+  &.sm {
+    font-size: 14px;
+    height: auto;
+    padding: 0px;
+  }
+
+  &.md {
+    font-size: 14px;
+    height: auto;
+    padding: 0px;
+  }
+
+  &.lg {
+    font-size: 16px;
+    height: auto;
+    padding: 0px;
+  }
 
   &:hover {
     color: $dark-red;
