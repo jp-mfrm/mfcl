@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import React, { ElementType, FunctionComponent, ReactNode } from 'react'
+import React, { ElementType, FunctionComponent, ReactNode, forwardRef } from 'react'
 import clsx from 'clsx'
 import Loading from '../Loading'
 
@@ -28,18 +28,19 @@ export interface Props {
 
 const marginRight = { marginRight: '15px' }
 
-const Button: FunctionComponent<Props> = ({
-  btnType = 'primary',
-  children = null,
-  className = '',
-  href = '',
-  loading = false,
-  loadingColor = '#fff',
-  size = 'lg',
-  type = 'button',
-  component: Component = 'button',
-  ...rest
-}) => {
+const Button: FunctionComponent<Props> = forwardRef<unknown, Props>(function ButtonComp(props, ref) {
+  const {
+    btnType = 'primary',
+    children = null,
+    className = '',
+    href = '',
+    loading = false,
+    loadingColor = '#fff',
+    size = 'lg',
+    type = 'button',
+    component: Component = 'button',
+    ...rest
+  } = props
   const load = loading ? styles.loading : ''
   const btnClassName = clsx(styles.btn, styles[size], load, styles[btnType], className)
 
@@ -52,17 +53,18 @@ const Button: FunctionComponent<Props> = ({
 
   if (href) {
     return (
-      <a href={href} className={btnClassName} {...rest}>
+      // @ts-ignore
+      <a href={href} className={btnClassName} ref={ref} {...rest}>
         {buttonChildren}
       </a>
     )
   }
 
   return (
-    <Component type={type} className={btnClassName} {...rest}>
+    <Component type={type} className={btnClassName} ref={ref} {...rest}>
       {buttonChildren}
     </Component>
   )
-}
+})
 
 export default Button
