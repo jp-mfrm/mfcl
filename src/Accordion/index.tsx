@@ -8,6 +8,8 @@ import React, {
   cloneElement
 } from 'react'
 import AccordionItem, { AccordionItemProps } from '../AccordionItem'
+import clsx from 'clsx'
+import styles from '../AccordionItem/accordionItem.module.scss'
 
 type Props = {
   /** class to pass to the accordion wrapper */
@@ -20,6 +22,8 @@ type Props = {
   titleStyles?: CSSProperties
   /** styles to pass to each section center wrapper */
   centerStyles?: CSSProperties
+  /** property to apply MM styling, is true if there's only one item and using hardcoded AccordionItem as a child */
+  singleItemAccordion?: boolean
   /** width of the Accordion */
   width?: string
   /** Optional children to use instead of items prop */
@@ -33,6 +37,7 @@ const Accordion: FunctionComponent<Props> = ({
   titleStyles = {},
   centerStyles = {},
   width = 'auto',
+  singleItemAccordion = false,
   children
 }) => {
   const ids = children ? Children.map(children, (child, index) => index) : items.map((_item, index) => index)
@@ -70,7 +75,10 @@ const Accordion: FunctionComponent<Props> = ({
   }
 
   return (
-    <div className={className} style={{ width, fontFamily: "'Rubik', 'Arial', sans-serif", margin: 'auto' }}>
+    <div
+      className={clsx(singleItemAccordion && styles.singleItemAccordion, className)}
+      style={{ width, fontFamily: "'Rubik', 'Arial', sans-serif", margin: 'auto' }}
+    >
       {children
         ? Children.map(children, (child, index) => {
             if (isValidElement(child)) {

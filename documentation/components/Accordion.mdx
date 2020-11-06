@@ -72,7 +72,9 @@ Accordion Component can be used to display a list of collapsable content panels 
     ]}
 />
 
+
 </Playground>
+
 
 ## Custom Accordion Content
 
@@ -133,7 +135,20 @@ Accordion Component can be used to display a list of collapsable content panels 
     <AccordionItem title={"Test 2"} id={"test_2"} content={mattressIpsum(2)}/>
   </Accordion>
 
+
 </Playground>
+
+
+## Using AccordionItem as Single Item
+
+<Playground>
+  <Accordion singleItemAccordion={true}> 
+    <AccordionItem title={"Test Single"} id={"test_1"} content={mattressIpsum(2)} />
+  </Accordion>
+
+
+</Playground>
+
 
 ## Accordion Item Properties
 
