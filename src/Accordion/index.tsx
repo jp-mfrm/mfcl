@@ -11,6 +11,7 @@ import AccordionItem, { AccordionItemProps } from '../AccordionItem'
 import clsx from 'clsx'
 import styles from '../AccordionItem/accordionItem.module.scss'
 
+
 type Props = {
   /** class to pass to the accordion wrapper */
   className?: string
@@ -28,6 +29,7 @@ type Props = {
   width?: string
   /** Optional children to use instead of items prop */
   children?: ReactNode | null
+  horizontal?: boolean
 }
 
 const Accordion: FunctionComponent<Props> = ({
@@ -38,11 +40,13 @@ const Accordion: FunctionComponent<Props> = ({
   centerStyles = {},
   width = 'auto',
   singleItemAccordion = false,
+  horizontal = false,
   children
 }) => {
   const ids = children ? Children.map(children, (child, index) => index) : items.map((_item, index) => index)
 
   const [focused, setFocus] = useState(-1)
+  const [openIndex, setOpenIndex] = useState(-1)
 
   function setIndex(goTo: string) {
     if (!ids) {
@@ -69,10 +73,16 @@ const Accordion: FunctionComponent<Props> = ({
   }
   const accordionItemProps = {
     focused,
+    openIndex,
     setIndex,
     setFocus,
     hidePreview
   }
+  const horizontalContent = horizontal ? items?.map((item) => {
+    return item.content
+  }) : null;
+  const showContent = horizontal && openIndex >=0
+  const content = horizontalContent?.[openIndex]
 
   return (
     <div
@@ -85,19 +95,27 @@ const Accordion: FunctionComponent<Props> = ({
               return cloneElement(child, { index, ...accordionItemProps })
             }
           })
-        : items?.map((item, index) => {
+        : <> {items?.map((item, index) => {
             return (
               <AccordionItem
+              horizontal={horizontal}
                 key={index}
                 titleInlineStyle={titleStyles}
                 centerInlineStyle={centerStyles}
                 {...item}
                 id={item.id || index.toString()}
                 index={index}
+                onOpen={() => {setOpenIndex(index)}}
+                onClose={() => {setOpenIndex(-1)}}
                 {...accordionItemProps}
               />
             )
-          })}
+          } )}
+          {showContent && <div className={styles.horizontalContent}>{content}</div> }
+          
+          </>
+          
+          }
     </div>
   )
 }

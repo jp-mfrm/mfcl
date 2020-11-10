@@ -17,6 +17,7 @@ export type AccordionItemProps = {
   id: string
   /** focuses the accordion item */
   focused?: number
+  openIndex?: number
   /** sets focus of item */
   setFocus?: Function
   /** sets index of item */
@@ -35,6 +36,7 @@ export type AccordionItemProps = {
   onClose?: Function
   /** Function to be called when accordionItem is focused */
   onFocus?: Function
+  horizontal?: boolean
 }
 
 const AccordionItem: FunctionComponent<AccordionItemProps> = ({
@@ -46,6 +48,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   index,
   focused,
   className,
+  openIndex,
   setFocus = () => {},
   setIndex = () => {},
   hidePreview = false,
@@ -54,7 +57,8 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   initialOpen = false,
   onOpen = () => {},
   onClose = () => {},
-  onFocus = () => {}
+  onFocus = () => {},
+  horizontal = false
 }) => {
   const labelId = `label-${id}`
   const sectionId = `section-${id}`
@@ -70,6 +74,12 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
       }
     }
   }, [index, focused])
+
+  useEffect(() => {
+    if (open && index !== openIndex) {
+      setOpen(false)
+    }
+  }, [index, openIndex])
 
   const handleClick = () => {
     if (open) {
@@ -111,7 +121,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   }
 
   return (
-    <div className={clsx(styles['accordionItem'], open && styles['open'], className)}>
+    <div className={clsx(styles['accordionItem'], open && styles['open'], className, horizontal && styles['horizontal'])}>
       <div
         className={lineStyles}
         aria-expanded={open}
@@ -138,7 +148,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
         </div>
         <span className={styles.openIcon} />
       </div>
-      <Collapse
+    { horizontal ? null : (<Collapse
         isOpen={open}
         childProps={{
           role: 'region',
@@ -149,7 +159,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
         }}
       >
         <div className={styles.innerContent}>{content}</div>
-      </Collapse>
+      </Collapse> )}
     </div>
   )
 }

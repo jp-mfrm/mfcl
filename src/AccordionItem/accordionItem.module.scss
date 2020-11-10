@@ -34,6 +34,15 @@
   border-bottom: 1px solid #d8d8d8;
 }
 
+.accordionItem.horizontal {
+  border: 2px solid #d8d8d8;
+  display: inline-block;
+}
+
+.horizontalContent {
+  border: 2px solid #d8d8d8;
+}
+
 .line {
   padding: 16px 0px 14px;
   display: flex;
