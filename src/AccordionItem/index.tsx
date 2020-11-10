@@ -142,13 +142,12 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
         isOpen={open}
         childProps={{
           role: 'region',
-          id: sectionId,
           'aria-labelledby': labelId,
           'aria-hidden': open ? 'false' : 'true',
           'data-testid': 'accordion-content'
         }}
       >
-        <div className={styles.innerContent}>{content}</div>
+        <div id={sectionId} className={styles.innerContent}>{content}</div>
       </Collapse>
     </div>
   )
