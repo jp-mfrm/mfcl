@@ -111,11 +111,9 @@ const Accordion: FunctionComponent<Props> = ({
               />
             )
           } )}
-          {showContent && <div className={styles.horizontalContent}>{content}</div> }
-          
           </>
-          
           }
+          {showContent && <div className={styles.horizontalContent}>{content}</div> }
     </div>
   )
 }

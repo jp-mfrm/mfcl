@@ -35,12 +35,18 @@
 }
 
 .accordionItem.horizontal {
-  border: 2px solid #d8d8d8;
+  border: 1px solid #d8d8d8;
   display: inline-block;
+  width: 33.33%;
+}
+
+.accordionItem.horizontal.open {
+  border: 1px solid black;
+  border-bottom: 2px solid transparent;
 }
 
 .horizontalContent {
-  border: 2px solid #d8d8d8;
+  border: 1px solid black;
 }
 
 .line {
