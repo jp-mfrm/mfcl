@@ -49,6 +49,7 @@ const Step: FunctionComponent<Props> = ({
         onClick={selectIndex ? () => selectIndex(index) : undefined}
         onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => handleKeyDown(e, index)}
         role="button"
+        aria-label={"step-"+index}
         tabIndex={selectIndex ? 0 : -1}
         className={clsx(styles.circle, verticalClass)}
         style={
