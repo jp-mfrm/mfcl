@@ -160,4 +160,148 @@ describe('Accordion Component', () => {
     fireEvent.keyDown(getAllByTestId('accordion-title')[0], { keyCode: 35 })
     expect(testFocusCallBack2).toHaveBeenCalled()
   })
+
+  it('should handle default key behavior', () => {
+    const { getAllByTestId, container } = render(
+      <Accordion
+        items={[
+          { title: 'Title1', content: 'a' },
+          { title: 'Title1', content: 'a' }
+        ]}
+      />
+    )
+    fireEvent.keyDown(getAllByTestId('accordion-title')[0], { keyCode: 65 }) // A 
+    expect(container.querySelector('.accordionItem')?.classList).not.toContain('open')
+  })
+  
+  it('should hide preview properly', () => {
+    const { getAllByTestId, container } = render(
+      <Accordion hidePreview
+        items={[
+          { title: 'Title1', content: 'a' },
+          { title: 'Title1', content: 'a' }
+        ]}
+      />
+    )
+    fireEvent.click(getAllByTestId('accordion-title')[0])
+    expect(container.querySelector('.hidePreview')?.classList).toContain('hidePreview')
+  })
+
+  it ('should render single item accordion', () => {
+    const { container } = render(
+      <Accordion singleItemAccordion={true}>
+        <AccordionItem
+          title={'Test Single'}
+          id={'test_1'}
+          content='Content 1'
+        />
+      </Accordion>
+    )
+
+    expect(container.querySelector('.singleItemAccordion')?.classList).toContain('singleItemAccordion')
+  })
+  
+  it('should render horizontal accordion', () => {
+    const { container } = render (
+      <Accordion
+      horizontal={true}
+      items={[
+        {
+          preview: 'Example1, Example2',
+          title: 'Title 1',
+          content: 'Content 1',
+        }
+      ]}
+    />
+    )
+
+    expect(container.querySelector('.horizontalAccordion')?.classList).toContain('horizontalAccordion')
+  })
+
+  it('should handle horizontal accordion opening section', () => {
+    const { getAllByTestId, getByText, container } = render (
+      <Accordion
+      horizontal={true}
+      items={[
+        {
+          preview: 'Example1, Example2',
+          title: 'Title 1',
+          content: 'Content 1',
+        },
+        {
+          preview: 'Example3',
+          title: 'Title 2',
+          content: 'Content 2',
+        }
+      ]}
+    />
+    )
+
+    fireEvent.click(getAllByTestId('accordion-title')[0])
+    expect(container.querySelector('.horizontalContent')).toBeVisible()
+    expect(getByText('Content 1')).toBeInTheDocument()
+
+    fireEvent.click(getAllByTestId('accordion-title')[1])
+    expect(getByText('Content 2')).toBeInTheDocument()
+  })
+
+  it('should handle horizontal accordion opening section', () => {
+    const testOpenCallBack = jest.fn()
+    const { getAllByTestId, getByText, container } = render (
+      <Accordion
+        horizontal={true}
+        items={[
+          {
+            preview: 'Example1, Example2',
+            title: 'Title 1',
+            content: 'Content 1',
+            onOpen: testOpenCallBack
+          },
+          {
+            preview: 'Example3',
+            title: 'Title 2',
+            content: 'Content 2',
+            onOpen: testOpenCallBack
+          }
+        ]}
+      />
+    )
+
+    fireEvent.click(getAllByTestId('accordion-title')[0])
+    expect(container.querySelector('.horizontalContent')).toBeVisible()
+    expect(getByText('Content 1')).toBeVisible()
+
+    fireEvent.click(getAllByTestId('accordion-title')[1])
+    expect(getByText('Content 2')).toBeVisible()
+    expect(testOpenCallBack).toHaveBeenCalled()
+  })
+
+  it('should handle closing section', () => {
+    const testCloseCallBack = jest.fn()
+    const { getAllByTestId, queryByText, container } = render(
+      <Accordion 
+        horizontal={true} 
+        items={[
+          {
+            preview: 'Example1, Example2',
+            title: 'Title 1',
+            content: 'Content 1',
+            onClose: testCloseCallBack
+          },
+          {
+            preview: 'Example3',
+            title: 'Title 2',
+            content: 'Content 2',
+            onClose: testCloseCallBack
+          }
+        ]}
+      />
+    )
+
+    fireEvent.click(getAllByTestId('accordion-title')[0])
+    fireEvent.click(getAllByTestId('accordion-title')[0])
+    expect(container.querySelector('.horizontalContent')).not.toBeInTheDocument()
+    expect(queryByText('Content 1')).not.toBeInTheDocument()
+    expect(testCloseCallBack).toHaveBeenCalled()
+  })
 })

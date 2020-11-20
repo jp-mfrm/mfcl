@@ -87,7 +87,7 @@ const Accordion: FunctionComponent<Props> = ({
   }) : null;
   const showContent = horizontal && openIndex >= 0
   const content = horizontalContent?.[openIndex]
-  const accordionItemStyle = { width: `${horizontal && (100 / (items?.length > 0 ? items.length : 1))}%`}
+  const accordionItemStyle = { width: `${horizontal && (100 / items.length)}%`}
 
   return (
     <div
