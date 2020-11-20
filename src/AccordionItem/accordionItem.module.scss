@@ -11,6 +11,36 @@
   opacity: 0.9;
 }
 
+.horizontalAccordion {
+
+  .accordionItem {
+    border: 1px solid #d8d8d8;
+    display: inline-block;
+
+    .line {
+      min-height: 94.75px;
+      padding: 16px 10px 14px;
+
+      @media screen and (max-width: 1024px) and (min-width: $mobile) {
+        min-height: 112px;
+      }
+    }
+  }
+  
+  .accordionItem.open {
+    border: 1px solid black;
+    border-bottom: 2px solid $white;
+    z-index: 1;
+  }
+  
+  .horizontalContent {
+    border: 1px solid black;
+    width: 100%;
+    margin-top: -1px;
+    padding: 0 10px;
+  }
+}
+
 // this styling is applied when there is only 1 item in the accordion; MM designs
 .singleItemAccordion {
   border: 1px solid #f1f1f2;
@@ -28,25 +58,10 @@
       padding: 16px 10px 14px;
     }
   }
-}
+} 
 
 .accordionItem {
   border-bottom: 1px solid #d8d8d8;
-}
-
-.accordionItem.horizontal {
-  border: 1px solid #d8d8d8;
-  display: inline-block;
-  width: 33.33%;
-}
-
-.accordionItem.horizontal.open {
-  border: 1px solid black;
-  border-bottom: 2px solid transparent;
-}
-
-.horizontalContent {
-  border: 1px solid black;
 }
 
 .line {

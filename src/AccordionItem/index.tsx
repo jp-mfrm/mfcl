@@ -36,7 +36,10 @@ export type AccordionItemProps = {
   onClose?: Function
   /** Function to be called when accordionItem is focused */
   onFocus?: Function
+  /** Will hide collapse-content at accordion item level if horizontal */
   horizontal?: boolean
+  /** Inline style for accordion item div wrapper */
+  accordionItemStyle?: CSSProperties
 }
 
 const AccordionItem: FunctionComponent<AccordionItemProps> = ({
@@ -58,7 +61,8 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   onOpen = () => {},
   onClose = () => {},
   onFocus = () => {},
-  horizontal = false
+  horizontal = false,
+  accordionItemStyle = {}
 }) => {
   const labelId = `label-${id}`
   const sectionId = `section-${id}`
@@ -121,7 +125,8 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   }
 
   return (
-    <div className={clsx(styles['accordionItem'], open && styles['open'], className, horizontal && styles['horizontal'])}>
+    <div className={clsx(styles['accordionItem'], open && styles['open'], horizontal && styles['horizontal'], className)}
+      style={accordionItemStyle}>
       <div
         className={lineStyles}
         aria-expanded={open}

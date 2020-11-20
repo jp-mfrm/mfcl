@@ -25,11 +25,12 @@ type Props = {
   centerStyles?: CSSProperties
   /** property to apply MM styling, is true if there's only one item and using hardcoded AccordionItem as a child */
   singleItemAccordion?: boolean
+  /** property to apply horizontal accordion with dynamic sizing */
+  horizontal?: boolean
   /** width of the Accordion */
   width?: string
   /** Optional children to use instead of items prop */
   children?: ReactNode | null
-  horizontal?: boolean
 }
 
 const Accordion: FunctionComponent<Props> = ({
@@ -43,10 +44,12 @@ const Accordion: FunctionComponent<Props> = ({
   horizontal = false,
   children
 }) => {
-  const ids = children ? Children.map(children, (child, index) => index) : items.map((_item, index) => index)
+  const ids = children
+    ? Children.map(children, (child, index) => index)
+    : items.map((_item, index) => index)
 
   const [focused, setFocus] = useState(-1)
-  const [openIndex, setOpenIndex] = useState(-1)
+  const [openIndex, setOpenIndex] = useState(items?.findIndex(x => x.initialOpen))
 
   function setIndex(goTo: string) {
     if (!ids) {
@@ -73,20 +76,22 @@ const Accordion: FunctionComponent<Props> = ({
   }
   const accordionItemProps = {
     focused,
-    openIndex,
+    openIndex, 
     setIndex,
     setFocus,
     hidePreview
   }
+
   const horizontalContent = horizontal ? items?.map((item) => {
     return item.content
   }) : null;
-  const showContent = horizontal && openIndex >=0
+  const showContent = horizontal && openIndex >= 0
   const content = horizontalContent?.[openIndex]
+  const accordionItemStyle = { width: `${horizontal && (100 / (items?.length > 0 ? items.length : 1))}%`}
 
   return (
     <div
-      className={clsx(singleItemAccordion && styles.singleItemAccordion, className)}
+      className={clsx(singleItemAccordion && styles.singleItemAccordion, horizontal && styles.horizontalAccordion, className)}
       style={{ width, fontFamily: "'Rubik', 'Arial', sans-serif", margin: 'auto' }}
     >
       {children
@@ -96,17 +101,29 @@ const Accordion: FunctionComponent<Props> = ({
             }
           })
         : <> {items?.map((item, index) => {
+            
+          const onOpen = () => {
+            if (item.onOpen) item.onOpen()
+            setOpenIndex(index)
+          }
+
+          const onClose = () => {
+            if (item.onClose) item.onClose()
+            setOpenIndex(-1)
+          }
+
             return (
               <AccordionItem
-              horizontal={horizontal}
+                horizontal={horizontal}
                 key={index}
                 titleInlineStyle={titleStyles}
                 centerInlineStyle={centerStyles}
                 {...item}
                 id={item.id || index.toString()}
                 index={index}
-                onOpen={() => {setOpenIndex(index)}}
-                onClose={() => {setOpenIndex(-1)}}
+                onOpen={onOpen}
+                onClose={onClose}
+                accordionItemStyle={accordionItemStyle}
                 {...accordionItemProps}
               />
             )
