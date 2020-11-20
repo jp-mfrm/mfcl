@@ -27,7 +27,6 @@ export interface Props {
   /** Controlled value */
   value?: number
   [rest: string]: unknown // ...rest property
-  accordionStyles?: boolean
 }
 
 const Tabs: FunctionComponent<Props> = ({
@@ -36,7 +35,6 @@ const Tabs: FunctionComponent<Props> = ({
   onChange,
   position = 'top',
   defaultValue = 0,
-  accordionStyles = false,
   value,
   ...rest
 }) => {
