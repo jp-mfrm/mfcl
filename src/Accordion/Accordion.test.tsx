@@ -276,7 +276,7 @@ describe('Accordion Component', () => {
     expect(testOpenCallBack).toHaveBeenCalled()
   })
 
-  it('should handle closing section', () => {
+  it('should handle horizontal accordion closing section', () => {
     const testCloseCallBack = jest.fn()
     const { getAllByTestId, queryByText, container } = render(
       <Accordion 
