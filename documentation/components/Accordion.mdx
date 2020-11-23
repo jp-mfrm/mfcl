@@ -141,6 +141,37 @@ Accordion Component can be used to display a list of collapsable content panels 
   </Accordion>
 </Playground>
 
+## With Horizontal
+
+<Playground>
+  <Accordion
+    horizontal={true}
+    items={[
+      {
+        preview: 'Example1, Example2',
+        title: 'Title 1',
+        id: 'title1',
+        icon: <MediumBed />,
+        content: "Content 1"
+      },
+      {
+        preview: 'Example1, Example2',
+        title: 'Title 2',
+        id: 'title2',
+        icon: <PlushBed />,
+        content: "Content 2"
+      },
+            {
+        preview: 'Example1',
+        title: 'Title 3',
+        id: 'title3',
+        icon: <MediumBed />,
+        content: "Content 3"
+      }
+    ]}
+  />
+</Playground>
+
 ## Accordion Item Properties
 
 <Props of={AccordionItem} />

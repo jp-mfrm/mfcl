@@ -10,6 +10,7 @@ export type AccordionItemProps = {
   content: string | ReactNode
   /** the subtitle of the accordion */
   preview?: string | ReactNode
+  /** hide preview text of AccordionItem on it's open state */
   hidePreview?: boolean
   /** Gives the accordion an icon */
   icon?: string | ReactNode
@@ -17,6 +18,8 @@ export type AccordionItemProps = {
   id: string
   /** focuses the accordion item */
   focused?: number
+  /** current open index identifier for the accordion */
+  openIndex?: number
   /** sets focus of item */
   setFocus?: Function
   /** sets index of item */
@@ -25,7 +28,9 @@ export type AccordionItemProps = {
   index?: number
   /** class to pass to the accordion item wrapper */
   className?: string
+  /** styles to pass to each section title wrapper */
   titleInlineStyle?: CSSProperties
+  /** styles to pass to each section center wrapper */
   centerInlineStyle?: CSSProperties
   /** Option to have accordionItem already open */
   initialOpen?: boolean
@@ -35,6 +40,10 @@ export type AccordionItemProps = {
   onClose?: Function
   /** Function to be called when accordionItem is focused */
   onFocus?: Function
+  /** Will hide collapse-content at accordion item level if horizontal */
+  horizontal?: boolean
+  /** styles to pass to each item div wrapper */
+  accordionItemStyle?: CSSProperties
 }
 
 const AccordionItem: FunctionComponent<AccordionItemProps> = ({
@@ -46,6 +55,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   index,
   focused,
   className,
+  openIndex,
   setFocus = () => {},
   setIndex = () => {},
   hidePreview = false,
@@ -54,7 +64,9 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   initialOpen = false,
   onOpen = () => {},
   onClose = () => {},
-  onFocus = () => {}
+  onFocus = () => {},
+  horizontal = false,
+  accordionItemStyle = {}
 }) => {
   const labelId = `label-${id}`
   const sectionId = `section-${id}`
@@ -70,6 +82,12 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
       }
     }
   }, [index, focused])
+
+  useEffect(() => {
+    if (open && index !== openIndex) {
+      setOpen(false)
+    }
+  }, [index, openIndex])
 
   const handleClick = () => {
     if (open) {
@@ -111,7 +129,8 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   }
 
   return (
-    <div className={clsx(styles['accordionItem'], open && styles['open'], className)}>
+    <div className={clsx(styles['accordionItem'], open && styles['open'], horizontal && styles['horizontal'], className)}
+      style={accordionItemStyle}>
       <div
         className={lineStyles}
         aria-expanded={open}
@@ -138,7 +157,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
         </div>
         <span className={styles.openIcon} />
       </div>
-      <Collapse
+    { horizontal ? null : (<Collapse
         isOpen={open}
         childProps={{
           role: 'region',
@@ -148,7 +167,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
         }}
       >
         <div id={sectionId} className={styles.innerContent}>{content}</div>
-      </Collapse>
+      </Collapse> )}
     </div>
   )
 }
