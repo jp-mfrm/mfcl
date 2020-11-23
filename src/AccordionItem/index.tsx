@@ -10,6 +10,7 @@ export type AccordionItemProps = {
   content: string | ReactNode
   /** the subtitle of the accordion */
   preview?: string | ReactNode
+  /** hide preview text of AccordionItem on it's open state */
   hidePreview?: boolean
   /** Gives the accordion an icon */
   icon?: string | ReactNode
@@ -17,6 +18,7 @@ export type AccordionItemProps = {
   id: string
   /** focuses the accordion item */
   focused?: number
+  /** current open index identifier for the accordion */
   openIndex?: number
   /** sets focus of item */
   setFocus?: Function
@@ -26,7 +28,9 @@ export type AccordionItemProps = {
   index?: number
   /** class to pass to the accordion item wrapper */
   className?: string
+  /** styles to pass to each section title wrapper */
   titleInlineStyle?: CSSProperties
+  /** styles to pass to each section center wrapper */
   centerInlineStyle?: CSSProperties
   /** Option to have accordionItem already open */
   initialOpen?: boolean
@@ -38,7 +42,7 @@ export type AccordionItemProps = {
   onFocus?: Function
   /** Will hide collapse-content at accordion item level if horizontal */
   horizontal?: boolean
-  /** Inline style for accordion item div wrapper */
+  /** styles to pass to each item div wrapper */
   accordionItemStyle?: CSSProperties
 }
 
