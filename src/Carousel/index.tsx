@@ -142,6 +142,7 @@ const Carousel: FunctionComponent<Props> = ({
             OTransition: slidesTransition
           }}
           ref={slidesRef}
+          onClickCapture={handleClickViaCapturing}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
           onTouchEnd={handleDragEndHandler}
