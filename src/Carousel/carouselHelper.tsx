@@ -374,6 +374,7 @@ export default function carouselHelper(
   )
 
   // Configure slider drag/touch handling
+  const [handleCapturing, setHandleCapturing] = useState(false)
   const [dragActive, setDragActive] = useState(false)
   const [dragAttempt, setDragAttempt] = useState(0)
   const [posInitial, setPosInitial] = useState(0)
@@ -490,7 +491,8 @@ export default function carouselHelper(
 
   // Event Handler: mousedown
   const handleDragStart = (event: any) => {
-    // Check if we are currently transitioning
+      console.log('hande drag start')
+      // Check if we are currently transitioning
     if (slidesTransition) {
       handleIndexCheck()
 
@@ -544,6 +546,8 @@ export default function carouselHelper(
         } else {
           setSlidesLeft(slidesLeft - nextPosition)
         }
+        
+        setHandleCapturing(true)
       }
     },
     [dragActive, posInitial, slidesLeft]
@@ -553,6 +557,8 @@ export default function carouselHelper(
   const handleDragEndHandler = useCallback(
     (event: any) => {
       if (dragActive) {
+      console.log('hande drag end (active)')
+
         var posFinal = slidesLeft
         var threshold = slideShift / 2
 
@@ -575,6 +581,17 @@ export default function carouselHelper(
       }
     },
     [dragActive, posInitial, slidesLeft]
+  )
+  
+  const handleClickViaCapturing = useCallback(
+    (event: any) => {
+      if (handleCapturing) {
+        console.log('event:', event)
+        event.stopPropagation()
+        setHandleCapturing(false)
+      }
+    },
+    [handleCapturing]
   )
 
   const calculateExtraSlides = (diff: number, shift: number, threshold: number) => {
@@ -735,6 +752,7 @@ export default function carouselHelper(
     handleDragStart,
     handleDragEndHandler,
     handleDragActionHandler,
-    handleIndexCheck
+    handleIndexCheck,
+    handleClickViaCapturing
   }
 }

@@ -85,7 +85,8 @@ const Carousel: FunctionComponent<Props> = ({
     handleDragStart,
     handleDragEndHandler,
     handleDragActionHandler,
-    handleIndexCheck
+    handleIndexCheck,
+    handleClickViaCapturing 
   } = carouselHelper(
     children,
     itemsToShow,
