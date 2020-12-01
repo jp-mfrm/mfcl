@@ -24,6 +24,10 @@ interface Props {
   onClose?: Function | null
   /** Transition speed when the modal appears */
   duration?: number
+  /** Color of close button svg  */
+  closeButtonColor?: string
+  /** Class to pass to the modal close button  */
+  closeButtonClass?: string
   /** Child elements of the modal  */
   children?: React.ReactNode
   [rest: string]: unknown // ...rest property
@@ -38,6 +42,8 @@ const Modal: FunctionComponent<Props> = ({
   onClose = null,
   duration = 100,
   children = null,
+  closeButtonColor = '#2D2926',
+  closeButtonClass = '',
   ...rest
 }) => {
   const [isSafari] = useState(() => (isClient ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent) : false))
@@ -134,8 +140,8 @@ const Modal: FunctionComponent<Props> = ({
                 aria-label="Close Modal"
                 ref={closeBtnRef}
               >
-                <span className={styles['close-icon-wrapper']} aria-hidden="true">
-                  <Close width="10" height="10" stroke="#2D2926" strokeWidth="2" />
+                <span className={clsx(styles['close-icon-wrapper'], closeButtonClass)} aria-hidden="true">
+                  <Close width="10" height="10" stroke={closeButtonColor} strokeWidth="2" />
                 </span>
               </div>
             </>

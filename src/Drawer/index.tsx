@@ -33,6 +33,10 @@ export interface Props {
   onClose?: Function | null
   /** The position on the screen the drawer will open */
   position?: 'top' | 'bottom' | 'right' | 'left'
+  /** Color of close button svg  */
+  closeButtonColor?: string
+  /** Class to pass to the modal close button  */
+  closeButtonClass?: string
   [rest: string]: unknown
 }
 
@@ -79,6 +83,8 @@ const Drawer: React.FunctionComponent<Props> = ({
   onClose = null,
   isOpen = false,
   headerClassName = '',
+  closeButtonColor = '#2D2926',
+  closeButtonClass = '',
   ...rest
 }) => {
   const [isSafari] = useState(() => (isClient ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent) : false))
@@ -186,8 +192,8 @@ const Drawer: React.FunctionComponent<Props> = ({
                     aria-label="Close Drawer"
                     ref={closeBtnRef}
                   >
-                    <span className={styles['close-icon-wrapper']} aria-hidden="true">
-                      <Close width="10" height="10" stroke="#2D2926" strokeWidth="2" />
+                    <span className={clsx(styles['close-icon-wrapper'], closeButtonClass)} aria-hidden="true">
+                      <Close width="10" height="10" stroke={closeButtonColor} strokeWidth="2" />
                     </span>
                   </div>
                 )}
