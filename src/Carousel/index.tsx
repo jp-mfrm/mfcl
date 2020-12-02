@@ -18,7 +18,9 @@ interface Props {
    * 'middle' centers vertically while 'center' centers horizontally. */
   controlAlignment?: string
   /** Sets the control buttons' style */
-  controlStyle?: 'square' | 'round'
+  controlStyle?: 'square' | 'round' | 'legacy'
+  /** Sets the class for the control buttons */
+  controlClass?: string
   /** Hides control buttons unless hovered */
   hideControls?: boolean
   /** Sets the indicator buttons' style */
@@ -63,6 +65,7 @@ const Carousel: FunctionComponent<Props> = ({
   hideControls = false,
   indicatorStyle = 'round',
   controlStyle = 'square',
+  controlClass = '',
   indicatorBg = 'light',
   layoutGap = 0,
   infinite = false,
@@ -85,13 +88,15 @@ const Carousel: FunctionComponent<Props> = ({
     handleDragStart,
     handleDragEndHandler,
     handleDragActionHandler,
-    handleIndexCheck
+    handleIndexCheck,
+    handleClickViaCapturing
   } = carouselHelper(
     children,
     itemsToShow,
     controlAlignment,
     hideControls,
     controlStyle,
+    controlClass,
     hideIndicators,
     indicatorStyle,
     duration,
@@ -141,6 +146,7 @@ const Carousel: FunctionComponent<Props> = ({
             OTransition: slidesTransition
           }}
           ref={slidesRef}
+          onClickCapture={handleClickViaCapturing}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
           onTouchEnd={handleDragEndHandler}

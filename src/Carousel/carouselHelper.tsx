@@ -139,6 +139,7 @@ function getIndicators(
 
 function getControlButtons(
   controlsVisibility: boolean,
+  controlClass: string,
   alignment: string[],
   shiftSlide: Function,
   direction: string,
@@ -155,7 +156,8 @@ function getControlButtons(
           controlsVisibility && styles['hidden'],
           alignment,
           styles[controlStyle],
-          !indicatorVisibility && styles['mt-48']
+          !indicatorVisibility && styles['mt-adjust'],
+          controlClass
         )}
         onClick={(event) => {
           ;(event.target as HTMLElement).focus()
@@ -305,6 +307,7 @@ export default function carouselHelper(
   controlAlignment: string,
   hideControls: boolean,
   controlStyle: string,
+  controlClass: string,
   hideIndicators: boolean,
   indicatorStyle: string,
   duration: number,
@@ -374,6 +377,7 @@ export default function carouselHelper(
   )
 
   // Configure slider drag/touch handling
+  const [handleCapturing, setHandleCapturing] = useState(false)
   const [dragActive, setDragActive] = useState(false)
   const [dragAttempt, setDragAttempt] = useState(0)
   const [posInitial, setPosInitial] = useState(0)
@@ -544,6 +548,8 @@ export default function carouselHelper(
         } else {
           setSlidesLeft(slidesLeft - nextPosition)
         }
+
+        setHandleCapturing(true)
       }
     },
     [dragActive, posInitial, slidesLeft]
@@ -575,6 +581,16 @@ export default function carouselHelper(
       }
     },
     [dragActive, posInitial, slidesLeft]
+  )
+
+  const handleClickViaCapturing = useCallback(
+    (event: any) => {
+      if (handleCapturing) {
+        event.stopPropagation()
+        setHandleCapturing(false)
+      }
+    },
+    [handleCapturing]
   )
 
   const calculateExtraSlides = (diff: number, shift: number, threshold: number) => {
@@ -621,10 +637,26 @@ export default function carouselHelper(
 
   const controlButtons: ReactNode[] = []
   controlButtons.push(
-    getControlButtons(controlsVisibility, alignment, shiftSlide, 'prev', controlStyle, indicatorVisibility)
+    getControlButtons(
+      controlsVisibility,
+      controlClass,
+      alignment,
+      shiftSlide,
+      'prev',
+      controlStyle,
+      indicatorVisibility
+    )
   )
   controlButtons.push(
-    getControlButtons(controlsVisibility, alignment, shiftSlide, 'next', controlStyle, indicatorVisibility)
+    getControlButtons(
+      controlsVisibility,
+      controlClass,
+      alignment,
+      shiftSlide,
+      'next',
+      controlStyle,
+      indicatorVisibility
+    )
   )
 
   useEffect(() => {
@@ -735,6 +767,7 @@ export default function carouselHelper(
     handleDragStart,
     handleDragEndHandler,
     handleDragActionHandler,
-    handleIndexCheck
+    handleIndexCheck,
+    handleClickViaCapturing
   }
 }

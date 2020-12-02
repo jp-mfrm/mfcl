@@ -34,6 +34,13 @@ $slider-height: 100%;
       }
     }
 
+    &.legacy {
+      width: 32px;
+      height: 32px;
+      border-radius: 50px;
+      box-shadow: none;
+    }
+
     &:focus {
       box-shadow: 0 0 0 2px $red;
       background-color: $white;
@@ -116,8 +123,12 @@ $slider-height: 100%;
     z-index: 2;
     outline: none;
 
-    &.mt-48 {
+    &.mt-adjust {
       margin-top: -48px;
+    }
+
+    &.mt-adjust.legacy {
+      margin-top: -41px;
     }
 
     svg {
@@ -170,6 +181,14 @@ $slider-height: 100%;
       }
     }
 
+    &.legacy {
+      width: 32px;
+      height: 32px;
+      border-radius: 50px;
+      box-shadow: none;
+      border: 2px solid #f7f7f7;
+    }
+
     &.hidden {
       background-image: none;
       background-color: rgba(255, 255, 255, 0);
@@ -183,6 +202,10 @@ $slider-height: 100%;
           stroke: rgba(255, 255, 255, 0.5);
           fill: rgba(255, 255, 255, 0.5);
         }
+      }
+
+      &.legacy {
+        border: none;
       }
     }
 
