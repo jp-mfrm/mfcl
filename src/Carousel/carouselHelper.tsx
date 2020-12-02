@@ -139,6 +139,7 @@ function getIndicators(
 
 function getControlButtons(
   controlsVisibility: boolean,
+  controlClass: string,
   alignment: string[],
   shiftSlide: Function,
   direction: string,
@@ -155,7 +156,8 @@ function getControlButtons(
           controlsVisibility && styles['hidden'],
           alignment,
           styles[controlStyle],
-          !indicatorVisibility && styles['mt-48']
+          !indicatorVisibility && styles['mt-adjust'],
+          controlClass
         )}
         onClick={(event) => {
           ;(event.target as HTMLElement).focus()
@@ -305,6 +307,7 @@ export default function carouselHelper(
   controlAlignment: string,
   hideControls: boolean,
   controlStyle: string,
+  controlClass: string,
   hideIndicators: boolean,
   indicatorStyle: string,
   duration: number,
@@ -491,8 +494,7 @@ export default function carouselHelper(
 
   // Event Handler: mousedown
   const handleDragStart = (event: any) => {
-      console.log('hande drag start')
-      // Check if we are currently transitioning
+    // Check if we are currently transitioning
     if (slidesTransition) {
       handleIndexCheck()
 
@@ -546,7 +548,7 @@ export default function carouselHelper(
         } else {
           setSlidesLeft(slidesLeft - nextPosition)
         }
-        
+
         setHandleCapturing(true)
       }
     },
@@ -557,8 +559,6 @@ export default function carouselHelper(
   const handleDragEndHandler = useCallback(
     (event: any) => {
       if (dragActive) {
-      console.log('hande drag end (active)')
-
         var posFinal = slidesLeft
         var threshold = slideShift / 2
 
@@ -582,11 +582,10 @@ export default function carouselHelper(
     },
     [dragActive, posInitial, slidesLeft]
   )
-  
+
   const handleClickViaCapturing = useCallback(
     (event: any) => {
       if (handleCapturing) {
-        console.log('event:', event)
         event.stopPropagation()
         setHandleCapturing(false)
       }
@@ -638,10 +637,26 @@ export default function carouselHelper(
 
   const controlButtons: ReactNode[] = []
   controlButtons.push(
-    getControlButtons(controlsVisibility, alignment, shiftSlide, 'prev', controlStyle, indicatorVisibility)
+    getControlButtons(
+      controlsVisibility,
+      controlClass,
+      alignment,
+      shiftSlide,
+      'prev',
+      controlStyle,
+      indicatorVisibility
+    )
   )
   controlButtons.push(
-    getControlButtons(controlsVisibility, alignment, shiftSlide, 'next', controlStyle, indicatorVisibility)
+    getControlButtons(
+      controlsVisibility,
+      controlClass,
+      alignment,
+      shiftSlide,
+      'next',
+      controlStyle,
+      indicatorVisibility
+    )
   )
 
   useEffect(() => {

@@ -7,9 +7,6 @@ route: /components-carousel
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
 import { Carousel, ProductCard, Panel, PanelItem } from '../../src'
-import { Accordion, AccordionItem } from '../../src'
-import MediumBed from '../../src/Icons/MediumBed'
-import PlushBed from '../../src/Icons/PlushBed'
 
 # Carousel
 
@@ -24,55 +21,6 @@ The Carousel component allows you to a display a selection of rotating items.
 ## Properties
 
 <Props of={Carousel} />
-
-## With Horizontal
-
-<Playground>
-
-
-  <Carousel ariaLabel="one">
-    <Accordion
-    horizontal={true}
-    items={[
-      {
-        preview: 'Example1, Example2',
-        title: 'Title 1',
-        id: 'title1',
-        icon: <MediumBed />,
-        content: 'Content 1'
-      },
-      {
-        preview: 'Example1, Example2',
-        title: 'Title 2',
-        id: 'title2',
-        icon: <PlushBed />,
-        content: 'Content 2'
-      },
-      {
-        preview: 'Example1',
-        title: 'Title 3',
-        id: 'title3',
-        icon: <MediumBed />,
-        content: 'Content 3'
-      }
-    ]}
-  />
-    <Accordion
-    horizontal={true}
-    items={[
-      {
-        preview: 'Example1, Example2',
-        title: 'Title 1',
-        id: 'title1',
-        icon: <MediumBed />,
-        content: 'Content 1'
-      }
-    ]}
-  />
-  </Carousel>
-  
-</Playground>
-
 
 ## Basic Usage
 
