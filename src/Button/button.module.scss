@@ -15,13 +15,13 @@
   transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 
   &:disabled {
-    cursor: not-allowed !important; // stylelint-disable-line
+    cursor: not-allowed; // stylelint-disable-line
   }
 
   &:disabled:not(.link) {
-    background-color: $gray-1 !important;
-    color: $gray-5 !important;
-    border: solid 1px $gray-3 !important;
+    background-color: $gray-1;
+    color: $gray-5;
+    border: solid 1px $gray-3;
   }
 
   &.sm {
@@ -125,7 +125,7 @@
     color: $white;
   }
   &:disabled {
-    color: $gray-5 !important;
+    color: $gray-5;
   }
 }
 
