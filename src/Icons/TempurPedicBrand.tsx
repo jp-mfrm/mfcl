@@ -9,13 +9,13 @@ interface Props {
 }
 
 const TempurPedicBrand: React.FunctionComponent<Props> = ({
-  width = 69,
-  height = 54,
+  width = 163,
+  height = 45,
   fillColor = '#222B63',
   secondaryColor = '#7AC143',
   ...rest
 }) => (
-  <svg width="163" height="45" viewBox="0 0 163 45">
+  <svg width={width} height={height} viewBox="0 0 163 45" {...rest}>
     <g fill="none" fillRule="nonzero">
       <path
         fill={fillColor}

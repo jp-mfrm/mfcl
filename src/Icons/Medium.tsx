@@ -7,8 +7,8 @@ interface Props {
   [x: string]: unknown // for the rest property
 }
 
-const Medium: React.FunctionComponent<Props> = ({ width = '24', height = '15', fillColor = '#2D2926', ...rest }) => (
-  <svg width="38" height="30" viewBox="0 0 38 30">
+const Medium: React.FunctionComponent<Props> = ({ width = '38', height = '30', fillColor = '#2D2926', ...rest }) => (
+  <svg width={width} height={height} viewBox="0 0 38 30" {...rest}>
     <path
       d="M7.45964 29.1583H6.32975V24.1745L4.20427 27.6956H4.07289L1.94741 24.1745V29.1554H0.750366V22.1833H2.01164L4.13712 25.6373L6.2626 22.1833H7.45964V29.1583Z"
       fill={fillColor}

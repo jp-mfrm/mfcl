@@ -7,8 +7,8 @@ interface Props {
   [x: string]: unknown // for the rest property
 }
 
-const Plush: React.FunctionComponent<Props> = ({ width = '24', height = '15', fillColor = '#2D2926', ...rest }) => (
-  <svg width="32" height="33" viewBox="0 0 32 33">
+const Plush: React.FunctionComponent<Props> = ({ width = '32', height = '33', fillColor = '#2D2926', ...rest }) => (
+  <svg width={width} height={height} viewBox="0 0 32 33" {...rest}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
