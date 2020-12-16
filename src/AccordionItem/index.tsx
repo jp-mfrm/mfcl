@@ -129,8 +129,10 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   }
 
   return (
-    <div className={clsx(styles['accordionItem'], open && styles['open'], horizontal && styles['horizontal'], className)}
-      style={accordionItemStyle}>
+    <div
+      className={clsx(styles['accordionItem'], open && styles['open'], horizontal && styles['horizontal'], className)}
+      style={accordionItemStyle}
+    >
       <div
         className={lineStyles}
         aria-expanded={open}
@@ -157,17 +159,21 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
         </div>
         <span className={styles.openIcon} />
       </div>
-    { horizontal ? null : (<Collapse
-        isOpen={open}
-        childProps={{
-          role: 'region',
-          'aria-labelledby': labelId,
-          'aria-hidden': open ? 'false' : 'true',
-          'data-testid': 'accordion-content'
-        }}
-      >
-        <div id={sectionId} className={styles.innerContent}>{content}</div>
-      </Collapse> )}
+      {horizontal ? null : (
+        <Collapse
+          isOpen={open}
+          childProps={{
+            role: 'region',
+            'aria-labelledby': labelId,
+            'aria-hidden': open ? 'false' : 'true',
+            'data-testid': 'accordion-content'
+          }}
+        >
+          <div id={sectionId} className={styles.innerContent}>
+            {content}
+          </div>
+        </Collapse>
+      )}
     </div>
   )
 }

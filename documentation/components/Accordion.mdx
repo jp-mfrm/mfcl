@@ -129,7 +129,7 @@ Accordion Component can be used to display a list of collapsable content panels 
 <Playground>
   <Accordion>
     <AccordionItem title={'Test'} id={'test_1'} content={mattressIpsum(2)} />
-    <AccordionItem title={'Test 2'} id={'test_2'} content={mattressIpsum(2)} />
+    <AccordionItem initialOpen title={'Test 2'} id={'test_2'} content={mattressIpsum(2)} />
   </Accordion>
 </Playground>
 
@@ -138,6 +138,14 @@ Accordion Component can be used to display a list of collapsable content panels 
 <Playground>
   <Accordion singleItemAccordion={true}>
     <AccordionItem title={'Test Single'} id={'test_1'} content={mattressIpsum(2)} />
+  </Accordion>
+  <Accordion singleItemAccordion={true}>
+    <AccordionItem
+      initialOpen
+      title={'Test Single initial open'}
+      id={'test_1_initial_open'}
+      content={mattressIpsum(2)}
+    />
   </Accordion>
 </Playground>
 
@@ -152,21 +160,21 @@ Accordion Component can be used to display a list of collapsable content panels 
         title: 'Title 1',
         id: 'title1',
         icon: <MediumBed />,
-        content: "Content 1"
+        content: 'Content 1'
       },
       {
         preview: 'Example1, Example2',
         title: 'Title 2',
         id: 'title2',
         icon: <PlushBed />,
-        content: "Content 2"
+        content: 'Content 2'
       },
-            {
+      {
         preview: 'Example1',
         title: 'Title 3',
         id: 'title3',
         icon: <MediumBed />,
-        content: "Content 3"
+        content: 'Content 3'
       }
     ]}
   />

@@ -2,6 +2,7 @@ import React, {
   FunctionComponent,
   useState,
   ReactNode,
+  useMemo,
   CSSProperties,
   Children,
   isValidElement,
@@ -10,7 +11,6 @@ import React, {
 import AccordionItem, { AccordionItemProps } from '../AccordionItem'
 import clsx from 'clsx'
 import styles from '../AccordionItem/accordionItem.module.scss'
-
 
 type Props = {
   /** class to pass to the accordion wrapper */
@@ -35,7 +35,7 @@ type Props = {
 
 const Accordion: FunctionComponent<Props> = ({
   className,
-  items = [],
+  items,
   hidePreview = false,
   titleStyles = {},
   centerStyles = {},
@@ -44,12 +44,25 @@ const Accordion: FunctionComponent<Props> = ({
   horizontal = false,
   children
 }) => {
-  const ids = children
-    ? Children.map(children, (child, index) => index)
-    : items.map((_item, index) => index)
+  const ids = useMemo(() => {
+    if (children) {
+      return Children.map(children, (child, index) => index)
+    } else if (items) {
+      return items.map((_item, index) => index)
+    }
+    return []
+  }, [children, items])
 
   const [focused, setFocus] = useState(-1)
-  const [openIndex, setOpenIndex] = useState(items?.findIndex(x => x.initialOpen))
+  const [openIndex, setOpenIndex] = useState(() => {
+    if (items) {
+      return items.findIndex((item) => item.initialOpen)
+    }
+
+    const childrenArr = React.Children.toArray(children)
+    // @ts-ignore
+    return childrenArr?.findIndex((child: ReactNode) => child?.props?.initialOpen)
+  })
 
   function setIndex(goTo: string) {
     if (!ids) {
@@ -74,43 +87,44 @@ const Accordion: FunctionComponent<Props> = ({
       setFocus(ids[ids.length - 1])
     }
   }
-  const accordionItemProps = {
-    focused,
-    openIndex, 
-    setIndex,
-    setFocus,
-    hidePreview
-  }
 
-  const horizontalContent = horizontal ? items?.map((item) => {
-    return item.content
-  }) : null;
-  const showContent = horizontal && openIndex >= 0
-  const content = horizontalContent?.[openIndex]
-  const accordionItemStyle = { width: `${horizontal && (100 / items.length)}%`}
+  let extraContent
+  let accordionItemStyle: CSSProperties
+
+  if (horizontal && items) {
+    const horizontalContent = items?.map((item) => item.content)
+    extraContent = openIndex >= 0 && <div className={styles.horizontalContent}>{horizontalContent?.[openIndex]}</div>
+    accordionItemStyle = { width: `${100 / items.length}%` }
+  }
 
   return (
     <div
-      className={clsx(singleItemAccordion && styles.singleItemAccordion, horizontal && styles.horizontalAccordion, className)}
+      className={clsx(
+        singleItemAccordion && styles.singleItemAccordion,
+        horizontal && styles.horizontalAccordion,
+        className
+      )}
       style={{ width, fontFamily: "'Rubik', 'Arial', sans-serif", margin: 'auto' }}
     >
-      {children
-        ? Children.map(children, (child, index) => {
-            if (isValidElement(child)) {
-              return cloneElement(child, { index, ...accordionItemProps })
+      {children ? (
+        Children.map(children, (child, index) => {
+          if (isValidElement(child)) {
+            return cloneElement(child, { index, focused, openIndex, setIndex, setFocus, hidePreview })
+          }
+        })
+      ) : (
+        <>
+          {' '}
+          {items?.map((item, index) => {
+            const onOpen = () => {
+              if (item.onOpen) item.onOpen()
+              setOpenIndex(index)
             }
-          })
-        : <> {items?.map((item, index) => {
-            
-          const onOpen = () => {
-            if (item.onOpen) item.onOpen()
-            setOpenIndex(index)
-          }
 
-          const onClose = () => {
-            if (item.onClose) item.onClose()
-            setOpenIndex(-1)
-          }
+            const onClose = () => {
+              if (item.onClose) item.onClose()
+              setOpenIndex(-1)
+            }
 
             return (
               <AccordionItem
@@ -124,13 +138,17 @@ const Accordion: FunctionComponent<Props> = ({
                 onOpen={onOpen}
                 onClose={onClose}
                 accordionItemStyle={accordionItemStyle}
-                {...accordionItemProps}
+                focused={focused}
+                openIndex={openIndex}
+                setIndex={setIndex}
+                setFocus={setFocus}
+                hidePreview={hidePreview}
               />
             )
-          } )}
-          </>
-          }
-          {showContent && <div className={styles.horizontalContent}>{content}</div> }
+          })}
+        </>
+      )}
+      {extraContent}
     </div>
   )
 }
