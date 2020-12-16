@@ -35,6 +35,9 @@ NOTE: DO NOT add "Component" as a wrapper. That is only for documentation. Use R
             onClose={(isOpen) => setState({ isOpen: false })}
           >
             {mattressIpsum(3)}
+            <br />
+            <br />
+            <Button onClick={() => setState({ isOpen: false })}>Close Modal</Button>
           </Modal>
           <Button btnType="primary" onClick={() => setState({ isOpen: !state.isOpen })} size="lg">
             Open Modal

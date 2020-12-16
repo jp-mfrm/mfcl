@@ -69,6 +69,7 @@ const Modal: FunctionComponent<Props> = ({
         closeBtnRef.current.focus()
       }
     } else {
+      setIsShowing(false)
       document.body.style.overflow = ''
 
       // with a fixed position, the scroll goes to the top.
