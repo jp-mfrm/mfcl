@@ -25,28 +25,6 @@ describe('Modal', () => {
     expect(getByTestId('yo')?.textContent).toBe('Yo')
   })
 
-  it('should render border style properly', () => {
-    const { rerender, getByRole } = render(
-      <Modal isOpen borderStyle="round">
-        {children}
-      </Modal>
-    )
-
-    expect(getByRole('dialog')?.classList).toContain('round')
-
-    rerender(
-      <Modal isOpen borderStyle="square">
-        {children}
-      </Modal>
-    )
-
-    expect(getByRole('dialog')?.classList).toContain('square')
-
-    rerender(<Modal isOpen>{children}</Modal>)
-
-    expect(getByRole('dialog')?.classList).toContain('square')
-  })
-
   it('it should render header properly', () => {
     const { rerender, getByText, queryByText, getByRole } = render(
       <Modal isOpen header="Header">
