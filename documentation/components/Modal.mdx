@@ -44,28 +44,3 @@ NOTE: DO NOT add "Component" as a wrapper. That is only for documentation. Use R
     }}
   </Component>
 </Playground>
-
-## Rounded Border
-
-<Playground>
-  <Component initialState={{ isOpen: false }}>
-    {({ setState, state }) => {
-      return (
-        <div>
-          <Modal
-            header="Rounded Border"
-            subheader="Subheader Details"
-            borderStyle="round"
-            isOpen={state.isOpen}
-            onClose={(isOpen) => setState({ isOpen: false })}
-          >
-            {mattressIpsum(3)}
-          </Modal>
-          <Button btnType="primary" onClick={() => setState({ isOpen: !state.isOpen })} size="lg">
-            Open Modal
-          </Button>
-        </div>
-      )
-    }}
-  </Component>
-</Playground>

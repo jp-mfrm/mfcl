@@ -14,8 +14,6 @@ interface Props {
   header?: string
   /** Subheader title for the modal */
   subheader?: string
-  /** Style to indicate modal border setting */
-  borderStyle?: 'round' | 'square'
   /** Class to pass to the modal center wrapper */
   contentClass?: string
   /** Whether or not the modal is open */
@@ -36,7 +34,6 @@ interface Props {
 const Modal: FunctionComponent<Props> = ({
   header = '',
   subheader = '',
-  borderStyle = 'square',
   contentClass = '',
   isOpen = false,
   onClose = null,
@@ -83,7 +80,7 @@ const Modal: FunctionComponent<Props> = ({
         window.scrollTo(0, offsetY || 0)
       }
     }
-  }, [isOpen, isShowing])
+  }, [isOpen])
 
   const hideModal = () => {
     if (onClose) {
@@ -116,12 +113,7 @@ const Modal: FunctionComponent<Props> = ({
     }
   }
 
-  const modalClasses = clsx(
-    styles['modal'],
-    isShowing && styles['active'],
-    styles[borderStyle],
-    rest.className as string
-  )
+  const modalClasses = clsx(styles['modal'], isShowing && styles['active'], rest.className as string)
   const modalContentClasses = clsx(styles['modal-content'], contentClass)
   const modalWrapperClasses = clsx(styles['modal-wrapper'], isShowing && styles['active'])
 
@@ -141,7 +133,7 @@ const Modal: FunctionComponent<Props> = ({
                 ref={closeBtnRef}
               >
                 <span className={clsx(styles['close-icon-wrapper'], closeButtonClass)} aria-hidden="true">
-                  <Close width="10" height="10" stroke={closeButtonColor} strokeWidth="2" />
+                  <Close width="10px" height="10px" stroke={closeButtonColor} strokeWidth="2" />
                 </span>
               </div>
             </>
