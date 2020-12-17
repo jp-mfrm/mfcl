@@ -3,11 +3,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import Transition from 'react-transition-group/Transition'
 import clsx from 'clsx'
 import Fade from '../Fade'
-import isClient from '../utils/isClient'
 import trapFocus from '../utils/trapFocus'
 import styles from './drawer.module.scss'
 import Portal from '../Portal'
 import Close from '../Icons/Close'
+import useOpenModal from '../utils/useOpenModal'
 
 export interface Props {
   /** Show a backdrop */
@@ -87,47 +87,12 @@ const Drawer: React.FunctionComponent<Props> = ({
   closeButtonClass = '',
   ...rest
 }) => {
-  const [isSafari] = useState(() => (isClient ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent) : false))
   const [isShowing, setIsShowing] = useState(isOpen)
 
-  const drawerClassName = clsx(styles['drawer-wrapper'], styles[position], className)
   const closeBtnRef = useRef<HTMLDivElement>(null)
   const modalRef: any = useRef<HTMLDivElement>(null)
-  const firstUpdate = useRef(true)
 
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false
-      return
-    }
-
-    if (isOpen) {
-      setIsShowing(true)
-      document.body.style.overflow = 'hidden'
-
-      // safari doesn't respect overflows on body/html. You need to set the position to fixed
-      if (isSafari) {
-        document.body.style.top = `${-window.pageYOffset}px`
-        document.body.style.position = 'fixed'
-      }
-
-      if (closeBtnRef.current !== null) {
-        closeBtnRef.current.focus()
-      }
-    } else {
-      document.body.style.overflow = ''
-
-      // with a fixed position, the scroll goes to the top.
-      // After setting the top, we grab that value and scroll to it to restore scroll position
-      if (isSafari) {
-        const offsetY = Math.abs(parseInt(document.body.style.top || '0', 10))
-        document.body.style.position = ''
-        document.body.style.top = ''
-        window.scrollTo(0, offsetY || 0)
-      }
-    }
-  }, [isOpen, isSafari])
-
+  useOpenModal({ isOpen, setIsShowing, closeBtnRef })
   useEffect(() => () => clearTimeout(timeout), [])
 
   if (!isOpen) {
@@ -162,6 +127,8 @@ const Drawer: React.FunctionComponent<Props> = ({
         break
     }
   }
+
+  const drawerClassName = clsx(styles['drawer-wrapper'], styles[position], className)
 
   return (
     <Portal>
