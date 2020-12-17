@@ -153,11 +153,6 @@ const Drawer: React.FunctionComponent<Props> = ({
         hideDrawer()
         break
       }
-      // enter
-      case 13: {
-        hideDrawer()
-        break
-      }
       // tab
       case 9: {
         trapFocus(e, modalRef)

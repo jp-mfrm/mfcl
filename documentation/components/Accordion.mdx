@@ -104,7 +104,7 @@ Accordion Component can be used to display a list of collapsable content panels 
 
 <Playground>
   <Accordion
-    hidePreview={true}
+    hidePreview
     items={[
       {
         preview: 'Example1, Example2',
@@ -136,10 +136,10 @@ Accordion Component can be used to display a list of collapsable content panels 
 ## Using AccordionItem as Single Item
 
 <Playground>
-  <Accordion singleItemAccordion={true}>
+  <Accordion singleItemAccordion>
     <AccordionItem title={'Test Single'} id={'test_1'} content={mattressIpsum(2)} />
   </Accordion>
-  <Accordion singleItemAccordion={true}>
+  <Accordion singleItemAccordion>
     <AccordionItem
       initialOpen
       title={'Test Single initial open'}
@@ -153,7 +153,7 @@ Accordion Component can be used to display a list of collapsable content panels 
 
 <Playground>
   <Accordion
-    horizontal={true}
+    horizontal
     items={[
       {
         preview: 'Example1, Example2',
