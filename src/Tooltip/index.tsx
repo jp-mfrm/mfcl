@@ -136,10 +136,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       }
 
       case 13: {
-        if (isShowing) {
-          hideTooltip()
-          removeListeners()
-        } else {
+        if (!isShowing) {
           showTooltip()
           assignOutsideTouchHandler()
         }

@@ -5,8 +5,8 @@ import Fade from '../Fade'
 import Portal from '../Portal'
 import Typography from '../Typography'
 import clsx from 'clsx'
-import isClient from '../utils/isClient'
 import styles from './modal.module.scss'
+import useOpenModal from '../utils/useOpenModal'
 import trapFocus from '../utils/trapFocus'
 
 interface Props {
@@ -14,8 +14,6 @@ interface Props {
   header?: string
   /** Subheader title for the modal */
   subheader?: string
-  /** Style to indicate modal border setting */
-  borderStyle?: 'round' | 'square'
   /** Class to pass to the modal center wrapper */
   contentClass?: string
   /** Whether or not the modal is open */
@@ -36,7 +34,6 @@ interface Props {
 const Modal: FunctionComponent<Props> = ({
   header = '',
   subheader = '',
-  borderStyle = 'square',
   contentClass = '',
   isOpen = false,
   onClose = null,
@@ -46,44 +43,12 @@ const Modal: FunctionComponent<Props> = ({
   closeButtonClass = '',
   ...rest
 }) => {
-  const [isSafari] = useState(() => (isClient ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent) : false))
   const [isShowing, setIsShowing] = useState(isOpen)
 
   const modalRef: any = useRef<HTMLDivElement>(null)
   const closeBtnRef = useRef<HTMLDivElement>(null)
-  const firstUpdate = useRef(true)
 
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false
-      return
-    }
-    if (isOpen) {
-      setIsShowing(true)
-      document.body.style.overflow = 'hidden'
-
-      // safari doesn't respect overflows on body/html. You need to set the position to fixed
-      if (isSafari) {
-        document.body.style.top = `${-window.pageYOffset}px`
-        document.body.style.position = 'fixed'
-      }
-
-      if (closeBtnRef.current !== null) {
-        closeBtnRef.current.focus()
-      }
-    } else {
-      document.body.style.overflow = ''
-
-      // with a fixed position, the scroll goes to the top.
-      // After setting the top, we grab that value and scroll to it to restore scroll position
-      if (isSafari) {
-        const offsetY = Math.abs(parseInt(document.body.style.top || '0', 10))
-        document.body.style.position = ''
-        document.body.style.top = ''
-        window.scrollTo(0, offsetY || 0)
-      }
-    }
-  }, [isOpen, isShowing])
+  useOpenModal({ isOpen, setIsShowing, closeBtnRef })
 
   const hideModal = () => {
     if (onClose) {
@@ -101,11 +66,6 @@ const Modal: FunctionComponent<Props> = ({
         hideModal()
         break
       }
-      // enter
-      case 13: {
-        hideModal()
-        break
-      }
       // tab
       case 9: {
         trapFocus(e, modalRef)
@@ -116,12 +76,7 @@ const Modal: FunctionComponent<Props> = ({
     }
   }
 
-  const modalClasses = clsx(
-    styles['modal'],
-    isShowing && styles['active'],
-    styles[borderStyle],
-    rest.className as string
-  )
+  const modalClasses = clsx(styles['modal'], isShowing && styles['active'], rest.className as string)
   const modalContentClasses = clsx(styles['modal-content'], contentClass)
   const modalWrapperClasses = clsx(styles['modal-wrapper'], isShowing && styles['active'])
 
@@ -141,7 +96,7 @@ const Modal: FunctionComponent<Props> = ({
                 ref={closeBtnRef}
               >
                 <span className={clsx(styles['close-icon-wrapper'], closeButtonClass)} aria-hidden="true">
-                  <Close width="10" height="10" stroke={closeButtonColor} strokeWidth="2" />
+                  <Close width="10px" height="10px" stroke={closeButtonColor} strokeWidth="2" />
                 </span>
               </div>
             </>
