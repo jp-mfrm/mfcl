@@ -12,8 +12,10 @@ export interface Props {
   name?: string
   /** Label for input field */
   label?: string | ReactNode
-  /** Size of the Input. Might add "sm" in the future */
-  size?: 'lg' | 'md' | 'sm'
+  /** Size of the Input. */
+  size?: 'lg' | 'sm'
+  /** Use rounded styling */
+  rounded?: boolean
   /** Makes the input field disabled */
   disabled?: boolean
   /** Apply error styling */
@@ -34,6 +36,7 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
     name,
     label,
     size = 'lg',
+    rounded = false,
     disabled = false,
     error = false,
     inputMessage,
@@ -63,7 +66,14 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
     <div className={clsx(styles['input-wrapper'], wrapperClass)}>
       <div className={styles.inner}>
         <input
-          className={clsx(styles.input, styles[size], errorClass, hasValue && styles['has-value'], className)}
+          className={clsx(
+            styles.input,
+            styles[size],
+            errorClass,
+            hasValue && styles['has-value'],
+            rounded && styles.rounded,
+            className
+          )}
           name={name}
           disabled={disabled}
           onChange={formControl}

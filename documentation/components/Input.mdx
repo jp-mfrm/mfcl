@@ -31,12 +31,10 @@ Generic attributes for input elements can be applied.
 
 ## Size
 
-You can choose between small, medium and large input field sizes, the default being large.
+You can choose between small and large input field sizes, the default being large.
 
 <Playground>
   <Input size="sm" label="sm" />
-  <br />
-  <Input size="md" label="md" />
   <br />
   <Input size="lg" label="lg" />
 </Playground>
@@ -71,6 +69,7 @@ Add a button or another component to the right side
 <Playground>
   <Input
     size="sm"
+    rounded={true}
     label="Right Side"
     rightSide={
       <Button btnType="secondary" style={{ height: '100%' }}>
@@ -80,7 +79,8 @@ Add a button or another component to the right side
   />
   <br />
   <Input
-    size="md"
+    size="sm"
+    rounded={true}
     label="Secondary Btn"
     rightSide={
       <svg viewBox="0 0 24 24" height={18} width={18} style={{ margin: '13px 20px' }}>
@@ -92,7 +92,7 @@ Add a button or another component to the right side
     }
   />
   <br />
-  <Input label="Tertiary Btn" rightSide={<Button style={{ height: '100%' }}>Submit</Button>} />
+  <Input rounded={true} label="Tertiary Btn" rightSide={<Button style={{ height: '100%' }}>Submit</Button>} />
 </Playground>
 
 ## With default values set

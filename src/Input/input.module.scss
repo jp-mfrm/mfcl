@@ -15,15 +15,16 @@
 }
 
 .footer {
-  text-align: center;
+  padding-left: 16px;
   font-size: 14px;
+  margin: 10px 0px;
 }
 
 .input {
   text-align: start;
-  border-radius: 25px;
+  border-radius: 5px;
   border: solid 1px #939393;
-  padding: 16px 34px;
+  padding: 14px 15px;
   font-family: $r-regular;
   font-size: 16px;
   font-weight: normal;
@@ -49,7 +50,7 @@
   &.has-value + .label {
     background: $white;
     top: -8px;
-    left: 33px;
+    left: 14px;
     font-size: 12px;
     line-height: 16px;
     padding-left: 2px;
@@ -73,11 +74,11 @@
   }
 
   &.sm {
-    padding: 8px 20px;
+    padding: 9px 15px;
   }
 
-  &.md {
-    padding: 12px 25px;
+  &.rounded {
+    border-radius: 25px;
   }
 
   &:-webkit-autofill,
@@ -111,21 +112,17 @@
 }
 
 .label {
-  font-size: 16px;
+  font-size: 14px;
   position: absolute;
   top: 18px;
-  left: 30px;
+  left: 15px;
   color: #5b5b5b;
   transition: all 0.2s ease-out;
   background: transparent;
   pointer-events: none;
 
   &.sm {
-    top: 10px;
-  }
-
-  &.md {
-    top: 14px;
+    top: 12px;
   }
 
   &.disabled {
