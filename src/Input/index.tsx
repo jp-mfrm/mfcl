@@ -81,7 +81,16 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
           {...rest}
         />
         {label && (
-          <label htmlFor={name} className={clsx(styles.label, styles[size], disabled && styles.disabled, errorClass)}>
+          <label
+            htmlFor={name}
+            className={clsx(
+              styles.label,
+              styles[size],
+              disabled && styles.disabled,
+              rounded && styles.roundedLabel,
+              errorClass
+            )}
+          >
             {label}
           </label>
         )}
