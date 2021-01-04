@@ -52,6 +52,7 @@
     border-color: #2d2926;
     outline: none;
     transition: all 0.2s ease-out;
+    padding: 13px 14px;
   }
 
   &:focus + .label,
@@ -88,11 +89,19 @@
 
   &.sm {
     padding: 9px 15px;
+
+    &:focus {
+      padding: 8px 14px;
+    }
   }
 
   &.rounded {
     border-radius: 50px;
     padding: 14px 25px;
+
+    &:focus {
+      padding: 13px 24px;
+    }
   }
 
   &:-webkit-autofill,
