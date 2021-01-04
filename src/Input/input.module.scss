@@ -18,6 +18,10 @@
   padding-left: 16px;
   font-size: 14px;
   margin: 10px 0px;
+
+  &.error {
+    color: $red;
+  }
 }
 
 .input {

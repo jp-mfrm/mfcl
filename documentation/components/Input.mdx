@@ -47,6 +47,7 @@ You can choose between regular or rounded inputs, default is regular.
   <Input label="Regular" />
   <br />
   <Input rounded label="Rounded" />
+  <br />
 </Playground>
 
 ## Required or Disabled
@@ -68,8 +69,6 @@ Add a small description below the input field.
   <Input inputMessage="This is an info message" label="info" />
   <br />
   <Input error inputMessage="This is an error message" label="error" />
-  <br />
-  <Input disabled error inputMessage="This is an disabled error message" label="disabled error" />
 </Playground>
 
 ## Right Side
@@ -78,7 +77,6 @@ Add a button or another component to the right side
 
 <Playground>
   <Input
-    size="sm"
     rounded={true}
     label="Right Side"
     rightSide={
@@ -89,7 +87,6 @@ Add a button or another component to the right side
   />
   <br />
   <Input
-    size="sm"
     rounded={true}
     label="Secondary Btn"
     rightSide={
