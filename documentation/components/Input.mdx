@@ -31,14 +31,23 @@ Generic attributes for input elements can be applied.
 
 ## Size
 
-You can choose between small, medium and large input field sizes, the default being large.
+You can choose between small and large input field sizes, the default being large.
 
 <Playground>
   <Input size="sm" label="sm" />
   <br />
-  <Input size="md" label="md" />
-  <br />
   <Input size="lg" label="lg" />
+</Playground>
+
+## Rounded
+
+You can choose between regular or rounded inputs, default is regular.
+
+<Playground>
+  <Input label="Regular" />
+  <br />
+  <Input rounded label="Rounded" />
+  <br />
 </Playground>
 
 ## Required or Disabled
@@ -60,8 +69,6 @@ Add a small description below the input field.
   <Input inputMessage="This is an info message" label="info" />
   <br />
   <Input error inputMessage="This is an error message" label="error" />
-  <br />
-  <Input disabled error inputMessage="This is an disabled error message" label="disabled error" />
 </Playground>
 
 ## Right Side
@@ -70,7 +77,7 @@ Add a button or another component to the right side
 
 <Playground>
   <Input
-    size="sm"
+    rounded={true}
     label="Right Side"
     rightSide={
       <Button btnType="secondary" style={{ height: '100%' }}>
@@ -80,7 +87,7 @@ Add a button or another component to the right side
   />
   <br />
   <Input
-    size="md"
+    rounded={true}
     label="Secondary Btn"
     rightSide={
       <svg viewBox="0 0 24 24" height={18} width={18} style={{ margin: '13px 20px' }}>
@@ -92,7 +99,7 @@ Add a button or another component to the right side
     }
   />
   <br />
-  <Input label="Tertiary Btn" rightSide={<Button style={{ height: '100%' }}>Submit</Button>} />
+  <Input rounded={true} label="Tertiary Btn" rightSide={<Button style={{ height: '100%' }}>Submit</Button>} />
 </Playground>
 
 ## With default values set

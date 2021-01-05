@@ -15,15 +15,20 @@
 }
 
 .footer {
-  text-align: center;
+  padding-left: 16px;
   font-size: 14px;
+  margin: 10px 0px;
+
+  &.error {
+    color: $red;
+  }
 }
 
 .input {
   text-align: start;
-  border-radius: 25px;
-  border: solid 1px #939393;
-  padding: 16px 34px;
+  border-radius: 5px;
+  border: solid 1px#B3B5B7;
+  padding: 14px 15px;
   font-family: $r-regular;
   font-size: 16px;
   font-weight: normal;
@@ -34,26 +39,36 @@
   color: #1e1e1e;
   width: 100%;
 
+  &:hover {
+    border: 1px solid #2d2926;
+  }
+
   &::placeholder {
     color: $gray-8;
   }
 
   &:focus {
-    border-width: 1px;
-    border-color: lighten($black, 30%);
+    border-width: 2px;
+    border-color: #2d2926;
     outline: none;
     transition: all 0.2s ease-out;
+    padding: 13px 14px;
   }
 
   &:focus + .label,
   &.has-value + .label {
     background: $white;
     top: -8px;
-    left: 33px;
+    left: 14px;
     font-size: 12px;
     line-height: 16px;
     padding-left: 2px;
     padding-right: 4px;
+  }
+
+  &:focus + .roundedLabel,
+  &.has-value + .roundedLabel {
+    margin-left: 10px;
   }
 
   &:disabled {
@@ -73,11 +88,20 @@
   }
 
   &.sm {
-    padding: 8px 20px;
+    padding: 9px 15px;
+
+    &:focus {
+      padding: 8px 14px;
+    }
   }
 
-  &.md {
-    padding: 12px 25px;
+  &.rounded {
+    border-radius: 50px;
+    padding: 14px 25px;
+
+    &:focus {
+      padding: 13px 24px;
+    }
   }
 
   &:-webkit-autofill,
@@ -102,7 +126,6 @@
   &:-webkit-autofill:active + .label {
     background: $white;
     top: -8px;
-    left: 33px;
     font-size: 12px;
     line-height: 16px;
     padding-left: 2px;
@@ -111,30 +134,31 @@
 }
 
 .label {
-  font-size: 16px;
+  font-size: 14px;
   position: absolute;
   top: 18px;
-  left: 30px;
-  color: #5b5b5b;
+  left: 15px;
+  color: #2d2926;
   transition: all 0.2s ease-out;
   background: transparent;
   pointer-events: none;
 
   &.sm {
-    top: 10px;
-  }
-
-  &.md {
-    top: 14px;
+    top: 12px;
   }
 
   &.disabled {
     color: lighten(#1e1e1e, 70%);
   }
 
+  &.roundedLabel {
+    left: 25px;
+  }
+
   &.error {
     outline: 0;
     border-color: $red;
+    color: $red;
 
     &:disabled {
       border-color: lighten($red, 25%);
@@ -151,12 +175,4 @@
   height: 100%;
   position: absolute;
   right: 0;
-}
-
-.error {
-  color: $red !important;
-
-  &.disabled {
-    color: lighten($red, 30%) !important;
-  }
 }
