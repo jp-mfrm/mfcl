@@ -18,6 +18,10 @@ export interface Props {
   name: string
   /** An array of objects that contain header and content */
   items: Item[]
+  /** class name to add to tabs component */
+  className?: string
+  /** class name to add to tabs title */
+  titleClassName?: string
   /** Callback function for controlled behavior */
   onChange?: (activeIndex: number) => void
   /** Horizontal or vertical left tabs */
@@ -32,6 +36,8 @@ export interface Props {
 const Tabs: FunctionComponent<Props> = ({
   name,
   items,
+  className,
+  titleClassName,
   onChange,
   position = 'top',
   defaultValue = 0,
@@ -79,7 +85,7 @@ const Tabs: FunctionComponent<Props> = ({
   }
 
   return (
-    <div className={clsx(styles['tabs-wrapper'], styles[position])} {...rest}>
+    <div className={clsx(styles['tabs-wrapper'], styles[position], className)} {...rest}>
       <div className={styles['tablist-wrapper']}>
         <ul role="tablist" className={styles.tablist}>
           {items.map((item, index) => {
@@ -94,6 +100,7 @@ const Tabs: FunctionComponent<Props> = ({
                 handleClick={handleClick}
                 handleKeyDown={handleKeyDown}
                 isSelected={index === selectedIndex}
+                className={titleClassName}
               />
             )
           })}

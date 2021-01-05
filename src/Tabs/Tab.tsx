@@ -6,6 +6,7 @@ interface Props {
   name: string
   id: string
   index: number
+  className?: string
   innerRef: any
   isSelected: boolean
   label: string | ReactNode
@@ -17,6 +18,7 @@ const Tab: FunctionComponent<Props> = ({
   name,
   innerRef,
   id,
+  className,
   handleClick,
   handleKeyDown,
   isSelected,
@@ -36,7 +38,7 @@ const Tab: FunctionComponent<Props> = ({
         aria-controls={`panel-${name}-${index}`}
         id={`tab-${name}-${index}`}
         aria-selected={isSelected}
-        className={clsx(styles['tab-item'], isSelected && styles.active)}
+        className={clsx(styles['tab-item'], isSelected && styles.active, className)}
         href={`#${id}`}
         data-index={index}
         role="tab"
