@@ -15,6 +15,8 @@ import styles from '../AccordionItem/accordionItem.module.scss'
 type Props = {
   /** class to pass to the accordion wrapper */
   className?: string
+  /** class to pass to the accordion item title */
+  titleClassName?: string
   /** Option to hide preview text of AccordionItem on it's open state */
   hidePreview?: boolean
   /** list of AccordionItems to be rendered */
@@ -35,6 +37,7 @@ type Props = {
 
 const Accordion: FunctionComponent<Props> = ({
   className,
+  titleClassName,
   items,
   hidePreview = false,
   titleStyles = {},
@@ -143,6 +146,7 @@ const Accordion: FunctionComponent<Props> = ({
                 setIndex={setIndex}
                 setFocus={setFocus}
                 hidePreview={hidePreview}
+                titleClassName={titleClassName}
               />
             )
           })}

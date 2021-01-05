@@ -26,6 +26,8 @@ export type AccordionItemProps = {
   setIndex?: Function
   /** Order number of item in array of items */
   index?: number
+  /** class to pass to the accordion item title */
+  titleClassName?: string
   /** class to pass to the accordion item wrapper */
   className?: string
   /** styles to pass to each section title wrapper */
@@ -55,6 +57,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   index,
   focused,
   className,
+  titleClassName,
   openIndex,
   setFocus = () => {},
   setIndex = () => {},
@@ -154,7 +157,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
       >
         {icon && <div className={styles.icon}>{icon}</div>}
         <div className={centerStyles} style={centerInlineStyle}>
-          <div className={styles.title}>{title}</div>
+          <div className={clsx(styles['title'], titleClassName)}>{title}</div>
           {preview && <span className={previewStyles}>{preview} </span>}
         </div>
         <span className={styles.openIcon} />
