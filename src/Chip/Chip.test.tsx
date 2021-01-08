@@ -21,9 +21,10 @@ describe('Chip Component', () => {
 
   it('renders the correct variant', () => {
     const { container } = render(<Chip label="test" variant="filled" />)
+    const chip = container.querySelector('.chip')
     // @ts-ignore
     fireEvent.click(chip) // won't delete
-    expect(container.querySelector('.chip')?.classList).toContain('filled')
+    expect(chip?.classList).toContain('filled')
   })
 
   it('can delete', () => {
