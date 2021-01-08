@@ -72,9 +72,12 @@
   }
 
   &:disabled {
-    border: solid 1px $gray-3;
-    color: lighten(#1e1e1e, 70%);
+    background-color: #fff;
     cursor: not-allowed;
+
+    &:hover {
+      border: solid 1px#B3B5B7;
+    }
   }
 
   &.error {
@@ -82,8 +85,7 @@
     border-color: $red;
 
     &:disabled {
-      border-color: lighten($red, 25%);
-      color: lighten($red, 30%);
+      background-color: #fff;
     }
   }
 
@@ -148,7 +150,7 @@
   }
 
   &.disabled {
-    color: lighten(#1e1e1e, 70%);
+    color: #b3b5b7;
   }
 
   &.roundedLabel {
@@ -159,11 +161,6 @@
     outline: 0;
     border-color: $red;
     color: $red;
-
-    &:disabled {
-      border-color: lighten($red, 25%);
-      color: lighten($red, 30%);
-    }
   }
 
   @media screen and (min-width: $mobile) {
