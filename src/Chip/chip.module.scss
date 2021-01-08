@@ -1,0 +1,46 @@
+@import '../variables';
+
+.chip {
+  align-items: center;
+  background: $white;
+  border: 1px solid $gray-3;
+  border-radius: 17.5px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2px;
+  margin-right: 5px;
+  padding: 9px 11px 9px 15px;
+
+  &:hover {
+    background: $gray-1;
+    cursor: pointer;
+  }
+}
+
+.not-deletable {
+  pointer-events: none;
+}
+
+.sm {
+  padding: 5px 8px 5px 10px;
+
+  .chip-label {
+    font-size: 12px;
+    margin-right: 2px;
+  }
+}
+
+.filled {
+  background: $gray-3;
+
+  &:hover {
+    background: $gray-4;
+    border: 1px solid $gray-4;
+  }
+}
+
+.chip-label {
+  font-size: 14px;
+  line-height: 12px;
+  margin-right: 4px;
+}

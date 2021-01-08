@@ -1,0 +1,80 @@
+---
+name: Chip
+menu: Components
+route: /components-chip
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Chip, Button } from '../../src'
+import Check from '../../src/Icons/Check.tsx'
+
+# Chip
+
+```javascript
+import Chip from 'mfcl/Chip'
+```
+
+## Description
+
+Chips allow users to enter information, make selections, filter content, or trigger actions.
+
+While included here as a standalone component, the most common use will be in some form of input, so some of the behaviour demonstrated here is not shown in context.
+
+## Properties
+
+<Props of={Chip} />
+
+## Basic Usage
+
+<Playground>
+  <Chip label="Basic" />
+  <Chip label="Filled" variant="filled" />
+  <Chip label="Check Icon" rightIcon={<Check />} />
+  <Chip label="Small" size="sm" />
+  <Chip label="Medium" size="md" />
+</Playground>
+
+## Deletable List
+
+<Playground>
+  <Component
+    initialState={{
+      chipData: ['$100-$500', '$501-$1000', '$1001-$1500', '$1501-$2000', '$2000+']
+    }}
+  >
+    {({ setState, state }) => {
+      const handleDelete = (chipLabel) => {
+        setState({ chipData: state.chipData.filter((chip) => chip !== chipLabel) })
+      }
+      return (
+        <>
+          <ul style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', listStyle: 'none' }}>
+            {state.chipData.map((chip, i) => (
+              <li key={chip}>
+                <Chip label={chip} onDelete={handleDelete} />
+              </li>
+            ))}
+            <li>
+              <Button onClick={() => setState({ chipData: [] })} size="sm" btnType="link">
+                Clear All
+              </Button>
+            </li>
+          </ul>
+          <Button
+            onClick={() => setState({ chipData: ['$100-$500', '$501-$1000', '$1001-$1500', '$1501-$2000', '$2000+'] })}
+            size="sm"
+          >
+            Refresh
+          </Button>
+        </>
+      )
+    }}
+  </Component>
+</Playground>
+
+## Accessibility
+
+If the Chip is deletable or clickable then it is a button in tab order.
+
+When the Chip is focused (e.g. when tabbing) releasing (`keyup` event) `Backspace` or `Delete` will call the `onDelete` handler while releasing `Escape` will blur the Chip.

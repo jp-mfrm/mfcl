@@ -33,8 +33,10 @@ import Tooltip from './Tooltip'
 import Pagination from './Pagination'
 import Typography from './Typography'
 import Slider from './Slider'
+import Chip from './Chip';
 
 export {
+  Chip,
   Slider,
   Accordion,
   AccordionItem,

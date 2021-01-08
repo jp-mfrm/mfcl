@@ -17,7 +17,7 @@
   &.align-right {
     justify-content: flex-end;
   }
-  
+
   &.top {
     flex-direction: column-reverse;
 
@@ -71,13 +71,19 @@
   }
 
   &.sm {
-    height: 16px;
-    width: 16px;
-    min-width: 16px;
+    height: 17px;
+    width: 17px;
+    min-width: 17px;
+    border: solid 1.5px #b3b5b7;
     border-radius: 2px;
 
     &:checked {
-      background-size: contain;
+      background-size: 12px;
+      border: solid 1.5px $gray-11;
+
+      &.red {
+        border: solid 1.5px $red;
+      }
     }
   }
 
@@ -97,7 +103,11 @@
 }
 
 .label {
-  font-size: 12px;
-  font-weight: 500;
-  padding-top: 5px;
+  font-size: 14px;
+  font-weight: normal;
+  padding-top: 3px;
+
+  &.lg {
+    font-size: 16px;
+  }
 }
