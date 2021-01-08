@@ -34,7 +34,7 @@ const Checkbox: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(f
     className,
     backgroundColor = 'black',
     defaultChecked,
-    alignment="center",
+    alignment = 'center',
     onChange,
     label,
     labelPlacement = 'right',
@@ -59,7 +59,9 @@ const Checkbox: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(f
   }
 
   return (
-    <label className={clsx(styles['checkbox-container'], styles[labelPlacement], styles[`align-${alignment}`], wrapperClass)}>
+    <label
+      className={clsx(styles['checkbox-container'], styles[labelPlacement], styles[`align-${alignment}`], wrapperClass)}
+    >
       <input
         type="checkbox"
         onChange={handleCheck}
@@ -68,7 +70,7 @@ const Checkbox: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(f
         checked={valueDerived}
         {...rest}
       />
-      {label && <span className={clsx(styles.label, labelClass)}>{label}</span>}
+      {label && <span className={clsx(styles.label, styles[size], labelClass)}>{label}</span>}
     </label>
   )
 })

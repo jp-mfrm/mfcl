@@ -1,10 +1,10 @@
-import React, { FunctionComponent, ElementType } from 'react'
+import React, { FunctionComponent, ElementType, ReactNode } from 'react'
 import clsx from 'clsx'
 
 import styles from './badge.module.scss'
 
 interface Props {
-  children: string
+  children: ReactNode
   /** Applies a primary or secondary style to the badge */
   type?: 'primary' | 'secondary'
   /** Overrides styles */
