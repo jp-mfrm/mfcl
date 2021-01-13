@@ -12,9 +12,11 @@ interface Props {
   /** type of Chip */
   size?: 'sm' | 'md'
   /** type of Chip */
-  variant?: 'outlined' | 'filled'
+  variant?: 'outlined' | 'default' | 'filled'
   /** Makes the chip deletable */
   onDelete?: (label: string) => void
+  /** callback for onClick */
+  onClick?: (label: string) => void
   [rest: string]: unknown
 }
 
@@ -36,30 +38,43 @@ const Chip: FunctionComponent<Props> = ({
   size = 'md',
   variant = 'outlined',
   onDelete,
+  onClick,
   ...rest
 }) => {
   const chipRef = useRef(null)
 
-  const handleDelete = () => {
+  const handleClick = () => {
     if (onDelete) {
       onDelete(label)
+    }
+
+    if (onClick) {
+      onClick(label)
     }
   }
 
   const handleKeyUp = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (isDeletableKeyboardEvent(event)) {
-      handleDelete()
+    if (isDeletableKeyboardEvent(event) && onDelete) {
+      onDelete(label)
     } else if (event.key === 'Escape' && chipRef && chipRef.current) {
       // @ts-ignore
       chipRef.current.blur()
+    } else if (event.key === 'Enter' && onClick) {
+      onClick(label)
     }
   }
 
   return (
     <button
-      className={clsx(styles.chip, styles[size], styles[variant], !onDelete && styles['not-deletable'], className)}
+      className={clsx(
+        styles.chip,
+        styles[size],
+        styles[variant],
+        !onDelete && !onClick && styles['not-clickable'],
+        className
+      )}
       id={`chip-${label}`}
-      onClick={handleDelete}
+      onClick={handleClick}
       onKeyUp={handleKeyUp}
       type="button"
       ref={chipRef}
