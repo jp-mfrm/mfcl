@@ -739,7 +739,6 @@ export default function carouselHelper(
   }, [windowWidth])
 
   useEffect(() => {
-    // set to slide1?
     setChildrenArray(getChildrenArr(children))
   }, [children])
 
