@@ -337,7 +337,7 @@ export default function carouselHelper(
   if (autoSlide) infinite = true
 
   // Configure slide boundary vars
-  const [childrenArr] = useState<ReactNode[]>(getChildrenArr(children))
+  const [childrenArr, setChildrenArray] = useState<ReactNode[]>(getChildrenArr(children))
   const [baseSlideCount] = useState(childrenArr.length)
   const [slidesShown, setSlidesShown] = useState(itemsToShow <= baseSlideCount ? itemsToShow : baseSlideCount)
   const [initLeftPos, setInitLeftState] = useState(0)
@@ -737,6 +737,10 @@ export default function carouselHelper(
 
     return () => window.removeEventListener('resize', handleResize)
   }, [windowWidth])
+
+  useEffect(() => {
+    setChildrenArray(getChildrenArr(children))
+  }, [children])
 
   useEffect(() => {
     const { current } = slidesRef
