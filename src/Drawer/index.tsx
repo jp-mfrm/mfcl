@@ -37,6 +37,8 @@ export interface Props {
   closeButtonColor?: string
   /** Class to pass to the modal close button  */
   closeButtonClass?: string
+  /** id for drawer*/
+  id?: string
   [rest: string]: unknown
 }
 
@@ -85,6 +87,7 @@ const Drawer: React.FunctionComponent<Props> = ({
   headerClassName = '',
   closeButtonColor = '#2D2926',
   closeButtonClass = '',
+  id = '',
   ...rest
 }) => {
   const [isShowing, setIsShowing] = useState(isOpen)
@@ -133,7 +136,7 @@ const Drawer: React.FunctionComponent<Props> = ({
   return (
     <Portal>
       <>
-        <Transition in={isShowing} timeout={duration} {...rest}>
+        <Transition in={isShowing} timeout={duration} id={id} {...rest}>
           {(state) => (
             // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
             <div
@@ -153,6 +156,7 @@ const Drawer: React.FunctionComponent<Props> = ({
                     className={styles.close}
                     aria-label="Close Drawer"
                     ref={closeBtnRef}
+                    id={`close-drawer-${id}`}
                   >
                     <span className={clsx(styles['close-icon-wrapper'], closeButtonClass)} aria-hidden="true">
                       <Close width="10" height="10" stroke={closeButtonColor} strokeWidth="2" />

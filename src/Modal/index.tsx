@@ -28,6 +28,8 @@ interface Props {
   closeButtonClass?: string
   /** Child elements of the modal  */
   children?: React.ReactNode
+  /** id for modal */
+  id?: string
   [rest: string]: unknown // ...rest property
 }
 
@@ -41,6 +43,7 @@ const Modal: FunctionComponent<Props> = ({
   children = null,
   closeButtonColor = '#2D2926',
   closeButtonClass = '',
+  id = '',
   ...rest
 }) => {
   const [isShowing, setIsShowing] = useState(isOpen)
@@ -85,7 +88,15 @@ const Modal: FunctionComponent<Props> = ({
       <div className={modalWrapperClasses}>
         <Fade duration={duration} in={isOpen}>
           <div className={styles['modal-overlay']} onClick={hideModal} onKeyDown={handleKeys} />
-          <div role="dialog" aria-modal="true" onKeyDown={handleKeys} ref={modalRef} {...rest} className={modalClasses}>
+          <div
+            role="dialog"
+            aria-modal="true"
+            onKeyDown={handleKeys}
+            ref={modalRef}
+            id={id}
+            {...rest}
+            className={modalClasses}
+          >
             <>
               <div
                 role="button"
@@ -94,6 +105,7 @@ const Modal: FunctionComponent<Props> = ({
                 className={styles.close}
                 aria-label="Close Modal"
                 ref={closeBtnRef}
+                id={`close-modal-${id}`}
               >
                 <span className={clsx(styles['close-icon-wrapper'], closeButtonClass)} aria-hidden="true">
                   <Close width="10px" height="10px" stroke={closeButtonColor} strokeWidth="2" />
