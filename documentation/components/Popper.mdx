@@ -8,6 +8,7 @@ import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
 import { Popper } from '../../src'
 import { Typography } from '../../src'
+import { Row } from './helpers'
 
 # Popper
 
@@ -34,3 +35,46 @@ TODO add description here
     )}
   </Component>
 </Playground>
+
+## Different positions
+
+<Playground>
+  <Row> 
+      <br />Top </Row>
+  <br />
+  <Row>{<Popper trigger={'Top Position'} offsetY={5} position={'top'} />}</Row>
+  <br />
+  <Row>{<Popper trigger={'Top-Start Position'} offsetY={5} position={'top-start'} />}</Row>
+  <br />
+  <Row> {<Popper trigger={'Top-End Position'} offsetY={5} position={'top-end'} />}</Row>
+  
+  <Row> 
+      <br /> Bottom </Row>
+  <br />
+  <Row>{<Popper trigger={'Bottom Position'} offsetY={5} position={'bottom'} />}</Row>
+  <br />
+  <Row>{<Popper trigger={'Bottom-Start Position'} offsetY={5} position={'bottom-start'} />}</Row>
+  <br />
+  <Row> {<Popper trigger={'Bottom-End Position'} offsetY={5} position={'bottom-end'} />}</Row>
+  
+  <Row> 
+      <br /> Left </Row>
+  <br />
+  <Row>{<Popper trigger={'Left Position'} offsetY={5} position={'left'} />}</Row>
+  <br />
+  <Row>{<Popper trigger={'Left-Start Position'} offsetY={5} position={'left-start'} />}</Row>
+  <br />
+  <Row> {<Popper trigger={'Left-End Position'} offsetY={5} position={'left-end'} />}</Row>
+  
+  <Row> 
+      <br />Right </Row>
+  <br />
+  <Row>{<Popper trigger={'Right Position'} offsetY={5} position={'right'} />}</Row>
+  <br />
+  <Row>{<Popper trigger={'Right-Start Position'} offsetY={5} position={'right-start'} />}</Row>
+  <br />
+  <Row> {<Popper trigger={'Right-End Position'} offsetY={5} position={'right-end'} />}</Row>
+
+
+</Playground>
+

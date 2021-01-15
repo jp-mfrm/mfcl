@@ -11,7 +11,19 @@ interface Props {
   /** Override styles to trigger */
   triggerClass?: string
   /** Position of tooltip in relation to the trigger */
-  position?: 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'left'
+  position?:
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'righ-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end'
   /** Space offset left/right in relation to the trigger */
   offsetX?: number
   /** Space offset top/bottom in relation to the trigger */
@@ -40,13 +52,13 @@ const Popper: FunctionComponent<Props> = ({
   const { styles, attributes } = usePopper(clickRef.current, popperRef.current, {
     placement: position,
     modifiers: [
-      // {
-      //   name: 'offset',
-      //   enabled: true,
-      //   options: {
-      //     offset: [offsetX, offsetY]
-      //   }
-      // },
+      {
+        name: 'offset',
+        enabled: true,
+        options: {
+          offset: [offsetX, offsetY]
+        }
+      },
       { name: 'arrow', options: { element: arrowRef.current } }
     ]
   })
