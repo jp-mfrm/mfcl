@@ -34,8 +34,10 @@ import Pagination from './Pagination'
 import Typography from './Typography'
 import Slider from './Slider'
 import Chip from './Chip';
+import Popper from './Popper';
 
 export {
+  Popper,
   Chip,
   Slider,
   Accordion,

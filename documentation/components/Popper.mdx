@@ -1,0 +1,36 @@
+---
+name: Popper
+menu: Components
+route: /components-popper
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Popper } from '../../src'
+import { Typography } from '../../src'
+
+# Popper
+
+```javascript
+import Popper from 'mfcl/Popper'
+```
+
+## Description
+
+TODO add description here
+
+## Properties
+
+<Props of={Popper} />
+
+## Basic Usage
+
+<Playground>
+  <Component initialState={{}}>
+    {({ setState, state }) => (
+      <Popper trigger={'Click Here'} offsetY={5}>
+        Popper
+      </Popper>
+    )}
+  </Component>
+</Playground>
