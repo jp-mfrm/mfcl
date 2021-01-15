@@ -17,7 +17,7 @@
   }
 }
 
-.not-deletable {
+.not-clickable {
   pointer-events: none;
 }
 
@@ -30,12 +30,28 @@
   }
 }
 
-.filled {
-  background: $gray-3;
+.default {
+  background: #f0f0f0;
+  border: 1px solid #f0f0f0;
 
   &:hover {
-    background: $gray-4;
-    border: 1px solid $gray-4;
+    background: $gray-3;
+    border: 1px solid $gray-3;
+  }
+}
+
+.filled {
+  background: $red;
+  border: 1px solid $red;
+  color: $white;
+
+  &:hover {
+    background: $dark-red;
+    border: 1px solid $dark-red;
+  }
+
+  path {
+    stroke: $white;
   }
 }
 
