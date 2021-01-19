@@ -39,7 +39,9 @@
   position: absolute;
   width: 16px;
   height: 16px;
-  background: hotpink;
+  transform: rotate(45deg);
+
+  // background: hotpink;
   &:after {
     position: absolute;
     width: 0;
@@ -59,8 +61,10 @@
   &:after {
     left: 0;
     bottom: 0;
-    border-top-color: #ffffff;
-    border-bottom: none;
+    // border-top-color: #ffffff;
+    // border-bottom: none;
+    border-color: black transparent transparent transparent;
+    border-width: 0.4rem 0.5rem 0 0.5rem;
   }
 }
 
@@ -70,8 +74,8 @@
   &:after {
     top: 0;
     left: 0;
-    border-bottom-color: #ffffff;
-    border-top: none;
+    // border-bottom-color: #ffffff;
+    // border-top: none;
   }
 }
 

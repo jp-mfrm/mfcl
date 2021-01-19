@@ -37,7 +37,7 @@ interface Props {
 const Popper: FunctionComponent<Props> = ({
   trigger,
   triggerClass,
-  position = 'bottom-start',
+  position = 'bottom',
   offsetX = 0,
   offsetY = 0,
   contentClass,
@@ -70,7 +70,6 @@ const Popper: FunctionComponent<Props> = ({
     console.log('test')
     setVisibility(!visible)
   }
-  console.log(styles.arrow)
 
   // const placement1 = attributes && attributes.popper && attributes.popper['data-popper-placement']
   // const arrowTopClass = position && position.startsWith('top') && ' top'
@@ -100,10 +99,10 @@ const Popper: FunctionComponent<Props> = ({
             style={styles.arrow}
             className={clsx(
               customStyles['arrow'],
-              position.startsWith('top') && 'styleArrowTop',
-              position.startsWith('bottom') && 'styleArrowBottom',
-              position.startsWith('left') && 'styleArrowLeft',
-              position.startsWith('right') && 'styleArrowRight'
+              position.startsWith('top') && customStyles['styleArrowBottom'],
+              position.startsWith('bottom') && customStyles['styleArrowTop'],
+              position.startsWith('left') && customStyles['styleArrowRight'],
+              position.startsWith('right') && customStyles['styleArrowLeft']
             )}
           />
         </div>
