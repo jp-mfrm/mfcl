@@ -44,53 +44,97 @@ const Popper: FunctionComponent<Props> = ({
   ...rest
 }) => {
   const [visible, setVisibility] = useState(false)
+  const [referenceElement, setReferenceElement] = React.useState(null)
+  const [popperElement, setPopperElement] = React.useState(null)
+  const [arrowElement, setArrowElement] = React.useState(null)
 
-  const clickRef = useRef<HTMLButtonElement>(null)
-  const popperRef = useRef<HTMLDivElement>(null)
-  const arrowRef = useRef<HTMLDivElement>(null)
+  // const clickRef = useRef<HTMLButtonElement>(null)
+  // const popperRef = useRef<HTMLDivElement>(null)
+  // const arrowRef = useRef<HTMLDivElement>(null)
 
-  const { styles, attributes } = usePopper(clickRef.current, popperRef.current, {
+  const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement: position,
     modifiers: [
+      { name: 'arrow', options: { element: arrowElement } },
       {
         name: 'offset',
         enabled: true,
         options: {
           offset: [offsetX, offsetY]
         }
-      },
-      { name: 'arrow', options: { element: arrowRef.current } }
+      }
     ]
   })
 
   function handleClick() {
+    console.log('test')
     setVisibility(!visible)
   }
+  console.log(styles.arrow)
+
+  // const placement1 = attributes && attributes.popper && attributes.popper['data-popper-placement']
+  // const arrowTopClass = position && position.startsWith('top') && ' top'
 
   return (
-    <>
-      <div
-        className={clsx(customStyles['popper-wrapper'])}
-        role="button"
-        tabindex={0}
-        ref={clickRef}
-        onClick={handleClick}
-      >
-        <div className={clsx(customStyles['popper-trigger'], triggerClass)}> {trigger} </div>
-      </div>
-
-      <div ref={popperRef} style={styles.popper} {...attributes.popper}>
-        <div ref={arrowRef} style={styles.arrow} />
-        {visible && (
-          // <Portal>
-          <div className={clsx(customStyles['popper-content'], contentClass)}>
-            FREE ADJUSTABLE BASE 3 with Queen mattress purchase of $699+ or King $999+. Use code: ELEVATE{' '}
-          </div>
-          // </Portal>
-        )}
-      </div>
-    </>
+    <div className={clsx(customStyles['popper-wrapper'])} onClick={handleClick}>
+      <button type="button" ref={setReferenceElement}>
+        {trigger}
+      </button>
+      {visible && (
+        <div
+          ref={setPopperElement}
+          style={styles.popper}
+          className={clsx(customStyles['content'])}
+          {...attributes.popper}
+        >
+          Popper element
+          {/* Popper element
+          // styleArrow,
+          //   placement && placement.startsWith("top") && styleArrowBottom,
+          //   placement && placement.startsWith("bottom") && styleArrowTop,
+          //   placement && placement.startsWith("left") && styleArrowRight,
+          //   placement && placement.startsWith("right") && styleArrowLeft */}
+          <div
+            ref={setArrowElement}
+            data-placement={position}
+            style={styles.arrow}
+            className={clsx(
+              customStyles['arrow'],
+              position.startsWith('top') && 'styleArrowTop',
+              position.startsWith('bottom') && 'styleArrowBottom',
+              position.startsWith('left') && 'styleArrowLeft',
+              position.startsWith('right') && 'styleArrowRight'
+            )}
+          />
+        </div>
+      )}
+    </div>
   )
+
+  // return (
+  //   <>
+  //     <div
+  //       className={clsx(customStyles['popper-wrapper'])}
+  //       role="button"
+  //       tabIndex={0}
+  //       ref={referenceElement}
+  //       onClick={handleClick}
+  //     >
+  //       <div className={clsx(customStyles['popper-trigger'], triggerClass)}> {trigger} </div>
+  //     </div>
+
+  //     <div ref={popperElement} style={styles.popper} {...attributes.popper}>
+  //       <div ref={arrowElement} style={styles.arrow} />
+  //       {visible && (
+  //         // <Portal>
+  //         <div className={clsx(customStyles['popper-content'], contentClass)}>
+  //           FREE ADJUSTABLE BASE 3 with Queen mattress purchase of $699+ or King $999+. Use code: ELEVATE{' '}
+  //         </div>
+  //         // </Portal>
+  //       )}
+  //     </div>
+  //   </>
+  // )
 }
 
 export default Popper

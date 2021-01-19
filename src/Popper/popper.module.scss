@@ -11,18 +11,88 @@
   color: $red;
 }
 
-.popper-content {
-  font-size: 14px;
-  background: white;
+// .popper-content {
+//   font-size: 14px;
+//   background: white;
+//   border: 1px solid black;
+//   max-width: 300px;
+//   padding: 15px;
+// }
+
+// .popper-arrow {
+//   width: 0;
+//   height: 0;
+//   border-style: solid;
+//   position: absolute;
+//   margin: 5px;
+// }
+
+.content {
+  // position: relative;
+  background-color: #ffffff;
+  border-radius: 2px;
   border: 1px solid black;
-  max-width: 300px;
-  padding: 15px;
+  position: absolute;
 }
 
-.popper-arrow {
-  width: 0;
-  height: 0;
-  border-style: solid;
+.arrow {
   position: absolute;
-  margin: 5px;
+  width: 16px;
+  height: 16px;
+  background: hotpink;
+  &:after {
+    position: absolute;
+    width: 0;
+    height: 0;
+    content: '';
+    pointer-events: none;
+  }
+
+  &:after {
+    border: 8px solid transparent;
+  }
+}
+
+.styleArrowBottom {
+  bottom: -8px;
+
+  &:after {
+    left: 0;
+    bottom: 0;
+    border-top-color: #ffffff;
+    border-bottom: none;
+  }
+}
+
+.styleArrowTop {
+  top: -8px;
+
+  &:after {
+    top: 0;
+    left: 0;
+    border-bottom-color: #ffffff;
+    border-top: none;
+  }
+}
+
+.styleArrowLeft {
+  left: -8px;
+
+  &:after {
+    left: 0;
+    top: 0;
+    border-right-color: #ffffff;
+    border-left: none;
+  }
+}
+
+.styleArrowRight {
+  right: -8px;
+
+  &:after {
+    right: 0;
+    top: 0;
+    border-left-color: #ffffff;
+    border-right: none;
+  }
 }
