@@ -4,7 +4,8 @@ import { render, fireEvent } from '@testing-library/react'
 import Pagination from './index'
 
 const defaultProps = {
-  totalPages: 5
+  totalItems: 5,
+  itemsPerPage: 1
 }
 
 describe('Pagination Component', () => {
@@ -40,15 +41,15 @@ describe('Pagination Component', () => {
   })
 
   it('renders the ellipses', () => {
-    const { getAllByText, rerender } = render(<Pagination totalPages={10} ellipses siblingPages={0} activePage={1} />)
+    const { getAllByText, rerender } = render(<Pagination totalItems={10} itemsPerPage={1} ellipses siblingPages={0} activePage={1} />)
     expect(getAllByText("...")[0]).toBeInTheDocument()
     expect(getAllByText("...")[1]).toBeUndefined()
 
-    rerender(<Pagination totalPages={10} ellipses siblingPages={0} activePage={7} boundaryCount={{ start: 3, end: 1 }} />)
+    rerender(<Pagination totalItems={100} itemsPerPage={10} ellipses siblingPages={0} activePage={7} boundaryCount={{ start: 3, end: 1 }} />)
     expect(getAllByText("...")[0]).toBeInTheDocument()
     expect(getAllByText("...")[1]).toBeInTheDocument()
 
-    rerender(<Pagination totalPages={10} ellipses siblingPages={0} activePage={10} boundaryCount={{ start: 20, end: 1 }} />)
+    rerender(<Pagination totalItems={100} itemsPerPage={10} ellipses siblingPages={0} activePage={10} boundaryCount={{ start: 20, end: 1 }} />)
     expect(getAllByText("...")[0]).toBeInTheDocument()
     expect(getAllByText("...")[1]).toBeUndefined()
 

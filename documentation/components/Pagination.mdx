@@ -27,7 +27,7 @@ Pagination allows you to paginate through a list of items.
 
 <Playground>
   <Row>
-    <Pagination totalPages={10} />
+    <Pagination totalItems={10} itemsPerPage={5} />
   </Row>
 </Playground>
 
@@ -35,7 +35,7 @@ Pagination allows you to paginate through a list of items.
 
 <Playground>
   <Row>
-    <Pagination totalPages={20} siblingPages={2} />
+    <Pagination totalItems={20} itemsPerPage={5} siblingPages={2} />
   </Row>
 </Playground>
 
@@ -43,7 +43,7 @@ Pagination allows you to paginate through a list of items.
 
 <Playground>
   <Row>
-    <Pagination totalPages={60} showItemCount countName="Reviews" />
+    <Pagination totalItems={60} itemsPerPage={5} showItemCount countName="Reviews" />
   </Row>
 </Playground>
 
@@ -51,7 +51,7 @@ Pagination allows you to paginate through a list of items.
 
 <Playground>
   <Row>
-    <Pagination itemsPerPage={10} totalPages={10} showItemCount />
+    <Pagination itemsPerPage={10} totalItems={100} showItemCount />
   </Row>
 </Playground>
 
@@ -60,10 +60,12 @@ Pagination allows you to paginate through a list of items.
 <Playground>
   <Row>
    <Pagination
-    totalPages={10}
+    totalItems={76}
+    itemsPerPage={10}
+    showItemCount
     ellipses
     siblingPages={0}
-    boundaryCount={{ start: 3, end: 1 }}
+    boundaryCount={{ start: 3, end: 2 }}
   />
   </Row>
 </Playground>
