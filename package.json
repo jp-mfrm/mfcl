@@ -85,5 +85,8 @@
       "!src/react-app-env.d.ts",
       "!src/setupTests.js"
     ]
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.6.0"
   }
 }
