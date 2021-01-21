@@ -54,3 +54,16 @@ Pagination allows you to paginate through a list of items.
     <Pagination itemsPerPage={10} totalPages={10} showItemCount />
   </Row>
 </Playground>
+
+## Ellipses
+
+<Playground>
+  <Row>
+   <Pagination
+    totalPages={10}
+    ellipses
+    siblingPages={0}
+    boundaryCount={{ start: 3, end: 1 }}
+  />
+  </Row>
+</Playground>
