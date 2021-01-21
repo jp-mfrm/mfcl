@@ -39,6 +39,22 @@ describe('Pagination Component', () => {
     expect(container.querySelector('.numText')).toBeInTheDocument()
   })
 
+  it('renders the ellipses', () => {
+    const { getAllByText, rerender } = render(<Pagination totalPages={10} ellipses siblingPages={0} activePage={1} />)
+    expect(getAllByText("...")[0]).toBeInTheDocument()
+    expect(getAllByText("...")[1]).toBeUndefined()
+
+    rerender(<Pagination totalPages={10} ellipses siblingPages={0} activePage={7} boundaryCount={{ start: 3, end: 1 }} />)
+    expect(getAllByText("...")[0]).toBeInTheDocument()
+    expect(getAllByText("...")[1]).toBeInTheDocument()
+
+    rerender(<Pagination totalPages={10} ellipses siblingPages={0} activePage={10} boundaryCount={{ start: 20, end: 1 }} />)
+    expect(getAllByText("...")[0]).toBeInTheDocument()
+    expect(getAllByText("...")[1]).toBeUndefined()
+
+
+  })
+
   it('clicks the correct button and sets the correct page', () => {
     const { getByLabelText } = render(<Pagination {...defaultProps} />)
     const page2 = getByLabelText('Go to page 2')
