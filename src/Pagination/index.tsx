@@ -47,12 +47,10 @@ const insertEllipses = (
   let pages: Array<any> = [...startPages, ...range(siblingsStart, siblingsEnd), ...endPages]
 
   if (startPages[startPages.length - 1] !== siblingsStart - 1) {
-    console.log('first')
     pages.splice(boundaryStart, 0, '...')
   }
 
   if (endPages.length && siblingsEnd !== endPages[0] - 1 && startPages[startPages.length - 1] !== endPages[0] - 1) {
-    console.log('second')
     pages.splice(pages.length - boundaryEnd, 0, '...')
   }
 
