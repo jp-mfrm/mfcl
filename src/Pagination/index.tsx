@@ -7,8 +7,8 @@ import useControlled from '../utils/useControlled'
 import styles from './pagination.module.scss'
 
 interface Props {
-  /** total pages are in the pagination */
-  totalPages: number
+  /** total items to be paginated */
+  totalItems: number
   /** Number of always visible pages before and after the current page. */
   siblingPages?: number
   /** Which page is currently selected */
@@ -16,7 +16,7 @@ interface Props {
   /** Number of always visible pages at the beginning and end. */
   boundaryCount?: number | { start: number; end: number }
   /** How many items will show per page */
-  itemsPerPage?: number
+  itemsPerPage: number
   /** Adds a name to the count if shown */
   countName?: string
   /** Shows the count of the items in the pagination list */
@@ -42,15 +42,17 @@ const insertEllipses = (
   siblingsStart: number,
   siblingsEnd: number,
   startPages: number[],
-  endPages: number[],
+  endPages: number[]
 ) => {
   let pages: Array<any> = [...startPages, ...range(siblingsStart, siblingsEnd), ...endPages]
-  
-  if(startPages[startPages.length-1] !==  siblingsStart - 1) {
+
+  if (startPages[startPages.length - 1] !== siblingsStart - 1) {
+    console.log('first')
     pages.splice(boundaryStart, 0, '...')
   }
 
-  if(siblingsEnd !== endPages[0] - 1) {
+  if (endPages.length && siblingsEnd !== endPages[0] - 1 && startPages[startPages.length - 1] !== endPages[0] - 1) {
+    console.log('second')
     pages.splice(pages.length - boundaryEnd, 0, '...')
   }
 
@@ -61,7 +63,7 @@ const Pagination: FunctionComponent<Props> = ({
   activePage,
   boundaryCount = 0,
   siblingPages = 1,
-  totalPages,
+  totalItems,
   itemsPerPage = 6,
   showItemCount = false,
   ellipses = false,
@@ -75,6 +77,12 @@ const Pagination: FunctionComponent<Props> = ({
     defaultValue: 1
   })
 
+  const totalPages = Math.ceil(totalItems / itemsPerPage)
+  const [currentItems, setCurrentItems] = useState(
+    `${1 + itemsPerPage * (currentPage - 1)} - ${currentPage === totalPages ? totalItems : itemsPerPage * currentPage}`
+  )
+  const indexOfFirstPage = totalPages - totalPages + 1
+
   let boundaryStart = 0
   let boundaryEnd = 0
 
@@ -82,21 +90,20 @@ const Pagination: FunctionComponent<Props> = ({
 
   if (typeof boundaryCount === 'object' && 'start' in boundaryCount && 'end' in boundaryCount) {
     boundaryStart = boundaryCount.start < totalPages ? boundaryCount.start : 1
-    boundaryEnd = boundaryCount.end
+    if (totalPages < boundaryCount.start + boundaryCount.end) boundaryEnd = 1
+    else boundaryEnd = boundaryCount.end
   } else {
     boundaryStart = boundaryEnd = boundaryCount
   }
-
-  const [currentItems, setCurrentItems] = useState(itemsPerPage)
-  const totalItems = itemsPerPage * totalPages
-  const indexOfFirstPage = totalPages - totalPages + 1
 
   const setNumberOfPage = (number: number) => {
     if (onChange) {
       onChange(number)
     }
     setCurrentPage(number)
-    setCurrentItems(number * itemsPerPage)
+    setCurrentItems(
+      `${1 + itemsPerPage * (number - 1)} - ${number === totalPages ? totalItems : itemsPerPage * number}`
+    )
   }
 
   const setPreviousPage = () => {
@@ -135,14 +142,7 @@ const Pagination: FunctionComponent<Props> = ({
     )
 
     if (ellipses) {
-      return insertEllipses(
-        boundaryStart,
-        boundaryEnd,
-        siblingsStart,
-        siblingsEnd,
-        startPages,
-        endPages
-      )
+      return insertEllipses(boundaryStart, boundaryEnd, siblingsStart, siblingsEnd, startPages, endPages)
     } else {
       return [...startPages, ...range(siblingsStart, siblingsEnd), ...endPages]
     }
