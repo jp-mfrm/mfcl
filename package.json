@@ -26,10 +26,6 @@
     "watch": "rollup -c -w",
     "build:dist": "rimraf dist && node ./scripts/buildDist"
   },
-  "dependencies": {
-    "@popperjs/core": "^2.6.0",
-    "react-popper": "^2.2.4"
-  },
   "peerDependencies": {
     "clsx": "^1.1.0",
     "react": "^16.13.0 || ^17.0.0",
@@ -62,6 +58,7 @@
     "react": "^16.11.0",
     "react-component-component": "^1.2.1",
     "react-dom": "^16.11.0",
+    "react-popper": "^2.2.4",
     "react-scripts": "^3.4.3",
     "react-test-renderer": "^16.13.1",
     "react-transition-group": "^4.4.1",

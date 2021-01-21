@@ -85,7 +85,6 @@ const Popper: FunctionComponent<Props> = ({
   }, [visible])
 
   function handleClick() {
-    console.log('click')
     setVisibility(!visible)
   }
 

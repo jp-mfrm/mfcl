@@ -99,19 +99,15 @@ TODO add description here
 ## With a Heading and No Close Button
 
 <Playground>
-  <Component initialState={{}}>
-    {({ setState, state }) => (
-      <Popper
-        trigger={'Click Here'}
-        position={'top-start'}
-        offsetY={10}
-        tooltipContent="This is what goes in the popper!"
-        header={'Header'}
-      >
-        Popper
-      </Popper>
-    )}
-  </Component>
+  <Popper
+    trigger={'Click Here'}
+    position={'top-start'}
+    offsetY={10}
+    tooltipContent="This is what goes in the popper!"
+    header={'Header'}
+  >
+    Popper
+  </Popper>
 </Playground>
 
 ## Different positions
