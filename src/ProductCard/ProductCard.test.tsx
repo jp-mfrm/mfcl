@@ -2,10 +2,9 @@ import React from 'react'
 import { render } from '@testing-library/react'
 
 import ProductCard from './index'
-import { isNull } from 'util'
 
 const defaultProps = {
-  brandImg: '',
+  brand: '',
   productImg: '',
   title: '',
   pricePrefix: '',
@@ -45,10 +44,9 @@ describe('ProductCard Component', () => {
     expect(getByTestId('review-count').textContent).toEqual(`(${numOfReviews})`)
   })
 
-  it('should render the brand img', () => {
-    let image = 'image/choo-choo'
-    const { container } = render(<ProductCard {...defaultProps} brand="brand" brandImg={image} />)
-    expect(container.querySelector('.brand-logo > img')?.getAttribute('src')).toEqual(image)
+  it('should render the brand logo', () => {
+    const { container } = render(<ProductCard {...defaultProps} brand="beautyrest" />)
+    expect(container.querySelector('.brand-logo')).toBeInTheDocument()
   })
 
   it('should render the product img', () => {
