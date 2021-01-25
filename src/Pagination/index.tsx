@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useMemo } from 'react'
+import React, { FunctionComponent, useState, useMemo, useEffect } from 'react'
 import clsx from 'clsx'
 import PaginationNumber from './PaginationNumber'
 import PaginationArrow from './PaginationArrow'
@@ -75,9 +75,10 @@ const Pagination: FunctionComponent<Props> = ({
     defaultValue: 1
   })
 
-  const totalPages = Math.ceil(totalItems / itemsPerPage)
+  const [itemsCount] = useState(totalItems)
+  const totalPages = Math.ceil(itemsCount / itemsPerPage)
   const [currentItems, setCurrentItems] = useState(
-    `${1 + itemsPerPage * (currentPage - 1)} - ${currentPage === totalPages ? totalItems : itemsPerPage * currentPage}`
+    `${1 + itemsPerPage * (currentPage - 1)} - ${currentPage === totalPages ? itemsCount : itemsPerPage * currentPage}`
   )
   const indexOfFirstPage = totalPages - totalPages + 1
 
@@ -94,13 +95,21 @@ const Pagination: FunctionComponent<Props> = ({
     boundaryStart = boundaryEnd = boundaryCount
   }
 
+  useEffect(() => {
+    setCurrentItems(
+      `${1 + itemsPerPage * (currentPage - 1)} - ${
+        currentPage === totalPages ? itemsCount : itemsPerPage * currentPage
+      }`
+    )
+  }, [itemsCount])
+
   const setNumberOfPage = (number: number) => {
     if (onChange) {
       onChange(number)
     }
     setCurrentPage(number)
     setCurrentItems(
-      `${1 + itemsPerPage * (number - 1)} - ${number === totalPages ? totalItems : itemsPerPage * number}`
+      `${1 + itemsPerPage * (number - 1)} - ${number === totalPages ? itemsCount : itemsPerPage * number}`
     )
   }
 
@@ -168,7 +177,7 @@ const Pagination: FunctionComponent<Props> = ({
       </ul>
       {showItemCount && (
         <span className={styles.numText}>
-          {currentItems} out of {totalItems} {countName}
+          {currentItems} out of {itemsCount} {countName}
         </span>
       )}
     </nav>
