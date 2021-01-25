@@ -83,6 +83,14 @@ const Popper: FunctionComponent<Props> = ({
       }
     }
   }, [visible])
+
+  useEffect(() => {
+    if (visible) {
+      handleTouch()
+    }
+    return removeListeners
+  }, [visible])
+
   const assignOutsideTouchHandler = () => {
     document.addEventListener('click', handler)
     document.addEventListener('keydown', handleEscape)
