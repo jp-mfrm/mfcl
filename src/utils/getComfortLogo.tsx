@@ -1,100 +1,57 @@
-import React, { lazy, Suspense } from 'react'
-
-// load them in dynamically for when we need them
-const ExtraFirmBed = lazy(() => import('../Icons/ExtraFirmBed'))
-const FirmBed = lazy(() => import('../Icons/FirmBed'))
-const MediumBed = lazy(() => import('../Icons/MediumBed'))
-const PlushBed = lazy(() => import('../Icons/PlushBed'))
-const UltraPlushBed = lazy(() => import('../Icons/UltraPlushBed'))
-const ExtraFirm = lazy(() => import('../Icons/ExtraFirm'))
-const ExtraPlush = lazy(() => import('../Icons/ExtraPlush'))
-const Firm = lazy(() => import('../Icons/Firm'))
-const Medium = lazy(() => import('../Icons/Medium'))
-const Plush = lazy(() => import('../Icons/Plush'))
+import React from 'react'
+import FirmBed from '../Icons/FirmBed'
+import ExtraFirmBed from '../Icons/ExtraFirmBed'
+import MediumBed from '../Icons/MediumBed'
+import PlushBed from '../Icons/PlushBed'
+import UltraPlushBed from '../Icons/UltraPlushBed'
+import ExtraFirm from '../Icons/ExtraFirm'
+import ExtraPlush from '../Icons/ExtraPlush'
+import Firm from '../Icons/Firm'
+import Medium from '../Icons/Medium'
+import Plush from '../Icons/Plush'
 
 const getComfortLogo = (comfort = '') => {
   switch (comfort.toLowerCase()) {
     case 'extrafirmbed': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <ExtraFirmBed />{' '}
-        </Suspense>
-      )
+      return <ExtraFirmBed />
     }
+    break
     case 'firmbed': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <FirmBed />{' '}
-        </Suspense>
-      )
+      return <FirmBed />
     }
+    break
     case 'mediumbed': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <MediumBed />{' '}
-        </Suspense>
-      )
+      return <MediumBed />
     }
+    break
     case 'plushbed': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <PlushBed />{' '}
-        </Suspense>
-      )
+      return <PlushBed />
     }
+    break
     case 'ultraplushbed': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <UltraPlushBed />{' '}
-        </Suspense>
-      )
+      return <UltraPlushBed />
     }
+    break
     case 'extrafirm': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <ExtraFirm />{' '}
-        </Suspense>
-      )
+      return <ExtraFirm />
     }
+    break
     case 'extraplush': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <ExtraPlush />{' '}
-        </Suspense>
-      )
+      return <ExtraPlush />
     }
+    break
     case 'firm': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <Firm />{' '}
-        </Suspense>
-      )
+      return <Firm />
     }
+    break
     case 'medium': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <Medium />{' '}
-        </Suspense>
-      )
+      return <Medium />
     }
+    break
     case 'plush': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <Plush />{' '}
-        </Suspense>
-      )
+      return <Plush />
     }
-    
+    break
     default:
       return comfort
   }

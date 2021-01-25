@@ -1,17 +1,15 @@
-import React, { lazy, Suspense } from 'react'
-
-// load them in dynamically for when we need them
-const BeautyRestBrand = lazy(() => import('../Icons/BeautyRestBrand'))
-const IntellibedBrand = lazy(() => import('../Icons/IntellibedBrand'))
-const LullBrand = lazy(() => import('../Icons/LullBrand'))
-const PurpleBrand = lazy(() => import('../Icons/PurpleBrand'))
-const SertaBrand = lazy(() => import('../Icons/SertaBrand'))
-const SealyBrand = lazy(() => import('../Icons/SealyBrand'))
-const SleepysBrand = lazy(() => import('../Icons/SleepysBrand'))
-const StearnsAndFosterBrand = lazy(() => import('../Icons/StearnsAndFosterBrand'))
-const TempurPedicBrand = lazy(() => import('../Icons/TempurPedicBrand'))
-const TuftAndNeedleBrand = lazy(() => import('../Icons/TuftAndNeedleBrand'))
-const TuloBrand = lazy(() => import('../Icons/TuloBrand'))
+import React from 'react'
+import BeautyRestBrand from '../Icons/BeautyRestBrand'
+import IntellibedBrand from '../Icons/IntellibedBrand'
+import LullBrand from '../Icons/LullBrand'
+import PurpleBrand from '../Icons/PurpleBrand'
+import SertaBrand from '../Icons/SertaBrand'
+import SealyBrand from '../Icons/SealyBrand'
+import SleepysBrand from '../Icons/SleepysBrand'
+import StearnsAndFosterBrand from '../Icons/StearnsAndFosterBrand'
+import TempurPedicBrand from '../Icons/TempurPedicBrand'
+import TuftAndNeedleBrand from '../Icons/TuftAndNeedleBrand'
+import TuloBrand from '../Icons/TuloBrand'
 
 /** dynamically changes SVG width based on height */
 function getWidthBasedOnHeight(startingWidth: number, startingHeight: number, height: number) {
@@ -20,95 +18,61 @@ function getWidthBasedOnHeight(startingWidth: number, startingHeight: number, he
 
 const getBrandLogo = (manufacturName = '', height = 18) => {
   switch (manufacturName.toLowerCase()) {
-    case 'beautyrest': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <BeautyRestBrand width={getWidthBasedOnHeight(150, 34, height)} height={height} />{' '}
-        </Suspense>
-      )
-    }
-    case 'intellibed': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <IntellibedBrand fillColor="#000" width={getWidthBasedOnHeight(149, 17, height)} height={height} />{' '}
-        </Suspense>
-      )
-    }
-    case 'lull': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <LullBrand width={getWidthBasedOnHeight(149, 90, height)} height={height} />{' '}
-        </Suspense>
-      )
-    }
-    case 'purple': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <PurpleBrand width={getWidthBasedOnHeight(123, 39, height)} height={height} />
-        </Suspense>
-      )
-    }
-    case 'serta': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <SertaBrand width={getWidthBasedOnHeight(69, 54, height)} height={height} />
-        </Suspense>
-      )
-    }
-    case 'sealy': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <SealyBrand width={getWidthBasedOnHeight(71, 60, height)} height={height} />
-        </Suspense>
-      )
-    }
-    case "sleepy's": {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <SleepysBrand width={getWidthBasedOnHeight(146, 42, height)} height={height} />
-        </Suspense>
-      )
-    }
-    case 'stearns and foster': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <StearnsAndFosterBrand width={getWidthBasedOnHeight(258, 19, height)} height={height} />
-        </Suspense>
-      )
-    }
-    case 'tempur-pedic': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <TempurPedicBrand width={getWidthBasedOnHeight(163, 45, height)} height={height} />
-        </Suspense>
-      )
-    }
-    case 'tuft and needle': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <TuftAndNeedleBrand width={getWidthBasedOnHeight(190, 30, height)} height={height} />
-        </Suspense>
-      )
-    }
-    case 'tulo': {
-      return (
-        <Suspense fallback={<></>}>
-          {' '}
-          <TuloBrand width={getWidthBasedOnHeight(190, 30, height)} height={height} />
-        </Suspense>
-      )
-    }
-
+    case 'beautyrest':
+      {
+        return <BeautyRestBrand width={getWidthBasedOnHeight(150, 34, height)} height={height} />
+      }
+      break
+    case 'intellibed':
+      {
+        return <IntellibedBrand fillColor="#000" width={getWidthBasedOnHeight(149, 17, height)} height={height} />
+      }
+      break
+    case 'lull':
+      {
+        return <LullBrand width={getWidthBasedOnHeight(149, 90, height)} height={height} />
+      }
+      break
+    case 'purple':
+      {
+        return <PurpleBrand width={getWidthBasedOnHeight(123, 39, height)} height={height} />
+      }
+      break
+    case 'serta':
+      {
+        return <SertaBrand width={getWidthBasedOnHeight(69, 54, height)} height={height} />
+      }
+      break
+    case 'sealy':
+      {
+        return <SealyBrand width={getWidthBasedOnHeight(71, 60, height)} height={height} />
+      }
+      break
+    case "sleepy's":
+      {
+        return <SleepysBrand width={getWidthBasedOnHeight(146, 42, height)} height={height} />
+      }
+      break
+    case 'stearns and foster':
+      {
+        return <StearnsAndFosterBrand width={getWidthBasedOnHeight(258, 19, height)} height={height} />
+      }
+      break
+    case 'tempur-pedic':
+      {
+        return <TempurPedicBrand width={getWidthBasedOnHeight(163, 45, height)} height={height} />
+      }
+      break
+    case 'tuft and needle':
+      {
+        return <TuftAndNeedleBrand width={getWidthBasedOnHeight(190, 30, height)} height={height} />
+      }
+      break
+    case 'tulo':
+      {
+        return <TuloBrand width={getWidthBasedOnHeight(190, 30, height)} height={height} />
+      }
+      break
     default:
       return manufacturName
   }
