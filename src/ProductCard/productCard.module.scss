@@ -1,11 +1,12 @@
 @import '../variables';
 
 .product-card-container {
+  display: flex;
   border: 1px solid #f1f1f2;
   width: 255px;
   margin: auto;
   border-radius: 2px;
-
+  
   @media screen and (max-width: 320px) {
     width: 218px;
   }
@@ -25,6 +26,7 @@
   text-transform: uppercase;
   padding: 5px 10px;
   margin: 15px;
+  width: fit-content;
 }
 
 .price-container {
@@ -55,9 +57,8 @@
   line-height: 21px;
 }
 
-.contentCol {
+.content {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
 
@@ -71,6 +72,13 @@
   justify-content: space-between;
   align-items: flex-start;
   margin: 15px 0;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 15px;
 }
 
 .details-container {
@@ -119,6 +127,12 @@
   }
 }
 
-.size {
-  display: flex;
+.row {
+  flex-direction: row;
+  justify-content: start;
+  width: 100%;
+}
+
+.column {
+  flex-direction: column;
 }
