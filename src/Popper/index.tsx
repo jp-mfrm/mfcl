@@ -83,9 +83,44 @@ const Popper: FunctionComponent<Props> = ({
       }
     }
   }, [visible])
+  const assignOutsideTouchHandler = () => {
+    document.addEventListener('click', handler)
+    document.addEventListener('keydown', handleEscape)
+  }
 
-  function handleClick() {
-    setVisibility(!visible)
+  const removeListeners = () => {
+    document.removeEventListener('click', handler)
+    document.removeEventListener('keydown', handleEscape)
+  }
+
+  const handleEscape = (e: any) => {
+    switch (e.key) {
+      case 'Escape': {
+        hideTooltip()
+        removeListeners()
+        break
+      }
+    }
+  }
+
+  const handler = (e: any) => {
+    hideTooltip()
+    removeListeners()
+  }
+
+  const showTooltip = () => {
+    setVisibility(true)
+  }
+
+  const hideTooltip = () => {
+    setVisibility(false)
+  }
+
+  const handleTouch = () => {
+    if (!visible) {
+      showTooltip()
+      assignOutsideTouchHandler()
+    }
   }
 
   const handleKeys = (e: any) => {
@@ -94,14 +129,24 @@ const Popper: FunctionComponent<Props> = ({
     switch (key) {
       // Escape
       case 27: {
-        handleClick()
+        if (visible) {
+          hideTooltip()
+          removeListeners()
+        }
         break
       }
-      // enter
+
       case 13: {
-        handleClick()
+        if (!visible) {
+          showTooltip()
+          assignOutsideTouchHandler()
+        } else {
+          hideTooltip()
+          removeListeners()
+        }
         break
       }
+
       default:
         break
     }
@@ -109,6 +154,7 @@ const Popper: FunctionComponent<Props> = ({
 
   const popperContent = visible && (
     <div
+      data-testid="popper-content"
       // @ts-ignore
       ref={setPopperElement}
       style={styles.popper}
@@ -134,6 +180,7 @@ const Popper: FunctionComponent<Props> = ({
       {tooltipContent}
       {arrow && (
         <div
+          data-testid="arrow"
           // @ts-ignore
           ref={setArrowElement}
           data-placement={position}
@@ -151,7 +198,7 @@ const Popper: FunctionComponent<Props> = ({
   )
 
   return (
-    <div className={clsx(customStyles['popper-wrapper'])} onClick={handleClick} onKeyDown={handleKeys}>
+    <div className={clsx(customStyles['popper-wrapper'])} onClick={handleTouch} onKeyDown={handleKeys}>
       <div role="button" tabIndex={0} ref={referenceElement} className={triggerClass}>
         {trigger}
       </div>
