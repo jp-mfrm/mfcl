@@ -27,13 +27,13 @@ interface Props {
   /** The text that appears before the product price */
   pricePrefix?: string
   /** Price or price range of product */
-  price: number[]
+  price?: number[]
   /** Rating of product out of 5 */
   rating?: number
   /** Position of where the ratings are shown in the card */
   ratingPosition?: 'top' | 'bottom'
   /** Number of Product reviews */
-  reviews: number
+  reviews?: number
   /** Match of product with user, will appear at top */
   matchPercentage?: number
   /** Discounted price or range of discounted prices if any */
