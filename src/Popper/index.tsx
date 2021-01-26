@@ -84,20 +84,13 @@ const Popper: FunctionComponent<Props> = ({
     }
   }, [visible])
 
-  useEffect(() => {
-    if (visible) {
-      handleTouch()
-    }
-    return removeListeners
-  }, [visible])
-
   const assignOutsideTouchHandler = () => {
-    document.addEventListener('click', handler)
+    document.addEventListener('click', hideTooltip)
     document.addEventListener('keydown', handleEscape)
   }
 
   const removeListeners = () => {
-    document.removeEventListener('click', handler)
+    document.removeEventListener('click', hideTooltip)
     document.removeEventListener('keydown', handleEscape)
   }
 
@@ -110,24 +103,21 @@ const Popper: FunctionComponent<Props> = ({
       }
     }
   }
-
-  const handler = (e: any) => {
-    hideTooltip()
-    removeListeners()
-  }
-
   const showTooltip = () => {
     setVisibility(true)
+    assignOutsideTouchHandler()
   }
 
   const hideTooltip = () => {
     setVisibility(false)
+    removeListeners()
   }
 
-  const handleTouch = () => {
+  const handleClick = () => {
     if (!visible) {
       showTooltip()
-      assignOutsideTouchHandler()
+    } else {
+      hideTooltip()
     }
   }
 
@@ -206,7 +196,7 @@ const Popper: FunctionComponent<Props> = ({
   )
 
   return (
-    <div className={clsx(customStyles['popper-wrapper'])} onClick={handleTouch} onKeyDown={handleKeys}>
+    <div className={clsx(customStyles['popper-wrapper'])} onClick={handleClick} onKeyDown={handleKeys}>
       <div role="button" tabIndex={0} ref={referenceElement} className={triggerClass}>
         {trigger}
       </div>
