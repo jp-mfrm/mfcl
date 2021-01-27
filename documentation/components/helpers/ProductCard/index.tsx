@@ -1,11 +1,11 @@
 import React, { FunctionComponent, ReactNode } from 'react'
-import Rating from '../Rating'
-import Price from '../Price'
+import Rating from '../../../../src/Rating'
+import Price from '../../../../src/Price'
 
 import styles from './productCard.module.scss'
 import clsx from 'clsx'
-import getBrandLogo from '../utils/getBrandLogo'
-import getComfortLogo from '../utils/getComfortLogo'
+import BeautyRestBrand from '../../../../src/Icons/BeautyRestBrand'
+import UltraPlushBed from '../../../../src/Icons/UltraPlushBed'
 
 interface Props {
   /** Product brand */
@@ -60,6 +60,7 @@ interface Props {
 
 const ProductCard: FunctionComponent<Props> = ({
   brand,
+  brandImg,
   brandHeight,
   brandClass,
   layout = 'column',
@@ -89,7 +90,7 @@ const ProductCard: FunctionComponent<Props> = ({
 
   const branding = typeof brand === 'string' && (
     <span className={clsx(styles['brand-logo'], brandClass && styles[brandClass])}>
-      {getBrandLogo(brand, brandHeight)}
+      <BeautyRestBrand />
     </span>
   )
 
@@ -125,7 +126,7 @@ const ProductCard: FunctionComponent<Props> = ({
       {ratingPosition === 'bottom' && ratings}
       <div className={clsx(styles.infoRow, infoClass && styles[infoClass])}>
         {size && <div>{size}</div>}
-        {typeof comfort === 'string' && getComfortLogo(comfort)}
+        {typeof comfort === 'string' && <UltraPlushBed />}
       </div>
       {priceInfo}
       {children}

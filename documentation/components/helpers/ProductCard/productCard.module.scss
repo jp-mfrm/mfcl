@@ -1,4 +1,4 @@
-@import '../variables';
+@import '../../../../src/variables.scss';
 
 .product-card-container {
   display: flex;
@@ -6,7 +6,7 @@
   width: 255px;
   margin: auto;
   border-radius: 2px;
-  
+
   @media screen and (max-width: 320px) {
     width: 218px;
   }

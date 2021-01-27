@@ -22,7 +22,6 @@ import Panel from './Panel'
 import PanelItem from './PanelItem'
 import Portal from './Portal'
 import Price from './Price'
-import ProductCard from './ProductCard'
 import ProgressBar from './ProgressBar'
 import Rating from './Rating'
 import Select from './Select'
@@ -33,7 +32,7 @@ import Tooltip from './Tooltip'
 import Pagination from './Pagination'
 import Typography from './Typography'
 import Slider from './Slider'
-import Chip from './Chip';
+import Chip from './Chip'
 
 export {
   Chip,
@@ -64,7 +63,6 @@ export {
   Portal,
   Price,
   ProgressBar,
-  ProductCard,
   Rating,
   Select,
   Stepper,
