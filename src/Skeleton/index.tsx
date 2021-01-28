@@ -6,35 +6,62 @@ import styles from './skeleton.module.scss'
 interface Props {
   /** Sets the skeleton-pulse style */
   type?: 'text' | 'image' | 'button' | 'button-secondary'
-  /** Sets the width of the skeleton. */
-  width?: number | string | []
-  /** Sets the height of the skeleton. */
-  height?: number | string | []
+  /** Sets the width of the skeleton. Default unit is px. */
+  width?: number | string
+  /** Sets the height of the skeleton. Default unit is px. */
+  height?: number | string
   /** Makes the skeleton look like a circle */
   circle?: boolean
+  /** Override classNames on wrapper */
+  className?: string
+  /** Override styles on wrapper */
+  style?: object
   [rest: string]: unknown // ...rest property
 }
 
-const Skeleton: FunctionComponent<Props> = ({ type = 'text', width, height, circle, ...rest }) => {
-  const isTextType = type === 'text'
-  const inlineStyle = {
-    // @ts-ignore
-    ...rest.style,
-    width: `${width ?? (isTextType ? '100%' : '')}`,
-    height: `${height}`
+const getValidCSSInput = (input: string | number) => {
+  switch (typeof input) {
+    case 'undefined':
+    case 'boolean':
+      return null
+    case 'number':
+      return `${input}px`
+    default:
+      const parsedInput = parseFloat(input)
+      const unit = input.match(/%|em/)
+      return isNaN(parsedInput) ? '' : unit ? `${parsedInput}${unit}` : parsedInput + 'px'
   }
+}
+
+const Skeleton: FunctionComponent<Props> = ({
+  width,
+  height,
+  circle,
+  type = 'text',
+  className = '',
+  style = {},
+  ...rest
+}) => {
+  const isTextType = type === 'text'
 
   return (
     <span
+      {...rest}
       className={clsx(
         styles.pulse,
         styles[`${type}`],
         isTextType && styles.transform,
         type === 'button-secondary' && styles.button,
         circle && styles.circle,
-        rest.className as string
+        className
       )}
-      style={inlineStyle}
+      style={{
+        ...style,
+        //@ts-ignore
+        width: `${getValidCSSInput(width) ?? (isTextType ? '100%' : '')}`,
+        //@ts-ignore
+        height: `${getValidCSSInput(height) ?? ''}`
+      }}
     />
   )
 }

@@ -41,7 +41,25 @@ The Skeleton component allows you to a build out placeholder Skeleton layouts.
   <Skeleton type="button-secondary" />
 </Playground>
 
-## Custom
+## Width/Height Units
+
+<Playground>
+  <Skeleton type="text" width={25} />
+  <Skeleton type="text" width="25" />
+  <Skeleton type="text" width="25px" />
+  <Skeleton type="text" width="25%" />
+  <Skeleton type="text" width="10em" />
+  <br />
+  <div style={{ height: '200px' }}>
+    <Skeleton type="text" height={10} />
+    <Skeleton type="text" height="10" />
+    <Skeleton type="text" height="10px" />
+    <Skeleton type="text" height="10%" />
+    <Skeleton type="text" height="5em" />
+  </div>
+</Playground>
+
+## Custom Layouts
 
 <Playground>
   <Row>
