@@ -34,8 +34,10 @@ import Typography from './Typography'
 import Slider from './Slider'
 import Chip from './Chip';
 import Popper from './Popper';
+import Skeleton from './Skeleton';
 
 export {
+  Skeleton,
   Popper,
   Chip,
   Slider,
