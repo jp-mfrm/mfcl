@@ -11,17 +11,15 @@ interface Props {
 
 const PaginationNumber: FunctionComponent<Props> = ({ active, number, setNumberOfPage }) => {
   return (
-    <li>
-      <button
-        className={clsx(styles.button, active && styles.active)}
-        onClick={() => setNumberOfPage(number)}
-        aria-label={`Go to page ${number}`}
-        aria-current={active}
-        type="button"
-      >
-        {number}
-      </button>
-    </li>
+    <button
+      className={clsx(styles.button, active && styles.active)}
+      onClick={() => setNumberOfPage(number)}
+      aria-label={`Go to page ${number}`}
+      aria-current={active}
+      type="button"
+    >
+      {number}
+    </button>
   )
 }
 
