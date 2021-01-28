@@ -1,0 +1,46 @@
+@import '../variables.scss';
+
+.pulse {
+  animation: pulse 1.5s ease-in-out 0.5s infinite;
+  display: block;
+  background-color: rgba(0, 0, 0, 0.11);
+  // background-color: $gray-1;
+  margin-bottom: 15px;
+}
+
+.transform {
+  transform-origin: 0 55%;
+  transform: scale(1, 0.8);
+}
+
+.text {
+  height: 20px;
+  border-radius: 4px;
+}
+
+.image {
+  height: 110px;
+}
+
+.button {
+  border-radius: 25px;
+  height: 44px;
+  width: 100%;
+}
+
+.button-secondary {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.11);
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}

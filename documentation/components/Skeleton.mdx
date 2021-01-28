@@ -1,0 +1,58 @@
+---
+name: Skeleton
+menu: Components
+route: /components-skeleton
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Skeleton } from '../../src'
+import { Row } from './helpers'
+
+# Skeleton
+
+```javascript
+import Skeleton from 'mfcl/Skeleton'
+```
+
+## Description
+
+The Skeleton component allows you to a build out placeholder Skeleton layouts.
+
+## Properties
+
+<Props of={Skeleton} />
+
+## Basic usage
+
+<Playground>
+  <Skeleton width="25%" />
+  <Skeleton width="50%" />
+  <Skeleton width="75%" />
+  <Skeleton />
+</Playground>
+
+## Type
+
+<Playground>
+  <Skeleton type="text" />
+  <Skeleton type="image" />
+  <Skeleton type="button" />
+  <Skeleton type="button-secondary" />
+</Playground>
+
+## Custom
+
+<Playground>
+  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <Skeleton type="image" width="33%" style={{ marginRight: '15px' }} />
+    <div style={{ width: '66%' }}>
+      <Row justifyContent="space-between">
+        <Skeleton circle type="text" width="35px" height="28px" style={{ marginRight: '15px' }} />
+        <Skeleton type="text" width="75%" />
+      </Row>
+      <Skeleton type="text" width="75%" />
+      <Skeleton type="text" width="33%" />
+    </div>
+  </div>
+</Playground>
