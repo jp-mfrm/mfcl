@@ -30,7 +30,7 @@ describe('Skeleton Component', () => {
   })
 
   it('renders a circle skeleton', () => {
-    const { container  } = render(<Skeleton circle />)
-    expect(container.querySelector('.text')).toHaveStyle(`border-radius: 50%`)
+    const { container } = render(<Skeleton circle />)
+    expect(container.querySelector('.circle')).toBeInTheDocument()
   })
 })

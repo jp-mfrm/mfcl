@@ -17,13 +17,6 @@ interface Props {
 
 const Skeleton: FunctionComponent<Props> = ({ type = 'text', width, height, circle, ...rest }) => {
   const isTextType = type === 'text'
-  const className = clsx(
-    styles.pulse,
-    styles[`${type}`],
-    isTextType && styles.transform,
-    type === 'button-secondary' && styles.button,
-    rest.className as string
-  )
   const inlineStyle = {
     // @ts-ignore
     ...rest.style,
@@ -31,10 +24,19 @@ const Skeleton: FunctionComponent<Props> = ({ type = 'text', width, height, circ
     height: `${height}`
   }
 
-  if (circle) inlineStyle['border-radius'] = '50%'
-
-  const pulse = <span className={className} style={inlineStyle} />
-  return pulse
+  return (
+    <span
+      className={clsx(
+        styles.pulse,
+        styles[`${type}`],
+        isTextType && styles.transform,
+        type === 'button-secondary' && styles.button,
+        circle && styles.circle,
+        rest.className as string
+      )}
+      style={inlineStyle}
+    />
+  )
 }
 
 export default Skeleton

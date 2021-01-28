@@ -44,12 +44,37 @@ The Skeleton component allows you to a build out placeholder Skeleton layouts.
 ## Custom
 
 <Playground>
+  <Row>
+    <div style={{ width: '30%' }}>
+      <Skeleton type="image" width="100%" />
+      <Skeleton width="100%" />
+      <Skeleton width="66%" />
+    </div>
+    <div style={{ width: '30%' }}>
+      <Skeleton type="image" width="100%" />
+      <Skeleton width="100%" />
+      <Skeleton width="66%" />
+    </div>
+    <div style={{ width: '30%' }}>
+      <Skeleton type="image" width="100%" />
+      <Skeleton width="100%" />
+      <Skeleton width="66%" />
+    </div>
+  </Row>
+  <Skeleton type="text" height="10px" style={{ marginBottom: '15px' }} />
+  <Row justifyContent="center">
+    <Skeleton circle type="text" width="50px" height="60px" style={{ marginRight: '15px' }} />
+    <Skeleton width="66%" />
+    <Skeleton type="image" width="100%" />
+    <Skeleton type="button" width="100%" />
+  </Row>
+  <Skeleton type="text" height="10px" style={{ marginBottom: '15px' }} />
   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
     <Skeleton type="image" width="33%" style={{ marginRight: '15px' }} />
     <div style={{ width: '66%' }}>
       <Row justifyContent="space-between">
-        <Skeleton circle type="text" width="35px" height="28px" style={{ marginRight: '15px' }} />
-        <Skeleton type="text" width="75%" />
+        <Skeleton circle type="text" width="35px" height="35px" style={{ marginRight: '15px' }} />
+        <Skeleton type="text" width="60%" />
       </Row>
       <Skeleton type="text" width="75%" />
       <Skeleton type="text" width="33%" />
