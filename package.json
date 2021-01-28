@@ -26,7 +26,7 @@
     "watch": "rollup -c -w",
     "build:dist": "rimraf dist && node ./scripts/buildDist"
   },
-  "pre-commit": [
+  "pre-commit": [ 
     "test"
   ],
   "dependencies": {},
@@ -40,6 +40,7 @@
     "@babel/plugin-proposal-class-properties": "^7.7.0",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
+    "@popperjs/core": "^2.6.0",
     "@testing-library/jest-dom": "^5.11.3",
     "@testing-library/react": "^10.4.8",
     "@testing-library/react-hooks": "^3.4.1",
@@ -63,6 +64,7 @@
     "react": "^16.11.0",
     "react-component-component": "^1.2.1",
     "react-dom": "^16.11.0",
+    "react-popper": "^2.2.4",
     "react-scripts": "^3.4.3",
     "react-test-renderer": "^16.13.1",
     "react-transition-group": "^4.4.1",

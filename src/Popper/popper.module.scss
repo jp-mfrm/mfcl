@@ -1,0 +1,154 @@
+@import '../variables';
+
+.popper-wrapper {
+  display: inline-block;
+}
+
+.popper-trigger {
+  font-size: 14px;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: $red;
+  padding: 10px;
+  cursor: pointer;
+
+  &:focus {
+    outline: 1px;
+  }
+}
+
+.popper-header {
+  margin-bottom: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content {
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  border: 1px solid black;
+  max-width: 350px;
+}
+
+.close {
+  right: 0px;
+  top: 0px;
+  padding-bottom: 2px;
+  font-size: 35px;
+  line-height: 0.75;
+  font-weight: normal;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-X {
+  &:focus {
+    outline: 1px dashed black;
+  }
+}
+
+.arrow {
+  height: 1rem;
+  position: absolute;
+  width: 1rem;
+}
+
+.arrow::before {
+  border-style: solid;
+  content: '';
+  display: block;
+  height: 0;
+  margin: auto;
+  width: 0;
+}
+
+.arrow::after {
+  border-style: solid;
+  content: '';
+  display: block;
+  height: 0;
+  margin: auto;
+  position: absolute;
+  width: 0;
+}
+
+.styleArrowTop {
+  height: 1rem;
+  left: 0;
+  margin-top: -0.4rem;
+  top: 0;
+  width: 1rem;
+
+  &:before {
+    border-color: transparent transparent black transparent;
+    border-width: 0 0.5rem 0.4rem 0.5rem;
+    position: absolute;
+    top: -1px;
+  }
+
+  &:after {
+    border-color: transparent transparent white transparent;
+    border-width: 0 0.5rem 0.4rem 0.5rem;
+  }
+}
+
+.styleArrowBottom {
+  bottom: 0;
+  height: 1rem;
+  left: 0;
+  margin-bottom: -1rem;
+  width: 1rem;
+
+  &:before {
+    border-color: black transparent transparent transparent;
+    border-width: 0.4rem 0.5rem 0 0.5rem;
+    position: absolute;
+    top: 1px;
+  }
+  &:after {
+    border-color: white transparent transparent transparent;
+    border-width: 0.4rem 0.5rem 0 0.5rem;
+  }
+}
+
+.styleArrowLeft {
+  height: 1rem;
+  left: 0;
+  margin-left: -0.7rem;
+  width: 1rem;
+
+  &:before {
+    border-color: transparent black transparent transparent;
+    border-width: 0.5rem 0.4rem 0.5rem 0;
+  }
+
+  &:after {
+    border-color: transparent white transparent transparent;
+    border-width: 0.5rem 0.4rem 0.5rem 0;
+    left: 6px;
+    top: 0;
+  }
+}
+
+.styleArrowRight {
+  height: 1rem;
+  margin-right: -0.8rem;
+  right: 0;
+  width: 1rem;
+
+  &:before {
+    border-color: transparent transparent transparent black;
+    border-width: 0.5rem 0 0.5rem 0.4em;
+  }
+
+  &:after {
+    border-color: transparent transparent transparent white;
+    border-width: 0.5rem 0 0.5rem 0.4em;
+    left: 3px;
+    top: 0;
+  }
+}
