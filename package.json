@@ -26,6 +26,10 @@
     "watch": "rollup -c -w",
     "build:dist": "rimraf dist && node ./scripts/buildDist"
   },
+  "pre-commit": [ 
+    "test"
+  ],
+  "dependencies": {},
   "peerDependencies": {
     "clsx": "^1.1.0",
     "react": "^16.13.0 || ^17.0.0",
