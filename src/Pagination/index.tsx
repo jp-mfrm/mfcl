@@ -160,7 +160,7 @@ const Pagination: FunctionComponent<Props> = ({
       <ul className={styles['list-wrapper']}>
         <PaginationArrow arrowType="Previous" onClick={setPreviousPage} show={currentPage > indexOfFirstPage} />
         {pages.map((value, index) => (
-          <div key={`pagination-${index}`}>
+          <li key={`pagination-${index}-${value === '...' ? 'ellipses' : value}`}>
             {value === '...' ? (
               <span>...</span>
             ) : (
@@ -171,7 +171,7 @@ const Pagination: FunctionComponent<Props> = ({
                 setNumberOfPage={setNumberOfPage}
               />
             )}
-          </div>
+          </li>
         ))}
         <PaginationArrow arrowType="Next" onClick={setNextPage} show={currentPage < totalPages} />
       </ul>

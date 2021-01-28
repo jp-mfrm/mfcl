@@ -20,6 +20,8 @@ const external = [
   'react',
   'react-transition-group/Transition',
   'clsx',
+  '@popperjs/core',
+  'react-popper',
   ...mfclComponents // don't bundle itself when components reuse other components
 ]
 

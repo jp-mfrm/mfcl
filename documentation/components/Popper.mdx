@@ -1,0 +1,149 @@
+---
+name: Popper
+menu: Components
+route: /components-popper
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Popper } from '../../src'
+import { Typography } from '../../src'
+import { Row } from './helpers'
+
+# Popper
+
+```javascript
+import Popper from 'mfcl/Popper'
+```
+
+## Description
+
+TODO add description here
+
+## Properties
+
+<Props of={Popper} />
+
+## Basic Usage
+
+<Playground>
+  <Component initialState={{}}>
+    {({ setState, state }) => (
+      <Popper
+        trigger={'Click Here'}
+        position={'top-start'}
+        offsetY={10}
+        tooltipContent="This is what goes in the popper!"
+      >
+        Popper
+      </Popper>
+    )}
+  </Component>
+</Playground>
+
+## Without Arrows
+
+<Playground>
+  <Component initialState={{}}>
+    {({ setState, state }) => (
+      <Popper
+        trigger={'Click Here'}
+        position={'top-start'}
+        arrow={false}
+        offsetY={10}
+        tooltipContent="This is what goes in the popper!"
+      >
+        Popper
+      </Popper>
+    )}
+  </Component>
+</Playground>
+
+## With Only a Close Button
+
+<Playground>
+  <Component initialState={{}}>
+    {({ setState, state }) => (
+      <Popper
+        trigger={'Click Here'}
+        position={'top-start'}
+        offsetY={10}
+        tooltipContent="This is what goes in the popper!"
+        closeBtn={true}
+      >
+        Popper
+      </Popper>
+    )}
+  </Component>
+</Playground>
+
+## With a Close Button & Heading
+
+<Playground>
+  <Component initialState={{}}>
+    {({ setState, state }) => (
+      <Popper
+        trigger={'Click Here'}
+        position={'top-start'}
+        offsetY={10}
+        tooltipContent="This is what goes in the popper!"
+        closeBtn={true}
+        header={'Header'}
+      >
+        Popper
+      </Popper>
+    )}
+  </Component>
+</Playground>
+
+## With a Heading and No Close Button
+
+<Playground>
+  <Popper
+    trigger={'Click Here'}
+    position={'top-start'}
+    offsetY={10}
+    tooltipContent="This is what goes in the popper!"
+    header={'Header'}
+  >
+    Popper
+  </Popper>
+</Playground>
+
+## Different positions
+
+<Playground>
+  
+  <Row>{<Popper trigger={'Top Position'} offsetY={10} position={'top'} tooltipContent={"I'm in the Top Position"} />}</Row>
+  <br />
+  <Row>{<Popper trigger={'Top-Start Position'} offsetY={10} position={'top-start'} tooltipContent={"I'm in the Top-Start Position"} />}</Row>
+  <br />
+  <Row> {<Popper trigger={'Top-End Position'} offsetY={10} position={'top-end'} tooltipContent={"I'm in the Top-End Position"} />}</Row>
+  
+  <br />
+  <br />
+  <Row>{<Popper trigger={'Bottom Position'} offsetY={10} position={'bottom'} tooltipContent={'I am in the Bottom Position'} />}</Row>
+  <br />
+  <Row>{<Popper trigger={'Bottom-Start Position'} offsetY={10} position={'bottom-start'} tooltipContent={'I am in the Bottom-Start Position'} />}</Row>
+  <br />
+  <Row> {<Popper trigger={'Bottom-End Position'} offsetY={10} position={'bottom-end'} tooltipContent={'I am in the Bottom-End Position'} />}</Row>
+  
+  <br />
+  <br />
+  <Row>{<Popper trigger={'Left Position'} offsetY={10} position={'left'} tooltipContent={'I am in the Left Position'} />}</Row>
+  <br />
+  <Row>{<Popper trigger={'Left-Start Position'} offsetY={10} position={'left-start'} tooltipContent={'I am in the Left-Start Position'} />}</Row>
+  <br />
+  <Row> {<Popper trigger={'Left-End Position'} offsetY={10} position={'left-end'} tooltipContent={'I am in the Left-End Position'} />}</Row>
+  
+  <br />
+  <br />
+  <Row>{<Popper trigger={'Right Position'} offsetY={10} position={'right'} tooltipContent={'I am in the Right Position'} />}</Row>
+  <br />
+  <Row>{<Popper trigger={'Right-Start Position'} offsetY={10} position={'right-start'} tooltipContent={'I am in the Right-Start Position'} />}</Row>
+  <br />
+  <Row> {<Popper trigger={'Right-End Position'} offsetY={10} position={'right-end'} tooltipContent={'I am in the Right-End Position'} />}</Row>
+
+
+</Playground>
+
