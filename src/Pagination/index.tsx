@@ -95,8 +95,11 @@ const Pagination: FunctionComponent<Props> = ({
   }
 
   useEffect(() => {
-    setCurrentPage(1)
-    setCurrentItems(`1 - ${1 === totalPages ? totalItems : itemsPerPage}`)
+    setCurrentItems(
+      `${1 + itemsPerPage * (currentPage - 1)} - ${
+        currentPage === totalPages ? totalItems : itemsPerPage * currentPage
+      }`
+    )
   }, [totalItems])
 
   const setNumberOfPage = (number: number) => {
