@@ -14,7 +14,7 @@ interface Props {
   className?: string
   /** is the item selected? */
   isSelected?: number
-  [rest: string]: unknown // ...rest property
+  [rest: string]: unknown
 }
 
 const PanelItem: FunctionComponent<Props> = ({ name, type, index, isSelected, className, ...rest }) => {
@@ -25,7 +25,7 @@ const PanelItem: FunctionComponent<Props> = ({ name, type, index, isSelected, cl
 
   return (
     <Component
-      id={`panel-${name}-${index}`}
+      id={`panel-${name}${index ? `-${index}-` : ''}`}
       className={clsx(
         styles['panel-item'],
         isSelected && styles['active'],

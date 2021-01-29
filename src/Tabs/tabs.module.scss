@@ -1,20 +1,21 @@
 @import '../variables';
 
 .tablist-wrapper {
+  border-bottom: 1px solid $gray-5;
+  overflow: auto;
   position: relative;
 }
 
 .tablist {
   list-style: none;
   padding-left: 0;
-  border-bottom: 1px solid $gray-5;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding-bottom: 10px;
+  margin: 0;
 
   @media screen and (max-width: $mobile) {
     padding-bottom: 0;
-    overflow: scroll;
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -25,15 +26,7 @@
   color: $gray-11;
   text-decoration: none;
   outline: none;
-  font-size: 21px;
-  font-weight: 700;
-
-  @media screen and (max-width: $mobile) {
-    &.active {
-      border-bottom: 5px solid red;
-      padding-bottom: 6px;
-    }
-  }
+  font-size: 14px;
 }
 
 .indicator {

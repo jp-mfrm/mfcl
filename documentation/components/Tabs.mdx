@@ -8,7 +8,7 @@ import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
 import mattressIpsum from 'mattress-ipsum'
 import { Tabs } from '../../src'
-import tabData from './helpers/TabData.tsx'
+import tabData, { tabContent } from './helpers/TabData.tsx'
 
 # Tabs
 
@@ -27,13 +27,7 @@ Tabs allow you to switch between different views of related information.
 ## Basic Usage
 
 <Playground>
-  <Tabs name="default" items={tabData} />
-</Playground>
-
-## Tabs Side
-
-<Playground>
-  <Tabs name="side" position="left" items={tabData} />
+  <Tabs name="default" items={tabData} defaultValue={2} />
 </Playground>
 
 ## Controlled or Uncontrolled
@@ -41,48 +35,27 @@ Tabs allow you to switch between different views of related information.
 <Playground>
   <Component initialState={{ activeTab: 1 }}>
     {({ setState, state }) => (
-      <>
-        <Tabs
-          name="controlled"
-          onChange={(activeTab) => setState({ activeTab })}
-          value={state.activeTab}
-          items={tabData}
-        />
-        <Tabs name="uncontrolled" defaultValue={3} items={tabData} />
-      </>
+      <Tabs
+        name="controlled"
+        onChange={(activeTab) => setState({ activeTab })}
+        value={state.activeTab}
+        items={tabData}
+      />
     )}
   </Component>
 </Playground>
 
-## items prop
-
-An array of objects that has a header and content:
+## Custom Tabs
 
 <Playground>
-  {() => {
-    const items = [
-      {
-        header: 'Description',
-        content: mattressIpsum()
-      },
-      {
-        header: 'Specifications',
-        content: mattressIpsum()
-      },
-      {
-        header: 'About Beautyrest',
-        content: mattressIpsum()
-      },
-      {
-        header: 'Delivery & Shipping',
-        content: mattressIpsum()
-      },
-      {
-        header: 'Warranty',
-        content: mattressIpsum()
-      }
-    ]
-  return null
-}}
-
+  <Component initialState={{ activeTab: 1 }}>
+    {({ setState, state }) => (
+      <Tabs
+        name="controlled"
+        onChange={(activeTab) => setState({ activeTab })}
+        value={state.activeTab}
+        items={tabData}
+      />
+    )}
+  </Component>
 </Playground>

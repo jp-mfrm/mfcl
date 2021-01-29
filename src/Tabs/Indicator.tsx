@@ -13,12 +13,12 @@ const Indicator: FunctionComponent<Props> = ({ activeTabElement }) => {
   const changeStyle = useCallback(() => {
     const newStyle: any = {}
     if (activeTabElement?.current) {
-      if (window.innerWidth > BREAKPOINT) {
-        newStyle.bottom = '0px'
-        newStyle.left = activeTabElement.current.offsetLeft
-        newStyle.height = '2px'
-        newStyle.width = activeTabElement.current.offsetWidth
-      }
+      // if (window.innerWidth > BREAKPOINT) {
+      newStyle.bottom = '0px'
+      newStyle.left = activeTabElement.current.offsetLeft
+      newStyle.height = '2px'
+      newStyle.width = activeTabElement.current.offsetWidth
+      // }
     }
 
     setStyle(newStyle)

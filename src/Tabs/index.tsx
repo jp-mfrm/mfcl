@@ -2,6 +2,7 @@ import React, { FunctionComponent, useMemo, createRef, ReactNode, MouseEvent, Ke
 import Tab from './Tab'
 import Indicator from './Indicator'
 import useControlled from '../utils/useControlled'
+import clsx from 'clsx'
 import styles from './tabs.module.scss'
 
 export interface Props {
@@ -73,7 +74,7 @@ const Tabs: FunctionComponent<Props> = ({
   }
 
   return (
-    <div className={styles['tablist-wrapper']} {...rest}>
+    <div className={clsx(styles['tablist-wrapper'], className)} {...rest}>
       <ul role="tablist" className={styles.tablist}>
         {items.map((label, index) => {
           return (
