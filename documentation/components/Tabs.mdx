@@ -7,8 +7,8 @@ route: /components-tabs
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
 import mattressIpsum from 'mattress-ipsum'
-import { Tabs } from '../../src'
-import tabData, { tabContent } from './helpers/TabData.tsx'
+import { Tabs, PanelItem, Panel } from '../../src'
+import tabData, { customTabHeaders, ipsumArray } from './helpers/TabData.tsx'
 
 # Tabs
 
@@ -30,17 +30,26 @@ Tabs allow you to switch between different views of related information.
   <Tabs name="default" items={tabData} defaultValue={2} />
 </Playground>
 
-## Controlled or Uncontrolled
+## Controlled by state
 
 <Playground>
-  <Component initialState={{ activeTab: 1 }}>
+  <Component initialState={{ activeTab: 0 }}>
     {({ setState, state }) => (
-      <Tabs
-        name="controlled"
-        onChange={(activeTab) => setState({ activeTab })}
-        value={state.activeTab}
-        items={tabData}
-      />
+      <>
+        <Tabs
+          name="controlled"
+          onChange={(activeTab) => setState({ activeTab })}
+          value={state.activeTab}
+          items={tabData}
+        />
+        <Panel>
+          {ipsumArray.map((item, index) => (
+            <PanelItem name="controlled" isSelected={index === state.activeTab} index={index} key={index}>
+              {item}
+            </PanelItem>
+          ))}
+        </Panel>
+      </>
     )}
   </Component>
 </Playground>
@@ -48,14 +57,30 @@ Tabs allow you to switch between different views of related information.
 ## Custom Tabs
 
 <Playground>
-  <Component initialState={{ activeTab: 1 }}>
-    {({ setState, state }) => (
-      <Tabs
-        name="controlled"
-        onChange={(activeTab) => setState({ activeTab })}
-        value={state.activeTab}
-        items={tabData}
-      />
-    )}
+  <Component initialState={{ activeTab: 0 }}>
+    {({ setState, state }) => {
+      return (
+        <>
+          <Tabs
+            name="custom"
+            onChange={(activeTab) => setState({ activeTab })}
+            value={state.activeTab}
+            items={customTabHeaders}
+          />
+          <PanelItem name="custom" isSelected={0 === state.activeTab} index={0}>
+            {mattressIpsum(1)}
+          </PanelItem>
+          <PanelItem name="custom" isSelected={1 === state.activeTab} index={1}>
+            {mattressIpsum(1)}
+          </PanelItem>
+          <PanelItem name="custom" isSelected={2 === state.activeTab} index={2}>
+            {mattressIpsum(1)}
+          </PanelItem>
+          <PanelItem name="custom" isSelected={3 === state.activeTab} index={3}>
+            {mattressIpsum(1)}
+          </PanelItem>
+        </>
+      )
+    }}
   </Component>
 </Playground>

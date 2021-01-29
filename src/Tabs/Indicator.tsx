@@ -5,23 +5,16 @@ interface Props {
   activeTabElement: any
 }
 
-const BREAKPOINT = 767
-
 const Indicator: FunctionComponent<Props> = ({ activeTabElement }) => {
   const [style, setStyle] = useState<any>({})
 
   const changeStyle = useCallback(() => {
-    const newStyle: any = {}
     if (activeTabElement?.current) {
-      // if (window.innerWidth > BREAKPOINT) {
-      newStyle.bottom = '0px'
+      const newStyle: any = {}
       newStyle.left = activeTabElement.current.offsetLeft
-      newStyle.height = '2px'
       newStyle.width = activeTabElement.current.offsetWidth
-      // }
+      setStyle(newStyle)
     }
-
-    setStyle(newStyle)
   }, [activeTabElement])
 
   useEffect(() => {

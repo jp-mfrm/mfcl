@@ -47,14 +47,14 @@ const Tabs: FunctionComponent<Props> = ({
     }
   }
 
-  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     // @ts-ignore
-    const index = parseInt(e.target.getAttribute('data-index'), 10)
+    const index = Number(e.currentTarget.getAttribute('data-index'))
     handleChange(index)
   }
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLAnchorElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
       e.preventDefault()
     } else {

@@ -37,7 +37,6 @@ const PanelItem: FunctionComponent<Props> = ({ name, type, index, isSelected, cl
       aria-hidden={!isSelected}
       // @ts-ignore
       role="tabpanel"
-      tabIndex={isSelected ? 0 : -1}
       aria-labelledby={`tab-${name}-${index}`}
     />
   )
