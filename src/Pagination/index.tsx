@@ -75,10 +75,9 @@ const Pagination: FunctionComponent<Props> = ({
     defaultValue: 1
   })
 
-  const [itemsCount] = useState(totalItems)
-  const totalPages = Math.ceil(itemsCount / itemsPerPage)
+  const totalPages = Math.ceil(totalItems / itemsPerPage)
   const [currentItems, setCurrentItems] = useState(
-    `${1 + itemsPerPage * (currentPage - 1)} - ${currentPage === totalPages ? itemsCount : itemsPerPage * currentPage}`
+    `${1 + itemsPerPage * (currentPage - 1)} - ${currentPage === totalPages ? totalItems : itemsPerPage * currentPage}`
   )
   const indexOfFirstPage = totalPages - totalPages + 1
 
@@ -96,12 +95,9 @@ const Pagination: FunctionComponent<Props> = ({
   }
 
   useEffect(() => {
-    setCurrentItems(
-      `${1 + itemsPerPage * (currentPage - 1)} - ${
-        currentPage === totalPages ? itemsCount : itemsPerPage * currentPage
-      }`
-    )
-  }, [itemsCount])
+    setCurrentPage(1)
+    setCurrentItems(`1 - ${1 === totalPages ? totalItems : itemsPerPage}`)
+  }, [totalItems])
 
   const setNumberOfPage = (number: number) => {
     if (onChange) {
@@ -109,7 +105,7 @@ const Pagination: FunctionComponent<Props> = ({
     }
     setCurrentPage(number)
     setCurrentItems(
-      `${1 + itemsPerPage * (number - 1)} - ${number === totalPages ? itemsCount : itemsPerPage * number}`
+      `${1 + itemsPerPage * (number - 1)} - ${number === totalPages ? totalItems : itemsPerPage * number}`
     )
   }
 
@@ -177,7 +173,7 @@ const Pagination: FunctionComponent<Props> = ({
       </ul>
       {showItemCount && (
         <span className={styles.numText}>
-          {currentItems} out of {itemsCount} {countName}
+          {currentItems} out of {totalItems} {countName}
         </span>
       )}
     </nav>
