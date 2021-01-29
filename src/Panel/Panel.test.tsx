@@ -39,34 +39,34 @@ describe('Panel Component', () => {
 })
 
 describe('PanelItem Component', () => {
-  it('should render the itemClass prop', () => {
-    const { container } = render(<PanelItem itemClass="test-class" />)
+  it('should render the className prop', () => {
+    const { container } = render(<PanelItem className="test-class" name="panel" />)
     expect(container.querySelector('.panel-item')?.classList).toContain('test-class')
   })
 
   it('should render the different types properly', () => {
-    const { container, rerender } = render(<PanelItem />)
+    const { container, rerender } = render(<PanelItem name="panel" />)
     expect(container.querySelectorAll('.header, .body, .footer, .link').length).toBe(0)
 
-    rerender(<PanelItem type="header" />)
+    rerender(<PanelItem type="header" name="panel" />)
     expect(container.querySelector('.header')).toBeInTheDocument()
     expect(container.querySelectorAll('.body, .footer, .link').length).toBe(0)
 
-    rerender(<PanelItem type="body" />)
+    rerender(<PanelItem type="body" name="panel" />)
     expect(container.querySelector('.body')).toBeInTheDocument()
     expect(container.querySelectorAll('.header, .footer, .link').length).toBe(0)
 
-    rerender(<PanelItem type="footer" />)
+    rerender(<PanelItem type="footer" name="panel" />)
     expect(container.querySelector('.footer')).toBeInTheDocument()
     expect(container.querySelectorAll('.header, .body, .link').length).toBe(0)
 
-    rerender(<PanelItem type="link" />)
+    rerender(<PanelItem type="link" name="panel" />)
     expect(container.querySelector('.link')).toBeInTheDocument()
     expect(container.querySelectorAll('.header, .body, .footer').length).toBe(0)
   })
 
   it('should render the custom inline styling properly', () => {
-    const { container } = render(<PanelItem style={{ width: '400px', backgroundColor: 'blue' }} />)
+    const { container } = render(<PanelItem name="panel" style={{ width: '400px', backgroundColor: 'blue' }} />)
     expect(container.querySelector('.panel-item'))?.toHaveStyle('width: 400px; background-color: blue')
   })
 })

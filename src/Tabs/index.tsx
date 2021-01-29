@@ -1,31 +1,20 @@
 import React, { FunctionComponent, useMemo, createRef, ReactNode, MouseEvent, KeyboardEvent } from 'react'
 import Tab from './Tab'
 import Indicator from './Indicator'
-import Panel from '../Panel'
-import PanelItem from '../PanelItem'
 import useControlled from '../utils/useControlled'
-
-import clsx from 'clsx'
 import styles from './tabs.module.scss'
-
-interface Item {
-  header: string | ReactNode
-  content: string | ReactNode
-}
 
 export interface Props {
   /** Uniquely identifies the Tabs component */
   name: string
   /** An array of objects that contain header and content */
-  items: Item[]
+  items: ReactNode[]
   /** class name to add to tabs component */
   className?: string
   /** class name to add to tabs title */
   titleClassName?: string
   /** Callback function for controlled behavior */
   onChange?: (activeIndex: number) => void
-  /** Horizontal or vertical left tabs */
-  position?: 'top' | 'left'
   /** Uncontrolled default value */
   defaultValue?: number
   /** Controlled value */
@@ -39,7 +28,6 @@ const Tabs: FunctionComponent<Props> = ({
   className,
   titleClassName,
   onChange,
-  position = 'top',
   defaultValue = 0,
   value,
   ...rest
@@ -49,7 +37,7 @@ const Tabs: FunctionComponent<Props> = ({
     defaultValue
   })
 
-  const tabRefs = useMemo(() => Array.from(items).map(() => createRef()), [items])
+  const tabRefs = useMemo(() => items.map(() => createRef()), [items])
 
   const handleChange = (activeIndex: number) => {
     setSelectedIndex(activeIndex)
@@ -85,37 +73,26 @@ const Tabs: FunctionComponent<Props> = ({
   }
 
   return (
-    <div className={clsx(styles['tabs-wrapper'], styles[position], className)} {...rest}>
-      <div className={styles['tablist-wrapper']}>
-        <ul role="tablist" className={styles.tablist}>
-          {items.map((item, index) => {
-            return (
-              <Tab
-                name={name}
-                key={index}
-                id={`tab-${index}`}
-                innerRef={tabRefs[index]}
-                index={index}
-                label={item.header}
-                handleClick={handleClick}
-                handleKeyDown={handleKeyDown}
-                isSelected={index === selectedIndex}
-                className={titleClassName}
-              />
-            )
-          })}
-        </ul>
-        <Indicator activeTabElement={tabRefs[selectedIndex]} position={position} />
-      </div>
-      <Panel className={styles.panel}>
-        {items.map((item, index) => {
+    <div className={styles['tablist-wrapper']} {...rest}>
+      <ul role="tablist" className={styles.tablist}>
+        {items.map((label, index) => {
           return (
-            <PanelItem name={name} selectedIndex={selectedIndex} index={index} key={index}>
-              {item.content}
-            </PanelItem>
+            <Tab
+              name={name}
+              key={index}
+              id={`tab-${index}`}
+              innerRef={tabRefs[index]}
+              index={index}
+              label={label}
+              handleClick={handleClick}
+              handleKeyDown={handleKeyDown}
+              isSelected={index === selectedIndex}
+              className={titleClassName}
+            />
           )
         })}
-      </Panel>
+      </ul>
+      <Indicator activeTabElement={tabRefs[selectedIndex]} />
     </div>
   )
 }

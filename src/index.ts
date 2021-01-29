@@ -6,6 +6,7 @@ import Breadcrumbs from './Breadcrumbs'
 import Button from './Button'
 import Carousel from './Carousel'
 import Checkbox from './Checkbox'
+import Chip from './Chip'
 import Collapse from './Collapse'
 import Drawer from './Drawer'
 import Dropdown from './Dropdown'
@@ -20,27 +21,22 @@ import Modal from './Modal'
 import NumberIncrementer from './NumberIncrementer'
 import Panel from './Panel'
 import PanelItem from './PanelItem'
+import Popper from './Popper'
 import Portal from './Portal'
 import Price from './Price'
 import ProgressBar from './ProgressBar'
 import Rating from './Rating'
 import Select from './Select'
+import Skeleton from './Skeleton'
+import Slider from './Slider'
 import Stepper from './Stepper'
 import Tabs from './Tabs'
 import Textarea from './Textarea'
 import Tooltip from './Tooltip'
 import Pagination from './Pagination'
 import Typography from './Typography'
-import Slider from './Slider'
-import Chip from './Chip';
-import Popper from './Popper';
-import Skeleton from './Skeleton';
 
 export {
-  Skeleton,
-  Popper,
-  Chip,
-  Slider,
   Accordion,
   AccordionItem,
   Alert,
@@ -49,6 +45,7 @@ export {
   Button,
   Carousel,
   Checkbox,
+  Chip,
   Collapse,
   Drawer,
   Dropdown,
@@ -64,11 +61,14 @@ export {
   Pagination,
   Panel,
   PanelItem,
+  Popper,
   Portal,
   Price,
   ProgressBar,
   Rating,
   Select,
+  Skeleton,
+  Slider,
   Stepper,
   Tabs,
   Textarea,

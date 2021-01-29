@@ -5,7 +5,7 @@
   min-width: 295px;
   border-radius: 2px;
   border: solid 1px #e0e0e0;
-  background-color: var(--white);
+  background-color: $white;
 
   display: flex;
   flex-direction: column;
@@ -59,7 +59,7 @@
       color: $blue;
     }
 
-    &.active { 
+    &.active {
       display: block;
     }
 

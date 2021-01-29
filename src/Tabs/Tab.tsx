@@ -9,7 +9,7 @@ interface Props {
   className?: string
   innerRef: any
   isSelected: boolean
-  label: string | ReactNode
+  label: ReactNode
   handleClick: (e: MouseEvent<HTMLAnchorElement>) => void
   handleKeyDown: (e: KeyboardEvent<HTMLAnchorElement>) => void
 }
