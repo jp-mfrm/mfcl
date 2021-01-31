@@ -11,11 +11,15 @@
   }
 
   .tab-item {
-    color: $gray-11;
+    color: $gray-5;
     text-decoration: none;
     outline: none;
     font-size: 21px;
     font-weight: 700;
+
+    &.active {
+      color: $gray-11;
+    }
 
     @media screen and (max-width: $tablet) {
       font-size: 14px;
@@ -49,17 +53,22 @@
     }
 
     .tab-list-item {
+      padding: 10px;
       @media screen and (max-width: $mobile) {
-        max-height: 44px;
         padding: 10px;
         white-space: nowrap;
+
+        &.active {
+          border-bottom: 5px solid $red;
+          padding-bottom: 6px;
+        }
       }
     }
 
     .tab-item {
       @media screen and (max-width: $mobile) {
         &.active {
-          border-bottom: 5px solid red;
+          border-bottom: 5px solid $red;
           padding-bottom: 6px;
         }
       }

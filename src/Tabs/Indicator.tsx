@@ -11,15 +11,24 @@ const Indicator: FunctionComponent<Props> = ({ activeTabElement, position, durat
   const changeStyle = useCallback(() => {
     const newStyle: any = {}
  if (activeTabElement?.current) {
-   if (position === 'top' && window.innerWidth > BREAKPOINT) {
+   if (position === 'top' && window.innerWidth >= BREAKPOINT) {
      newStyle.bottom = '0px'
-     newStyle.left = activeTabElement.current.offsetLeft
+     newStyle.left = activeTabElement.current.offsetLeft - 10
      newStyle.height = '5px'
-     newStyle.width = activeTabElement.current.offsetWidth
+     if(!activeTabElement.current.offsetWidth && activeTabElement.current.children.length) {
+      newStyle.width = activeTabElement.current.children[0].offsetWidth + 20
+     } else {
+      newStyle.width = activeTabElement.current.offsetWidth
+     }
+     
    } else if (position === 'left') {
      newStyle.right = '0px'
-     newStyle.top = activeTabElement.current.offsetTop
-     newStyle.height = activeTabElement.current.offsetHeight
+     newStyle.top = activeTabElement.current.offsetTop - 10
+     if(!activeTabElement.current.offsetHeight && activeTabElement.current.children.length) {
+      newStyle.height = activeTabElement.current.children[0].offsetHeight + 20
+     } else {
+      newStyle.height = activeTabElement.current.offsetHeight + 20
+     }
      newStyle.width = '5px'
    }
  }

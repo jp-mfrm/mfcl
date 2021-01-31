@@ -5,7 +5,16 @@ import Tabs from './index'
 
 const items = [
   {
-    header: 'Description',
+    header: (
+      <div data-index={0}>
+        <div data-index={0}>
+          Step 1
+        </div>
+        <div data-index={0}>
+          Description
+        </div>
+      </div>
+    ),
     content:
       'Extra firm Seally snoring bed sets Americas top-rated brands bed sheets snooze medium latex encased coil bunk bed linens firm plush queen sleep expert dreams memory foam hypoallergenic free delivery 50% low price guarantee spine position pillowcases futon shut eye loft special financing brand ultra plush comfy save back pain sleep trial size zzzzzz king stomach innerspring Sterns & Foster adjustable bed Beautyrest box spring side bundle Purple malouf wrap dow'
   },
