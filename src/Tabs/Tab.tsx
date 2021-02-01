@@ -9,9 +9,9 @@ interface Props {
   className?: string
   innerRef: any
   isSelected: boolean
-  label: string | ReactNode
-  handleClick: (e: MouseEvent<HTMLAnchorElement>) => void
-  handleKeyDown: (e: KeyboardEvent<HTMLAnchorElement>) => void
+  label: ReactNode
+  handleClick: (e: MouseEvent<HTMLButtonElement>) => void
+  handleKeyDown: (e: KeyboardEvent<HTMLButtonElement>) => void
 }
 
 const Tab: FunctionComponent<Props> = ({
@@ -32,14 +32,13 @@ const Tab: FunctionComponent<Props> = ({
   }, [isSelected])
 
   return (
-    <li className={clsx(styles['tab-list-item'], isSelected && styles.active)} role="presentation">
-      <a
+    <li className={styles['tab-list-item']} role="presentation">
+      <button
         ref={innerRef}
         aria-controls={`panel-${name}-${index}`}
         id={`tab-${name}-${index}`}
         aria-selected={isSelected}
         className={clsx(styles['tab-item'], isSelected && styles.active, className)}
-        href={`#${id}`}
         data-index={index}
         role="tab"
         tabIndex={isSelected ? 0 : -1}
@@ -47,7 +46,7 @@ const Tab: FunctionComponent<Props> = ({
         onKeyDown={handleKeyDown}
       >
         {label}
-      </a>
+      </button>
     </li>
   )
 }

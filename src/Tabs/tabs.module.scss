@@ -1,104 +1,62 @@
 @import '../variables';
 
-.tabs-wrapper {
-  .tablist-wrapper {
-    position: relative;
+.tablist-wrapper {
+  overflow: auto;
+  position: relative;
+
+  &::-webkit-scrollbar {
+    height: 5px;
   }
+}
 
-  .tablist {
-    list-style: none;
-    padding-left: 0;
-  }
+.tablist {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin: 0;
 
-  .tab-item {
-    color: $gray-11;
-    text-decoration: none;
-    outline: none;
-    font-size: 21px;
-    font-weight: 700;
-
-    @media screen and (max-width: $tablet) {
-      font-size: 14px;
-    }
-  }
-
-  .panel {
-    font-size: 16px;
-  }
-
-  .indicator {
-    background-color: $red;
-    position: absolute;
-    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  }
-
-  &.top {
-    .tablist {
-      border-bottom: 1px solid $gray-5;
-      display: flex;
-      justify-content: space-around;
-      padding-bottom: 10px;
-
-      @media screen and (max-width: $mobile) {
-        padding-bottom: 0;
-        overflow: scroll;
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-      }
-    }
-
-    .tab-list-item {
-      @media screen and (max-width: $mobile) {
-        max-height: 44px;
-        padding: 10px;
-        white-space: nowrap;
-      }
-    }
-
-    .tab-item {
-      @media screen and (max-width: $mobile) {
-        &.active {
-          border-bottom: 5px solid red;
-          padding-bottom: 6px;
-        }
-      }
-    }
-  }
-
-  &.left {
+  @media screen and (max-width: $mobile) {
+    padding-bottom: 0;
     display: flex;
-
-    .tablist-wrapper {
-      width: 25%;
-
-      @media screen and (max-width: $mobile) {
-        width: auto;
-      }
-    }
-
-    .tablist {
-      border-right: 1px solid $gray-5;
-    }
-
-    .panel {
-      display: flex;
-      justify-content: center;
-      font-size: 16px;
-      padding-left: 15px;
-    }
-
-    .tab-list-item {
-      padding: 5px;
-
-      @media screen and (max-width: $mobile) {
-        padding: 8px;
-      }
-    }
+    justify-content: flex-start;
   }
+}
 
-  .panel {
-    width: 100%;
-    border: none;
+.tab-list-item {
+  margin: 0 1px;
+  text-align: center;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.tab-item {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 1px;
+  color: $gray-11;
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  outline: none;
+  padding: 5px;
+  text-decoration: none;
+  transition: border-bottom 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  width: 100%;
+
+  &:hover {
+    border-bottom: 2px solid lighten($red, 40%);
   }
+}
+
+.indicator {
+  background-color: $red;
+  bottom: 0px;
+  height: 2px;
+  border-radius: 1px;
+  position: absolute;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
