@@ -13,7 +13,7 @@ interface Props {
   /** Class to pass to the panel item */
   className?: string
   /** is the item selected? */
-  isSelected?: number
+  isSelected?: boolean
   [rest: string]: unknown
 }
 
