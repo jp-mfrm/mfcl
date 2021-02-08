@@ -170,7 +170,7 @@ function getControlButtons(
         }}
       >
         {controlStyle === 'round' && (
-          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
             <circle cx="36" cy="36" r="35" transform="rotate(-180 36 36)" fill="white" stroke="#2D2926" />
             <path
               d="M55.9997 35.5L17.0176 35.5"
