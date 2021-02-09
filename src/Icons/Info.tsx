@@ -15,7 +15,7 @@ const Info: React.FunctionComponent<Props> = ({ width = '32', height = '32', ...
     <path
       d="M16 31C24.2843 31 31 24.2843 31 16C31 7.71573 24.2843 1 16 1C7.71573 1 1 7.71573 1 16C1 24.2843 7.71573 31 16 31Z"
       stroke="#2D2926"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
   </svg>
 )
