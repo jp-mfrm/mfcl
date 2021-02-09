@@ -23,8 +23,8 @@ const Facebook: React.FunctionComponent<Props> = ({
         <svg width={width} height={height} viewBox="0 0 35 35" fill="none"  {...rest}>
           <rect width={width} height={height} rx="17.5" fill='#D63426' />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M19.3147 29H14.4372V17.4985H12V13.5355H14.4372V11.1563C14.4372 7.92344 15.8127 6 19.723 6H22.9776V9.96447H20.9435C19.4213 9.96447 19.3207 10.5183 19.3207 11.5518L19.314 13.5355H23L22.5686 17.4985H19.314V29H19.3147Z"
             fill="white"
           />

@@ -23,8 +23,8 @@ const Youtube: React.FunctionComponent<Props> = ({
         <svg width={width} height={height} viewBox="0 0 35 35" fill="none" {...rest}>
           <rect  width={width} height={height} rx="17.5" fill="#D63426" />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M28 21.5642V14.4358C28 14.4358 28 11 24.5534 11H11.4454C11.4454 11 8 11 8 14.4358V21.5642C8 21.5642 8 25 11.4454 25H24.5534C24.5534 25 28 25 28 21.5642ZM21.8829 18.01L15.3354 21.8432V14.1756L21.8829 18.01Z"
             fill="white"
           />
