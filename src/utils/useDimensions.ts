@@ -28,17 +28,6 @@ function useDimensions(liveMeasure = true, delay = 250, initialDimensions = {}, 
     if (liveMeasure) {
       const debounceMeasure = debounce(measure, delay)
 
-      if ('ResizeObserver' in window) {
-        // @ts-ignore
-        const resizeObserver = new ResizeObserver(debounceMeasure)
-        resizeObserver.observe(node)
-        window.addEventListener('scroll', debounceMeasure)
-
-        return () => {
-          resizeObserver.disconnect()
-          window.removeEventListener('scroll', debounceMeasure)
-        }
-      }
       window.addEventListener('resize', debounceMeasure)
       window.addEventListener('scroll', debounceMeasure)
 

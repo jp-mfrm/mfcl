@@ -30,12 +30,12 @@ Tooltips help clarify what certain features do.
 
 <Playground>
   <Row>
-    <Tooltip header="header" hover={false} trigger={'i'} position="bottom">
+    <Tooltip trigger={<Button>Click Me</Button>} position="bottom">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
       magna.
     </Tooltip>
-    <Tooltip header="header" hover={false} trigger={'?'} position="top">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    <Tooltip trigger={<Button size="sm">Click Me</Button>} position="top">
+      {mattressIpsum(1, 50)}
     </Tooltip>
   </Row>
 </Playground>
@@ -44,11 +44,24 @@ Tooltips help clarify what certain features do.
 
 <Playground>
   <Row>
-    <Tooltip header="header" arrow={false} hover={false} trigger={'i'} position="bottom">
+    <Tooltip arrow={false} trigger={<Button>Click Me</Button>} position="bottom">
       Where did my arrow go?
     </Tooltip>
-    <Tooltip header="header" arrow={false} hover={false} trigger={'?'} position="top">
-      Where did my arrow go?
+    <Tooltip arrow={false} trigger={<Button>Click Me</Button>} position="top">
+      Definitely no arrow
+    </Tooltip>
+  </Row>
+</Playground>
+
+## Header
+
+<Playground>
+  <Row>
+    <Tooltip header="header" trigger={<Button>Click Me</Button>} position="bottom">
+      <p>I have a header</p>
+    </Tooltip>
+    <Tooltip header="header" closeBtn arrow={false} trigger={<Button>Click Me</Button>} position="top">
+      <p>And I have a close button in my header</p>
     </Tooltip>
   </Row>
 </Playground>
@@ -57,19 +70,11 @@ Tooltips help clarify what certain features do.
 
 <Playground>
   {() => {
-    const margin = { marginBottom: 5 }
-    const positions = ['right', 'left', 'top', 'top-left', 'top-right', 'bottom-right', 'bottom-left', 'bottom']
+    const positions = ['right', 'left', 'top', 'top-left', 'top-right', 'bottom-right', 'bottom', 'bottom-left']
     return (
       <Row>
         {positions.map((position) => (
-          <Tooltip
-            key={position}
-            position={position}
-            trigger={'i'}
-            style={{ margin: '0px 10px' }}
-            hover={false}
-            header="header"
-          >
+          <Tooltip key={position} position={position} trigger={<Button size="sm">{position}</Button>}>
             {position.toUpperCase()} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna.
           </Tooltip>
@@ -77,6 +82,33 @@ Tooltips help clarify what certain features do.
       </Row>
     )
   }}
+</Playground>
+
+## Controlled State
+
+<Playground>
+  <Component
+    initialState={{
+      isOpen: false
+    }}
+  >
+    {({ setState, state }) => {
+      return (
+        <>
+          <Button onClick={() => setState({ isOpen: !state.isOpen })}>{state.isOpen ? 'Close' : 'Open'} it</Button>
+          <div style={{ textAlign: 'center' }}>
+            <Tooltip
+              trigger={<p>Open my tooltip by clicking on the button</p>}
+              isOpen={state.isOpen}
+              onClose={() => setState({ isOpen: false })}
+            >
+              I am a tooltip
+            </Tooltip>
+          </div>
+        </>
+      )
+    }}
+  </Component>
 </Playground>
 
 ## Animations
@@ -131,9 +163,7 @@ Tooltips help clarify what certain features do.
           </Row>
           <div style={{ marginTop: '100px', textAlign: 'center' }}>
             <Tooltip
-              header='header'
-              hover={false}
-              trigger={'i'}
+              trigger={<Button size="sm">Click Me</Button>}
               delay={state.delay}
               duration={state.duration}
               easing={state.easing}
@@ -144,8 +174,5 @@ Tooltips help clarify what certain features do.
         </>
       )
     }}
-
-
   </Component>
 </Playground>
-

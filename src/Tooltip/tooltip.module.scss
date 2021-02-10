@@ -2,21 +2,10 @@
 @import '../mixins/closeX';
 
 .tooltip-wrapper {
-  display: flex;
+  display: block;
+  padding: 0px;
   position: relative;
-  width: 10px;
-  height: 10px;
-  padding: 10px;
-  background: orange;
-  text-align: center;
-  border-radius: 100%;
-  font-size: 12px;
-  justify-content: center;
-  align-items: center;
-  line-height: 0;
-  cursor: pointer;
-  //why does this wrapper have a z-index?
-  z-index: 98;
+  z-index: 1;
 }
 
 .tooltip-arrow {
@@ -34,7 +23,8 @@
 .tip-container {
   backface-visibility: hidden;
   background-color: $white;
-  border-radius: 4px;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
   box-sizing: content-box;
   color: $gray-11;
   display: table;
@@ -45,9 +35,7 @@
   position: absolute;
   transform: translate3d(0, 0, 0);
   transform-origin: top;
-  white-space: nowrap;
   z-index: 99;
-  box-shadow: 0px 0px 8px $gray-11;
 }
 
 .gap {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, screen, act } from '@testing-library/react'
 
 import Tooltip from './index'
 
@@ -28,12 +28,12 @@ describe('Tooltip Component', () => {
     })
   })
   it('renders a className', () => {
-    const { container } = render(<Tooltip header="header" trigger={trigger} className="test-class-name"></Tooltip>)
-    expect(container.querySelector('.tooltip-wrapper')?.classList).toContain('test-class-name')
+    render(<Tooltip header="header" trigger={trigger} className="test-class-name" />)
+    expect(screen.getByLabelText('tooltip-wrapper').classList).toContain('test-class-name')
   })
 
   it('should fade in with a duration, delay, and easing prop', () => {
-    const { getByTestId, getByRole } = render(
+    render(
       <Tooltip
         header="header"
         trigger={trigger}
@@ -42,191 +42,168 @@ describe('Tooltip Component', () => {
         easing="ease"
         arrowClassName="arrow"
         tipContainerClassName="tip"
-      ></Tooltip>
+      />
     )
 
-    expect(getByTestId('arrow')).toHaveStyle('transition: all 300ms ease 100ms')
-    expect(getByRole('tooltip')).toHaveStyle('transition: all 300ms ease 100ms')
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transition: all 300ms ease 100ms')
+    expect(screen.getByRole('tooltip')).toHaveStyle('transition: all 300ms ease 100ms')
   })
 
   it('should not render arrow when false and vice versa', () => {
-    const { getByTestId, rerender, container } = render(
-      <Tooltip trigger={trigger} arrow arrowClassName="arrow" header="header"></Tooltip>
-    )
-    expect(getByTestId('arrow')).toBeInTheDocument()
+    const { rerender, container } = render(<Tooltip trigger={trigger} arrow arrowClassName="arrow" header="header" />)
+    expect(screen.getByLabelText('tooltip-arrow')).toBeInTheDocument()
 
-    rerender(<Tooltip trigger={trigger} arrow={false} header="header"></Tooltip>)
+    rerender(<Tooltip trigger={trigger} arrow={false} header="header" />)
     expect(container.querySelector('.tooltip-arrow')).not.toBeInTheDocument()
   })
 
   it('should render top positions on arrow and tipContainer', () => {
-    const { getByTestId } = render(
+    render(
       <Tooltip
         header="header"
         trigger={trigger}
         tipContainerClassName="tip"
         position="top"
         initialDimensions={initialDimensions}
-        data-testid="tooltip"
-      ></Tooltip>
+      />
     )
 
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 0, 0)')
-    fireEvent.mouseEnter(getByTestId('tooltip'))
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, -2px, 0)')
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 0, 0)')
+    fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, -2px, 0)')
   })
 
   it('should render top-left positions on arrow and tipContainer', () => {
-    const { getByTestId } = render(
+    render(
       <Tooltip
         header="header"
         trigger={trigger}
         tipContainerClassName="tip"
         position="top-left"
         initialDimensions={initialDimensions}
-        data-testid="tooltip"
-      ></Tooltip>
+      />
     )
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 0, 0)')
-    fireEvent.mouseEnter(getByTestId('tooltip'))
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, -2px, 0)')
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 0, 0)')
+    fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, -2px, 0)')
   })
 
   it('should render top-right positions on arrow and tipContainer', () => {
-    const { getByTestId } = render(
+    render(
       <Tooltip
         header="header"
         trigger={trigger}
         tipContainerClassName="tip"
         position="top-right"
         initialDimensions={initialDimensions}
-        data-testid="tooltip"
-      ></Tooltip>
+      />
     )
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 0, 0)')
-    fireEvent.mouseEnter(getByTestId('tooltip'))
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, -2px, 0)')
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 0, 0)')
+    fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, -2px, 0)')
   })
 
   it('should render bottom positions on arrow and tipContainer', () => {
-    const { getByTestId } = render(
+    const onOpen = jest.fn()
+    const onClose = jest.fn()
+    render(
       <Tooltip
         header="header"
         trigger={trigger}
         tipContainerClassName="tip"
         position="bottom"
         initialDimensions={initialDimensions}
-        data-testid="tooltip"
-      ></Tooltip>
+        onOpen={onOpen}
+        onClose={onClose}
+      />
     )
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -10px, 0)')
-    fireEvent.mouseEnter(getByTestId('tooltip'))
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 1px, 0)')
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -10px, 0)')
+    fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 1px, 0)')
+    fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
+    expect(onOpen).toHaveBeenCalled()
+    expect(onClose).toHaveBeenCalled()
   })
 
   it('should render bottom-left positions on arrow and tipContainer', () => {
-    const { getByTestId } = render(
+    render(
       <Tooltip
         header="header"
         trigger={trigger}
         tipContainerClassName="tip"
         position="bottom-left"
         initialDimensions={initialDimensions}
-        data-testid="tooltip"
-      ></Tooltip>
+      />
     )
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -10px, 0)')
-    fireEvent.mouseEnter(getByTestId('tooltip'))
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 0, 0)')
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -10px, 0)')
+    fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 0, 0)')
   })
 
   it('should render bottom-right positions on arrow and tipContainer', () => {
-    const { getByTestId } = render(
+    render(
       <Tooltip
         header="header"
         trigger={trigger}
         tipContainerClassName="tip"
         position="bottom-right"
         initialDimensions={initialDimensions}
-        data-testid="tooltip"
-      ></Tooltip>
+      />
     )
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -10px, 0)')
-    fireEvent.mouseEnter(getByTestId('tooltip'))
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 0, 0)')
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -10px, 0)')
+    fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-50%, 0, 0)')
   })
 
   it('should render left positions on arrow and tipContainer', () => {
-    const { getByTestId } = render(
+    render(
       <Tooltip
         header="header"
         trigger={trigger}
         tipContainerClassName="tip"
         position="left"
         initialDimensions={initialDimensions}
-        data-testid="tooltip"
-      ></Tooltip>
+      />
     )
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -50%, 0)')
-    fireEvent.mouseEnter(getByTestId('tooltip'))
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -50%, 0)')
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -50%, 0)')
+    fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -50%, 0)')
   })
 
   it('should render right positions on arrow and tipContainer', () => {
-    const { getByTestId } = render(
+    render(
       <Tooltip
         header="header"
         trigger={trigger}
         tipContainerClassName="tip"
         position="right"
         initialDimensions={initialDimensions}
-        data-testid="tooltip"
-      ></Tooltip>
+      />
     )
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-10px, -100%, 0)')
-    fireEvent.mouseEnter(getByTestId('tooltip'))
-    expect(getByTestId('arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -50%, 0)')
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(-10px, -100%, 0)')
+    fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transform: rotate(-45deg) translate3d(0, -50%, 0)')
   })
 
   it('should not hover when false', () => {
-    const onOpen = jest.fn()
-    const onClose = jest.fn()
-    const { getByTestId, rerender } = render(
-      <Tooltip header="header" trigger={trigger} hover={false} data-testid="tooltip"></Tooltip>
-    )
-    expect(getByTestId('arrow')).toHaveStyle('opacity: 0')
+    render(<Tooltip header="header" trigger={trigger} hover={false} />)
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('opacity: 0')
 
-    fireEvent.mouseEnter(getByTestId('tooltip'))
-    expect(getByTestId('arrow')).toHaveStyle('opacity: 0')
-
-    rerender(
-      <Tooltip header="header" trigger={trigger} data-testid="tooltip" onOpen={onOpen} onClose={onClose}></Tooltip>
-    )
-    expect(getByTestId('arrow')).toHaveStyle('opacity: 0')
-
-    fireEvent.mouseEnter(getByTestId('tooltip'))
-    expect(getByTestId('arrow')).toHaveStyle('opacity: 1')
-    fireEvent.mouseLeave(getByTestId('tooltip'))
-
-    expect(onOpen).toHaveBeenCalled()
-    expect(onClose).toHaveBeenCalled()
+    fireEvent.mouseEnter(screen.getByLabelText('tooltip-wrapper'))
+    expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('opacity: 0')
   })
 
   it('should handle click and touch', () => {
-    const { getByTestId, getByRole } = render(
-      <Tooltip header="header" trigger={trigger} hover={false} data-testid="tooltip"></Tooltip>
-    )
+    render(<Tooltip header="header" trigger={trigger} hover={false} />)
 
-    fireEvent.click(getByTestId('tooltip'))
-    expect(getByRole('tooltip')).toHaveStyle('opacity: 1')
+    fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
+    expect(screen.getByRole('tooltip')).toHaveStyle('opacity: 1')
   })
 
   it('should handle escape', () => {
-    const { getByTestId, getByRole } = render(
-      <Tooltip header="header" trigger={trigger} hover={false} data-testid="tooltip"></Tooltip>
-    )
-    fireEvent.click(getByTestId('tooltip'))
+    render(<Tooltip header="header" trigger={trigger} hover={false} />)
+    fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
     fireEvent.keyDown(document, { key: 'Escape' })
-    expect(getByRole('tooltip')).toHaveStyle('opacity: 0')
+    expect(screen.getByRole('tooltip')).toHaveStyle('opacity: 0')
   })
 })
