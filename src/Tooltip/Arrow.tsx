@@ -1,20 +1,62 @@
-import React, { FunctionComponent } from 'react'
+import React, { CSSProperties, FunctionComponent, useMemo } from 'react'
 import clsx from 'clsx'
 
 import styles from './tooltip.module.scss'
+import { Position } from '.'
 
 export interface Props {
   arrowClassName?: string
+  borderColor?: string
   delay?: number
   dimensions?: ClientRect
   duration?: number
   easing?: string
   isShowing?: boolean
-  position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
+  position?: Position
+}
+
+const getAnimationStyleByPosition = (position?: Position) => {
+  switch (position) {
+    case 'top':
+    case 'top-right':
+    case 'top-left':
+      return {
+        enter: 'translate3d(-50%, 0, 0)',
+        active: 'translate3d(-50%, -2px, 0)'
+      }
+
+    case 'bottom':
+      return {
+        enter: 'translate3d(0, -10px, 0)',
+        active: 'translate3d(-50%, 1px, 0)'
+      }
+    case 'bottom-left':
+    case 'bottom-right':
+      return {
+        enter: 'translate3d(0, -10px, 0)',
+        active: 'translate3d(-50%, 0, 0)'
+      }
+
+    case 'left':
+      return {
+        enter: 'translate3d(0, -50%, 0)',
+        active: 'translate3d(0, -50%, 0)'
+      }
+
+    case 'right':
+      return {
+        enter: 'translate3d(-10px, -100%, 0)',
+        active: 'translate3d(0, -50%, 0)'
+      }
+
+    default:
+      return { enter: '', active: '' }
+  }
 }
 
 const Arrow: FunctionComponent<Props> = ({
   arrowClassName,
+  borderColor,
   delay,
   dimensions,
   duration,
@@ -22,27 +64,25 @@ const Arrow: FunctionComponent<Props> = ({
   isShowing,
   position
 }) => {
-  const getBaseStyle = () => {
-    if (dimensions && dimensions.top) {
-      const { top, bottom, left, right } = dimensions
-      return {
-        transition: `all ${duration}ms ${easing} ${delay}ms`,
-        opacity: isShowing ? 1 : 0,
-        pointerEvents: isShowing ? 'auto' : 'none',
-        top,
-        bottom,
-        left,
-        right
-      }
-    }
-    return {
+  const getBaseStyle: CSSProperties = useMemo(() => {
+    const baseStyle: CSSProperties = {
       transition: `all ${duration}ms ${easing} ${delay}ms`,
       opacity: isShowing ? 1 : 0,
       pointerEvents: isShowing ? 'auto' : 'none'
     }
-  }
 
-  const getPositionStyle = () => {
+    if (dimensions && dimensions.top) {
+      const { top, bottom, left, right } = dimensions
+      baseStyle.top = top
+      baseStyle.bottom = bottom
+      baseStyle.left = left
+      baseStyle.right = right
+    }
+
+    return baseStyle
+  }, [dimensions])
+
+  const getPositionStyle = (): CSSProperties => {
     if (dimensions && dimensions.top) {
       const { top, left, height, width } = dimensions
       switch (position) {
@@ -53,7 +93,7 @@ const Arrow: FunctionComponent<Props> = ({
             bottom: '100%',
             top: top + window.scrollY - 29,
             left: left - 5 + width / 2,
-            boxShadow: '-4px 4px 5px 0px rgba(45, 41, 38, 0.5)'
+            boxShadow: `-1px 1px 0px 0px ${borderColor}`
           }
 
         case 'bottom':
@@ -63,7 +103,7 @@ const Arrow: FunctionComponent<Props> = ({
             bottom: 'auto',
             top: top + window.scrollY + height + 9,
             left: left - 5 + width / 2,
-            boxShadow: '4px -4px 5px 0px rgba(45, 41, 38, 0.5)'
+            boxShadow: `1px -1px 0px 0px ${borderColor}`
           }
 
         case 'left':
@@ -72,7 +112,7 @@ const Arrow: FunctionComponent<Props> = ({
             top: top + window.scrollY + 9,
             bottom: 'auto',
             right: '102%',
-            boxShadow: '4px 4px 5px 0px rgba(45, 41, 38, 0.5)'
+            boxShadow: `1px 1px 0px 0px ${borderColor}`
           }
 
         case 'right':
@@ -80,7 +120,7 @@ const Arrow: FunctionComponent<Props> = ({
             left: left + width + 18,
             top: top + window.scrollY + 11,
             bottom: 'auto',
-            boxShadow: '-4px -4px 5px 0px rgba(45, 41, 38, 0.5)'
+            boxShadow: `-1px -1px 0px 0px ${borderColor}`
           }
 
         default:
@@ -90,7 +130,7 @@ const Arrow: FunctionComponent<Props> = ({
     return {}
   }
 
-  const getSpecificStyle = () => {
+  const getSpecificStyle = (): CSSProperties => {
     if (dimensions && dimensions.top) {
       const { left, width } = dimensions
       switch (position) {
@@ -106,66 +146,26 @@ const Arrow: FunctionComponent<Props> = ({
     return {}
   }
 
-  const getAnimation = () => {
+  const getAnimation: CSSProperties = useMemo(() => {
     let animation: 'active' | 'enter' = 'active'
     if (isShowing === false) {
       animation = 'enter'
     }
 
     return {
-      transform: `rotate(-45deg) ${getAnimationStyleByPosition()[animation]}`
+      transform: `rotate(-45deg) ${getAnimationStyleByPosition(position)[animation]}`
     }
-  }
-
-  const getAnimationStyleByPosition = () => {
-    switch (position) {
-      case 'top':
-      case 'top-right':
-      case 'top-left':
-        return {
-          enter: 'translate3d(-50%, 0, 0)',
-          active: 'translate3d(-50%, -2px, 0)'
-        }
-
-      case 'bottom':
-        return {
-          enter: 'translate3d(0, -10px, 0)',
-          active: 'translate3d(-50%, 1px, 0)'
-        }
-      case 'bottom-left':
-      case 'bottom-right':
-        return {
-          enter: 'translate3d(0, -10px, 0)',
-          active: 'translate3d(-50%, 0, 0)'
-        }
-
-      case 'left':
-        return {
-          enter: 'translate3d(0, -50%, 0)',
-          active: 'translate3d(0, -50%, 0)'
-        }
-
-      case 'right':
-        return {
-          enter: 'translate3d(-10px, -100%, 0)',
-          active: 'translate3d(0, -50%, 0)'
-        }
-
-      default:
-        return { enter: '', active: '' }
-    }
-  }
+  }, [isShowing, position])
 
   return (
     <div
-      data-testid="arrow"
+      aria-label="tooltip-arrow"
       className={clsx(styles['tooltip-arrow'], arrowClassName)}
-      // @ts-ignore
       style={{
-        ...getBaseStyle(),
+        ...getBaseStyle,
         ...getPositionStyle(),
         ...getSpecificStyle(),
-        ...getAnimation()
+        ...getAnimation
       }}
     />
   )

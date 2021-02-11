@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { useState, useEffect, ReactNode, FunctionComponent } from 'react'
+import React, { useState, useEffect, ReactNode, FunctionComponent, useRef } from 'react'
 import clsx from 'clsx'
 import useDimensions from '../utils/useDimensions'
 import Portal from '../Portal'
@@ -7,6 +7,8 @@ import Arrow from './Arrow'
 import TipContainer from './TipContainer'
 
 import styles from './tooltip.module.scss'
+
+export type Position = 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
 
 export interface Props {
   /** Content elements inside the tooltip container */
@@ -17,30 +19,36 @@ export interface Props {
   arrow?: boolean
   /** Override styles to arrow */
   arrowClassName?: string
+  /** border-color of tooltip container */
+  borderColor?: string
   /** Override styles to wrapper */
   className?: string
+  /** whether or not the x should appear in the header */
+  closeBtn?: boolean
   /** Delay of transition animation */
   delay?: number
   /** How long the transition animation should go */
   duration?: number
   /** Type of easing animtation applied */
   easing?: string
+  /** Title to be shown at top of tooltip content */
+  header?: string
   /** If true, the tooltip will open on hover */
   hover?: boolean
   /** DON'T USE. For testing purposes only */
   initialDimensions?: any
   /** Whether the tooltip is open or not */
   isOpen?: boolean
+  /** max-width of the tooltip container */
+  maxWidth?: string
   /** Callback when tooltip is closed */
   onClose?: Function | null
   /** Callback when tooltip is opened */
   onOpen?: Function | null
   /** Position of tooltip in relation to the trigger */
-  position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
+  position?: Position
   /** Override styles to the content */
   tipContainerClassName?: string
-  /** Title to be shown at top of tooltip content */
-  header: string
   [rest: string]: unknown
 }
 
@@ -48,25 +56,29 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   const {
     arrow,
     arrowClassName,
+    borderColor,
     children,
     className,
-    initialDimensions,
-    trigger,
+    closeBtn,
     duration,
     delay,
     easing,
+    header,
     hover,
+    initialDimensions,
+    isOpen,
+    maxWidth,
     onOpen,
     onClose,
     position,
     tipContainerClassName,
-    isOpen,
-    header,
+    trigger,
     ...rest
   } = props
   const [isShowing, setIsShowing] = useState(isOpen)
+  const tipContainerRef = useRef<HTMLDivElement>(null)
   // @ts-ignore
-  const [wrapperRef, dimensions] = useDimensions(true, 250, initialDimensions, [isShowing])
+  const [wrapperRef, dimensions] = useDimensions(true, 20, initialDimensions, [isShowing])
   useEffect(() => {
     if (isOpen) {
       handleTouch()
@@ -84,19 +96,28 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     document.removeEventListener('keydown', handleEscape)
   }
 
+  const closeToolTip = () => {
+    hideTooltip()
+    removeListeners()
+  }
+
   const handleEscape = (e: any) => {
     switch (e.key) {
       case 'Escape': {
-        hideTooltip()
-        removeListeners()
+        closeToolTip()
         break
       }
     }
   }
 
   const handler = (e: any) => {
-    hideTooltip()
-    removeListeners()
+    let currentNode = e.target
+    while (currentNode.parentNode) {
+      if (currentNode === tipContainerRef.current) return
+      currentNode = currentNode.parentNode
+    }
+    if (currentNode !== document) return
+    closeToolTip()
   }
 
   const showTooltip = () => {
@@ -129,8 +150,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       // Escape
       case 27: {
         if (isShowing) {
-          hideTooltip()
-          removeListeners()
+          closeToolTip()
         }
         break
       }
@@ -153,6 +173,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       {arrow && (
         <Arrow
           arrowClassName={arrowClassName}
+          borderColor={borderColor}
           delay={delay}
           dimensions={dimensions}
           duration={duration}
@@ -162,14 +183,19 @@ const Tooltip: FunctionComponent<Props> = (props) => {
         />
       )}
       <TipContainer
-        header={header}
+        borderColor={borderColor}
+        closeBtn={closeBtn}
         delay={delay}
         dimensions={dimensions}
         duration={duration}
         easing={easing}
+        closeToolTip={closeToolTip}
+        header={header}
         isShowing={isShowing}
+        maxWidth={maxWidth}
         position={position}
         tipContainerClassName={tipContainerClassName}
+        tipContainerRef={tipContainerRef}
       >
         {children}
       </TipContainer>
@@ -182,10 +208,11 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       onClick={hover ? undefined : handleTouch}
       onKeyDown={hover ? undefined : handleKeys}
       onMouseEnter={hover ? showTooltip : undefined}
-      onMouseLeave={hover ? hideTooltip : undefined}
+      onMouseLeave={hover ? closeToolTip : undefined}
       ref={wrapperRef}
       tabIndex={0}
       aria-expanded={isShowing}
+      aria-label="tooltip-wrapper"
       {...rest}
     >
       {trigger}
@@ -200,16 +227,19 @@ const Tooltip: FunctionComponent<Props> = (props) => {
 Tooltip.defaultProps = {
   arrow: true,
   arrowClassName: '',
+  borderColor: '#e5e5e5',
   className: '',
+  closeBtn: false,
   duration: 180,
   delay: 0,
   easing: 'ease-in-out',
-  hover: true,
+  hover: false,
   initialDimensions: {},
   isOpen: false,
   onClose: null,
   onOpen: null,
   position: 'top',
+  maxWidth: '350px',
   tipContainerClassName: ''
 }
 

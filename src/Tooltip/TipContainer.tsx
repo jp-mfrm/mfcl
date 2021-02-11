@@ -1,30 +1,64 @@
-import React, { FunctionComponent, ReactNode, useRef, useEffect } from 'react'
+import React, { FunctionComponent, ReactNode, useRef, useEffect, CSSProperties, RefObject } from 'react'
 import clsx from 'clsx'
 import Typography from '../Typography'
 
 import styles from './tooltip.module.scss'
+import { Position } from '.'
 
 export interface Props {
+  borderColor?: string
   children: ReactNode
+  closeBtn?: boolean
   delay?: number
   dimensions?: ClientRect
   duration?: number
   easing?: string
-  isShowing?: boolean
-  position?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
-  tipContainerClassName?: string
+  closeToolTip?: () => void
   header?: string
+  isShowing?: boolean
+  maxWidth?: string
+  position?: Position
+  tipContainerClassName?: string
+  tipContainerRef?: RefObject<HTMLDivElement>
+}
+
+const getGap = (position?: Position) => {
+  switch (position) {
+    case 'top':
+    case 'top-left':
+    case 'top-right':
+      return { bottom: '20px' }
+
+    case 'bottom':
+    case 'bottom-left':
+    case 'bottom-right':
+      return { top: '-20px' }
+
+    case 'left':
+      return { right: '-20px' }
+
+    case 'right':
+      return { left: '-20px' }
+
+    default:
+      return {}
+  }
 }
 
 const TipContainer: FunctionComponent<Props> = ({
+  borderColor,
   children,
+  closeBtn,
   delay,
   dimensions,
   duration,
   easing,
+  closeToolTip,
   isShowing,
+  maxWidth,
   position,
   tipContainerClassName,
+  tipContainerRef,
   header
 }) => {
   const closeBtnRef = useRef<HTMLDivElement>(null)
@@ -35,90 +69,78 @@ const TipContainer: FunctionComponent<Props> = ({
     }
   }, [isShowing])
 
-  const getBaseStyle = () => {
+  const getBaseStyle = (): CSSProperties => {
     const opacity = isShowing ? 1 : 0
     const pointerEvents = isShowing ? 'auto' : 'none'
+    const baseStyle: CSSProperties = {
+      borderColor,
+      maxWidth,
+      transition: `all ${duration}ms ${easing} ${delay}ms`,
+      opacity,
+      pointerEvents
+    }
 
-    if (dimensions && dimensions.top) {
-      const { top, bottom, left, right, height, width } = dimensions
+    if (dimensions && dimensions.top && tipContainerRef?.current) {
+      const { top, left, right, height, width } = dimensions
       switch (position) {
-        case 'top':
+        case 'top': {
           return {
-            transition: `all ${duration}ms ${easing} ${delay}ms`,
-            opacity,
-            pointerEvents,
-            top: top + window.scrollY - 168,
-            bottom,
+            ...baseStyle,
+            top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left - 10,
             right
           }
+        }
         case 'top-left':
           return {
-            transition: `all ${duration}ms ${easing} ${delay}ms`,
-            opacity,
-            pointerEvents,
-            top: top + window.scrollY - 168,
-            bottom,
+            ...baseStyle,
+            top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left - width - 5,
             right
           }
         case 'top-right':
           return {
-            transition: `all ${duration}ms ${easing} ${delay}ms`,
-            opacity,
-            pointerEvents,
-            top: top + window.scrollY - 168,
-            bottom,
+            ...baseStyle,
+            top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left + width / 2 - 7,
             right
           }
-        case 'bottom':
+        case 'bottom': {
           return {
-            transition: `all ${duration}ms ${easing} ${delay}ms`,
-            opacity,
-            pointerEvents,
+            ...baseStyle,
             top: top + window.scrollY + height - 25,
-            bottom,
             left: left - 10,
             right
           }
+        }
+
         case 'bottom-left':
           return {
-            transition: `all ${duration}ms ${easing} ${delay}ms`,
-            opacity,
-            pointerEvents,
-            top: top + window.scrollY + 15,
-            bottom,
+            ...baseStyle,
+            top: top + window.scrollY + height - 25,
             left: left - width + 25,
             right
           }
-        case 'bottom-right':
+        case 'bottom-right': {
           return {
-            transition: `all ${duration}ms ${easing} ${delay}ms`,
-            opacity,
-            pointerEvents,
-            top: top + window.scrollY + 15,
-            bottom,
+            ...baseStyle,
+            top: top + window.scrollY + height - 25,
             left: left + width / 2 - 7,
             right
           }
+        }
+
         case 'right':
           return {
-            transition: `all ${duration}ms ${easing} ${delay}ms`,
-            opacity,
-            pointerEvents,
+            ...baseStyle,
             top: top + window.scrollY - height,
-            bottom,
             left: left + width + 15,
             right
           }
         case 'left':
           return {
-            transition: `all ${duration}ms ${easing} ${delay}ms`,
-            opacity,
-            pointerEvents,
+            ...baseStyle,
             top: top + window.scrollY - height,
-            bottom,
             left: left - width * 2 - 60,
             right
           }
@@ -134,7 +156,7 @@ const TipContainer: FunctionComponent<Props> = ({
     }
   }
 
-  const getAnimationStyle = () => {
+  const getAnimationStyle = (): CSSProperties => {
     const animationStyle = getAnimationStyleByPosition(position)
 
     if (isShowing === false) {
@@ -148,25 +170,26 @@ const TipContainer: FunctionComponent<Props> = ({
   }
 
   const getAnimationStyleByPosition = (tipPosition?: string): any => {
-    if (dimensions && dimensions.top) {
+    if (dimensions && dimensions.top && tipContainerRef?.current) {
       const { top, left, height, width } = dimensions
+
       switch (tipPosition) {
-        case 'top':
+        case 'top': {
           return {
             enter: {
+              top: top + window.scrollY - tipContainerRef.current.offsetHeight - 39,
               transform: 'translate3d(-50%, 0, 0)',
-              bottom: '100%',
               left: left + width / 2
             },
             active: {
               transform: 'translate3d(-50%, -3px, 0)'
             }
           }
-
-        case 'top-left':
+        }
+        case 'top-left': {
           return {
             enter: {
-              ...getAnimationStyleByPosition('top').enter,
+              top: top + window.scrollY - tipContainerRef.current.offsetHeight - 39,
               transform: 'translate3d(calc(-100% + 16px), 0, 0)',
               left: left + width + 10 - width / 2
             },
@@ -174,11 +197,11 @@ const TipContainer: FunctionComponent<Props> = ({
               transform: 'translate3d(calc(-100% + 16px), -3px, 0)'
             }
           }
-
+        }
         case 'top-right':
           return {
             enter: {
-              ...getAnimationStyleByPosition('top').enter,
+              top: top + window.scrollY - tipContainerRef.current.offsetHeight - 39,
               transform: 'translate3d(calc(0% + -16px), 0, 0)',
               left: left + width / 2 - 7
             },
@@ -202,9 +225,8 @@ const TipContainer: FunctionComponent<Props> = ({
         case 'bottom-left':
           return {
             enter: {
-              ...getAnimationStyleByPosition('bottom').enter,
               transform: 'translate3d(calc(-100% + 16px), 0, 0)',
-              top: top + window.scrollY + 5,
+              top: top + window.scrollY + height - 15,
               left: left + 22 + width - width / 2
             },
             active: {
@@ -215,9 +237,8 @@ const TipContainer: FunctionComponent<Props> = ({
         case 'bottom-right':
           return {
             enter: {
-              ...getAnimationStyleByPosition('bottom').enter,
               transform: 'translate3d(calc(0% + -16px), 0, 0)',
-              top: top + window.scrollY + 5,
+              top: top + window.scrollY + height - 15,
               left: left - 22 + width - width / 2
             },
             active: {
@@ -260,55 +281,41 @@ const TipContainer: FunctionComponent<Props> = ({
     return { enter: {}, active: {} }
   }
 
-  const getGap = () => {
-    switch (position) {
-      case 'top':
-      case 'top-left':
-      case 'top-right':
-        return { bottom: '20px' }
-
-      case 'bottom':
-      case 'bottom-left':
-      case 'bottom-right':
-        return { top: '-20px' }
-
-      case 'left':
-        return { right: '-20px' }
-
-      case 'right':
-        return { left: '-20px' }
-
-      default:
-        return {}
-    }
-  }
-
   return (
     <div
       role="tooltip"
+      ref={tipContainerRef}
       className={clsx(styles['tip-container'], tipContainerClassName)}
       style={{
         ...getBaseStyle(),
         ...getAnimationStyle()
       }}
     >
-      <div className={styles.gap} style={getGap()} />
-      <div className={styles['header-wrapper']}>
-        <Typography className={styles['header']} variant="h6">
-          {/* @ts-ignore */}
-          {header}
-        </Typography>
-        <div role="button" tabIndex={0} className={clsx(styles.close)} aria-label="Close Alert" ref={closeBtnRef}>
-          <span aria-hidden="true" className={styles['close-icon']}>
-            &times;
-          </span>
+      <div className={styles.gap} style={getGap(position)} />
+      {(header || closeBtn) && (
+        <div className={styles['header-wrapper']}>
+          {header && (
+            <Typography className={styles['header']} variant="h6">
+              {header}
+            </Typography>
+          )}
+          {closeBtn && (
+            <div
+              role="button"
+              tabIndex={0}
+              className={styles.close}
+              aria-label="Close Alert"
+              ref={closeBtnRef}
+              onClick={closeToolTip}
+            >
+              <span aria-hidden="true" className={styles['close-icon']}>
+                &times;
+              </span>
+            </div>
+          )}
         </div>
-      </div>
-
-      <Typography className={styles['tooltip-content']} variant="paragraph-sm">
-        {/* @ts-ignore */}
-        {children}
-      </Typography>
+      )}
+      {children}
     </div>
   )
 }
