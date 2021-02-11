@@ -86,6 +86,12 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     return removeListeners
   }, [isOpen])
 
+  useEffect(() => {
+    if (isShowing) {
+      assignOutsideTouchHandler()
+    }
+  }, [isShowing])
+
   const assignOutsideTouchHandler = () => {
     document.addEventListener('click', handler)
     document.addEventListener('keydown', handleEscape)
@@ -111,13 +117,15 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   }
 
   const handler = (e: any) => {
-    let currentNode = e.target
-    while (currentNode.parentNode) {
-      if (currentNode === tipContainerRef.current) return
-      currentNode = currentNode.parentNode
+    if (isShowing) {
+      let currentNode = e.target
+      while (currentNode.parentNode) {
+        if (currentNode === tipContainerRef.current) return
+        currentNode = currentNode.parentNode
+      }
+      if (currentNode !== document) return
+      closeToolTip()
     }
-    if (currentNode !== document) return
-    closeToolTip()
   }
 
   const showTooltip = () => {
@@ -139,7 +147,6 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   const handleTouch = () => {
     if (!isShowing) {
       showTooltip()
-      assignOutsideTouchHandler()
     }
   }
 
@@ -158,7 +165,6 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       case 13: {
         if (!isShowing) {
           showTooltip()
-          assignOutsideTouchHandler()
         }
         break
       }
