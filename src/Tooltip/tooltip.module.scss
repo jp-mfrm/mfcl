@@ -29,20 +29,12 @@
   color: $gray-11;
   display: table;
   font-size: 20px;
-  line-height: 30px;
   margin-top: 25px;
-  padding: 0.5em 1em;
+  padding: 12px 20px;
   position: absolute;
   transform: translate3d(0, 0, 0);
   transform-origin: top;
   z-index: 99;
-}
-
-.gap {
-  height: 20px;
-  margin-top: 10px;
-  position: absolute;
-  width: 100%;
 }
 
 .header-wrapper {

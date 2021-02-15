@@ -101,8 +101,10 @@ Tooltips help clarify what certain features do.
               trigger={<p>Open my tooltip by clicking on the button</p>}
               isOpen={state.isOpen}
               onClose={() => setState({ isOpen: false })}
+              onOpen={() => setState({ isOpen: true })}
             >
-              I am a tooltip
+              <div>I am a tooltip</div>
+              <Button onClick={() => setState({ isOpen: !state.isOpen })}>Close me</Button>
             </Tooltip>
           </div>
         </>

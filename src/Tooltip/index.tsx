@@ -79,17 +79,20 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   const tipContainerRef = useRef<HTMLDivElement>(null)
   // @ts-ignore
   const [wrapperRef, dimensions] = useDimensions(true, 20, initialDimensions, [isShowing])
+
   useEffect(() => {
     if (isOpen) {
       handleTouch()
+    } else {
+      closeToolTip()
     }
-    return removeListeners
   }, [isOpen])
 
   useEffect(() => {
     if (isShowing) {
       assignOutsideTouchHandler()
     }
+    return removeListeners
   }, [isShowing])
 
   const assignOutsideTouchHandler = () => {

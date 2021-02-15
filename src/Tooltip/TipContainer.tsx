@@ -22,29 +22,6 @@ export interface Props {
   tipContainerRef?: RefObject<HTMLDivElement>
 }
 
-const getGap = (position?: Position) => {
-  switch (position) {
-    case 'top':
-    case 'top-left':
-    case 'top-right':
-      return { bottom: '20px' }
-
-    case 'bottom':
-    case 'bottom-left':
-    case 'bottom-right':
-      return { top: '-20px' }
-
-    case 'left':
-      return { right: '-20px' }
-
-    case 'right':
-      return { left: '-20px' }
-
-    default:
-      return {}
-  }
-}
-
 const TipContainer: FunctionComponent<Props> = ({
   borderColor,
   children,
@@ -291,7 +268,6 @@ const TipContainer: FunctionComponent<Props> = ({
         ...getAnimationStyle()
       }}
     >
-      <div className={styles.gap} style={getGap(position)} />
       {(header || closeBtn) && (
         <div className={styles['header-wrapper']}>
           {header && (
