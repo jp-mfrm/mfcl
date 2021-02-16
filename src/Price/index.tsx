@@ -10,10 +10,14 @@ interface Props {
   text?: string
   /** align the text in the center */
   center?: boolean
+  /** align the text to the right */
+  right?: boolean
   /** will add new styling to the price */
   discount?: boolean
   /** will cross out the price(s) and add new price(s) above the old price */  
   discountPrice?: number[]
+  /** will add discount percentage */
+  discountPercentage?: boolean
   className?: string
   [rest: string]: unknown // ...rest property
 }
@@ -23,8 +27,10 @@ const Price: FunctionComponent<Props> = ({
   discountPrice,
   text,
   center = false,
+  right = false,
   divider = false,
   discount = false,
+  discountPercentage = false,
   className,
   ...rest
 }) => {
@@ -53,12 +59,19 @@ const Price: FunctionComponent<Props> = ({
   )
 
   let productDiscount
+  let productDiscountPercentage
   if (discountPrice) {
-    productDiscount = <p className={styles['price-cut']}>{formatPrice(price)}</p>
+    if (discountPercentage) {
+      let priceDiff = price[0]-discountPrice[0];
+      let percentage = Math.round((priceDiff/price[0])*100);
+      productDiscount = <p className={styles['price-cut']}><span className={clsx({[styles['price-cut-percent']]: percentage > 0})}>{percentage > 0 ? percentage + `% Off ` : ``}</span><span className={styles['price-cut-value']}>{formatPrice(price)}</span></p>
+    } else {
+      productDiscount = <p className={styles['price-cut']}>{formatPrice(price)}</p>
+    }
   }
 
   return (
-    <div className={clsx(styles['price-wrapper'], center && styles.center, className && className)} {...rest}>
+    <div className={clsx(styles['price-wrapper'], center && styles.center, right && styles.right, className && className)} {...rest}>
       <div data-testid="price-container-prices">
         <p
           className={clsx(

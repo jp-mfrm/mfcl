@@ -47,4 +47,9 @@ describe('Price Component', () => {
     const {getByTestId} = render(<Price price={price} text='text' divider/>)
     expect(getByTestId('price-container-prices').querySelector('p')?.textContent).toContain('|')
   })
+
+  it('should render the discounted percentage', () => {
+    const {getByTestId} = render(<Price price={price} discountPrice={[200]} discountPercentage/>)
+    expect(getByTestId('price-container-prices').querySelector('p.price-cut')?.textContent).toContain('%')
+  })
 });
