@@ -14,7 +14,7 @@ interface Props {
   right?: boolean
   /** will add new styling to the price */
   discount?: boolean
-  /** will cross out the price(s) and add new price(s) above the old price */  
+  /** will cross out the price(s) and add new price(s) above the old price */
   discountPrice?: number[]
   /** will add discount percentage */
   discountPercentage?: boolean
@@ -34,22 +34,27 @@ const Price: FunctionComponent<Props> = ({
   className,
   ...rest
 }) => {
-  const formatPrice = useCallback((nums: number[]) => {
-    if(price) {
-      let p = new Intl.NumberFormat('en-US', { 
-        style: 'currency',
-        currency: 'USD',}).format(nums[0])
-
-      if(nums[1]) {
-        p += " - " + new Intl.NumberFormat('en-US', { 
+  const formatPrice = useCallback(
+    (nums: number[]) => {
+      if (price) {
+        let p = new Intl.NumberFormat('en-US', {
           style: 'currency',
-          currency: 'USD',}).format(nums[1])
+          currency: 'USD'
+        }).format(nums[0])
+
+        if (nums[1]) {
+          p +=
+            ' - ' +
+            new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+            }).format(nums[1])
+        }
+        return p
       }
-      return p;
-    }
-    
-    
-  }, [price, discountPrice])
+    },
+    [price, discountPrice]
+  )
 
   let productPrice = discountPrice ? formatPrice(discountPrice) : formatPrice(price)
   let productText = text && (
@@ -59,19 +64,28 @@ const Price: FunctionComponent<Props> = ({
   )
 
   let productDiscount
-  let productDiscountPercentage
   if (discountPrice) {
     if (discountPercentage) {
-      let priceDiff = price[0]-discountPrice[0];
-      let percentage = Math.round((priceDiff/price[0])*100);
-      productDiscount = <p className={styles['price-cut']}><span className={clsx({[styles['price-cut-percent']]: percentage > 0})}>{percentage > 0 ? percentage + `% Off ` : ``}</span><span className={styles['price-cut-value']}>{formatPrice(price)}</span></p>
+      let priceDiff = price[0] - discountPrice[0]
+      let percentage = Math.round((priceDiff / price[0]) * 100)
+      productDiscount = (
+        <p className={styles['price-cut']}>
+          <span className={clsx(percentage > 0 && styles['price-cut-percent'])}>
+            {percentage > 0 ? percentage + '% Off ' : ''}
+          </span>
+          <span className={styles['price-cut-value']}>{formatPrice(price)}</span>
+        </p>
+      )
     } else {
       productDiscount = <p className={styles['price-cut']}>{formatPrice(price)}</p>
     }
   }
 
   return (
-    <div className={clsx(styles['price-wrapper'], center && styles.center, right && styles.right, className && className)} {...rest}>
+    <div
+      className={clsx(styles['price-wrapper'], center && styles.center, right && styles.right, className && className)}
+      {...rest}
+    >
       <div data-testid="price-container-prices">
         <p
           className={clsx(
