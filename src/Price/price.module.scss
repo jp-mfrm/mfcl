@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+.right {
+  text-align: right;
+}
+
 .original-price {
     font-size: 16px;
     line-height: 14.4px;
@@ -52,4 +56,11 @@
     @media screen and (min-width: $mobile) {
       padding: 0;
     }
+}
+
+.price-cut-percent {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 500;
+  margin-right: 10px;
 }
