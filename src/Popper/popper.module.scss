@@ -29,8 +29,15 @@
   padding: 10px;
   background-color: #ffffff;
   border-radius: 2px;
-  border: 1px solid black;
   max-width: 350px;
+}
+
+.border-standard {
+  border: 1px solid black;
+}
+
+.border-shadow {
+  box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .close {
@@ -80,19 +87,42 @@
   height: 1rem;
   left: 0;
   margin-top: -0.4rem;
-  top: 0;
   width: 1rem;
 
+  &.arrow-shadow {
+    top: -2px;
+
+    &:before {
+      border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+      border-width: 0 0.5rem 0.6rem 0.5rem;
+      top: -2px;
+    }
+
+    &:after {
+      border-width: 0 0.5rem 0.55rem 0.5rem;
+    }
+  }
+
+  &.arrow-outline {
+    top: 0;
+
+    &:before {
+      top: -1px;
+      border-width: 0 0.5rem 0.4rem 0.5rem;
+      border-color: transparent transparent black transparent;
+    }
+
+    &:after {
+      border-width: 0 0.5rem 0.4rem 0.5rem;
+    }
+  }
+
   &:before {
-    border-color: transparent transparent black transparent;
-    border-width: 0 0.5rem 0.4rem 0.5rem;
     position: absolute;
-    top: -1px;
   }
 
   &:after {
     border-color: transparent transparent white transparent;
-    border-width: 0 0.5rem 0.4rem 0.5rem;
   }
 }
 
@@ -103,32 +133,72 @@
   margin-bottom: -1rem;
   width: 1rem;
 
+  &.arrow-shadow {
+    &:before {
+      border-color: rgba(0, 0, 0, 0.1) transparent transparent transparent;
+      border-width: 0.5rem 0.6rem 0 0.6rem;
+    }
+
+    &:after {
+      border-width: 0.5rem 0.55rem 0 0.6rem;
+    }
+  }
+
+  &.arrow-outline {
+    &:before {
+      border-color: black transparent transparent transparent;
+      border-width: 0.4rem 0.5rem 0 0.5rem;
+    }
+
+    &:after {
+      border-width: 0.4rem 0.5rem 0 0.5rem;
+    }
+  }
+
   &:before {
     border-color: black transparent transparent transparent;
-    border-width: 0.4rem 0.5rem 0 0.5rem;
     position: absolute;
     top: 1px;
   }
+
   &:after {
     border-color: white transparent transparent transparent;
-    border-width: 0.4rem 0.5rem 0 0.5rem;
   }
 }
 
 .styleArrowLeft {
   height: 1rem;
-  left: 0;
   margin-left: -0.7rem;
   width: 1rem;
 
-  &:before {
-    border-color: transparent black transparent transparent;
-    border-width: 0.5rem 0.4rem 0.5rem 0;
+  &.arrow-shadow {
+    left: -2px;
+
+    &:before {
+      border-color: transparent rgba(0, 0, 0, 0.1) transparent transparent;
+      border-width: 0.6rem 0.5rem 0.6rem 0;
+    }
+
+    &:after {
+      border-width: 0.6rem 0.5rem 0.6rem 0;
+    }
+  }
+
+  &.arrow-outline {
+    left: 0;
+
+    &:before {
+      border-color: transparent black transparent transparent;
+      border-width: 0.5rem 0.4rem 0.5rem 0;
+    }
+
+    &:after {
+      border-width: 0.5rem 0.4rem 0.5rem 0;
+    }
   }
 
   &:after {
     border-color: transparent white transparent transparent;
-    border-width: 0.5rem 0.4rem 0.5rem 0;
     left: 6px;
     top: 0;
   }
@@ -140,15 +210,36 @@
   right: 0;
   width: 1rem;
 
+  &.arrow-shadow {
+    &:before {
+      border-color: transparent transparent transparent rgba(0, 0, 0, 0.1);
+      border-width: 0.6rem 0 0.6rem 0.5em;
+    }
+
+    &:after {
+      border-width: 0.6rem 0 0.6rem 0.5em;
+      left: 1px;
+    }
+  }
+
+  &.arrow-outline {
+    &:before {
+      border-color: transparent transparent transparent black;
+      border-width: 0.5rem 0 0.5rem 0.4em;
+    }
+
+    &:after {
+      border-width: 0.5rem 0 0.5rem 0.4em;
+      left: 3px;
+    }
+  }
+
   &:before {
     border-color: transparent transparent transparent black;
-    border-width: 0.5rem 0 0.5rem 0.4em;
   }
 
   &:after {
     border-color: transparent transparent transparent white;
-    border-width: 0.5rem 0 0.5rem 0.4em;
-    left: 3px;
     top: 0;
   }
 }

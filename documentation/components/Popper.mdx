@@ -118,6 +118,32 @@ A Popper can be used to display some content on top of another. Utilizes the Pop
   </Popper>
 </Playground>
 
+## With Different Outline Styles
+
+<Playground>
+  <Row>
+    <Popper
+      trigger={'Shadow'}
+      position={'top-start'}
+      offsetY={10}
+      tooltipContent="This is what goes in the popper!"
+      header={'Header'}
+      outline="shadow"
+    />
+  </Row>
+  <br /> <br />
+  <Row>
+    <Popper
+      trigger={'Standard Border'}
+      position={'top-start'}
+      offsetY={10}
+      tooltipContent="This is what goes in the popper!"
+      header={'Header'}
+      outline="border"
+    />
+  </Row>
+</Playground>
+
 ## Different positions
 
 <Playground>
