@@ -43,6 +43,13 @@ const useOpenModal = ({ isOpen, setIsShowing, closeBtnRef }: Props) => {
         window.scrollTo(0, offsetY || 0)
       }
     }
+    return () => {
+      document.body.style.overflow = ''
+      if (isSafari) {
+        document.body.style.position = ''
+        document.body.style.top = ''
+      }
+    }
   }, [isOpen])
 }
 
