@@ -1,5 +1,6 @@
 import Accordion from './Accordion'
 import AccordionItem from './AccordionItem'
+import Arcade from './Arcade'
 import Alert from './Alert'
 import Badge from './Badge'
 import Breadcrumbs from './Breadcrumbs'
@@ -37,6 +38,7 @@ import Pagination from './Pagination'
 import Typography from './Typography'
 
 export {
+  Arcade,
   Accordion,
   AccordionItem,
   Alert,

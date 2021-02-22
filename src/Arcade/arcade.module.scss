@@ -1,0 +1,66 @@
+@import "../variables";
+
+.player {
+  position: absolute;
+  bottom: 0;
+  width: 60px;
+  height: 60px;
+  background-size: 60px 60px;
+}
+
+.stage {
+  position: relative;
+  bottom: 0px;
+  width: 100%;
+  height: 200px;
+  background-image: url("../images/player-run-bg.png");
+  background-repeat: repeat-x;
+  animation: slideright 600s infinite linear;
+  -webkit-animation: slideright 600s infinite linear;
+}
+
+.stage.not-started,
+.stage.game-over {
+  animation: non;
+  -webkit-animation: none;
+}
+
+.gameOverBanner {
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.banner,
+.restart-game {
+  display: flex;
+}
+
+.banner {
+  width: 100%;
+  justify-content: center;
+}
+
+.restart-game {
+  margin-top: 15px;
+}
+
+@keyframes slideright {
+  from {
+    background-position: 70000%;
+  }
+  to {
+    background-position: 0%;
+  }
+}
+
+@-webkit-keyframes slideright {
+  from {
+    background-position: 70000%;
+  }
+  to {
+    background-position: 0%;
+  }
+}
