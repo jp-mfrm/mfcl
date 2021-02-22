@@ -35,6 +35,7 @@ interface Props {
   offsetY?: number
   arrow?: boolean
   closeBtn?: boolean
+  outline?: string
 }
 
 const Popper: FunctionComponent<Props> = ({
@@ -48,6 +49,7 @@ const Popper: FunctionComponent<Props> = ({
   offsetY = 0,
   arrow = true,
   closeBtn = false,
+  outline = 'border',
   ...rest
 }) => {
   const [visible, setVisibility] = useState(false)
@@ -156,7 +158,12 @@ const Popper: FunctionComponent<Props> = ({
       // @ts-ignore
       ref={setPopperElement}
       style={styles.popper}
-      className={clsx(customStyles['content'], contentClass)}
+      className={clsx(
+        customStyles['content'],
+        outline === 'border' && customStyles['border-standard'],
+        outline === 'shadow' && customStyles['border-shadow'],
+        contentClass
+      )}
       {...attributes.popper}
     >
       <div
@@ -188,7 +195,9 @@ const Popper: FunctionComponent<Props> = ({
             position.startsWith('top') && customStyles['styleArrowBottom'],
             position.startsWith('bottom') && customStyles['styleArrowTop'],
             position.startsWith('left') && customStyles['styleArrowRight'],
-            position.startsWith('right') && customStyles['styleArrowLeft']
+            position.startsWith('right') && customStyles['styleArrowLeft'],
+            outline === 'border' && customStyles['arrow-outline'],
+            outline === 'shadow' && customStyles['arrow-shadow']
           )}
         />
       )}
