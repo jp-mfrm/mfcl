@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
+import carouselHelper, { Chips } from './carouselHelper'
 
-import carouselHelper from './carouselHelper'
 import clsx from 'clsx'
 import styles from './carousel.module.scss'
 
@@ -12,6 +12,9 @@ interface Props {
   /** Sets the class for the Carousel wrapper */
   carouselClass?: string
   /** Sets how many slides to show */
+  chips?: Chips[]
+  /** List of carousel chips to be rendered.
+   *  Will override the following props: itemsToShow */
   itemsToShow?: number
   /** Sets the transition control button alignments. Two non conflicting configurations can be combined.
    * Valid configurations are: 'top', 'middle', 'center', 'apart', 'left', 'right', 'bottom'.
@@ -72,6 +75,7 @@ const Carousel: FunctionComponent<Props> = ({
   autoSlide = false,
   duration = 3000,
   responsive = [{}],
+  chips = [],
   children
 }) => {
   const {
@@ -104,7 +108,8 @@ const Carousel: FunctionComponent<Props> = ({
     autoSlide,
     layoutGap,
     //@ts-ignore
-    responsive
+    responsive,
+    chips
   )
 
   const screenReaderInstructions = (
@@ -127,11 +132,11 @@ const Carousel: FunctionComponent<Props> = ({
 
   const template = (
     <section
-      className={clsx(styles['carousel-wrapper'], styles['loaded'], carouselClass)}
+      className={clsx(styles['carousel-wrapper'], styles['loaded'], styles['carousel-chips'], carouselClass)}
       aria-label={'carousel-' + ariaLabel}
     >
       {screenReaderInstructions}
-      {controlButtons[0]}
+      {(!chips || chips.length < 1) && controlButtons[0]}
       <div className={styles['carousel-wrapper-slider']}>
         <div
           className={styles['carousel-wrapper-slides']}
@@ -158,7 +163,7 @@ const Carousel: FunctionComponent<Props> = ({
         </div>
         {!indicatorVisibility && indicatorWrapper}
       </div>
-      {controlButtons[1]}
+      {(!chips || chips.length < 1) && controlButtons[1]}
     </section>
   )
 

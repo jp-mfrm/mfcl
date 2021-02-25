@@ -105,6 +105,11 @@ $slider-height: 100%;
       margin: 0;
     }
 
+    .chip-slide {
+      min-height: 50px;
+      white-space: nowrap;
+    }
+
     .grabbing {
       cursor: grabbing;
     }
