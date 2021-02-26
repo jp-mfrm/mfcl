@@ -108,6 +108,10 @@ $slider-height: 100%;
     .chip-slide {
       min-height: 50px;
       white-space: nowrap;
+
+      & button[class^='chip-module--chip'] {
+        margin: 0;
+      }
     }
 
     .grabbing {
