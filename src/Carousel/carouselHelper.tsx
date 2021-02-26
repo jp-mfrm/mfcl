@@ -42,6 +42,34 @@ function getChildrenArr(children: ReactNode, chips?: Chips[]) {
   return cloneEls
 }
 
+function getChipMeasurements(current: any, slidePxWidth: number) {
+    // TODO: Move to another function then desctructure 
+    let activeIndexLimit = -1;
+    let chipsLength = 0
+    let chipsLengthArray = []
+    for (let i = 0; i < current.children.length; i++) {
+      // TODO: Add margin space between <?> (A)
+      let chipLength = current.children[i].getBoundingClientRect().width
+      chipsLength += chipLength
+      chipsLengthArray.push(chipLength)
+    }
+
+    // TODO: I think this logic needs more revision 
+    let _chipsLength = chipsLength - chipsLengthArray[0] // always remove the first chip
+    for (let i = 1; i < chipsLengthArray.length; i++) {
+      let chipsLen = _chipsLength - chipsLengthArray[i]
+      if (activeIndexLimit === -1 && chipsLen <= slidePxWidth) {
+        activeIndexLimit = i
+        break;
+      }
+      _chipsLength = chipsLen; 
+    }
+    console.log('chips length:', chipsLength)
+    console.log('active index limit:', activeIndexLimit)
+    let shiftEnabled = slidePxWidth < chipsLength;
+    return { activeIndexLimit, chipsLength, chipsLengthArray, shiftEnabled }
+}
+
 function getSliderMeasurements(
   current: any,
   slideGap: number,
@@ -58,35 +86,24 @@ function getSliderMeasurements(
     slideFlexBasis: 0,
     slideFlexPxWidth: 0,
     slideShift: 0,
-    chipShiftEnabled: false,
-    chipsShiftArray: [0],
-    chipsPxLength: 0
+    chips: {
+      shiftEnabled: false,
+      lengthArray: [0],
+      totalLength: 0,
+      activeIndexLimit: 0
+    }
   }
 
   let totalSlideCount = baseSlideCount + (infinite ? 2 : 0) * slidesShown
   measurements.slidePxWidth = measurements.slidesPxWidth / totalSlideCount
 
   console.log('slide stage width:', measurements.slidePxWidth)
-  // console.log('slides shown:', slidesShown)
-  if (chips?.length > 0) {
-    measurements.slidesLeft = infinite ? -100 / slidesShown + (-100 / slidesShown) * (slidesShown - 1) : 0
-    measurements.slideFlexBasis = 0
-    measurements.slidesLeft = infinite ? -100 / slidesShown + (-100 / slidesShown) * (slidesShown - 1) : 0
-    let chipsLength = 0
-    let positionAdj = infinite ? slidesShown : 0
-    let chipsLengthArray = []
-    for (let i = positionAdj; i < current.children.length; i++) {
-      let chipLength = current.children[i].getBoundingClientRect().width
-      chipsLength += chipLength
-      chipsLengthArray.push(chipLength)
-    }
-    // TODO: Add margin space between <?> (A)
-    console.log('chips length:', chipsLength)
-    // console.log('allow chip shift:', measurements.slidePxWidth < chipsLength)
-    measurements.chipShiftEnabled = measurements.slidePxWidth < chipsLength
-    measurements.chipsPxLength = chipsLength
-    measurements.slideShift = 100 / slidesShown // Shifting slides now varies on each slides width (differing widths)
-    measurements.chipsShiftArray = chipsLengthArray; // NOTE: This may replace the above slideShift variable 
+  if (chips && chips.length > 0) {
+    const { activeIndexLimit, chipsLength, chipsLengthArray, shiftEnabled } = getChipMeasurements(current, measurements.slidePxWidth)
+    measurements.chips.totalLength = chipsLength // TODO: Remove 'measurements.chipsPxLength' if not needed 
+    measurements.chips.lengthArray = chipsLengthArray; 
+    measurements.chips.shiftEnabled = shiftEnabled;
+    measurements.chips.activeIndexLimit = activeIndexLimit
   } else if (slideGap === 0) {
     measurements.slideFlexBasis = 100 / totalSlideCount
     measurements.slideShift = 100 / slidesShown
@@ -399,8 +416,9 @@ export default function carouselHelper(
   }
   const [chipShiftEnabled, setChipShiftEnabled] = useState(false)
   const [chipsShiftArray, setChipsShiftArray] = useState<number[]>([])
-  const [slideStageWidth, setSlideStageWidth] = useState(0) // TODO: Remove if not needed 
-  const [chipsPxLength, setChipPxLength] = useState(0)
+  const [slideStageWidth, setSlideStageWidth] = useState(0)
+  const [chipsPxLength, setChipPxLength] = useState(0) // TODO: Remove if not needed 
+  const [activeIndexLimit, setActiveIndexLimit] = useState(-1)
 
   // Configure slide boundary vars
   const [childrenArr, setChildrenArray] = useState<ReactNode[]>(getChildrenArr(children, chips))
@@ -477,9 +495,16 @@ export default function carouselHelper(
     )
   }
 
+  const calculateSlideShift = (direction: number, shift: number, numberOfShifts: number) => {
+    const isShiftingRight = direction === 1; // right (1), left (-1)
+    const extraSlideShift = shift * numberOfShifts * (isShiftingRight ? -1 : 1)
+    const indexShift = direction + activeIndex + (isShiftingRight ? numberOfShifts : -numberOfShifts)
+    return { extraSlideShift, indexShift, shift: shift * (isShiftingRight ? -1 : 1) }
+  }
+
   const calculateChipShift = (direction: number, numberOfShifts: number) => {
     const isShiftingRight = direction === 1; // right (1), left (-1)
-    const destinationIndexShift = direction + activeIndex + (isShiftingRight ? numberOfShifts : -numberOfShifts)
+    const indexShift = direction + activeIndex + (isShiftingRight ? numberOfShifts : -numberOfShifts)
     const chipIndex = isShiftingRight ? activeIndex : activeIndex - 1 
     let chipShift = (chipsShiftArray[chipIndex] / slideStageWidth) * 100 * (isShiftingRight ? -1 : 1)
 
@@ -494,7 +519,7 @@ export default function carouselHelper(
       }
     }
     if (extraChipShift !== 0 && isShiftingRight) extraChipShift *= -1
-    return { chipShift, destinationIndexShift, extraChipShift };
+    return { chipShift, indexShift, extraChipShift };
   }
 
   const shiftSlide = (dir: number, action?: string, extraShift: number = 0) => {
@@ -510,10 +535,6 @@ export default function carouselHelper(
       return
     }
 
-    // TODO: Add chips variation here <?> (B)
-    // - shiftSlide might be an array type with chip lengths and indices match with chip order starting at 0
-    // - shiftSlide array to use destinationIndex and activeIndex variation
-    // - challenge: initPosition might only understand percentages
     let destinationIndex = dir
     if (allowShift) {
       switch (true) {
@@ -534,25 +555,14 @@ export default function carouselHelper(
           }
 
           if (chips && chips.length > 0) {
-            if (chipShiftEnabled) {
-              const { chipShift, destinationIndexShift, extraChipShift } = calculateChipShift(destinationIndex, extraShift) 
-              setSlidesLeft(initPosition + chipShift + extraChipShift)
-              destinationIndex = destinationIndexShift;
-            }
-            else {
-              // TODO: Would we ever hit this? 
-              return;
-            }
+            if (!chipShiftEnabled) return; // TODO: Would we ever hit this? 
+            const { chipShift, indexShift, extraChipShift } = calculateChipShift(destinationIndex, extraShift) 
+            setSlidesLeft(initPosition + chipShift + extraChipShift)
+            destinationIndex = indexShift;
           } else {
-            let extraSlideShift = slideShift * extraShift
-            if (destinationIndex == 1) {
-              setSlidesLeft(initPosition - slideShift - extraSlideShift)
-              destinationIndex = destinationIndex + activeIndex + extraShift
-            } else {
-              // destinationIndex == -1
-              setSlidesLeft(initPosition + slideShift + extraSlideShift)
-              destinationIndex = destinationIndex + activeIndex - extraShift
-            }
+            const { extraSlideShift, indexShift, shift } = calculateSlideShift(destinationIndex, slideShift, extraShift)
+            setSlidesLeft(initPosition + shift + extraSlideShift)
+            destinationIndex = indexShift
           }
 
           // Handle destination index overshot
@@ -673,14 +683,17 @@ export default function carouselHelper(
         let threshold = 0
         let extraSlides = 0
         if (chips && chips.length > 0) {
-          if (chipShiftEnabled) {
+          if (!chipShiftEnabled) diff = 0 
+          else {
             //TODO:let gapPercent = ((layoutGap / slideStageWidth) * 100)
-            const { additionalSlides, currentThreshold } = calculateExtraChipSlides(diff)
-            extraSlides = additionalSlides
-            threshold = currentThreshold
-          } else {
-            diff = 0
-          }
+            //TODO: Updated the nested if/else statements here... I dont like it
+            const { additionalSlides, currentThreshold, limitExceeded } = calculateExtraChipSlides(diff)
+            if (limitExceeded) diff = 0
+            else {
+              extraSlides = additionalSlides
+              threshold = currentThreshold
+            }
+          } 
         } else {
           threshold = slideShift / 2
           extraSlides = calculateExtraSlides(diff, slideShift, threshold)
@@ -715,20 +728,24 @@ export default function carouselHelper(
   )
 
   const calculateExtraChipSlides = (diff: number) => {
-    console.log('activeIndex', activeIndex)
-    console.log('current chip px length:', chipsShiftArray[activeIndex])
     const chipLengthPercent = chipsShiftArray[activeIndex] / slideStageWidth
     const currentThreshold = (chipLengthPercent / 2) * 100
-    let dynamicThreshold = currentThreshold;
     
     let direction = 'right' 
     if (diff > currentThreshold) direction = 'left'
 
+    // If activeIndex equals the activeIndexLimit, do not even perform calculation
+    // The boundary check shouldn't even allow the active index to go above the activeIndexLimit 
+    if (direction === 'right' && activeIndex === activeIndexLimit) {
+      return { additionalSlides: 0, currentThreshold, limitExceeded: true }
+    }
+
     // TODO: Might need to account for margin gaps 
     // - It looks like the chip lengths that are used, already includes the margin (offset width does that)
+    let absDiff = Math.abs(diff)
     let extraSlides = 0
     let chipIndex = activeIndex;
-    let absDiff = Math.abs(diff)
+    let dynamicThreshold = currentThreshold;
     for (let i = 0; i < absDiff; i = i + ((chipsShiftArray[chipIndex] / slideStageWidth) * 100 )) {
       let chipLength = chipsShiftArray[chipIndex]
       let chipLengthPercent =  chipLength / slideStageWidth
@@ -741,7 +758,7 @@ export default function carouselHelper(
       extraSlides++
     }
 
-    return { additionalSlides: extraSlides - 1, currentThreshold }
+    return { additionalSlides: extraSlides - 1, currentThreshold, limitExceeded: false }
   }
 
   const calculateExtraSlides = (diff: number, shift: number, threshold: number) => {
@@ -760,6 +777,11 @@ export default function carouselHelper(
 
   const boundaryCheck = (dir: number, extraSlides: number) => {
     let destinationIndex = dir + activeIndex + dir * extraSlides
+
+    // TODO: This may be kinda working but something is not completely
+    if (chipShiftEnabled && chips.length > 0 && dir > 0 && destinationIndex > activeIndexLimit) {
+      return activeIndexLimit - dir + activeIndex
+    }
 
     if (destinationIndex <= -1) {
       var limit = dir + activeIndex
@@ -841,16 +863,16 @@ export default function carouselHelper(
       setInitLeftState(measurements.slidesLeft)
       setSlidesLeft(measurements.slidesLeft)
       setSlidesPxWidth(measurements.slidesPxWidth)
-      console.log(measurements.slidesPxWidth)
       setSlideShift(measurements.slideShift)
       setSlideMargin(measurements.slideMargin)
       setSlideFlexBasis(measurements.slideFlexBasis)
-      setChipShiftEnabled(measurements.chipShiftEnabled)
-      setChipsShiftArray(measurements.chipsShiftArray)
       setSlideStageWidth(measurements.slidePxWidth)
-      setChipPxLength(measurements.chipsPxLength)
+      setChipShiftEnabled(measurements.chips.shiftEnabled)
+      setChipsShiftArray(measurements.chips.lengthArray)
+      setChipPxLength(measurements.chips.totalLength)
       // setChipPxLength(measurements.slidePxWidth)
-
+      setActiveIndexLimit(measurements.chips.activeIndexLimit)
+      
       setWindowWidth(window.innerWidth)
 
       if (responsiveSettings.length) {
@@ -920,11 +942,11 @@ export default function carouselHelper(
     setSlideShift(measurements.slideShift)
     setSlideMargin(measurements.slideMargin)
     setSlideFlexBasis(measurements.slideFlexBasis)
-    setChipShiftEnabled(measurements.chipShiftEnabled)
-    setChipsShiftArray(measurements.chipsShiftArray)
-    setSlideStageWidth(measurements.slidePxWidth)
-    setChipPxLength(measurements.chipsPxLength)
+    setChipShiftEnabled(measurements.chips.shiftEnabled)
+    setChipsShiftArray(measurements.chips.lengthArray)
+    setChipPxLength(measurements.chips.totalLength)
     // setChipPxLength(measurements.slidePxWidth)
+    setActiveIndexLimit(measurements.chips.activeIndexLimit)
 
     setAriaLive('polite')
   }, [windowWidth])
