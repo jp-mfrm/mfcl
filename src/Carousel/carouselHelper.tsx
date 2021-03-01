@@ -941,6 +941,9 @@ export default function carouselHelper(settings: CarouselSettings) {
       setDynamicShiftEnabled(measurements.dynamic.shiftEnabled)
       setDynamicWidthArray(measurements.dynamic.lengthArray)
       setDynamicIndexLimit(measurements.dynamic.dynamicIndexLimit)
+      if (hasDynamicWidth) {
+        setActiveIndex(0)
+      }
 
       setWindowWidth(window.innerWidth)
 
@@ -1021,7 +1024,10 @@ export default function carouselHelper(settings: CarouselSettings) {
     setDynamicShiftEnabled(measurements.dynamic.shiftEnabled)
     setDynamicWidthArray(measurements.dynamic.lengthArray)
     setDynamicIndexLimit(measurements.dynamic.dynamicIndexLimit)
-
+    if (hasDynamicWidth) {
+      setActiveIndex(0)
+    }
+    
     setAriaLive('polite')
   }, [windowWidth])
 
