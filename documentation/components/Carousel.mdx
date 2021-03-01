@@ -6,8 +6,9 @@ route: /components-carousel
 
 import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
-import { Carousel, Panel, PanelItem } from '../../src'
+import { Carousel, Chip, Panel, PanelItem } from '../../src'
 import ProductCard from './helpers/ProductCard'
+import Chips from './helpers/Chips'
 
 # Carousel
 
@@ -55,6 +56,55 @@ The Responsive prop overrides the provided props of the carousel at different pi
     <div style={{ backgroundColor: 'rgb(253,204,11)' }}>Slide 2</div>
     <div style={{ backgroundColor: 'rgb(50,48,49)', color: '#fff' }}>Slide 3</div>
     <div style={{ backgroundColor: 'lightblue' }}>Slide 4</div>
+  </Carousel>
+</Playground>
+
+## Variable Width
+
+### Chips
+
+<Playground>
+  <Carousel
+    itemsToShow={1}
+    layoutGap={5}
+    hideIndicators
+    disableControls
+    ariaLabel="one"
+    chips={Chips}
+  />
+</Playground>
+
+### Custom Children
+
+<Playground>
+  <Carousel
+    itemsToShow={1}
+    hideIndicators
+    disableControls
+    variableWidth
+    ariaLabel="one"
+  >
+   {Chips.list.map(({ label, value }) => {
+    return (
+      <div key={label}>
+        <Chip label={label} variant="default" onClick={() => console.log(value)} />
+      </div>
+    )
+  })}
+  </Carousel>
+
+  <Carousel
+    itemsToShow={1}
+    hideIndicators
+    disableControls
+    variableWidth
+    layoutGap={5}
+    ariaLabel="one"
+  >
+   <div style={{ backgroundColor: 'rgb(214,52,38)', color: '#fff', width: '300px' }}>Slide 1</div>
+   <div style={{ backgroundColor: 'rgb(253,204,11)', color: '#fff', width: '300px' }}>Slide 2</div>
+    <div style={{ backgroundColor: 'rgb(50,48,49)', color: '#fff', width: '450px' }}>Slide 4</div>
+    <div style={{ backgroundColor: 'lightblue', color: '#fff', width: '500px' }}>Slide 3</div>
   </Carousel>
 </Playground>
 
@@ -261,7 +311,6 @@ The layoutGap prop sets the slides' margins in pixels
     <div style={{ backgroundColor: 'lightblue' }}>Slide 4</div>
   </Carousel>
 
-
   <Carousel infinite itemsToShow={2} layoutGap={5} ariaLabel="one">
     <div style={{ backgroundColor: 'rgb(214,52,38)', color: '#fff' }}>Slide 1</div>
     <div style={{ backgroundColor: 'rgb(253,204,11)' }}>Slide 2</div>
@@ -269,7 +318,6 @@ The layoutGap prop sets the slides' margins in pixels
     <div style={{ backgroundColor: 'lightblue' }}>Slide 4</div>
   </Carousel>
 </Playground>
-
 
 ## Indicator Button Styles
 

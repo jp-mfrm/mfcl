@@ -3,10 +3,64 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import Carousel from './index'
 import React from 'react'
 import { act } from '@testing-library/react-hooks'
+import { Chip } from '..'
+
+const Chips = {
+  onClick: (value: any) => {
+    console.log(value)
+  },
+  className: 'CHEEPS',
+  list: [
+    {
+      label: 'Serta',
+      value: 'mattresses?brand=Serta',
+      onClick: (value: any) => {
+        console.log(value + ' custom!')
+      },
+      className: 'CHEEPS CUSTOM',
+    },
+    {
+      label: 'Purple',
+      value: 'mattresses?brand=Purple'
+    },
+    {
+      label: 'Beautyrest',
+      value: 'mattresses?brand=BeautyRest'
+    },
+    {
+      label: 'Stearns & Foster',
+      value: 'mattresses?brand=Stearns and Foster'
+    },
+    {
+      label: 'Sealy',
+      value: 'mattresses?brand=Sealy'
+    }
+  ]
+}
 
 describe('Carousel Component', () => {
   beforeEach(() => {
     jest.useFakeTimers()
+
+    Object.defineProperties(window.HTMLElement.prototype, {
+      offsetWidth: {
+        get: function() { return this.tagName === 'SPAN' ? 100: 500}
+      }
+    });
+    
+    HTMLElement.prototype.getBoundingClientRect = jest.fn(() => {
+        return {
+            width: 120,
+            height: 120,
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            x: 0,
+            y: 0,
+            toJSON: {} as any
+        }
+    });
   })
 
   afterEach(() => {
@@ -382,5 +436,41 @@ describe('Carousel Component', () => {
     setTimeout(() => {
       expect(container.querySelectorAll('.carousel-wrapper-indicators > button')?.length).toBe(0)
     }, 0)
+  })
+
+  it('should render carousel chips appropriately', () => {
+    act(() => {
+      //@ts-ignore
+      window.innerWidth = 350
+      //@ts-ignore
+      window.innerHeight = 400
+      fireEvent(window, new Event('resize'))
+    })
+
+    const { container } = render(
+      <Carousel ariaLabel="test" layoutGap={5} controlStyle="legacy" chips={Chips} />
+    )
+    expect(container.querySelector('.slide')?.classList).toContain('chip-slide')
+    fireEvent.click(container.querySelectorAll('.chip-slide button')[0]!)
+    
+    expect(container.querySelectorAll('.slide')[0]).toHaveStyle('margin: 0px 5px 0px 0px')
+    expect(container.querySelectorAll('.slide')[0]).toHaveStyle('flex-basis: 0%')
+  })
+
+  it('should render variable width slides appropriately', () => {
+    const { container } = render(
+      <Carousel ariaLabel="test" layoutGap={30} disableControls variableWidth>
+      {Chips.list.map(({ label, value }) => {
+        return (
+          <div key={label}>
+            <Chip label={label} variant="default" onClick={() => console.log(value)} />
+          </div>
+        )
+      })}
+      </Carousel>
+    )
+
+    expect(container.querySelectorAll('.slide')[0]).toHaveStyle('margin: 0px 30px 0px 0px')
+    expect(container.querySelectorAll('.slide')[0]).toHaveStyle('flex-basis: 0%')
   })
 })

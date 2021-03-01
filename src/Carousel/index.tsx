@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import carouselHelper, { Chips } from './carouselHelper'
+import carouselHelper, { CarouselSettings, CarouselChips } from './carouselHelper'
 
 import clsx from 'clsx'
 import styles from './carousel.module.scss'
@@ -9,10 +9,16 @@ interface Props {
    * Label is prefixed with 'carousel-'
    */
   ariaLabel: string
+  /** Enables automatic transitions. */
+  autoSlide?: boolean
   /** Sets the class for the Carousel wrapper */
   carouselClass?: string
   /** Sets how many slides to show */
-  chips?: Chips[]
+  chips?: CarouselChips
+  /** Disables the control buttons */
+  disableControls?: boolean
+  /** Time in milliseconds for autoSlide */
+  duration?: number
   /** List of carousel chips to be rendered.
    *  Will override the following props: itemsToShow */
   itemsToShow?: number
@@ -20,26 +26,22 @@ interface Props {
    * Valid configurations are: 'top', 'middle', 'center', 'apart', 'left', 'right', 'bottom'.
    * 'middle' centers vertically while 'center' centers horizontally. */
   controlAlignment?: string
-  /** Sets the control buttons' style */
-  controlStyle?: 'square' | 'round' | 'legacy'
   /** Sets the class for the control buttons */
   controlClass?: string
+  /** Sets the control buttons' style */
+  controlStyle?: 'square' | 'round' | 'legacy'
   /** Hides control buttons unless hovered */
   hideControls?: boolean
+  /** Hides indicator buttons */
+  hideIndicators?: boolean
   /** Sets the indicator buttons' style */
   indicatorStyle?: 'bar' | 'round'
   /** Sets indicator bar background color*/
   indicatorBg?: 'dark' | 'light'
-  /** Hides indicator buttons */
-  hideIndicators?: boolean
-  /** Supply a px margin between slides */
-  layoutGap?: number
   /** Allows Carousel to be cyclical. */
   infinite?: boolean
-  /** Enables automatic transitions. */
-  autoSlide?: boolean
-  /** Time in milliseconds for autoSlide */
-  duration?: number
+  /** Supply a px margin between slides */
+  layoutGap?: number
   /** Override props at certain breakpoints  
   
 
@@ -56,28 +58,51 @@ interface Props {
   
   */
   responsive?: object[]
+  /** Indicate if slides have variable width (sets itemsToShow to 1 and infinite to false) */
+  variableWidth?: boolean
   [rest: string]: unknown // ...rest property
 }
 
 const Carousel: FunctionComponent<Props> = ({
-  carouselClass,
   ariaLabel,
-  itemsToShow = 1,
+  autoSlide = false,
+  carouselClass,
+  chips = undefined, 
+  children, // TODO: Check if children come through properly 
   controlAlignment = 'middle apart',
-  hideIndicators = false,
-  hideControls = false,
-  indicatorStyle = 'round',
-  controlStyle = 'square',
   controlClass = '',
+  controlStyle = 'square',
+  disableControls = false,
+  duration = 3000,
+  hideControls = false,
+  hideIndicators = false,
+  indicatorStyle = 'round',
   indicatorBg = 'light',
+  itemsToShow = 1,
   layoutGap = 0,
   infinite = false,
-  autoSlide = false,
-  duration = 3000,
   responsive = [{}],
-  chips = [],
-  children
+  variableWidth = false
 }) => {
+  const helperSettings: CarouselSettings = {
+    autoSlide,
+    children,
+    chips,
+    controlAlignment,
+    controlClass,
+    controlStyle,
+    disableControls,
+    duration,
+    hideControls,
+    hideIndicators,
+    indicatorStyle,
+    infinite,
+    itemsToShow,
+    layoutGap,
+    //@ts-ignore
+    responsive,
+    variableWidth
+  }
   const {
     slidesRef,
     slidesLeft,
@@ -94,23 +119,7 @@ const Carousel: FunctionComponent<Props> = ({
     handleDragActionHandler,
     handleIndexCheck,
     handleClickViaCapturing
-  } = carouselHelper(
-    children,
-    itemsToShow,
-    controlAlignment,
-    hideControls,
-    controlStyle,
-    controlClass,
-    hideIndicators,
-    indicatorStyle,
-    duration,
-    infinite,
-    autoSlide,
-    layoutGap,
-    //@ts-ignore
-    responsive,
-    chips
-  )
+  } = carouselHelper(helperSettings)
 
   const screenReaderInstructions = (
     <p className={clsx(styles['sr-only'])}>
@@ -136,7 +145,7 @@ const Carousel: FunctionComponent<Props> = ({
       aria-label={'carousel-' + ariaLabel}
     >
       {screenReaderInstructions}
-      {(!chips || chips.length < 1) && controlButtons[0]}
+      {controlButtons[0]}
       <div className={styles['carousel-wrapper-slider']}>
         <div
           className={styles['carousel-wrapper-slides']}
@@ -163,7 +172,7 @@ const Carousel: FunctionComponent<Props> = ({
         </div>
         {!indicatorVisibility && indicatorWrapper}
       </div>
-      {(!chips || chips.length < 1) && controlButtons[1]}
+      {controlButtons[1]}
     </section>
   )
 

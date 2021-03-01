@@ -1,24 +1,62 @@
-const Chips = [
+const Chips = {
+  onClick: (value: any) => {
+    console.log(value)
+  },
+  className: 'CHEEPS',
+  list: [
     {
       label: 'Serta',
-      url: 'mattresses?brand=Serta'
+      value: 'mattresses?brand=Serta',
+      onClick: (value: any) => {
+        console.log(value + ' custom!')
+      },
+      className: 'CHEEPS CUSTOM',
     },
     {
       label: 'Purple',
-      url: 'mattresses?brand=Purple'
+      value: 'mattresses?brand=Purple'
     },
     {
       label: 'Beautyrest',
-      url: 'mattresses?brand=BeautyRest'
+      value: 'mattresses?brand=BeautyRest'
     },
     {
       label: 'Stearns & Foster',
-      url: 'mattresses?brand=Stearns and Foster'
+      value: 'mattresses?brand=Stearns and Foster'
     },
     {
       label: 'Sealy',
-      url: 'mattresses?brand=Sealy'
+      value: 'mattresses?brand=Sealy'
+    },
+    {
+      label: 'Tempur-Pedic',
+      value: 'mattresses?brand=Tempur-Pedic',
+    },
+    {
+      label: 'Tuft and Needle',
+      value: 'mattresses?brand=TuftandNeedle'
+    },
+    {
+      label: 'Simmons',
+      value: 'mattresses?brand=Simmons'
+    },
+    {
+      label: 'Awara',
+      value: 'mattresses?brand=Awara'
+    },
+    {
+      label: 'Nectar',
+      value: 'mattresses?brand=Nectar'
+    },
+    {
+      label: 'Delta Children',
+      value: 'mattresses?brand=DeltaChildren'
+    },
+    {
+      label: 'Custom Label',
+      value: 'mattresses?brand=CustomLabel'
     }
   ]
+}
   
 export default Chips
