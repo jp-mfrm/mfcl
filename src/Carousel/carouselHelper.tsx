@@ -796,7 +796,6 @@ export default function carouselHelper(settings: CarouselSettings) {
       dynamicThreshold = dynamicPercent / 2
     }
 
-    // TODO: Run prettier-only commit
     return {
       additionalSlides: extraSlides,
       currentThreshold,
