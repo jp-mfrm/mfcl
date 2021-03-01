@@ -112,8 +112,6 @@ function getSliderMeasurements(
     measurements.dynamic.shiftEnabled = shiftEnabled
     measurements.dynamic.dynamicIndexLimit = dynamicIndexLimit
     measurements.slideMargin = slideGap
-    console.log('length array:', slideWidthArray)
-    console.log('slide px width', measurements.slidePxWidth)
   } else if (slideGap === 0) {
     measurements.slideFlexBasis = 100 / totalSlideCount
     measurements.slideShift = 100 / slidesShown

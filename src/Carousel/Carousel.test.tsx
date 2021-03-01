@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 
 import Carousel from './index'
 import React from 'react'
@@ -439,14 +439,6 @@ describe('Carousel Component', () => {
   })
 
   it('should render carousel chips appropriately', () => {
-    act(() => {
-      //@ts-ignore
-      window.innerWidth = 350
-      //@ts-ignore
-      window.innerHeight = 400
-      fireEvent(window, new Event('resize'))
-    })
-
     const { container } = render(
       <Carousel ariaLabel="test" layoutGap={5} controlStyle="legacy" chips={Chips} />
     )
