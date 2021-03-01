@@ -13,7 +13,7 @@ interface Props {
   autoSlide?: boolean
   /** Sets the class for the Carousel wrapper */
   carouselClass?: string
-  /** Sets how many slides to show */
+  /** List of carousel chips to be rendered (sets itemsToShow to 1 and infinite to false) */
   chips?: CarouselChips
   /** Disables the control buttons */
   disableControls?: boolean
