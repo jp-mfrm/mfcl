@@ -921,7 +921,6 @@ export default function carouselHelper(settings: CarouselSettings) {
   // useWindowResizeMeasurements
   useEffect(() => {
     function handleResize() {
-      // Reset measurements <?>
       const { current } = slidesRef
       const { ...measurements } = getSliderMeasurements(
         current,
@@ -1021,12 +1020,6 @@ export default function carouselHelper(settings: CarouselSettings) {
     setSlideShift(measurements.slideShift)
     setSlideMargin(measurements.slideMargin)
     setSlideFlexBasis(measurements.slideFlexBasis)
-    setDynamicShiftEnabled(measurements.dynamic.shiftEnabled)
-    setDynamicWidthArray(measurements.dynamic.lengthArray)
-    setDynamicIndexLimit(measurements.dynamic.dynamicIndexLimit)
-    if (hasDynamicWidth) {
-      setActiveIndex(0)
-    }
     
     setAriaLive('polite')
   }, [windowWidth])
