@@ -25,7 +25,7 @@ const PanelItem: FunctionComponent<Props> = ({ name, type, index, isSelected, cl
 
   return (
     <Component
-      id={`panel-${name}${index ? `-${index}-` : ''}`}
+      id={`panel-${name}-${index}`}
       className={clsx(
         styles['panel-item'],
         isSelected && styles['active'],
