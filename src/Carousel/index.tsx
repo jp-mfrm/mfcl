@@ -67,8 +67,8 @@ const Carousel: FunctionComponent<Props> = ({
   ariaLabel,
   autoSlide = false,
   carouselClass,
-  chips = undefined, 
-  children, // TODO: Check if children come through properly 
+  chips = undefined,
+  children,
   controlAlignment = 'middle apart',
   controlClass = '',
   controlStyle = 'square',

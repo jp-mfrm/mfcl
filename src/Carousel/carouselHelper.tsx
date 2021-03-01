@@ -22,7 +22,6 @@ function getChildrenArr(children: ReactNode, chips?: CarouselChips) {
   if (chips && chips.list && chips.list.length > 0) {
     const { list, onClick: parentOnClick, ...parentRest } = chips
     list.map(({ label, value, onClick, ...rest }) => {
-
       if (!onClick) {
         onClick = parentOnClick
       }
@@ -39,7 +38,7 @@ function getChildrenArr(children: ReactNode, chips?: CarouselChips) {
           onClick={() => {
             if (onClick) {
               onClick(value)
-            } 
+            }
           }}
           {...rest}
         />
@@ -55,26 +54,26 @@ function getChildrenArr(children: ReactNode, chips?: CarouselChips) {
 }
 
 function getDynamicMeasurements(current: any, slidePxWidth: number, slideGap: number) {
-    let dynamicIndexLimit = -1;
-    let slidesLength = 0
-    let slideWidthArray = []
-    for (let i = 0; i < current.children.length; i++) {
-      let slideLength = current.children[i].getBoundingClientRect().width + slideGap
-      slidesLength += slideLength
-      slideWidthArray.push(slideLength)
-    }
+  let dynamicIndexLimit = -1
+  let slidesLength = 0
+  let slideWidthArray = []
+  for (let i = 0; i < current.children.length; i++) {
+    let slideLength = current.children[i].getBoundingClientRect().width + slideGap
+    slidesLength += slideLength
+    slideWidthArray.push(slideLength)
+  }
 
-    let remainingSlideLength = slidesLength - slideWidthArray[0] // always remove the first slide
-    for (let i = 1; i < slideWidthArray.length; i++) {
-      let slideLength = remainingSlideLength - slideWidthArray[i]
-      if (dynamicIndexLimit === -1 && slideLength <= slidePxWidth) {
-        dynamicIndexLimit = i
-        break;
-      }
-      remainingSlideLength = slideLength; 
+  let remainingSlideLength = slidesLength - slideWidthArray[0] // always remove the first slide
+  for (let i = 1; i < slideWidthArray.length; i++) {
+    let slideLength = remainingSlideLength - slideWidthArray[i]
+    if (dynamicIndexLimit === -1 && slideLength <= slidePxWidth) {
+      dynamicIndexLimit = i
+      break
     }
-    const shiftEnabled = slidePxWidth < slidesLength;
-    return { dynamicIndexLimit, slideWidthArray, shiftEnabled }
+    remainingSlideLength = slideLength
+  }
+  const shiftEnabled = slidePxWidth < slidesLength
+  return { dynamicIndexLimit, slideWidthArray, shiftEnabled }
 }
 
 function getSliderMeasurements(
@@ -104,9 +103,13 @@ function getSliderMeasurements(
   measurements.slidePxWidth = current.offsetWidth / totalSlideCount
 
   if (dynamic) {
-    const { dynamicIndexLimit, shiftEnabled, slideWidthArray } = getDynamicMeasurements(current, measurements.slidePxWidth, slideGap)
-    measurements.dynamic.lengthArray = slideWidthArray; 
-    measurements.dynamic.shiftEnabled = shiftEnabled;
+    const { dynamicIndexLimit, shiftEnabled, slideWidthArray } = getDynamicMeasurements(
+      current,
+      measurements.slidePxWidth,
+      slideGap
+    )
+    measurements.dynamic.lengthArray = slideWidthArray
+    measurements.dynamic.shiftEnabled = shiftEnabled
     measurements.dynamic.dynamicIndexLimit = dynamicIndexLimit
     measurements.slideMargin = slideGap
     console.log('length array:', slideWidthArray)
@@ -216,7 +219,7 @@ function getControlButtons(
   return (
     <>
       <button
-        aria-hidden={(disableControls || controlsVisibility && 'true') || 'false'}
+        aria-hidden={disableControls || (controlsVisibility && 'true') || 'false'}
         className={clsx(
           styles['carousel-wrapper-control'],
           styles[direction],
@@ -381,31 +384,31 @@ function updateSlideAttributes(
 export interface Chips {
   label: string
   value: string
-  onClick?: (value: any) => void 
+  onClick?: (value: any) => void
   [rest: string]: any // ...rest property
 }
 
 export interface CarouselChips {
   list: Chips[]
-  onClick?: (value: any) => void 
+  onClick?: (value: any) => void
   [parentRest: string]: any // ...rest property
 }
 
 export interface CarouselSettings {
-  autoSlide: boolean,
-  children: ReactNode,
-  chips: CarouselChips | undefined,
-  controlAlignment: string,
-  controlClass: string,
-  controlStyle: string,
-  disableControls: boolean,
-  duration: number,
-  hideControls: boolean,
-  hideIndicators: boolean,
-  indicatorStyle: string,
-  itemsToShow: number,
-  infinite: boolean,
-  layoutGap: number,
+  autoSlide: boolean
+  children: ReactNode
+  chips: CarouselChips | undefined
+  controlAlignment: string
+  controlClass: string
+  controlStyle: string
+  disableControls: boolean
+  duration: number
+  hideControls: boolean
+  hideIndicators: boolean
+  indicatorStyle: string
+  itemsToShow: number
+  infinite: boolean
+  layoutGap: number
   responsive: {
     breakpoint: number
     itemsToShow: number
@@ -414,13 +417,12 @@ export interface CarouselSettings {
     hideIndicators: boolean
     indicatorStyle: string
     layoutGap: number
-  }[],
+  }[]
   variableWidth: boolean
 }
 
 export default function carouselHelper(settings: CarouselSettings) {
-
-  const { 
+  const {
     autoSlide,
     children,
     chips,
@@ -436,11 +438,8 @@ export default function carouselHelper(settings: CarouselSettings) {
     responsive,
     variableWidth
   } = settings
-  
-  let {
-    itemsToShow,
-    infinite
-  } = settings 
+
+  let { itemsToShow, infinite } = settings
 
   // Configure dynamic override(s)
   const hasChips = typeof chips !== 'undefined' && chips.list && chips.list.length > 0
@@ -505,7 +504,17 @@ export default function carouselHelper(settings: CarouselSettings) {
         hasChips,
         hasDynamicWidth
       ),
-    [childrenArr, chips, hasDynamicWidth, baseSlideCount, slidesShown, slideGrabbing, slideFlexBasis, slideMargin, slidesRef.current]
+    [
+      childrenArr,
+      chips,
+      hasDynamicWidth,
+      baseSlideCount,
+      slidesShown,
+      slideGrabbing,
+      slideFlexBasis,
+      slideMargin,
+      slidesRef.current
+    ]
   )
 
   // Configure slider drag/touch handling
@@ -545,34 +554,40 @@ export default function carouselHelper(settings: CarouselSettings) {
     return { extraSlideShift, shift: shift * (shiftingRight ? -1 : 1) }
   }
 
-  const calculateDynamicShift = useCallback((shiftingRight: boolean, numberOfShifts: number) => {
-    const dynamicIndex = shiftingRight ? activeIndex : activeIndex - 1 
-    let dynamicShift = (getDynamicSlidePercentage(dynamicWidthArray[dynamicIndex])) * (shiftingRight ? -1 : 1)
+  const calculateDynamicShift = useCallback(
+    (shiftingRight: boolean, numberOfShifts: number) => {
+      const dynamicIndex = shiftingRight ? activeIndex : activeIndex - 1
+      let dynamicShift = getDynamicSlidePercentage(dynamicWidthArray[dynamicIndex]) * (shiftingRight ? -1 : 1)
 
-    let extraShiftPercent = 0
-    for (let n = 0; n < numberOfShifts; n++) {
-      if (shiftingRight) { 
-        extraShiftPercent += getDynamicSlidePercentage(dynamicWidthArray[activeIndex + n + 1])
-      } else { 
-        extraShiftPercent += getDynamicSlidePercentage(dynamicWidthArray[activeIndex - n - 2])
+      let extraShiftPercent = 0
+      for (let n = 0; n < numberOfShifts; n++) {
+        if (shiftingRight) {
+          extraShiftPercent += getDynamicSlidePercentage(dynamicWidthArray[activeIndex + n + 1])
+        } else {
+          extraShiftPercent += getDynamicSlidePercentage(dynamicWidthArray[activeIndex - n - 2])
+        }
       }
-    }
-    if (extraShiftPercent !== 0 && shiftingRight) extraShiftPercent *= -1
-    return { dynamicShift, extraShiftPercent };
-  }, [activeIndex, dynamicWidthArray])
+      if (extraShiftPercent !== 0 && shiftingRight) extraShiftPercent *= -1
+      return { dynamicShift, extraShiftPercent }
+    },
+    [activeIndex, dynamicWidthArray]
+  )
 
-  const getSlideShiftDimensions = useCallback((direction: number, numberOfShifts: number) => {
-    const shiftingRight = direction === 1; // right (1), left (-1)
-    const indexShift = direction + activeIndex + (shiftingRight ? numberOfShifts : -numberOfShifts)
+  const getSlideShiftDimensions = useCallback(
+    (direction: number, numberOfShifts: number) => {
+      const shiftingRight = direction === 1 // right (1), left (-1)
+      const indexShift = direction + activeIndex + (shiftingRight ? numberOfShifts : -numberOfShifts)
 
-    if (hasDynamicWidth) {
-      const { dynamicShift, extraShiftPercent } = calculateDynamicShift(shiftingRight, numberOfShifts) 
-      return { extraShiftPercent, indexShift, shiftPercent: dynamicShift }
-    } else {
-      const { extraSlideShift, shift } = calculateEvenShift(shiftingRight, slideShift, numberOfShifts)
-      return { extraShiftPercent: extraSlideShift, indexShift, shiftPercent: shift }
-    }
-  }, [hasDynamicWidth, calculateDynamicShift])
+      if (hasDynamicWidth) {
+        const { dynamicShift, extraShiftPercent } = calculateDynamicShift(shiftingRight, numberOfShifts)
+        return { extraShiftPercent, indexShift, shiftPercent: dynamicShift }
+      } else {
+        const { extraSlideShift, shift } = calculateEvenShift(shiftingRight, slideShift, numberOfShifts)
+        return { extraShiftPercent: extraSlideShift, indexShift, shiftPercent: shift }
+      }
+    },
+    [hasDynamicWidth, calculateDynamicShift]
+  )
 
   const shiftSlide = (dir: number, action?: string, extraShift: number = 0) => {
     // Check if slide is in the middle of a transition
@@ -600,7 +615,7 @@ export default function carouselHelper(settings: CarouselSettings) {
           break
         case action === 'drag':
         default:
-          if (hasDynamicWidth && !dynamicShiftEnabled) return;
+          if (hasDynamicWidth && !dynamicShiftEnabled) return
 
           // dir is the direction: left (-1) or right (1)
           const initPosition = action ? posInitial : slidesLeft
@@ -610,7 +625,7 @@ export default function carouselHelper(settings: CarouselSettings) {
 
           const { extraShiftPercent, indexShift, shiftPercent } = getSlideShiftDimensions(destinationIndex, extraShift)
           setSlidesLeft(initPosition + shiftPercent + extraShiftPercent)
-          destinationIndex = indexShift;
+          destinationIndex = indexShift
 
           // Handle destination index overshot
           if (destinationIndex < -1) {
@@ -722,7 +737,7 @@ export default function carouselHelper(settings: CarouselSettings) {
     (event: any) => {
       if (dragActive) {
         let { diff, extraSlides, threshold } = getBoundaryProps()
-        
+
         if (diff < -threshold) {
           if (!infinite) extraSlides = boundaryCheck(1, extraSlides)
           shiftSlide(1, 'drag', extraSlides)
@@ -752,41 +767,41 @@ export default function carouselHelper(settings: CarouselSettings) {
   )
 
   const getDynamicSlidePercentage = (width: number) => {
-    return ((width / slideStageWidth) * 100 )
+    return (width / slideStageWidth) * 100
   }
 
   const getDynamicBoundaryProps = (diff: number) => {
     const currentLengthPercent = getDynamicSlidePercentage(dynamicWidthArray[activeIndex])
-    const currentThreshold = (currentLengthPercent / 2) 
-    
-    let direction = 'right' 
+    const currentThreshold = currentLengthPercent / 2
+
+    let direction = 'right'
     if (diff > currentThreshold) direction = 'left'
 
     let absDiff = Math.abs(diff)
-    let dynamicIndex = activeIndex;
-    let dynamicThreshold = currentThreshold;
+    let dynamicIndex = activeIndex
+    let dynamicThreshold = currentThreshold
     let dynamicPercent = currentLengthPercent
     let extraSlides = 0
     for (let i = dynamicPercent; i < absDiff; i = i + dynamicPercent) {
       if (i - dynamicThreshold <= absDiff && absDiff <= i + dynamicThreshold) {
-        break // threshold is exceeding, quit adding extra slides 
+        break // threshold is exceeding, quit adding extra slides
       }
-      
+
       if (direction === 'right' && activeIndex + 1 + extraSlides > dynamicIndexLimit) {
-        break // boundary is exceeding, quit adding extra slides 
+        break // boundary is exceeding, quit adding extra slides
       }
       dynamicIndex = dynamicIndex + (direction === 'right' ? 1 : -1)
       extraSlides++
-      dynamicPercent = getDynamicSlidePercentage((dynamicWidthArray[dynamicIndex]))
+      dynamicPercent = getDynamicSlidePercentage(dynamicWidthArray[dynamicIndex])
       dynamicThreshold = dynamicPercent / 2
     }
 
-    // TODO: Run prettier-only commit 
-    return { 
-      additionalSlides: extraSlides, 
-      currentThreshold, 
-      direction, 
-      limitExceeded: false 
+    // TODO: Run prettier-only commit
+    return {
+      additionalSlides: extraSlides,
+      currentThreshold,
+      direction,
+      limitExceeded: false
     }
   }
 
@@ -812,15 +827,15 @@ export default function carouselHelper(settings: CarouselSettings) {
     let extraSlides = 0
 
     if (hasDynamicWidth) {
-      if (!dynamicShiftEnabled) diff = 0 
+      if (!dynamicShiftEnabled) diff = 0
       else {
         const { additionalSlides, currentThreshold, direction } = getDynamicBoundaryProps(diff)
         if (direction === 'right' && activeIndex === dynamicIndexLimit + 1) {
           diff = 0
-        } 
+        }
         extraSlides = additionalSlides
         threshold = currentThreshold
-      } 
+      }
     } else {
       threshold = slideShift / 2
       extraSlides = getEvenBoundaryProps(diff, slideShift, threshold)
@@ -911,7 +926,14 @@ export default function carouselHelper(settings: CarouselSettings) {
     function handleResize() {
       // Reset measurements <?>
       const { current } = slidesRef
-      const { ...measurements } = getSliderMeasurements(current, slideGap, infinite, baseSlideCount, slidesShown, hasDynamicWidth)
+      const { ...measurements } = getSliderMeasurements(
+        current,
+        slideGap,
+        infinite,
+        baseSlideCount,
+        slidesShown,
+        hasDynamicWidth
+      )
       setInitLeftState(measurements.slidesLeft)
       setSlidesLeft(measurements.slidesLeft)
       setSlidesPxWidth(measurements.slidesPxWidth)
@@ -922,7 +944,7 @@ export default function carouselHelper(settings: CarouselSettings) {
       setDynamicShiftEnabled(measurements.dynamic.shiftEnabled)
       setDynamicWidthArray(measurements.dynamic.lengthArray)
       setDynamicIndexLimit(measurements.dynamic.dynamicIndexLimit)
-      
+
       setWindowWidth(window.innerWidth)
 
       if (responsiveSettings.length) {
@@ -984,7 +1006,14 @@ export default function carouselHelper(settings: CarouselSettings) {
   useEffect(() => {
     const { current } = slidesRef
 
-    const { ...measurements } = getSliderMeasurements(current, slideGap, infinite, baseSlideCount, slidesShown, hasDynamicWidth)
+    const { ...measurements } = getSliderMeasurements(
+      current,
+      slideGap,
+      infinite,
+      baseSlideCount,
+      slidesShown,
+      hasDynamicWidth
+    )
 
     setInitLeftState(measurements.slidesLeft)
     setSlidesLeft(measurements.slidesLeft)
