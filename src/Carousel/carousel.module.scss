@@ -12,7 +12,7 @@ $slider-height: 100%;
   display: flex;
   position: relative;
 
-  &:hover > &-control.hidden {
+  &:hover > &-control.hidden:not(.disable-controls) {
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
     transition: all 0.25s;
@@ -99,10 +99,20 @@ $slider-height: 100%;
       transition: left 1s;
       position: relative;
       border-radius: 2px;
+      white-space: nowrap;
     }
 
     &.marginless {
       margin: 0;
+    }
+
+    .chip-slide {
+      min-height: 50px;
+      white-space: nowrap;
+
+      & button[class^='chip-module--chip'] {
+        margin: 0;
+      }
     }
 
     .grabbing {
@@ -209,7 +219,7 @@ $slider-height: 100%;
       }
     }
 
-    &:focus {
+    &:focus:not(.disable-controls) {
       box-shadow: 0 0 0 2px $red;
       background-color: $white;
 
@@ -309,6 +319,10 @@ $slider-height: 100%;
     &.top {
       top: 5%;
     }
+
+    &.disable-controls {
+      top: -50%;
+    } 
 
     &.bottom {
       top: 70%;
