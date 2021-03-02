@@ -57,7 +57,8 @@ function getDynamicMeasurements(current: any, slidePxWidth: number, slideGap: nu
   let dynamicIndexLimit = -1
   let slidesLength = 0
   let slideWidthArray = []
-  for (let i = 0; i < current.children.length; i++) {
+  const nodeLength = current && current.children && current.children.length
+  for (let i = 0; i < nodeLength; i++) {
     let slideLength = current.children[i].getBoundingClientRect().width + slideGap
     slidesLength += slideLength
     slideWidthArray.push(slideLength)
@@ -85,7 +86,7 @@ function getSliderMeasurements(
   dynamic: boolean
 ) {
   const measurements = {
-    slidesPxWidth: current.offsetWidth,
+    slidesPxWidth: current && current.offsetWidth,
     slidesLeft: 0,
     slideMargin: 0,
     slidePxWidth: 0,
@@ -100,7 +101,7 @@ function getSliderMeasurements(
   }
 
   let totalSlideCount = baseSlideCount + (infinite ? 2 : 0) * slidesShown
-  measurements.slidePxWidth = current.offsetWidth / totalSlideCount
+  measurements.slidePxWidth = measurements.slidesPxWidth / totalSlideCount
 
   if (dynamic) {
     const { dynamicIndexLimit, shiftEnabled, slideWidthArray } = getDynamicMeasurements(
