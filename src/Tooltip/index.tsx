@@ -25,6 +25,8 @@ export interface Props {
   className?: string
   /** whether or not the x should appear in the header */
   closeBtn?: boolean
+  /** Delay of debounce on scroll */
+  debounceDelay?: number
   /** Delay of transition animation */
   delay?: number
   /** How long the transition animation should go */
@@ -62,6 +64,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     closeBtn,
     duration,
     delay,
+    debounceDelay,
     easing,
     header,
     hover,
@@ -78,7 +81,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   const [isShowing, setIsShowing] = useState(isOpen)
   const tipContainerRef = useRef<HTMLDivElement>(null)
   // @ts-ignore
-  const [wrapperRef, dimensions] = useDimensions(true, 20, initialDimensions, [isShowing])
+  const [wrapperRef, dimensions] = useDimensions(true, debounceDelay, initialDimensions, [isShowing])
 
   useEffect(() => {
     if (isOpen) {
@@ -240,6 +243,7 @@ Tooltip.defaultProps = {
   className: '',
   closeBtn: false,
   duration: 180,
+  debounceDelay: 20,
   delay: 0,
   easing: 'ease-in-out',
   hover: false,
