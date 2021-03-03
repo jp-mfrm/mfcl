@@ -7,7 +7,7 @@ import { Chip } from '..'
 
 const Chips = {
   onClick: (value: any) => {
-    console.log(value)
+    return value
   },
   className: 'CHEEPS',
   list: [
@@ -15,7 +15,7 @@ const Chips = {
       label: 'Serta',
       value: 'mattresses?brand=Serta',
       onClick: (value: any) => {
-        console.log(value + ' custom!')
+        return (value + ' custom!')
       },
       className: 'CHEEPS CUSTOM',
     },
@@ -455,7 +455,7 @@ describe('Carousel Component', () => {
       {Chips.list.map(({ label, value }) => {
         return (
           <div key={label}>
-            <Chip label={label} variant="default" onClick={() => console.log(value)} />
+            <Chip label={label} variant="default" onClick={() => value} />
           </div>
         )
       })}
