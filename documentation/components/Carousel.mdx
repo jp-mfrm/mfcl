@@ -64,7 +64,15 @@ The Responsive prop overrides the provided props of the carousel at different pi
 ### Chips
 
 <Playground>
-  <Carousel itemsToShow={1} layoutGap={5} hideIndicators disableControls ariaLabel="one" chips={Chips} />
+  <Carousel
+    itemsToShow={1}
+    layoutGap={5}
+    hideIndicators
+    disableControls
+    ariaLabel="one"
+    chips={Chips}
+    capturePropagation="disable"
+  />
 </Playground>
 
 ### Custom Children
@@ -76,6 +84,7 @@ The Responsive prop overrides the provided props of the carousel at different pi
     disableControls
     variableWidth
     ariaLabel="one"
+    capturePropagation="disable"
   >
    {Chips.list.map(({ label, value }) => {
     return (
