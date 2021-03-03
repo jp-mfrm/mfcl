@@ -395,6 +395,7 @@ export interface CarouselChips {
 
 export interface CarouselSettings {
   autoSlide: boolean
+  capturePropagation: string
   children: ReactNode
   chips: CarouselChips | undefined
   controlAlignment: string
@@ -423,6 +424,7 @@ export interface CarouselSettings {
 export default function carouselHelper(settings: CarouselSettings) {
   const {
     autoSlide,
+    capturePropagation,
     children,
     chips,
     controlAlignment,
@@ -725,7 +727,9 @@ export default function carouselHelper(settings: CarouselSettings) {
           setSlidesLeft(slidesLeft - nextPosition)
         }
 
-        setHandleCapturing(true)
+        if (capturePropagation === 'allow') {
+          setHandleCapturing(true)
+        }
       }
     },
     [dragActive, posInitial, slidesLeft]

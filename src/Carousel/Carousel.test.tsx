@@ -465,4 +465,43 @@ describe('Carousel Component', () => {
     expect(container.querySelectorAll('.slide')[0]).toHaveStyle('margin: 0px 30px 0px 0px')
     expect(container.querySelectorAll('.slide')[0]).toHaveStyle('flex-basis: 0%')
   })
+
+  it('should handle event capturing appropriately', () => {
+    const { container, rerender } = render(
+      <Carousel layoutGap={5} ariaLabel="test" capturePropagation='disable'>
+        <div>One</div>
+        <div>Two</div>
+      </Carousel>
+    )
+
+    fireEvent.click(container.querySelectorAll('.slide')[1]!, { clientX: 500 })
+    fireEvent.mouseDown(container.querySelectorAll('.slide')[1]!, { clientX: 500 })
+    fireEvent.mouseMove(container.querySelectorAll('.slide')[1]!, { clientX: 200 })
+    fireEvent.click(container.querySelectorAll('.slide')[1]!, { clientX: 500 })
+
+    jest.clearAllTimers()
+
+    setTimeout(() => {
+      expect(container.querySelectorAll('.slide')[1]?.classList).toContain('grabbing')
+    }, 100)
+
+    fireEvent.mouseUp(container.querySelectorAll('.slide')[1]!, { clientX: 100 })
+
+    rerender(
+      <Carousel layoutGap={0} infinite duration={0} ariaLabel="test" capturePropagation='allow'>
+        <div>One</div>
+        <div>Two</div>
+      </Carousel>
+    )
+
+    fireEvent.mouseDown(container.querySelectorAll('.slide')[1]!, { clientX: 2000 })
+    fireEvent.mouseMove(container.querySelectorAll('.slide')[1]!, { clientX: 1000 })
+    
+    jest.clearAllTimers()
+
+    setTimeout(() => {
+      expect(container.querySelectorAll('.slide')[1]?.classList).toContain('grabbing')
+      fireEvent.click(container.querySelectorAll('.slide')[1])
+    }, 100)
+  })
 })

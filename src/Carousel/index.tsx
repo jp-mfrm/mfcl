@@ -19,6 +19,8 @@ interface Props {
   disableControls?: boolean
   /** Time in milliseconds for autoSlide */
   duration?: number
+  /** Enable propagation during click event capture phase */
+  capturePropagation?: 'allow' | 'disable' 
   /** List of carousel chips to be rendered.
    *  Will override the following props: itemsToShow */
   itemsToShow?: number
@@ -66,6 +68,7 @@ interface Props {
 const Carousel: FunctionComponent<Props> = ({
   ariaLabel,
   autoSlide = false,
+  capturePropagation = 'allow',
   carouselClass,
   chips = undefined,
   children,
@@ -86,6 +89,7 @@ const Carousel: FunctionComponent<Props> = ({
 }) => {
   const helperSettings: CarouselSettings = {
     autoSlide,
+    capturePropagation,
     children,
     chips,
     controlAlignment,
