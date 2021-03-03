@@ -5,7 +5,7 @@ import clsx from 'clsx'
 
 export type AccordionItemProps = {
   /** the header of the accordion */
-  title: string
+  title: string | ReactNode
   /** the content that is shown when the title is clicked */
   content: string | ReactNode
   /** the subtitle of the accordion */
