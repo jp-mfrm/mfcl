@@ -8,6 +8,8 @@ interface Props {
   divider?: boolean
   /** text to be added before price */
   text?: string
+  /** text to be added to the right of the price */
+  rightText?: string
   /** align the text in the center */
   center?: boolean
   /** align the text to the right */
@@ -26,6 +28,7 @@ const Price: FunctionComponent<Props> = ({
   price,
   discountPrice,
   text,
+  rightText,
   center = false,
   right = false,
   divider = false,
@@ -62,6 +65,7 @@ const Price: FunctionComponent<Props> = ({
       {text} {divider && <span>|</span>}
     </>
   )
+  let productRightText = rightText && <>{rightText}</>
 
   let productDiscount
   if (discountPrice) {
@@ -94,7 +98,7 @@ const Price: FunctionComponent<Props> = ({
             discount && styles.discount
           )}
         >
-          {productText} {productPrice}
+          {productText} {productPrice} {productRightText}
         </p>
         {productDiscount}
       </div>
