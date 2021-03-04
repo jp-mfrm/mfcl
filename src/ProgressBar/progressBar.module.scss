@@ -6,12 +6,7 @@
   position: relative;
   overflow: hidden;
   height: 6px;
-
-  @media screen and (min-width: $mobile) {
-    width: 317px;
-    margin: 0 auto;
-    margin-top: 30px;
-  }
+  width: 100%;
 }
 
 .bar {

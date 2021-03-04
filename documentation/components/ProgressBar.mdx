@@ -34,6 +34,7 @@ Loaders help the user feel like things are happening
     {({ setState, state }) => (
       <>
         <ProgressBar value={state.value} max={15} />
+        <br />
         <Button
           onClick={() => {
             let newValue = state.value + 1
