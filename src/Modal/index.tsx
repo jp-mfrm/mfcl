@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import React, { FunctionComponent, isValidElement, useEffect, useRef, useState } from 'react'
 
 import Close from '../Icons/Close'
 import Fade from '../Fade'
@@ -11,9 +11,9 @@ import trapFocus from '../utils/trapFocus'
 
 interface Props {
   /** Header title for the modal  */
-  header?: string
+  header?: string | React.ReactNode
   /** Subheader title for the modal */
-  subheader?: string
+  subheader?: string | React.ReactNode
   /** Class to pass to the modal center wrapper */
   contentClass?: string
   /** Whether or not the modal is open */
@@ -28,8 +28,12 @@ interface Props {
   closeButtonClass?: string
   /** Child elements of the modal  */
   children?: React.ReactNode
+  /** Class to pass to the children wrapper */
+  childrenClass?: string
   /** id for modal */
   id?: string
+  /** style to indicate modal border setting */
+  borderStyle?: 'round' | 'square'
   [rest: string]: unknown // ...rest property
 }
 
@@ -37,6 +41,7 @@ const Modal: FunctionComponent<Props> = ({
   header = '',
   subheader = '',
   contentClass = '',
+  childrenClass = '',
   isOpen = false,
   onClose = null,
   duration = 100,
@@ -44,6 +49,7 @@ const Modal: FunctionComponent<Props> = ({
   closeButtonColor = '#2D2926',
   closeButtonClass = '',
   id = '',
+  borderStyle = 'round',
   ...rest
 }) => {
   const [isShowing, setIsShowing] = useState(isOpen)
@@ -79,9 +85,10 @@ const Modal: FunctionComponent<Props> = ({
     }
   }
 
-  const modalClasses = clsx(styles['modal'], isShowing && styles['active'], rest.className as string)
+  const modalClasses = clsx(styles.modal, isShowing && styles.active, styles[borderStyle], rest.className as string)
   const modalContentClasses = clsx(styles['modal-content'], contentClass)
-  const modalWrapperClasses = clsx(styles['modal-wrapper'], isShowing && styles['active'])
+  const modalWrapperClasses = clsx(styles['modal-wrapper'], isShowing && styles.active)
+  const modalChildrenClasses = clsx(styles['modal-children-wrapper'], childrenClass)
 
   return (
     <Portal>
@@ -113,17 +120,19 @@ const Modal: FunctionComponent<Props> = ({
               </div>
             </>
             <div className={modalContentClasses}>
-              {header && header !== '' && (
-                <Typography className={clsx(styles['modal-header'])} variant="h4" align="center">
-                  {header}
-                </Typography>
-              )}
-              {subheader && subheader !== '' && (
-                <Typography className={clsx(styles['modal-subheader'])} variant="paragraph" align="center">
-                  {subheader}
-                </Typography>
-              )}
-              {children}
+              {(isValidElement(header) && header) ||
+                (header && header !== '' && (
+                  <Typography className={clsx(styles['modal-header'])} variant="h4" align="center">
+                    {header}
+                  </Typography>
+                ))}
+              {(isValidElement(subheader) && subheader) ||
+                (subheader && subheader !== '' && (
+                  <Typography className={clsx(styles['modal-subheader'])} variant="paragraph" align="center">
+                    {subheader}
+                  </Typography>
+                ))}
+              <div className={modalChildrenClasses}>{children}</div>
             </div>
           </div>
         </Fade>

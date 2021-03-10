@@ -28,7 +28,6 @@
 
 .modal {
   background: white;
-  border-radius: 20px;
   display: block;
   max-height: 80vh;
   overflow: auto;
@@ -39,6 +38,43 @@
   transform: translate(-50%, -50%);
   width: calc(100% - 30px);
   z-index: 1001;
+  overflow: hidden;
+
+  &.round {
+    border-radius: 20px;
+  }
+
+  &-children-wrapper {
+    max-height: 54vh;
+    overflow: auto;
+    margin: 0 -15px;
+    padding: 0 15px;
+    
+    /* width */
+    &::-webkit-scrollbar {
+      width: 3px;
+      border-radius: 160px;
+      margin: 100px;
+      position: relative;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: #a6a6a6;
+      border: 3px solid #a6a6a6;
+      border-radius: 160px;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: #888;
+    }
+  }
 
   &-content {
     padding: 60px 0 0;
@@ -56,6 +92,10 @@
   @media screen and (min-width: $tablet) {
     width: 50%;
   }
+
+  @media screen and (max-height: 710px) {
+	  max-height: 100%;
+	}
 }
 
 .close {
