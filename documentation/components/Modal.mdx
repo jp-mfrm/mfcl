@@ -34,7 +34,35 @@ NOTE: DO NOT add "Component" as a wrapper. That is only for documentation. Use R
             isOpen={state.isOpen}
             onClose={(isOpen) => setState({ isOpen: false })}
           >
-            {mattressIpsum(3)}
+            {mattressIpsum(23)}
+            <br />
+            <br />
+            <Button onClick={() => setState({ isOpen: false })}>Close Modal</Button>
+          </Modal>
+          <Button btnType="primary" onClick={() => setState({ isOpen: !state.isOpen })} size="lg">
+            Open Modal
+          </Button>
+        </div>
+      )
+    }}
+  </Component>
+</Playground>
+
+## Custom Usage
+
+<Playground>
+  <Component initialState={{ isOpen: false }}>
+    {({ setState, state }) => {
+      return (
+        <div>
+          <Modal
+            header={<div>Basic Modal (Element)</div>}
+            subheader={<div style={{marginBottom: '15px'}}>Subheader Details (Element)</div>}
+            isOpen={state.isOpen}
+            borderStyle="square"
+            onClose={(isOpen) => setState({ isOpen: false })}
+          >
+            {mattressIpsum(23)}
             <br />
             <br />
             <Button onClick={() => setState({ isOpen: false })}>Close Modal</Button>

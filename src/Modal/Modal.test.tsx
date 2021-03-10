@@ -7,7 +7,7 @@ const children = <div data-testid="yo">Yo</div>
 
 describe('Modal', () => {
   it('should be empty if not isOpen', () => {
-    const { container } = render(<Modal isOpen={false}>{children}</Modal>)
+    const { container } = render(<Modal>{children}</Modal>)
     expect(container.querySelector('.modal')).toBeNull()
   })
 
@@ -107,5 +107,23 @@ describe('Modal', () => {
     // @ts-ignore
     fireEvent.keyDown(getByRole('dialog').querySelector('.close'), { keyCode: 9 })
     expect(onKeyDown).toHaveBeenCalled()
+  })
+
+  it('should render the header/subheader elements', () => {
+    const { getByRole } = render(
+      <Modal
+        isOpen
+        header={<div className="custom-header">Basic Modal (Element)</div>}
+        subheader={
+          <div className="custom-subheader" style={{ marginBottom: '15px' }}>
+            Subheader Details (Element)
+          </div>
+        }
+        borderStyle="square"
+      ></Modal>
+    )
+
+    expect(getByRole('dialog').querySelector('.custom-header')).toBeInTheDocument()
+    expect(getByRole('dialog').querySelector('.custom-subheader')).toBeInTheDocument()
   })
 })
