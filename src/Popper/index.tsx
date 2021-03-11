@@ -14,7 +14,8 @@ interface Props {
   /** Content that is in header */
   header?: string
   /** Content that is in the tooltip itself */
-  tooltipContent: string
+  tooltipContent: ReactNode
+  children: ReactNode
   /** Position of tooltip in relation to the trigger */
   position?:
     | 'top'
@@ -44,6 +45,7 @@ const Popper: FunctionComponent<Props> = ({
   contentClass,
   header,
   tooltipContent,
+  children,
   position = 'bottom',
   offsetX = 0,
   offsetY = 0,
@@ -165,6 +167,7 @@ const Popper: FunctionComponent<Props> = ({
         contentClass
       )}
       {...attributes.popper}
+      {...rest}
     >
       <div
         className={clsx(
@@ -182,7 +185,7 @@ const Popper: FunctionComponent<Props> = ({
           </div>
         )}
       </div>
-      {tooltipContent}
+      {tooltipContent || children}
       {arrow && (
         <div
           data-testid="arrow"
