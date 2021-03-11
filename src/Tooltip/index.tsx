@@ -229,7 +229,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     >
       {trigger}
       {/* @ts-ignore */}
-      <Portal>
+      <Portal ariaRole="tooltip">
         <>{tooltipContent}</>
       </Portal>
     </div>
