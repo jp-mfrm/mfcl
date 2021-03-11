@@ -14,8 +14,8 @@ interface Props {
   /** Content that is in header */
   header?: string
   /** Content that is in the tooltip itself */
-  tooltipContent: ReactNode
-  children: ReactNode
+  tooltipContent?: ReactNode
+  children?: ReactNode
   /** Position of tooltip in relation to the trigger */
   position?:
     | 'top'
