@@ -46,7 +46,7 @@ describe('Tooltip Component', () => {
     )
 
     expect(screen.getByLabelText('tooltip-arrow')).toHaveStyle('transition: all 300ms ease 100ms')
-    expect(screen.getByRole('tooltip')).toHaveStyle('transition: all 300ms ease 100ms')
+    expect(screen.getAllByRole('tooltip')[1]).toHaveStyle('transition: all 300ms ease 100ms')
   })
 
   it('should not render arrow when false and vice versa', () => {
@@ -197,13 +197,13 @@ describe('Tooltip Component', () => {
     render(<Tooltip header="header" trigger={trigger} hover={false} />)
 
     fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
-    expect(screen.getByRole('tooltip')).toHaveStyle('opacity: 1')
+    expect(screen.getAllByRole('tooltip')[1]).toHaveStyle('opacity: 1')
   })
 
   it('should handle escape', () => {
     render(<Tooltip header="header" trigger={trigger} hover={false} />)
     fireEvent.click(screen.getByLabelText('tooltip-wrapper'))
     fireEvent.keyDown(document, { key: 'Escape' })
-    expect(screen.getByRole('tooltip')).toHaveStyle('opacity: 0')
+    expect(screen.getAllByRole('tooltip')[1]).toHaveStyle('opacity: 0')
   })
 })
