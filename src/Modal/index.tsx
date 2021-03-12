@@ -1,4 +1,4 @@
-import React, { FunctionComponent, isValidElement, useEffect, useRef, useState } from 'react'
+import React, { FunctionComponent, KeyboardEvent, MutableRefObject, isValidElement, useRef, useState } from 'react'
 
 import Close from '../Icons/Close'
 import Fade from '../Fade'
@@ -34,6 +34,8 @@ interface Props {
   id?: string
   /** style to indicate modal border setting */
   borderStyle?: 'round' | 'square'
+  /** ref for the modal */
+  modalRef?: MutableRefObject<HTMLDivElement | null>
   [rest: string]: unknown // ...rest property
 }
 
@@ -50,11 +52,12 @@ const Modal: FunctionComponent<Props> = ({
   closeButtonClass = '',
   id = '',
   borderStyle = 'round',
+  modalRef = null,
   ...rest
 }) => {
   const [isShowing, setIsShowing] = useState(isOpen)
 
-  const modalRef: any = useRef<HTMLDivElement>(null)
+  const modalRefWrapper = useRef<HTMLDivElement | null>(modalRef ? modalRef.current : null)
   const closeBtnRef = useRef<HTMLDivElement>(null)
 
   useOpenModal({ isOpen, setIsShowing, closeBtnRef })
@@ -66,7 +69,7 @@ const Modal: FunctionComponent<Props> = ({
     setIsShowing(!isOpen)
   }
 
-  const handleKeys = (e: any) => {
+  const handleKeys = (e: KeyboardEvent<HTMLDivElement>) => {
     const key = e.keyCode || e.which
 
     switch (key) {
@@ -77,7 +80,7 @@ const Modal: FunctionComponent<Props> = ({
       }
       // tab
       case 9: {
-        trapFocus(e, modalRef)
+        trapFocus(e, modalRefWrapper)
         break
       }
       default:
@@ -99,7 +102,7 @@ const Modal: FunctionComponent<Props> = ({
             role="dialog"
             aria-modal="true"
             onKeyDown={handleKeys}
-            ref={modalRef}
+            ref={modalRefWrapper}
             id={id}
             {...rest}
             className={modalClasses}
