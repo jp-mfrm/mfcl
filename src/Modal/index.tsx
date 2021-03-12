@@ -57,7 +57,7 @@ const Modal: FunctionComponent<Props> = ({
 }) => {
   const [isShowing, setIsShowing] = useState(isOpen)
 
-  const modalRefWrapper = useRef<HTMLDivElement | null>(modalRef ? modalRef.current : null)
+  const modalRefWrapper = modalRef || useRef<HTMLDivElement | null>(null)
   const closeBtnRef = useRef<HTMLDivElement>(null)
 
   useOpenModal({ isOpen, setIsShowing, closeBtnRef })
