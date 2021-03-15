@@ -4,7 +4,7 @@ import isClient from '../utils/isClient'
 
 type HTMLElRef = MutableRefObject<HTMLElement>
 
-const Portal = ({ children = null, ariaRole = '' }: { children: ReactElement | null; ariaRole?: string }) => {
+const Portal = ({ children = null, ariaRole = '', ariaLabel = '' }: { children: ReactElement | null; ariaRole?: string; ariaLabel?: string }) => {
   const mount = useRef(isClient ? document.createElement('div') : null) as HTMLElRef
 
   useEffect(() => {
@@ -13,11 +13,17 @@ const Portal = ({ children = null, ariaRole = '' }: { children: ReactElement | n
       if (ariaRole) {
         mount.current.setAttribute('role', ariaRole)
       }
+      if (ariaLabel) {
+        mount.current.setAttribute('aria-label', ariaLabel)
+      }
     }
 
     if (mount.current) {
       if (ariaRole) {
         mount.current.setAttribute('role', ariaRole)
+      }
+      if (ariaLabel) {
+        mount.current.setAttribute('aria-label', ariaLabel)
       }
       document.body.appendChild(mount.current)
       return () => {
