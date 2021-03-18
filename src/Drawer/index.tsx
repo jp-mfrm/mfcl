@@ -143,6 +143,7 @@ const Drawer: React.FunctionComponent<Props> = ({
               className={drawerClassName}
               style={positions[position][state]}
               role="dialog"
+              aria-label={`${id} drawer`}
               aria-modal="true"
               ref={modalRef}
               onKeyDown={handleKeys}
