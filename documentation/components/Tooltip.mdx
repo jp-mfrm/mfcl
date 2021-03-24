@@ -8,6 +8,7 @@ import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
 import mattressIpsum from 'mattress-ipsum'
 import { Tooltip, Button, Select } from '../../src'
+import QuestionMark from '../../src/Icons/QuestionMark'
 import { Row } from './helpers'
 
 # Tooltip
@@ -177,4 +178,26 @@ Tooltips help clarify what certain features do.
       )
     }}
   </Component>
+</Playground>
+
+## Hover
+
+<Playground>
+  <Row>
+    <>
+      <Tooltip hover trigger={<QuestionMark />} position="bottom">
+        <div>
+          Hover content with action: <Button size="sm">Click</Button>
+        </div>
+      </Tooltip>
+    </>
+    <>
+      <Tooltip hover trigger={<QuestionMark />} position="top">
+        <div style={{ height: '300px' }}>
+          <Button size="sm">Click</Button>
+          <div>Tall content with action</div>
+        </div>
+      </Tooltip>
+    </>
+  </Row>
 </Playground>
