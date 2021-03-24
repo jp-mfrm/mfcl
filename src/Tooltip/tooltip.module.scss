@@ -25,7 +25,6 @@
   position: absolute;
   transform: translate3d(0, 0, 0);
   transform-origin: top;
-
   z-index: 99;
 }
 
@@ -35,11 +34,9 @@
   background-color: $white;
   color: $gray-11;
   font-size: 20px;
-  // margin-top: 25px;
-  line-height: 30px;
+  width: 392px;
   padding: 12px 20px;
   border-radius: 5px;
-  white-space: nowrap;
   border: 1px solid #e5e5e5;
 }
 

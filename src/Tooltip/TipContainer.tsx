@@ -66,8 +66,8 @@ const TipContainer: FunctionComponent<Props> = ({
             top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left - 10,
             right,
-            paddingBottom: '18px',
-            marginTop: '25px'
+            marginTop: '42px',
+            paddingBottom: '18px'
           }
         }
         case 'top-left':
@@ -76,8 +76,8 @@ const TipContainer: FunctionComponent<Props> = ({
             top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left - width - 5,
             right,
-            paddingBottom: '18px',
-            marginTop: '25px'
+            marginTop: '42px',
+            paddingBottom: '18px'
           }
         case 'top-right':
           return {
@@ -85,8 +85,8 @@ const TipContainer: FunctionComponent<Props> = ({
             top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left + width / 2 - 7,
             right,
-            paddingBottom: '18px',
-            marginTop: '25px'
+            marginTop: '42px',
+            paddingBottom: '18px'
           }
         case 'bottom': {
           return {
@@ -95,7 +95,7 @@ const TipContainer: FunctionComponent<Props> = ({
             left: left - 10,
             right,
             paddingTop: '22px',
-            marginTop: '0px'
+            marginTop: '2px'
           }
         }
 
@@ -106,7 +106,7 @@ const TipContainer: FunctionComponent<Props> = ({
             left: left - width + 25,
             right,
             paddingTop: '22px',
-            marginTop: '0px'
+            marginTop: '2px'
           }
         case 'bottom-right': {
           return {
@@ -115,7 +115,7 @@ const TipContainer: FunctionComponent<Props> = ({
             left: left + width / 2 - 7,
             right,
             paddingTop: '22px',
-            marginTop: '0px'
+            marginTop: '2px'
           }
         }
 
@@ -274,13 +274,13 @@ const TipContainer: FunctionComponent<Props> = ({
     <div
       role="tooltip"
       ref={tipContainerRef}
-      className={clsx(styles['tip-container-wrapper'], tipContainerClassName)}
+      className={clsx(styles['tip-container-wrapper'])}
       style={{
         ...getBaseStyle(),
         ...getAnimationStyle()
       }}
     >
-      <div className={styles['tip-container']}>
+      <div className={clsx(styles['tip-container'], tipContainerClassName)}>
         {(header || closeBtn) && (
           <div className={styles['header-wrapper']}>
             {header && (
