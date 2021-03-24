@@ -65,7 +65,9 @@ const TipContainer: FunctionComponent<Props> = ({
             ...baseStyle,
             top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left - 10,
-            right
+            right,
+            marginTop: '42px',
+            paddingBottom: '18px'
           }
         }
         case 'top-left':
@@ -73,21 +75,27 @@ const TipContainer: FunctionComponent<Props> = ({
             ...baseStyle,
             top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left - width - 5,
-            right
+            right,
+            marginTop: '42px',
+            paddingBottom: '18px'
           }
         case 'top-right':
           return {
             ...baseStyle,
             top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left + width / 2 - 7,
-            right
+            right,
+            marginTop: '42px',
+            paddingBottom: '18px'
           }
         case 'bottom': {
           return {
             ...baseStyle,
             top: top + window.scrollY + height - 25,
             left: left - 10,
-            right
+            right,
+            paddingTop: '22px',
+            marginTop: '3px'
           }
         }
 
@@ -96,14 +104,18 @@ const TipContainer: FunctionComponent<Props> = ({
             ...baseStyle,
             top: top + window.scrollY + height - 25,
             left: left - width + 25,
-            right
+            right,
+            paddingTop: '22px',
+            marginTop: '2px'
           }
         case 'bottom-right': {
           return {
             ...baseStyle,
             top: top + window.scrollY + height - 25,
             left: left + width / 2 - 7,
-            right
+            right,
+            paddingTop: '22px',
+            marginTop: '2px'
           }
         }
 
@@ -112,14 +124,18 @@ const TipContainer: FunctionComponent<Props> = ({
             ...baseStyle,
             top: top + window.scrollY - height,
             left: left + width + 15,
-            right
+            right,
+            marginTop: '25px',
+            paddingLeft: '27px'
           }
         case 'left':
           return {
             ...baseStyle,
             top: top + window.scrollY - height,
             left: left - width * 2 - 60,
-            right
+            right,
+            marginTop: '25px',
+            paddingRight: '27px'
           }
 
         default:
@@ -228,7 +244,7 @@ const TipContainer: FunctionComponent<Props> = ({
             enter: {
               bottom: 'auto',
               top: top + window.scrollY - height / 2,
-              marginRight: 10,
+              marginLeft: '27px',
               transform: `translate3d(calc(-100% + -${width}), -50%, 0)`,
               left: left - 10 + width - width / 2
             },
@@ -244,7 +260,7 @@ const TipContainer: FunctionComponent<Props> = ({
               left: left + width + 15,
               top: top + window.scrollY - height / 2,
               transform: 'translate3d(-10px, -50%, 0)',
-              marginLeft: 10
+              marginLeft: '-18px'
             },
             active: {
               transform: 'translate3d(0, -47%, 0)'
@@ -262,36 +278,38 @@ const TipContainer: FunctionComponent<Props> = ({
     <div
       role="tooltip"
       ref={tipContainerRef}
-      className={clsx(styles['tip-container'], tipContainerClassName)}
+      className={clsx(styles['tip-container-wrapper'])}
       style={{
         ...getBaseStyle(),
         ...getAnimationStyle()
       }}
     >
-      {(header || closeBtn) && (
-        <div className={styles['header-wrapper']}>
-          {header && (
-            <Typography className={styles['header']} variant="h6">
-              {header}
-            </Typography>
-          )}
-          {closeBtn && (
-            <div
-              role="button"
-              tabIndex={0}
-              className={styles.close}
-              aria-label="Close Alert"
-              ref={closeBtnRef}
-              onClick={closeToolTip}
-            >
-              <span aria-hidden="true" className={styles['close-icon']}>
-                &times;
-              </span>
-            </div>
-          )}
-        </div>
-      )}
-      {children}
+      <div className={clsx(styles['tip-container'], tipContainerClassName)}>
+        {(header || closeBtn) && (
+          <div className={styles['header-wrapper']}>
+            {header && (
+              <Typography className={styles['header']} variant="h6">
+                {header}
+              </Typography>
+            )}
+            {closeBtn && (
+              <div
+                role="button"
+                tabIndex={0}
+                className={styles.close}
+                aria-label="Close Alert"
+                ref={closeBtnRef}
+                onClick={closeToolTip}
+              >
+                <span aria-hidden="true" className={styles['close-icon']}>
+                  &times;
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+        {children}
+      </div>
     </div>
   )
 }

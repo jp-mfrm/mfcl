@@ -19,22 +19,25 @@
   background: #ffffff;
   z-index: 100;
 }
-
-.tip-container {
-  backface-visibility: hidden;
-  background-color: $white;
-  border: 1px solid #e5e5e5;
-  border-radius: 5px;
+.tip-container-wrapper {
   box-sizing: content-box;
-  color: $gray-11;
   display: table;
-  font-size: 20px;
-  margin-top: 25px;
-  padding: 12px 20px;
   position: absolute;
   transform: translate3d(0, 0, 0);
   transform-origin: top;
   z-index: 99;
+}
+
+.tip-container {
+  position: relative;
+  backface-visibility: hidden;
+  background-color: $white;
+  color: $gray-11;
+  font-size: 20px;
+  max-width: 385px;
+  padding: 12px 20px;
+  border-radius: 5px;
+  border: 1px solid #e5e5e5;
 }
 
 .header-wrapper {
