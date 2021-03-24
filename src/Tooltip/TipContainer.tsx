@@ -95,7 +95,7 @@ const TipContainer: FunctionComponent<Props> = ({
             left: left - 10,
             right,
             paddingTop: '22px',
-            marginTop: '2px'
+            marginTop: '3px'
           }
         }
 
