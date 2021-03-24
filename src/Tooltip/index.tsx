@@ -258,7 +258,7 @@ Tooltip.defaultProps = {
   onClose: null,
   onOpen: null,
   position: 'top',
-  maxWidth: '350px',
+  maxWidth: '385px',
   tipContainerClassName: ''
 }
 

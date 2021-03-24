@@ -124,14 +124,18 @@ const TipContainer: FunctionComponent<Props> = ({
             ...baseStyle,
             top: top + window.scrollY - height,
             left: left + width + 15,
-            right
+            right,
+            marginTop: '25px',
+            paddingLeft: '27px'
           }
         case 'left':
           return {
             ...baseStyle,
             top: top + window.scrollY - height,
             left: left - width * 2 - 60,
-            right
+            right,
+            marginTop: '25px',
+            paddingRight: '27px'
           }
 
         default:
@@ -240,7 +244,7 @@ const TipContainer: FunctionComponent<Props> = ({
             enter: {
               bottom: 'auto',
               top: top + window.scrollY - height / 2,
-              marginRight: 10,
+              marginLeft: '27px',
               transform: `translate3d(calc(-100% + -${width}), -50%, 0)`,
               left: left - 10 + width - width / 2
             },
@@ -256,7 +260,7 @@ const TipContainer: FunctionComponent<Props> = ({
               left: left + width + 15,
               top: top + window.scrollY - height / 2,
               transform: 'translate3d(-10px, -50%, 0)',
-              marginLeft: 10
+              marginLeft: '-18px'
             },
             active: {
               transform: 'translate3d(0, -47%, 0)'
