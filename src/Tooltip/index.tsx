@@ -51,6 +51,8 @@ export interface Props {
   position?: Position
   /** Override styles to the content */
   tipContainerClassName?: string
+  /** Keep content open on hover, for interactive content */
+  openOnHover: boolean
   [rest: string]: unknown
 }
 
@@ -76,6 +78,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     position,
     tipContainerClassName,
     trigger,
+    openOnHover,
     ...rest
   } = props
   const [isShowing, setIsShowing] = useState(isOpen)
@@ -181,7 +184,10 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   }
 
   const tooltipContent = (
-    <>
+    <div
+      onMouseEnter={hover && openOnHover ? showTooltip : undefined}
+      onMouseLeave={hover && openOnHover ? hideTooltip : undefined}
+    >
       {arrow && (
         <Arrow
           arrowClassName={arrowClassName}
@@ -211,7 +217,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
       >
         {children}
       </TipContainer>
-    </>
+    </div>
   )
 
   return (

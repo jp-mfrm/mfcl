@@ -65,7 +65,9 @@ const TipContainer: FunctionComponent<Props> = ({
             ...baseStyle,
             top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left - 10,
-            right
+            right,
+            paddingBottom: '18px',
+            marginTop: '25px'
           }
         }
         case 'top-left':
@@ -73,21 +75,27 @@ const TipContainer: FunctionComponent<Props> = ({
             ...baseStyle,
             top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left - width - 5,
-            right
+            right,
+            paddingBottom: '18px',
+            marginTop: '25px'
           }
         case 'top-right':
           return {
             ...baseStyle,
             top: top + window.scrollY - tipContainerRef.current.offsetHeight - 49,
             left: left + width / 2 - 7,
-            right
+            right,
+            paddingBottom: '18px',
+            marginTop: '25px'
           }
         case 'bottom': {
           return {
             ...baseStyle,
             top: top + window.scrollY + height - 25,
             left: left - 10,
-            right
+            right,
+            paddingTop: '22px',
+            marginTop: '0px'
           }
         }
 
@@ -96,14 +104,18 @@ const TipContainer: FunctionComponent<Props> = ({
             ...baseStyle,
             top: top + window.scrollY + height - 25,
             left: left - width + 25,
-            right
+            right,
+            paddingTop: '22px',
+            marginTop: '0px'
           }
         case 'bottom-right': {
           return {
             ...baseStyle,
             top: top + window.scrollY + height - 25,
             left: left + width / 2 - 7,
-            right
+            right,
+            paddingTop: '22px',
+            marginTop: '0px'
           }
         }
 
@@ -262,36 +274,38 @@ const TipContainer: FunctionComponent<Props> = ({
     <div
       role="tooltip"
       ref={tipContainerRef}
-      className={clsx(styles['tip-container'], tipContainerClassName)}
+      className={clsx(styles['tip-container-wrapper'], tipContainerClassName)}
       style={{
         ...getBaseStyle(),
         ...getAnimationStyle()
       }}
     >
-      {(header || closeBtn) && (
-        <div className={styles['header-wrapper']}>
-          {header && (
-            <Typography className={styles['header']} variant="h6">
-              {header}
-            </Typography>
-          )}
-          {closeBtn && (
-            <div
-              role="button"
-              tabIndex={0}
-              className={styles.close}
-              aria-label="Close Alert"
-              ref={closeBtnRef}
-              onClick={closeToolTip}
-            >
-              <span aria-hidden="true" className={styles['close-icon']}>
-                &times;
-              </span>
-            </div>
-          )}
-        </div>
-      )}
-      {children}
+      <div className={styles['tip-container']}>
+        {(header || closeBtn) && (
+          <div className={styles['header-wrapper']}>
+            {header && (
+              <Typography className={styles['header']} variant="h6">
+                {header}
+              </Typography>
+            )}
+            {closeBtn && (
+              <div
+                role="button"
+                tabIndex={0}
+                className={styles.close}
+                aria-label="Close Alert"
+                ref={closeBtnRef}
+                onClick={closeToolTip}
+              >
+                <span aria-hidden="true" className={styles['close-icon']}>
+                  &times;
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+        {children}
+      </div>
     </div>
   )
 }
