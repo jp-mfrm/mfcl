@@ -9,7 +9,7 @@ export interface Props {
   /** default value for uncontrolled */
   defaultChecked?: boolean
   /** This is the label and aria-label of the checkbox */
-  label?: string
+  label?: string | React.ReactNode
   /** Changes the background color of checkbox */
   backgroundColor?: 'black' | 'red'
   /** Which side of the checkbox the label is placed */
