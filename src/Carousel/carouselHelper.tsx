@@ -81,6 +81,7 @@ function getSliderMeasurements(
   current: any,
   slideGap: number,
   infinite: boolean,
+  showHalfSlides: boolean,
   baseSlideCount: number,
   slidesShown: number,
   dynamic: boolean
@@ -134,6 +135,11 @@ function getSliderMeasurements(
     let offsetLeftPx = remainingWidthPx / 2 - defaultMarginPixel
     let startPos = (offsetLeftPx / measurements.slidePxWidth) * 100
     measurements.slidesLeft = infinite ? startPos - measurements.slideShift * slidesShown : startPos
+  }
+  if (showHalfSlides && dynamic) {
+    measurements.slidesLeft =
+      ((measurements.slidePxWidth - (measurements.dynamic.lengthArray[0] - slideGap)) / 2 / measurements.slidePxWidth) *
+      100
   }
 
   return { ...measurements }
@@ -411,6 +417,7 @@ export interface CarouselSettings {
   hideDisabledButtons: boolean
   indicatorStyle: string
   itemsToShow: number
+  showHalfSlides: boolean
   infinite: boolean
   layoutGap: number
   responsive: {
@@ -444,7 +451,7 @@ export default function carouselHelper(settings: CarouselSettings) {
     variableWidth
   } = settings
 
-  let { itemsToShow, infinite, hideDisabledButtons } = settings
+  let { itemsToShow, infinite, hideDisabledButtons, showHalfSlides } = settings
 
   // Configure dynamic override(s)
   const hasChips = typeof chips !== 'undefined' && chips.list && chips.list.length > 0
@@ -566,7 +573,7 @@ export default function carouselHelper(settings: CarouselSettings) {
       const dynamicIndex = shiftingRight ? activeIndex : activeIndex - 1
       let dynamicShift = getDynamicSlidePercentage(dynamicWidthArray[dynamicIndex]) * (shiftingRight ? -1 : 1)
 
-      if (dynamicIndex + 1 === dynamicWidthArray.length - 1) {
+      if (!showHalfSlides && dynamicIndex + 1 === dynamicWidthArray.length - 1) {
         const adjustedShift = ((slideStageWidth - (dynamicWidthArray[dynamicIndex] - slideGap)) / slideStageWidth) * 100
 
         if (shiftingRight) {
@@ -956,6 +963,7 @@ export default function carouselHelper(settings: CarouselSettings) {
         current,
         slideGap,
         infinite,
+        showHalfSlides,
         baseSlideCount,
         slidesShown,
         hasDynamicWidth
@@ -1039,6 +1047,7 @@ export default function carouselHelper(settings: CarouselSettings) {
       current,
       slideGap,
       infinite,
+      showHalfSlides,
       baseSlideCount,
       slidesShown,
       hasDynamicWidth

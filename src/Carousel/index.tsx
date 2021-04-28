@@ -24,6 +24,8 @@ interface Props {
   /** List of carousel chips to be rendered.
    *  Will override the following props: itemsToShow */
   itemsToShow?: number
+  /**  Show sides of next slides only with same set widths **/
+  showHalfSlides?: boolean
   /** Sets the transition control button alignments. Two non conflicting configurations can be combined.
    * Valid configurations are: 'top', 'middle', 'center', 'apart', 'left', 'right', 'bottom'.
    * 'middle' centers vertically while 'center' centers horizontally. */
@@ -85,6 +87,7 @@ const Carousel: FunctionComponent<Props> = ({
   indicatorStyle = 'round',
   indicatorBg = 'light',
   itemsToShow = 1,
+  showHalfSlides = false,
   layoutGap = 0,
   infinite = false,
   responsive = [{}],
@@ -106,6 +109,7 @@ const Carousel: FunctionComponent<Props> = ({
     indicatorStyle,
     infinite,
     itemsToShow,
+    showHalfSlides,
     layoutGap,
     //@ts-ignore
     responsive,

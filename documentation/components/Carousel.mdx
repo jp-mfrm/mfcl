@@ -95,6 +95,7 @@ The Responsive prop overrides the provided props of the carousel at different pi
   })}
   </Carousel>
 
+
   <Carousel
     itemsToShow={1}
     hideIndicators
@@ -109,6 +110,7 @@ The Responsive prop overrides the provided props of the carousel at different pi
     <div style={{ backgroundColor: 'lightblue', color: '#fff', width: '500px' }}>Slide 3</div>
   </Carousel>
 </Playground>
+
 
 ## Style Variations
 
@@ -313,6 +315,7 @@ The layoutGap prop sets the slides' margins in pixels
     <div style={{ backgroundColor: 'lightblue' }}>Slide 4</div>
   </Carousel>
 
+
   <Carousel infinite itemsToShow={2} layoutGap={5} ariaLabel="one">
     <div style={{ backgroundColor: 'rgb(214,52,38)', color: '#fff' }}>Slide 1</div>
     <div style={{ backgroundColor: 'rgb(253,204,11)' }}>Slide 2</div>
@@ -320,6 +323,7 @@ The layoutGap prop sets the slides' margins in pixels
     <div style={{ backgroundColor: 'lightblue' }}>Slide 4</div>
   </Carousel>
 </Playground>
+
 
 ## Indicator Button Styles
 
@@ -384,5 +388,25 @@ hideControls prop removes the control buttons from view until hovered.
   <br />
   <Carousel hideControls controlStyle="round" ariaLabel="one">
     <div style={{ backgroundColor: 'lightblue' }}>Slide 1</div>
+  </Carousel>
+</Playground>
+
+## Hide Disabled Buttons
+
+<Playground>
+  <Carousel ariaLabel="one" controlStyle="legacy" hideDisabledButtons variableWidth layoutGap={25}>
+    <div style={{ backgroundColor: 'rgb(214,52,38)', color: '#fff', width: '750px' }}>Slide 1</div>
+    <div style={{ backgroundColor: ' rgb(253,204,11)', width: '750px' }}>Slide 2</div>
+    <div style={{ backgroundColor: ' rgb(0,204,0)', width: '750px' }}>Slide 3</div>
+  </Carousel>
+</Playground>
+
+## Show Sides with set width
+
+<Playground>
+  <Carousel ariaLabel="one" controlStyle="legacy" hideDisabledButtons variableWidth layoutGap={25} showHalfSlides>
+    <div style={{ backgroundColor: 'rgb(214,52,38)', color: '#fff', width: '700px' }}>Slide 1</div>
+    <div style={{ backgroundColor: ' rgb(253,204,11)', width: '700px' }}>Slide 2</div>
+    <div style={{ backgroundColor: ' rgb(0,204,0)', width: '700px' }}>Slide 3</div>
   </Carousel>
 </Playground>
