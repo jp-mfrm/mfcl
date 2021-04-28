@@ -566,6 +566,16 @@ export default function carouselHelper(settings: CarouselSettings) {
       const dynamicIndex = shiftingRight ? activeIndex : activeIndex - 1
       let dynamicShift = getDynamicSlidePercentage(dynamicWidthArray[dynamicIndex]) * (shiftingRight ? -1 : 1)
 
+      if (dynamicIndex + 1 === dynamicWidthArray.length - 1) {
+        const adjustedShift = ((slideStageWidth - (dynamicWidthArray[dynamicIndex] - slideGap)) / slideStageWidth) * 100
+
+        if (shiftingRight) {
+          dynamicShift = dynamicShift + adjustedShift
+        } else {
+          dynamicShift = dynamicShift - adjustedShift
+        }
+      }
+
       let extraShiftPercent = 0
       for (let n = 0; n < numberOfShifts; n++) {
         if (shiftingRight) {
