@@ -81,6 +81,7 @@ function getSliderMeasurements(
   current: any,
   slideGap: number,
   infinite: boolean,
+  showHalfSlides: boolean,
   baseSlideCount: number,
   slidesShown: number,
   dynamic: boolean
@@ -134,6 +135,11 @@ function getSliderMeasurements(
     let offsetLeftPx = remainingWidthPx / 2 - defaultMarginPixel
     let startPos = (offsetLeftPx / measurements.slidePxWidth) * 100
     measurements.slidesLeft = infinite ? startPos - measurements.slideShift * slidesShown : startPos
+  }
+  if (showHalfSlides && dynamic) {
+    measurements.slidesLeft =
+      ((measurements.slidePxWidth - (measurements.dynamic.lengthArray[0] - slideGap)) / 2 / measurements.slidePxWidth) *
+      100
   }
 
   return { ...measurements }
@@ -213,58 +219,61 @@ function getControlButtons(
   direction: string,
   controlStyle: string,
   indicatorVisibility: boolean,
-  disableControls: boolean
+  disableControls: boolean,
+  buttonDisabled: boolean
 ) {
   return (
     <>
-      <button
-        aria-hidden={disableControls || (controlsVisibility && 'true') || 'false'}
-        className={clsx(
-          styles['carousel-wrapper-control'],
-          styles[direction],
-          (disableControls || controlsVisibility) && styles['hidden'],
-          disableControls && styles['disable-controls'],
-          alignment,
-          styles[controlStyle],
-          !indicatorVisibility && styles['mt-adjust'],
-          controlClass
-        )}
-        onClick={(event) => {
-          if (!disableControls) {
-            ;(event.target as HTMLElement).focus()
-            shiftSlide(direction === 'next' ? 1 : -1)
-          }
-        }}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter') {
-            shiftSlide(direction === 'next' ? 1 : -1)
-          }
-        }}
-      >
-        {controlStyle === 'round' && (
-          <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
-            <circle cx="36" cy="36" r="35" transform="rotate(-180 36 36)" fill="white" stroke="#2D2926" />
-            <path
-              d="M55.9997 35.5L17.0176 35.5"
-              stroke="#2D2926"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M29.0176 47.5L17.0176 35.5L29.0176 23.5"
-              stroke="#2D2926"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        )}
+      {buttonDisabled ? null : (
+        <button
+          aria-hidden={disableControls || (controlsVisibility && 'true') || 'false'}
+          className={clsx(
+            styles['carousel-wrapper-control'],
+            styles[direction],
+            (disableControls || controlsVisibility) && styles['hidden'],
+            disableControls && styles['disable-controls'],
+            alignment,
+            styles[controlStyle],
+            !indicatorVisibility && styles['mt-adjust'],
+            controlClass
+          )}
+          onClick={(event) => {
+            if (!disableControls) {
+              ;(event.target as HTMLElement).focus()
+              shiftSlide(direction === 'next' ? 1 : -1)
+            }
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              shiftSlide(direction === 'next' ? 1 : -1)
+            }
+          }}
+        >
+          {controlStyle === 'round' && (
+            <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+              <circle cx="36" cy="36" r="35" transform="rotate(-180 36 36)" fill="white" stroke="#2D2926" />
+              <path
+                d="M55.9997 35.5L17.0176 35.5"
+                stroke="#2D2926"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M29.0176 47.5L17.0176 35.5L29.0176 23.5"
+                stroke="#2D2926"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
 
-        <p className={clsx(styles['sr-only'])}>
-          {direction === 'next' ? 'Move Slider Left Button' : 'Move Slider Right Button'}
-        </p>
-      </button>
+          <p className={clsx(styles['sr-only'])}>
+            {direction === 'next' ? 'Move Slider Left Button' : 'Move Slider Right Button'}
+          </p>
+        </button>
+      )}
     </>
   )
 }
@@ -405,8 +414,10 @@ export interface CarouselSettings {
   duration: number
   hideControls: boolean
   hideIndicators: boolean
+  hideDisabledButtons: boolean
   indicatorStyle: string
   itemsToShow: number
+  showHalfSlides: boolean
   infinite: boolean
   layoutGap: number
   responsive: {
@@ -440,7 +451,7 @@ export default function carouselHelper(settings: CarouselSettings) {
     variableWidth
   } = settings
 
-  let { itemsToShow, infinite } = settings
+  let { itemsToShow, infinite, hideDisabledButtons, showHalfSlides } = settings
 
   // Configure dynamic override(s)
   const hasChips = typeof chips !== 'undefined' && chips.list && chips.list.length > 0
@@ -526,6 +537,8 @@ export default function carouselHelper(settings: CarouselSettings) {
   const [posX1, setPosX1] = useState(0)
   const [activeIndex, setActiveIndex] = useState(0)
   const [allowShift, setAllowShift] = useState(true)
+  const [rightDisabled, setRightDisabled] = useState(false)
+  const [leftDisabled, setLeftDisabled] = useState(false)
 
   const toSlidesPercentage = (pixelVal: number) => {
     let _width
@@ -559,6 +572,16 @@ export default function carouselHelper(settings: CarouselSettings) {
     (shiftingRight: boolean, numberOfShifts: number) => {
       const dynamicIndex = shiftingRight ? activeIndex : activeIndex - 1
       let dynamicShift = getDynamicSlidePercentage(dynamicWidthArray[dynamicIndex]) * (shiftingRight ? -1 : 1)
+
+      if (!showHalfSlides && dynamicIndex + 1 === dynamicWidthArray.length - 1) {
+        const adjustedShift = ((slideStageWidth - (dynamicWidthArray[dynamicIndex] - slideGap)) / slideStageWidth) * 100
+
+        if (shiftingRight) {
+          dynamicShift = dynamicShift + adjustedShift
+        } else {
+          dynamicShift = dynamicShift - adjustedShift
+        }
+      }
 
       let extraShiftPercent = 0
       for (let n = 0; n < numberOfShifts; n++) {
@@ -874,6 +897,13 @@ export default function carouselHelper(settings: CarouselSettings) {
     [activeIndex, slidesTransition, slidesLeft, slideShift]
   )
 
+  useEffect(() => {
+    if (!infinite && hideDisabledButtons) {
+      setLeftDisabled(!infinite && activeIndex === 0)
+      setRightDisabled(!infinite && activeIndex >= baseSlideCount - 1 - (slidesShown > 1 ? slidesShown - 1 : 0))
+    }
+  }, [activeIndex])
+
   const controlButtons: ReactNode[] = []
   controlButtons.push(
     getControlButtons(
@@ -884,7 +914,8 @@ export default function carouselHelper(settings: CarouselSettings) {
       'prev',
       controlStyle,
       indicatorVisibility,
-      disableControls
+      disableControls,
+      leftDisabled
     )
   )
   controlButtons.push(
@@ -896,7 +927,8 @@ export default function carouselHelper(settings: CarouselSettings) {
       'next',
       controlStyle,
       indicatorVisibility,
-      disableControls
+      disableControls,
+      rightDisabled
     )
   )
 
@@ -931,6 +963,7 @@ export default function carouselHelper(settings: CarouselSettings) {
         current,
         slideGap,
         infinite,
+        showHalfSlides,
         baseSlideCount,
         slidesShown,
         hasDynamicWidth
@@ -1014,6 +1047,7 @@ export default function carouselHelper(settings: CarouselSettings) {
       current,
       slideGap,
       infinite,
+      showHalfSlides,
       baseSlideCount,
       slidesShown,
       hasDynamicWidth
@@ -1025,7 +1059,7 @@ export default function carouselHelper(settings: CarouselSettings) {
     setSlideShift(measurements.slideShift)
     setSlideMargin(measurements.slideMargin)
     setSlideFlexBasis(measurements.slideFlexBasis)
-    
+
     setAriaLive('polite')
   }, [windowWidth])
 

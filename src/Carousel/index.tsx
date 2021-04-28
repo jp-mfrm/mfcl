@@ -20,10 +20,12 @@ interface Props {
   /** Time in milliseconds for autoSlide */
   duration?: number
   /** Enable propagation during click event capture phase */
-  capturePropagation?: 'allow' | 'disable' 
+  capturePropagation?: 'allow' | 'disable'
   /** List of carousel chips to be rendered.
    *  Will override the following props: itemsToShow */
   itemsToShow?: number
+  /**  Show sides of next slides only with same set widths **/
+  showHalfSlides?: boolean
   /** Sets the transition control button alignments. Two non conflicting configurations can be combined.
    * Valid configurations are: 'top', 'middle', 'center', 'apart', 'left', 'right', 'bottom'.
    * 'middle' centers vertically while 'center' centers horizontally. */
@@ -36,6 +38,8 @@ interface Props {
   hideControls?: boolean
   /** Hides indicator buttons */
   hideIndicators?: boolean
+  /** Hides Left/Right Arrows when they are disabled */
+  hideDisabledButtons?: boolean
   /** Sets the indicator buttons' style */
   indicatorStyle?: 'bar' | 'round'
   /** Sets indicator bar background color*/
@@ -79,9 +83,11 @@ const Carousel: FunctionComponent<Props> = ({
   duration = 3000,
   hideControls = false,
   hideIndicators = false,
+  hideDisabledButtons = false,
   indicatorStyle = 'round',
   indicatorBg = 'light',
   itemsToShow = 1,
+  showHalfSlides = false,
   layoutGap = 0,
   infinite = false,
   responsive = [{}],
@@ -99,9 +105,11 @@ const Carousel: FunctionComponent<Props> = ({
     duration,
     hideControls,
     hideIndicators,
+    hideDisabledButtons,
     indicatorStyle,
     infinite,
     itemsToShow,
+    showHalfSlides,
     layoutGap,
     //@ts-ignore
     responsive,
