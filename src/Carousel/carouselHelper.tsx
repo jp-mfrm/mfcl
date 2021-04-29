@@ -140,6 +140,12 @@ function getSliderMeasurements(
     measurements.slidesLeft =
       ((measurements.slidePxWidth - (measurements.dynamic.lengthArray[0] - slideGap)) / 2 / measurements.slidePxWidth) *
       100
+
+    // if infinite and half slides move slides left further to show the real index 1
+    if (infinite) {
+      measurements.slidesLeft =
+        measurements.slidesLeft - (measurements.dynamic.lengthArray[1] / measurements.slidePxWidth) * 100
+    }
   }
 
   return { ...measurements }
@@ -287,7 +293,8 @@ function getSlides(
   margin: number,
   infinite: boolean,
   hasChips: boolean,
-  hasDynamicWidth: boolean
+  hasDynamicWidth: boolean,
+  showHalfSlides: boolean
 ) {
   const initSlides = childrenArr?.map((child: ReactNode, index: number) => {
     if (isValidElement(child)) {
@@ -320,7 +327,12 @@ function getSlides(
   // Configure infinite slider
   if (infinite) {
     const initSlidesLength = initSlides.length
-    const firstSlides = initSlides.slice(0, slidesShown)
+    let firstSlides = initSlides.slice(0, slidesShown)
+
+    // If showHalfSlides need to add an additional slide to not have gap loading in slides
+    if (showHalfSlides) {
+      firstSlides = initSlides.slice(0, slidesShown + 1)
+    }
     const lastSlides = initSlides.slice(initSlidesLength - slidesShown, initSlidesLength)
     const cloneSlides = firstSlides.concat(lastSlides).map((child: ReactNode, index: number) => {
       if (isValidElement(child)) {
@@ -331,7 +343,11 @@ function getSlides(
       }
     })
     initSlides.unshift(...cloneSlides.slice(cloneSlides.length - slidesShown))
-    initSlides.push(...cloneSlides.slice(0, slidesShown))
+    if (showHalfSlides) {
+      initSlides.push(...cloneSlides.slice(0, slidesShown + 1))
+    } else {
+      initSlides.push(...cloneSlides.slice(0, slidesShown))
+    }
   }
 
   return initSlides
@@ -458,6 +474,9 @@ export default function carouselHelper(settings: CarouselSettings) {
   const [hasDynamicWidth] = useState(variableWidth || hasChips)
   if (hasDynamicWidth) {
     itemsToShow = 1
+  }
+  // Only override infinite when showHalfSlides is false
+  if (hasDynamicWidth && !showHalfSlides) {
     infinite = false
   }
   const [dynamicShiftEnabled, setDynamicShiftEnabled] = useState(false)
@@ -514,7 +533,8 @@ export default function carouselHelper(settings: CarouselSettings) {
         slideMargin,
         infinite,
         hasChips,
-        hasDynamicWidth
+        hasDynamicWidth,
+        showHalfSlides
       ),
     [
       childrenArr,
