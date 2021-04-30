@@ -322,10 +322,15 @@ $slider-height: 100%;
 
     &.disable-controls {
       top: -50%;
-    } 
+    }
 
     &.bottom {
       top: 70%;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 60%;
     }
   }
 

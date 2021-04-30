@@ -140,6 +140,12 @@ function getSliderMeasurements(
     measurements.slidesLeft =
       ((measurements.slidePxWidth - (measurements.dynamic.lengthArray[0] - slideGap)) / 2 / measurements.slidePxWidth) *
       100
+
+    // if infinite and half slides move slides left further to show the real index 1
+    if (infinite) {
+      measurements.slidesLeft =
+        measurements.slidesLeft - (measurements.dynamic.lengthArray[1] / measurements.slidePxWidth) * 100
+    }
   }
 
   return { ...measurements }
@@ -224,56 +230,55 @@ function getControlButtons(
 ) {
   return (
     <>
-      {buttonDisabled ? null : (
-        <button
-          aria-hidden={disableControls || (controlsVisibility && 'true') || 'false'}
-          className={clsx(
-            styles['carousel-wrapper-control'],
-            styles[direction],
-            (disableControls || controlsVisibility) && styles['hidden'],
-            disableControls && styles['disable-controls'],
-            alignment,
-            styles[controlStyle],
-            !indicatorVisibility && styles['mt-adjust'],
-            controlClass
-          )}
-          onClick={(event) => {
-            if (!disableControls) {
-              ;(event.target as HTMLElement).focus()
-              shiftSlide(direction === 'next' ? 1 : -1)
-            }
-          }}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              shiftSlide(direction === 'next' ? 1 : -1)
-            }
-          }}
-        >
-          {controlStyle === 'round' && (
-            <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
-              <circle cx="36" cy="36" r="35" transform="rotate(-180 36 36)" fill="white" stroke="#2D2926" />
-              <path
-                d="M55.9997 35.5L17.0176 35.5"
-                stroke="#2D2926"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M29.0176 47.5L17.0176 35.5L29.0176 23.5"
-                stroke="#2D2926"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          )}
+      <button
+        disabled={buttonDisabled}
+        aria-hidden={disableControls || (controlsVisibility && 'true') || 'false'}
+        className={clsx(
+          styles['carousel-wrapper-control'],
+          styles[direction],
+          (disableControls || controlsVisibility) && styles['hidden'],
+          disableControls && styles['disable-controls'],
+          alignment,
+          styles[controlStyle],
+          !indicatorVisibility && styles['mt-adjust'],
+          controlClass
+        )}
+        onClick={(event) => {
+          if (!disableControls) {
+            ;(event.target as HTMLElement).focus()
+            shiftSlide(direction === 'next' ? 1 : -1)
+          }
+        }}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            shiftSlide(direction === 'next' ? 1 : -1)
+          }
+        }}
+      >
+        {controlStyle === 'round' && (
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+            <circle cx="36" cy="36" r="35" transform="rotate(-180 36 36)" fill="white" stroke="#2D2926" />
+            <path
+              d="M55.9997 35.5L17.0176 35.5"
+              stroke="#2D2926"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M29.0176 47.5L17.0176 35.5L29.0176 23.5"
+              stroke="#2D2926"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
 
-          <p className={clsx(styles['sr-only'])}>
-            {direction === 'next' ? 'Move Slider Left Button' : 'Move Slider Right Button'}
-          </p>
-        </button>
-      )}
+        <p className={clsx(styles['sr-only'])}>
+          {direction === 'next' ? 'Move Slider Left Button' : 'Move Slider Right Button'}
+        </p>
+      </button>
     </>
   )
 }
@@ -287,7 +292,8 @@ function getSlides(
   margin: number,
   infinite: boolean,
   hasChips: boolean,
-  hasDynamicWidth: boolean
+  hasDynamicWidth: boolean,
+  showHalfSlides: boolean
 ) {
   const initSlides = childrenArr?.map((child: ReactNode, index: number) => {
     if (isValidElement(child)) {
@@ -320,7 +326,12 @@ function getSlides(
   // Configure infinite slider
   if (infinite) {
     const initSlidesLength = initSlides.length
-    const firstSlides = initSlides.slice(0, slidesShown)
+    let firstSlides = initSlides.slice(0, slidesShown)
+
+    // If showHalfSlides need to add an additional slide to not have gap loading in slides
+    if (showHalfSlides) {
+      firstSlides = initSlides.slice(0, slidesShown + 1)
+    }
     const lastSlides = initSlides.slice(initSlidesLength - slidesShown, initSlidesLength)
     const cloneSlides = firstSlides.concat(lastSlides).map((child: ReactNode, index: number) => {
       if (isValidElement(child)) {
@@ -331,7 +342,11 @@ function getSlides(
       }
     })
     initSlides.unshift(...cloneSlides.slice(cloneSlides.length - slidesShown))
-    initSlides.push(...cloneSlides.slice(0, slidesShown))
+    if (showHalfSlides) {
+      initSlides.push(...cloneSlides.slice(0, slidesShown + 1))
+    } else {
+      initSlides.push(...cloneSlides.slice(0, slidesShown))
+    }
   }
 
   return initSlides
@@ -414,7 +429,7 @@ export interface CarouselSettings {
   duration: number
   hideControls: boolean
   hideIndicators: boolean
-  hideDisabledButtons: boolean
+  disableEndButtons: boolean
   indicatorStyle: string
   itemsToShow: number
   showHalfSlides: boolean
@@ -451,13 +466,16 @@ export default function carouselHelper(settings: CarouselSettings) {
     variableWidth
   } = settings
 
-  let { itemsToShow, infinite, hideDisabledButtons, showHalfSlides } = settings
+  let { itemsToShow, infinite, disableEndButtons, showHalfSlides } = settings
 
   // Configure dynamic override(s)
   const hasChips = typeof chips !== 'undefined' && chips.list && chips.list.length > 0
   const [hasDynamicWidth] = useState(variableWidth || hasChips)
   if (hasDynamicWidth) {
     itemsToShow = 1
+  }
+  // Only override infinite when showHalfSlides is false
+  if (hasDynamicWidth && !showHalfSlides) {
     infinite = false
   }
   const [dynamicShiftEnabled, setDynamicShiftEnabled] = useState(false)
@@ -514,7 +532,8 @@ export default function carouselHelper(settings: CarouselSettings) {
         slideMargin,
         infinite,
         hasChips,
-        hasDynamicWidth
+        hasDynamicWidth,
+        showHalfSlides
       ),
     [
       childrenArr,
@@ -744,7 +763,8 @@ export default function carouselHelper(settings: CarouselSettings) {
 
         if (infinite && slidesLeft > 0) {
           setSlidesLeft(-slideShift * baseSlideCount)
-        } else if (infinite && slidesLeft < -(slideShift * baseSlideCount) - 100) {
+          // test to only use logic if not dynamic width
+        } else if (!hasDynamicWidth && infinite && slidesLeft < -(slideShift * baseSlideCount) - 100) {
           setSlidesLeft(-100)
         } else {
           setSlidesLeft(slidesLeft - nextPosition)
@@ -898,7 +918,7 @@ export default function carouselHelper(settings: CarouselSettings) {
   )
 
   useEffect(() => {
-    if (!infinite && hideDisabledButtons) {
+    if (!infinite && disableEndButtons) {
       setLeftDisabled(!infinite && activeIndex === 0)
       setRightDisabled(!infinite && activeIndex >= baseSlideCount - 1 - (slidesShown > 1 ? slidesShown - 1 : 0))
     }

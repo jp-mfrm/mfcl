@@ -391,22 +391,41 @@ hideControls prop removes the control buttons from view until hovered.
   </Carousel>
 </Playground>
 
-## Hide Disabled Buttons
+## Disable End Buttons
 
 <Playground>
-  <Carousel ariaLabel="one" controlStyle="legacy" hideDisabledButtons variableWidth layoutGap={25}>
+  <Carousel ariaLabel="one" controlStyle="legacy" disableEndButtons variableWidth layoutGap={25}>
     <div style={{ backgroundColor: 'rgb(214,52,38)', color: '#fff', width: '750px' }}>Slide 1</div>
     <div style={{ backgroundColor: ' rgb(253,204,11)', width: '750px' }}>Slide 2</div>
     <div style={{ backgroundColor: ' rgb(0,204,0)', width: '750px' }}>Slide 3</div>
   </Carousel>
 </Playground>
 
-## Show Sides with set width
+## Show Half Next Slides using set width
 
 <Playground>
-  <Carousel ariaLabel="one" controlStyle="legacy" hideDisabledButtons variableWidth layoutGap={25} showHalfSlides>
+  <Carousel ariaLabel="one" controlStyle="legacy" disableEndButtons variableWidth layoutGap={25} showHalfSlides>
     <div style={{ backgroundColor: 'rgb(214,52,38)', color: '#fff', width: '700px' }}>Slide 1</div>
     <div style={{ backgroundColor: ' rgb(253,204,11)', width: '700px' }}>Slide 2</div>
     <div style={{ backgroundColor: ' rgb(0,204,0)', width: '700px' }}>Slide 3</div>
   </Carousel>
+</Playground>
+
+## Show Half Next and Prev Slides with infinite using set width
+
+<Playground>
+  <Carousel ariaLabel="one" controlStyle="legacy" infinite variableWidth layoutGap={20} showHalfSlides>
+    <div style={{ backgroundColor: 'rgb(214,52,38)', color: '#fff', width: '700px' }}>Slide 1</div>
+    <div style={{ backgroundColor: ' rgb(253,204,11)', width: '700px' }}>Slide 2</div>
+    <div style={{ backgroundColor: ' rgb(0,204,0)', width: '700px' }}>Slide 3</div>
+    <div style={{ backgroundColor: ' rgb(186,219,255)', width: '700px' }}>Slide 4</div>
+  </Carousel>
+  <div style={{ width: '300px', border: '2px solid black' }}>
+    <Carousel ariaLabel="one" controlStyle="legacy" infinite variableWidth layoutGap={15} showHalfSlides>
+      <div style={{ backgroundColor: 'rgb(214,52,38)', color: '#fff', width: '225px' }}>Slide 1</div>
+      <div style={{ backgroundColor: ' rgb(253,204,11)', width: '225px' }}>Slide 2</div>
+      <div style={{ backgroundColor: ' rgb(0,204,0)', width: '225px' }}>Slide 3</div>
+      <div style={{ backgroundColor: ' rgb(186,219,255)', width: '225px' }}>Slide 4</div>
+    </Carousel>
+  </div>
 </Playground>
