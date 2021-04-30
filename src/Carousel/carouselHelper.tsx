@@ -763,7 +763,8 @@ export default function carouselHelper(settings: CarouselSettings) {
 
         if (infinite && slidesLeft > 0) {
           setSlidesLeft(-slideShift * baseSlideCount)
-        } else if (infinite && slidesLeft < -(slideShift * baseSlideCount) - 100) {
+          // test to only use logic if not dynamic width
+        } else if (!hasDynamicWidth && infinite && slidesLeft < -(slideShift * baseSlideCount) - 100) {
           setSlidesLeft(-100)
         } else {
           setSlidesLeft(slidesLeft - nextPosition)
