@@ -38,8 +38,8 @@ interface Props {
   hideControls?: boolean
   /** Hides indicator buttons */
   hideIndicators?: boolean
-  /** Hides Left/Right Arrows when they are disabled */
-  hideDisabledButtons?: boolean
+  /** Sets Left/Right Arrows to disabled when they cannot be clicked */
+  disableEndButtons?: boolean
   /** Sets the indicator buttons' style */
   indicatorStyle?: 'bar' | 'round'
   /** Sets indicator bar background color*/
@@ -83,7 +83,7 @@ const Carousel: FunctionComponent<Props> = ({
   duration = 3000,
   hideControls = false,
   hideIndicators = false,
-  hideDisabledButtons = false,
+  disableEndButtons = false,
   indicatorStyle = 'round',
   indicatorBg = 'light',
   itemsToShow = 1,
@@ -105,7 +105,7 @@ const Carousel: FunctionComponent<Props> = ({
     duration,
     hideControls,
     hideIndicators,
-    hideDisabledButtons,
+    disableEndButtons,
     indicatorStyle,
     infinite,
     itemsToShow,
