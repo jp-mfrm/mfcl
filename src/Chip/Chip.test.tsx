@@ -27,6 +27,12 @@ describe('Chip Component', () => {
     expect(chip?.classList).toContain('filled')
   })
 
+  it('renders the checked variant', () => {
+    const { container } = render(<Chip label="test" variant="checked" />)
+    const chip = container.querySelector('.chip')
+    expect(chip?.classList).toContain('checked')
+  })
+
   it('can delete', () => {
     let newLabel = ''
     const onDelete = (label: string) => {
