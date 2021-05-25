@@ -1,6 +1,7 @@
 import React, { useRef, FunctionComponent, KeyboardEvent, ReactNode } from 'react'
 import clsx from 'clsx'
 import styles from './chip.module.scss'
+import Check from '../Icons/Check'
 
 interface Props {
   /** Label inside of the chip */
@@ -12,7 +13,7 @@ interface Props {
   /** type of Chip */
   size?: 'sm' | 'md'
   /** type of Chip */
-  variant?: 'outlined' | 'default' | 'filled'
+  variant?: 'outlined' | 'default' | 'filled' | 'checked'
   /** Makes the chip deletable */
   onDelete?: (label: string) => void
   /** callback for onClick */
@@ -80,7 +81,8 @@ const Chip: FunctionComponent<Props> = ({
       ref={chipRef}
       {...rest}
     >
-      <span className={styles['chip-label']}>{label}</span>
+      {variant === 'checked' && <Check width={9} height={7} fillColor="#FFFFFF" />}
+      <span className={clsx(styles['chip-label'], variant === 'checked' && styles['checked-label'])}>{label}</span>
       {onDelete && rightIcon}
     </button>
   )

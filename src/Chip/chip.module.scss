@@ -55,8 +55,17 @@
   }
 }
 
+.checked {
+  background: $black;
+  color: $white;
+}
+
 .chip-label {
   font-size: 14px;
   line-height: 12px;
   margin-right: 4px;
+}
+
+.checked-label {
+  margin-left: 10px;
 }
