@@ -10,6 +10,14 @@ import useOpenModal from '../utils/useOpenModal'
 import trapFocus from '../utils/trapFocus'
 
 interface Props {
+  /** Show a backdrop */
+  backdrop?: boolean
+  /** sets opacity of backdrop */
+  backdropOpacity?: number
+  /** Override styles on backdrop */
+  backdropClassName?: string
+  /** Duration of backdrop fade */
+  backdropDuration?: number
   /** Header title for the modal  */
   header?: string | React.ReactNode
   /** Subheader title for the modal */
@@ -32,6 +40,10 @@ interface Props {
   childrenClass?: string
   /** id for modal */
   id?: string
+  /** explicitly sets z-index of modal */
+  zIndex?: number
+  /** explicitly sets z-index of backdrop */
+  backdropZIndex?: number
   /** style to indicate modal border setting */
   borderStyle?: 'round' | 'square'
   /** ref for the modal */
@@ -40,6 +52,10 @@ interface Props {
 }
 
 const Modal: FunctionComponent<Props> = ({
+  backdrop = true,
+  backdropOpacity = 0.1,
+  backdropClassName = '',
+  backdropDuration = 50,
   header = '',
   subheader = '',
   contentClass = '',
@@ -51,6 +67,8 @@ const Modal: FunctionComponent<Props> = ({
   closeButtonColor = '#2D2926',
   closeButtonClass = '',
   id = '',
+  zIndex = 1000,
+  backdropZIndex = 950,
   borderStyle = 'round',
   modalRef = null,
   ...rest
@@ -96,50 +114,58 @@ const Modal: FunctionComponent<Props> = ({
 
   return (
     <Portal ref={portalRef}>
-      <div className={modalWrapperClasses}>
-        <Fade duration={duration} in={isOpen}>
-          <div className={styles['modal-overlay']} onClick={hideModal} onKeyDown={handleKeys} />
-          <div
-            role="dialog"
-            aria-modal="true"
+      <div className={modalWrapperClasses} style={{ zIndex }}>
+        {backdrop && (
+          <Fade
+            className={clsx(styles['modal-backdrop'], isOpen && styles.backdrop, backdropClassName)}
+            style={{ zIndex: backdropZIndex, opacity: backdropOpacity }}
+            onClick={hideModal}
             onKeyDown={handleKeys}
-            ref={modalRefWrapper}
-            id={id}
-            {...rest}
-            className={modalClasses}
-          >
-            <>
-              <div
-                role="button"
-                tabIndex={0}
-                onClick={hideModal}
-                className={styles.close}
-                aria-label="Close Modal"
-                ref={closeBtnRef}
-                id={`close-modal-${id}`}
-              >
-                <span className={clsx(styles['close-icon-wrapper'], closeButtonClass)} aria-hidden="true">
-                  <Close width="10px" height="10px" stroke={closeButtonColor} strokeWidth="2" />
-                </span>
-              </div>
-            </>
-            <div className={modalContentClasses}>
-              {(isValidElement(header) && header) ||
-                (header && header !== '' && (
-                  <Typography className={clsx(styles['modal-header'])} variant="h4" align="center">
-                    {header}
-                  </Typography>
-                ))}
-              {(isValidElement(subheader) && subheader) ||
-                (subheader && subheader !== '' && (
-                  <Typography className={clsx(styles['modal-subheader'])} variant="paragraph" align="center">
-                    {subheader}
-                  </Typography>
-                ))}
-              <div className={modalChildrenClasses}>{children}</div>
+            duration={backdropDuration}
+            in={isOpen && !!backdrop}
+            opacity={backdropOpacity}
+          />
+        )}
+        <div
+          role="dialog"
+          aria-modal="true"
+          onKeyDown={handleKeys}
+          ref={modalRefWrapper}
+          id={id}
+          {...rest}
+          className={modalClasses}
+        >
+          <>
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={hideModal}
+              className={styles.close}
+              aria-label="Close Modal"
+              ref={closeBtnRef}
+              id={`close-modal-${id}`}
+            >
+              <span className={clsx(styles['close-icon-wrapper'], closeButtonClass)} aria-hidden="true">
+                <Close width="10px" height="10px" stroke={closeButtonColor} strokeWidth="2" />
+              </span>
             </div>
+          </>
+          <div className={modalContentClasses}>
+            {(isValidElement(header) && header) ||
+              (header && header !== '' && (
+                <Typography className={clsx(styles['modal-header'])} variant="h4" align="center">
+                  {header}
+                </Typography>
+              ))}
+            {(isValidElement(subheader) && subheader) ||
+              (subheader && subheader !== '' && (
+                <Typography className={clsx(styles['modal-subheader'])} variant="paragraph" align="center">
+                  {subheader}
+                </Typography>
+              ))}
+            <div className={modalChildrenClasses}>{children}</div>
           </div>
-        </Fade>
+        </div>
       </div>
     </Portal>
   )
