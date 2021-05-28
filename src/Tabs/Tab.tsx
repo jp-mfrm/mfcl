@@ -1,6 +1,7 @@
 import React, { memo, useEffect, FunctionComponent, MouseEvent, KeyboardEvent, ReactNode } from 'react'
 import clsx from 'clsx'
 import styles from './tabs.module.scss'
+import { useFirstRender } from '../utils/useFirstRender'
 
 interface Props {
   name: string
@@ -25,8 +26,9 @@ const Tab: FunctionComponent<Props> = ({
   index,
   label
 }) => {
+  const firstRender = useFirstRender()
   useEffect(() => {
-    if (isSelected && innerRef.current) {
+    if (!firstRender && isSelected && innerRef.current) {
       innerRef.current.focus()
     }
   }, [isSelected])
