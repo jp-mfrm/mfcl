@@ -94,6 +94,7 @@ const Drawer: React.FunctionComponent<Props> = ({
 
   const closeBtnRef = useRef<HTMLDivElement>(null)
   const modalRef: any = useRef<HTMLDivElement>(null)
+  const portalRef = useRef<HTMLDivElement>(null)
 
   useOpenModal({ isOpen, setIsShowing, closeBtnRef })
   useEffect(() => () => clearTimeout(timeout), [])
@@ -134,7 +135,7 @@ const Drawer: React.FunctionComponent<Props> = ({
   const drawerClassName = clsx(styles['drawer-wrapper'], styles[position], className)
 
   return (
-    <Portal>
+    <Portal ref={portalRef}>
       <>
         <Transition in={isShowing} timeout={duration} id={id} {...rest}>
           {(state) => (

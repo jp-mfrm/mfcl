@@ -83,6 +83,8 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   // @ts-ignore
   const [wrapperRef, dimensions] = useDimensions(true, debounceDelay, initialDimensions, [isShowing])
 
+  const portalRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (isOpen) {
       handleTouch()
@@ -229,7 +231,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     >
       {trigger}
       {/* @ts-ignore */}
-      <Portal ariaRole="tooltip" ariaLabel="tooltip-content">
+      <Portal ref={portalRef} ariaRole="tooltip" ariaLabel="tooltip-content">
         <>{tooltipContent}</>
       </Portal>
     </div>

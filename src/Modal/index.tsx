@@ -59,6 +59,7 @@ const Modal: FunctionComponent<Props> = ({
 
   const modalRefWrapper = modalRef || useRef<HTMLDivElement | null>(null)
   const closeBtnRef = useRef<HTMLDivElement>(null)
+  const portalRef = useRef<HTMLDivElement>(null)
 
   useOpenModal({ isOpen, setIsShowing, closeBtnRef })
 
@@ -94,7 +95,7 @@ const Modal: FunctionComponent<Props> = ({
   const modalChildrenClasses = clsx(styles['modal-children-wrapper'], childrenClass)
 
   return (
-    <Portal>
+    <Portal ref={portalRef}>
       <div className={modalWrapperClasses}>
         <Fade duration={duration} in={isOpen}>
           <div className={styles['modal-overlay']} onClick={hideModal} onKeyDown={handleKeys} />
