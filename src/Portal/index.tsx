@@ -1,42 +1,53 @@
-import { useEffect, useRef, ReactElement, MutableRefObject } from 'react'
+import React, {
+  useLayoutEffect,
+  ReactElement,
+  MutableRefObject,
+  useState,
+  useContext,
+  createContext,
+  forwardRef
+} from 'react'
 import { createPortal } from 'react-dom'
 import isClient from '../utils/isClient'
 
-type HTMLElRef = MutableRefObject<HTMLElement>
+const PortalContext = createContext(isClient ? document.body : null)
 
-const Portal = ({ children = null, ariaRole = '', ariaLabel = '' }: { children: ReactElement | null; ariaRole?: string; ariaLabel?: string }) => {
-  const mount = useRef(isClient ? document.createElement('div') : null) as HTMLElRef
+interface Props {
+  children: ReactElement | null
+  ariaRole?: string
+  ariaLabel?: string
+}
 
-  useEffect(() => {
-    if (isClient && !mount.current) {
-      mount.current = document.createElement('div')
-      if (ariaRole) {
-        mount.current.setAttribute('role', ariaRole)
-      }
-      if (ariaLabel) {
-        mount.current.setAttribute('aria-label', ariaLabel)
-      }
+const Portal = forwardRef<HTMLDivElement, Props>(({ children, ariaRole, ariaLabel }: Props, ref) => {
+  const context = useContext(PortalContext)
+  const [container] = useState(() => {
+    if (isClient) {
+      const div = document.createElement('div')
+      const myRef = ref as MutableRefObject<HTMLDivElement>
+      myRef.current = div
+      return div
     }
+    return null
+  })
 
-    if (mount.current) {
-      if (ariaRole) {
-        mount.current.setAttribute('role', ariaRole)
-      }
-      if (ariaLabel) {
-        mount.current.setAttribute('aria-label', ariaLabel)
-      }
-      document.body.appendChild(mount.current)
-      return () => {
-        document.body.removeChild(mount.current)
-      }
+  useLayoutEffect(() => {
+    if (!container || !context) return undefined
+    if (ariaRole) container.setAttribute('role', ariaRole)
+    if (ariaLabel) container.setAttribute('aria-label', ariaLabel)
+
+    context.appendChild(container)
+    return () => {
+      context.removeChild(container)
     }
-  }, [mount, isClient])
+  }, [container, context])
 
-  if (!isClient) {
-    return children
+  if (container) {
+    const portal = createPortal(children, container)
+    return <PortalContext.Provider value={container}>{portal}</PortalContext.Provider>
   }
 
-  return createPortal(children, mount.current)
-}
+  // not Client
+  return null
+})
 
 export default Portal
