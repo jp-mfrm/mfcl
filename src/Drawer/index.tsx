@@ -12,6 +12,8 @@ import useOpenModal from '../utils/useOpenModal'
 export interface Props {
   /** Show a backdrop */
   backdrop?: boolean
+  /** sets opacity of backdrop */
+  backdropOpacity?: number
   /** Override styles on backdrop */
   backdropClassName?: string
   /** Duration of backdrop fade */
@@ -74,6 +76,7 @@ let timeout: ReturnType<typeof setTimeout>
 
 const Drawer: React.FunctionComponent<Props> = ({
   backdrop = true,
+  backdropOpacity = 0.5,
   backdropClassName = '',
   backdropDuration = 50,
   bodyClassName = '',
@@ -177,7 +180,7 @@ const Drawer: React.FunctionComponent<Props> = ({
             onKeyDown={handleKeys}
             duration={backdropDuration}
             in={isOpen && !!backdrop}
-            opacity={0.5}
+            opacity={backdropOpacity}
             data-testid="backdrop"
           />
         )}
