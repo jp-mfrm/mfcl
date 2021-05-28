@@ -8,7 +8,7 @@ import { Playground, Props } from 'docz'
 import Component from 'react-component-component'
 import mattressIpsum from 'mattress-ipsum'
 import { Row } from './helpers'
-import { Drawer, Button } from '../../src'
+import { Drawer, Button, Modal, Tooltip } from '../../src'
 
 # Drawer
 
@@ -32,6 +32,75 @@ import Drawer from 'mfcl/Drawer'
           </Drawer>
           <Button btnType="primary" onClick={() => setState({ isOpen: !state.isOpen })} size="lg">
             {state.isOpen ? 'Close' : 'Open'} me
+          </Button>
+        </div>
+      )
+    }}
+  </Component>
+</Playground>
+
+## Nested Usage
+
+<Playground>
+  <Component initialState={{ isOpen: false, isNestedDrawerOpen: false, isNestedModalOpen: false }}>
+    {({ setState, state }) => {
+      return (
+        <div>
+          <Drawer header="Parent Drawer" isOpen={state.isOpen} onClose={(isOpen) => setState({ isOpen: false })}>
+            <div>
+              Parent Drawer
+              <Row>
+                <Button
+                  btnType="link"
+                  onClick={() => setState({ isNestedDrawerOpen: !state.isNestedDrawerOpen })}
+                  size="lg"
+                >
+                  {state.isNestedDrawerOpen ? 'Close' : 'Open'} Nested Drawer
+                </Button>
+              </Row>
+              <Row>
+                <Button
+                  btnType="link"
+                  onClick={() => setState({ isNestedModalOpen: !state.isNestedModalOpen })}
+                  size="lg"
+                >
+                  {state.isNestedModalOpen ? 'Close' : 'Open'} Nested Modal
+                </Button>
+              </Row>
+              <Row>
+                <Tooltip trigger={<Button>Open Tooltip</Button>} position="bottom" zIndex={5000}>
+                  Nested Tooltip
+                </Tooltip>
+              </Row>
+              <Drawer
+                header="Nested Drawer"
+                isOpen={state.isNestedDrawerOpen}
+                onClose={(isNestedDrawerOpen) => setState({ isNestedDrawerOpen: false })}
+              >
+                Nested Drawer
+                <Button
+                  btnType="tertiary"
+                  onClick={() => setState({ isNestedDrawerOpen: !state.isNestedDrawerOpen })}
+                  size="lg"
+                >
+                  {state.isNestedDrawerOpen ? 'Close' : 'Open'} Nested Drawer
+                </Button>
+              </Drawer>
+              <Modal
+                header="Nested Modal"
+                isOpen={state.isNestedModalOpen}
+                onClose={(isNestedModalOpen) => setState({ isNestedModalOpen: false })}
+                backdrop={true}
+                zIndex={5000}
+                backdropZindex={2000}
+                backdropOpacity={0.5}
+              >
+                <Button onClick={() => setState({ isNestedModalOpen: false })}>Close Modal</Button>
+              </Modal>
+            </div>
+          </Drawer>
+          <Button btnType="primary" onClick={() => setState({ isOpen: !state.isOpen })} size="lg">
+            {state.isOpen ? 'Close' : 'Open'} Parent Drawer
           </Button>
         </div>
       )
