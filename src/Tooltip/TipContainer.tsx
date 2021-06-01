@@ -18,6 +18,7 @@ export interface Props {
   isShowing?: boolean
   maxWidth?: string
   position?: Position
+  zIndex?: number
   tipContainerClassName?: string
   tipContainerRef?: RefObject<HTMLDivElement>
 }
@@ -34,6 +35,7 @@ const TipContainer: FunctionComponent<Props> = ({
   isShowing,
   maxWidth,
   position,
+  zIndex = 99,
   tipContainerClassName,
   tipContainerRef,
   header
@@ -281,7 +283,8 @@ const TipContainer: FunctionComponent<Props> = ({
       className={clsx(styles['tip-container-wrapper'])}
       style={{
         ...getBaseStyle(),
-        ...getAnimationStyle()
+        ...getAnimationStyle(),
+        zIndex
       }}
     >
       <div className={clsx(styles['tip-container'], tipContainerClassName)}>

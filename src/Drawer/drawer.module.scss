@@ -89,7 +89,6 @@ $drawer-width: 315px;
 .drawer-backdrop {
   bottom: 0;
   left: 0;
-  opacity: 0.5;
   position: fixed;
   right: 0;
   top: 0;
@@ -97,5 +96,6 @@ $drawer-width: 315px;
 
   &.backdrop {
     background-color: $gray-12;
+    opacity: 0.5;
   }
 }

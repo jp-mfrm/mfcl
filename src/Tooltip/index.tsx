@@ -49,39 +49,43 @@ export interface Props {
   onOpen?: Function | null
   /** Position of tooltip in relation to the trigger */
   position?: Position
+  /** Sets the tooltip zIndex */
+  zIndex?: number
   /** Override styles to the content */
   tipContainerClassName?: string
   [rest: string]: unknown
 }
 
-const Tooltip: FunctionComponent<Props> = (props) => {
-  const {
-    arrow,
-    arrowClassName,
-    borderColor,
-    children,
-    className,
-    closeBtn,
-    duration,
-    delay,
-    debounceDelay,
-    easing,
-    header,
-    hover,
-    initialDimensions,
-    isOpen,
-    maxWidth,
-    onOpen,
-    onClose,
-    position,
-    tipContainerClassName,
-    trigger,
-    ...rest
-  } = props
+const Tooltip: FunctionComponent<Props> = ({
+  arrow,
+  arrowClassName,
+  borderColor,
+  children,
+  className,
+  closeBtn,
+  duration,
+  delay,
+  debounceDelay,
+  easing,
+  header,
+  hover,
+  initialDimensions,
+  isOpen,
+  maxWidth,
+  onOpen,
+  onClose,
+  position,
+  tipContainerClassName,
+  trigger,
+  zIndex = 1,
+  ...rest
+}) => {
   const [isShowing, setIsShowing] = useState(isOpen)
   const tipContainerRef = useRef<HTMLDivElement>(null)
   // @ts-ignore
   const [wrapperRef, dimensions] = useDimensions(true, debounceDelay, initialDimensions, [isShowing])
+
+  const portalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (isOpen) {
@@ -192,6 +196,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
           easing={easing}
           isShowing={isShowing}
           position={position}
+          zIndex={zIndex + 100}
         />
       )}
       <TipContainer
@@ -206,6 +211,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
         isShowing={isShowing}
         maxWidth={maxWidth}
         position={position}
+        zIndex={zIndex + 99}
         tipContainerClassName={tipContainerClassName}
         tipContainerRef={tipContainerRef}
       >
@@ -217,6 +223,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
   return (
     <div
       className={clsx(styles['tooltip-wrapper'], className)}
+      style={{ zIndex }}
       onClick={hover ? undefined : handleTouch}
       onKeyDown={hover ? undefined : handleKeys}
       onMouseEnter={hover ? showTooltip : undefined}
@@ -229,7 +236,7 @@ const Tooltip: FunctionComponent<Props> = (props) => {
     >
       {trigger}
       {/* @ts-ignore */}
-      <Portal ariaRole="tooltip" ariaLabel="tooltip-content">
+      <Portal ref={portalRef} ariaRole="tooltip" ariaLabel="tooltip-content">
         <>{tooltipContent}</>
       </Portal>
     </div>

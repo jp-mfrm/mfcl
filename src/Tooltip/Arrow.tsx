@@ -13,6 +13,7 @@ export interface Props {
   easing?: string
   isShowing?: boolean
   position?: Position
+  zIndex?: number
 }
 
 const getAnimationStyleByPosition = (position?: Position) => {
@@ -62,7 +63,8 @@ const Arrow: FunctionComponent<Props> = ({
   duration,
   easing,
   isShowing,
-  position
+  position,
+  zIndex = 100
 }) => {
   const getBaseStyle: CSSProperties = useMemo(() => {
     const baseStyle: CSSProperties = {
@@ -165,7 +167,8 @@ const Arrow: FunctionComponent<Props> = ({
         ...getBaseStyle,
         ...getPositionStyle(),
         ...getSpecificStyle(),
-        ...getAnimation
+        ...getAnimation,
+        zIndex
       }}
     />
   )

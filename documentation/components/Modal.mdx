@@ -19,9 +19,9 @@ import Modal from 'mfcl/Modal'
 
 <Props of={Modal} />
 
-## Basic Usage
-
 NOTE: DO NOT add "Component" as a wrapper. That is only for documentation. Use React state/context to manage open/close
+
+## Basic Usage
 
 <Playground>
   <Component initialState={{ isOpen: false }}>
@@ -48,6 +48,40 @@ NOTE: DO NOT add "Component" as a wrapper. That is only for documentation. Use R
   </Component>
 </Playground>
 
+## Nested Usage
+
+<Playground>
+  <Component initialState={{ isOpen: false, isNestedOpen: false, isNestedDrawerOpen: false }}>
+    {({ setState, state }) => {
+      return (
+        <>
+          <Modal
+            header="Parent Modal"
+            isOpen={state.isOpen}
+            onClose={(isOpen) => setState({ isOpen: false })}
+          >
+            <Modal
+              header="Nested Modal"
+              isOpen={state.isNestedOpen}
+              onClose={(isNestedOpen) => setState({ isNestedOpen: false })}
+            >
+              <Button btnType="link" onClick={() => setState({ isNestedOpen: false })}>Close Nested Modal</Button>
+            </Modal>
+            <Button onClick={() => setState({ isOpen: false })}>Close Parent Modal</Button>
+            <Button btnType="link" onClick={() => setState({ isNestedOpen: !state.isNestedOpen })} size="lg">
+              Open Nested Modal
+            </Button>
+          </Modal>
+          <Button btnType="primary" onClick={() => setState({ isOpen: !state.isOpen })} size="lg">
+            Open Parent Modal
+          </Button>
+        </>
+      )
+    }}
+
+  </Component>
+</Playground>
+
 ## Custom Usage
 
 <Playground>
@@ -57,7 +91,7 @@ NOTE: DO NOT add "Component" as a wrapper. That is only for documentation. Use R
         <div>
           <Modal
             header={<div>Basic Modal (Element)</div>}
-            subheader={<div style={{marginBottom: '15px'}}>Subheader Details (Element)</div>}
+            subheader={<div style={{ marginBottom: '15px' }}>Subheader Details (Element)</div>}
             isOpen={state.isOpen}
             borderStyle="square"
             onClose={(isOpen) => setState({ isOpen: false })}

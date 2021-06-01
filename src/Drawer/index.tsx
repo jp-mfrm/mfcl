@@ -12,6 +12,8 @@ import useOpenModal from '../utils/useOpenModal'
 export interface Props {
   /** Show a backdrop */
   backdrop?: boolean
+  /** sets opacity of backdrop */
+  backdropOpacity?: number
   /** Override styles on backdrop */
   backdropClassName?: string
   /** Duration of backdrop fade */
@@ -74,6 +76,7 @@ let timeout: ReturnType<typeof setTimeout>
 
 const Drawer: React.FunctionComponent<Props> = ({
   backdrop = true,
+  backdropOpacity = 0.5,
   backdropClassName = '',
   backdropDuration = 50,
   bodyClassName = '',
@@ -94,6 +97,7 @@ const Drawer: React.FunctionComponent<Props> = ({
 
   const closeBtnRef = useRef<HTMLDivElement>(null)
   const modalRef: any = useRef<HTMLDivElement>(null)
+  const portalRef = useRef<HTMLDivElement>(null)
 
   useOpenModal({ isOpen, setIsShowing, closeBtnRef })
   useEffect(() => () => clearTimeout(timeout), [])
@@ -134,7 +138,7 @@ const Drawer: React.FunctionComponent<Props> = ({
   const drawerClassName = clsx(styles['drawer-wrapper'], styles[position], className)
 
   return (
-    <Portal>
+    <Portal ref={portalRef}>
       <>
         <Transition in={isShowing} timeout={duration} id={id} {...rest}>
           {(state) => (
@@ -176,7 +180,7 @@ const Drawer: React.FunctionComponent<Props> = ({
             onKeyDown={handleKeys}
             duration={backdropDuration}
             in={isOpen && !!backdrop}
-            opacity={0.5}
+            opacity={backdropOpacity}
             data-testid="backdrop"
           />
         )}
