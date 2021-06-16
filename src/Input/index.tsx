@@ -1,6 +1,7 @@
 import React, { forwardRef, FunctionComponent, ReactNode, useState } from 'react'
 import useForwardRefHasValue from '../utils/useForwardRefHasValue'
 import clsx from 'clsx'
+import useControlled from '../utils/useControlled'
 import styles from './input.module.scss'
 
 export interface Props {
@@ -24,6 +25,8 @@ export interface Props {
   rightSide?: ReactNode
   /** Set the value of the input  */
   value?: string | number | readonly string[]
+  /** Make the input uncontrolled with defaultValue */
+  defaultValue?: string | number | readonly string[]
   /** You already know what this is for. Why are you looking up the description? */
   onChange?: Function
   [rest: string]: unknown
@@ -41,10 +44,12 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
     inputMessage,
     onChange,
     rightSide,
+    defaultValue = '',
     value,
     ...rest
   } = props
   const { hasValue, setHasValue, forwardedRef } = useForwardRefHasValue<HTMLInputElement>(ref, value)
+  const [valueDerived, setValue] = useControlled({ controlled: value, defaultValue: defaultValue })
   const errorClass = error && styles.error
 
   const formControl = (e: any) => {
@@ -56,6 +61,8 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
     } else if (!hasValue && length > 0) {
       setHasValue(true)
     }
+
+    setValue(e.target.value)
 
     if (onChange) {
       onChange(e)
@@ -71,7 +78,7 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
           disabled={disabled}
           onChange={formControl}
           onBlur={formControl}
-          value={value}
+          value={valueDerived}
           ref={forwardedRef}
           {...rest}
         />
