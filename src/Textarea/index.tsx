@@ -1,5 +1,6 @@
 import React, { CSSProperties, forwardRef, FunctionComponent, ReactNode } from 'react'
 import useForwardRefHasValue from '../utils/useForwardRefHasValue'
+import useControlled from '../utils/useControlled'
 import clsx from 'clsx'
 import styles from './textarea.module.scss'
 
@@ -18,15 +19,35 @@ interface Props {
   inputMessage?: string
   /** Field and label name */
   name?: string
+  /** Set the value of the input  */
+  value?: string | number | readonly string[]
+  /** Make the input uncontrolled with defaultValue */
+  defaultValue?: string | number | readonly string[]
   /** You already know what this is for. Why are you looking up the description? */
   onChange?: Function
   [rest: string]: unknown // ...rest property
 }
 
 const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props>(function TextField(props, ref) {
-  const { className, fieldStyling, wrapperStyling, error = false, label, name, inputMessage, onChange, ...rest } = props
-  const { hasValue, setHasValue, forwardedRef } = useForwardRefHasValue<HTMLTextAreaElement>(ref)
+  const {
+    className,
+    fieldStyling,
+    wrapperStyling,
+    error = false,
+    label,
+    name,
+    inputMessage,
+    value,
+    defaultValue,
+    onChange,
+    ...rest
+  } = props
+  const { hasValue, setHasValue, forwardedRef } = useForwardRefHasValue<HTMLTextAreaElement>(ref, value)
   const errorClass = error && styles.error
+  const [valueDerived, setTextAreaValue] = useControlled({
+    controlled: value,
+    defaultValue: defaultValue
+  })
 
   const handleKeyUp = (e: any) => {
     if (e.target.value.length > 0) return
@@ -65,6 +86,8 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props
       setHasValue(true)
     }
 
+    setTextAreaValue(e.target.value)
+
     if (onChange) {
       onChange(e)
     }
@@ -81,6 +104,7 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props
           onChange={formControl}
           ref={forwardedRef}
           style={fieldStyling}
+          value={valueDerived}
           {...rest}
         />
         {label && (
