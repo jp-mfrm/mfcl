@@ -1,4 +1,4 @@
-import React, { forwardRef, FunctionComponent, ReactNode } from 'react'
+import React, { forwardRef, FunctionComponent, ReactNode, useState } from 'react'
 import useForwardRefHasValue from '../utils/useForwardRefHasValue'
 import clsx from 'clsx'
 import styles from './input.module.scss'
@@ -22,6 +22,8 @@ export interface Props {
   inputMessage?: string
   /** Add a Button or other component to the right side  */
   rightSide?: ReactNode
+  /** Set the value of the input  */
+  value?: string | number | readonly string[]
   /** You already know what this is for. Why are you looking up the description? */
   onChange?: Function
   [rest: string]: unknown
@@ -39,9 +41,10 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
     inputMessage,
     onChange,
     rightSide,
+    value,
     ...rest
   } = props
-  const { hasValue, setHasValue, forwardedRef } = useForwardRefHasValue<HTMLInputElement>(ref)
+  const { hasValue, setHasValue, forwardedRef } = useForwardRefHasValue<HTMLInputElement>(ref, value)
   const errorClass = error && styles.error
 
   const formControl = (e: any) => {
@@ -67,6 +70,8 @@ const Input: FunctionComponent<Props> = forwardRef<HTMLInputElement, Props>(func
           name={name}
           disabled={disabled}
           onChange={formControl}
+          onBlur={formControl}
+          value={value}
           ref={forwardedRef}
           {...rest}
         />

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useForwardedRef from './useForwardedRef'
 
-const useRefHasValue = <T>(ref: any) => {
+const useRefHasValue = <T>(ref: any, value: any) => {
   const [hasValue, setHasValue] = useState(false)
   const forwardedRef = useForwardedRef<T>(ref)
 
@@ -9,9 +9,12 @@ const useRefHasValue = <T>(ref: any) => {
     // @ts-ignore
     if (forwardedRef?.current?.value) {
       setHasValue(true)
+      // @ts-ignore
+    } else if (!forwardedRef?.current?.value || !value) {
+      setHasValue(false)
     }
     // @ts-ignore
-  }, [forwardedRef?.current?.value])
+  }, [forwardedRef?.current?.value, value])
 
   return {
     forwardedRef,
