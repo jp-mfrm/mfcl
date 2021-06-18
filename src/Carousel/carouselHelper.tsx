@@ -762,7 +762,6 @@ export default function carouselHelper(settings: CarouselSettings) {
     (event: any) => {
       if (dragActive) {
         let { diff, extraSlides, threshold } = getBoundaryProps()
-
         if (diff < -threshold) {
           if (!infinite) extraSlides = boundaryCheck(1, extraSlides)
           shiftSlide(1, 'drag', extraSlides)
@@ -797,11 +796,11 @@ export default function carouselHelper(settings: CarouselSettings) {
 
   const getDynamicBoundaryProps = (diff: number) => {
     const currentLengthPercent = getDynamicSlidePercentage(dynamicWidthArray[activeIndex])
-    const currentThreshold = currentLengthPercent / 2
+    // the currentLengthPercent / # (The higher # is the less dragging and more "flick" like the touchstart/end is)
+    const currentThreshold = currentLengthPercent / 20
 
     let direction = 'right'
     if (diff > currentThreshold) direction = 'left'
-
     let absDiff = Math.abs(diff)
     let dynamicIndex = activeIndex
     let dynamicThreshold = currentThreshold
@@ -818,7 +817,8 @@ export default function carouselHelper(settings: CarouselSettings) {
       dynamicIndex = dynamicIndex + (direction === 'right' ? 1 : -1)
       extraSlides++
       dynamicPercent = getDynamicSlidePercentage(dynamicWidthArray[dynamicIndex])
-      dynamicThreshold = dynamicPercent / 2
+      // the deynamicPercent / # (The higher # is the less dragging and more "flick" like the touchstart/end is)
+      dynamicThreshold = dynamicPercent / 20
     }
 
     return {
@@ -861,7 +861,8 @@ export default function carouselHelper(settings: CarouselSettings) {
         threshold = currentThreshold
       }
     } else {
-      threshold = slideShift / 2
+      // the slideShift / # (The higher # is the less dragging and more "flick" like the touchstart/end is)
+      threshold = slideShift / 20
       extraSlides = getEvenBoundaryProps(diff, slideShift, threshold)
     }
 
