@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState, ReactNode, useEffect, useRef, CSSProperties } from 'react'
 import Collapse from '../Collapse'
 import styles from './accordionItem.module.scss'
+import { useFirstRender } from '../utils/useFirstRender'
 import clsx from 'clsx'
 
 export type AccordionItemProps = {
@@ -76,9 +77,10 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   const [open, setOpen] = useState(initialOpen)
 
   const labelRef = useRef<HTMLDivElement>(null)
+  const firstRender = useFirstRender()
 
   useEffect(() => {
-    if (index === focused) {
+    if (!firstRender && index === focused) {
       if (labelRef && labelRef.current) {
         labelRef.current.focus()
         onFocus()
