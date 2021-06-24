@@ -1,6 +1,7 @@
 import React from 'react'
 import Textarea from './index'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 describe('Textarea Component', () => {
   it('should render the className prop', () => {
@@ -80,5 +81,23 @@ describe('Textarea Component', () => {
   it('should display the label animation properly', () => {
     const { container } = render(<Textarea label="howdy" value="hi" />)
     expect(container.querySelector('.textarea')?.classList).toContain('has-value')
+  })
+
+  it('should render the character limit correctly', () => {
+    render(<Textarea placeholder="Please enter limited characters here" characterLimit={20} />)
+
+    const textarea = screen.getByPlaceholderText('Please enter limited characters here')
+    expect(textarea).toBeInTheDocument()
+
+    // Add text within limit
+    userEvent.type(textarea, 'Character count')
+    expect(screen.getByText('5')).toBeInTheDocument()
+    expect(textarea).toHaveTextContent('Character count')
+
+    // Test the character limit
+    userEvent.type(textarea, ' limit')
+    expect(screen.getByText('0')).toBeInTheDocument()
+    expect(textarea).toHaveTextContent('Character count limi')
+    expect(textarea).not.toHaveTextContent('Character count limit')
   })
 })

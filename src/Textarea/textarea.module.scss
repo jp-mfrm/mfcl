@@ -122,3 +122,22 @@
     color: lighten($red, 30%) !important;
   }
 }
+
+.characterLimit {
+  border: solid 1px #939393;
+
+  .textarea {
+    border: none;
+    overflow: hidden;
+    margin-bottom: 15px;
+    resize: none;
+  }
+}
+
+.characterCount {
+  font-size: 12px;
+  font-weight: 500;
+  position: absolute;
+  bottom: 5px;
+  left: 15px;
+}
