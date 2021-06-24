@@ -1,4 +1,4 @@
-import React, { CSSProperties, forwardRef, FunctionComponent, ReactNode } from 'react'
+import React, { CSSProperties, forwardRef, FunctionComponent, ReactNode, useState } from 'react'
 import useForwardRefHasValue from '../utils/useForwardRefHasValue'
 import useControlled from '../utils/useControlled'
 import clsx from 'clsx'
@@ -25,9 +25,10 @@ interface Props {
   defaultValue?: string | number | readonly string[]
   /** You already know what this is for. Why are you looking up the description? */
   onChange?: Function
+  /** Enables the character count and applies a max length */
+  characterLimit?: number
   [rest: string]: unknown // ...rest property
 }
-
 const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props>(function TextField(props, ref) {
   const {
     className,
@@ -40,6 +41,7 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props
     value,
     defaultValue,
     onChange,
+    characterLimit,
     ...rest
   } = props
   const { hasValue, setHasValue, forwardedRef } = useForwardRefHasValue<HTMLTextAreaElement>(ref, value)
@@ -48,6 +50,9 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props
     controlled: value,
     defaultValue: defaultValue
   })
+  const [characterCount, setCharacterCount] = useState(
+    characterLimit && valueDerived ? characterLimit - valueDerived.length : characterLimit
+  )
 
   const handleKeyUp = (e: any) => {
     if (e.target.value.length > 0) return
@@ -91,11 +96,17 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props
     if (onChange) {
       onChange(e)
     }
+
+    if (characterLimit) {
+      const count = characterLimit - e.target.value.length
+      if (count < 0) return
+      setCharacterCount(count)
+    }
   }
 
   return (
     <div className={styles['textarea-wrapper']} style={wrapperStyling}>
-      <div>
+      <div className={clsx(characterLimit && styles.characterLimit)}>
         <textarea
           className={clsx(styles.textarea, errorClass, hasValue && styles['has-value'], className)}
           name={name}
@@ -105,12 +116,16 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props
           ref={forwardedRef}
           style={fieldStyling}
           value={valueDerived}
+          maxLength={characterLimit}
           {...rest}
         />
         {label && (
           <label htmlFor={name} className={clsx(styles.label, errorClass)}>
             {label}
           </label>
+        )}
+        {characterLimit && characterCount !== characterLimit && (
+          <span className={clsx(styles.characterCount, characterCount === 0 && styles.error)}>{characterCount}</span>
         )}
       </div>
       {inputMessage && <p className={clsx(styles.footer, errorClass)}>{inputMessage}</p>}
