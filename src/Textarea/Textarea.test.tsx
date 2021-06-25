@@ -88,16 +88,22 @@ describe('Textarea Component', () => {
 
     const textarea = screen.getByPlaceholderText('Please enter limited characters here')
     expect(textarea).toBeInTheDocument()
+    expect(textarea).toHaveTextContent('')
 
     // Add text within limit
     userEvent.type(textarea, 'Character count')
-    expect(screen.getByText('5')).toBeInTheDocument()
+    expect(screen.getByTestId('character-count')).toHaveTextContent('5')
     expect(textarea).toHaveTextContent('Character count')
 
     // Test the character limit
     userEvent.type(textarea, ' limit')
-    expect(screen.getByText('0')).toBeInTheDocument()
+    expect(screen.getByTestId('character-count')).toHaveTextContent('0')
     expect(textarea).toHaveTextContent('Character count limi')
     expect(textarea).not.toHaveTextContent('Character count limit')
+
+    // Clear the text and ensure character count is removed
+    userEvent.clear(textarea)
+    expect(screen.queryByTestId('character-count')).not.toBeInTheDocument()
+    expect(textarea).toHaveTextContent('')
   })
 })
