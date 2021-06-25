@@ -1,4 +1,4 @@
-import React, { CSSProperties, forwardRef, FunctionComponent, ReactNode, useState } from 'react'
+import React, { CSSProperties, forwardRef, FunctionComponent, ReactNode, useState, useEffect } from 'react'
 import useForwardRefHasValue from '../utils/useForwardRefHasValue'
 import useControlled from '../utils/useControlled'
 import clsx from 'clsx'
@@ -96,13 +96,13 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props
     if (onChange) {
       onChange(e)
     }
-
-    if (characterLimit) {
-      const count = characterLimit - e.target.value.length
-      if (count < 0) return
-      setCharacterCount(count)
-    }
   }
+
+  useEffect(() => {
+    if (characterLimit) {
+      setCharacterCount(characterLimit - (valueDerived?.length || 0))
+    }
+  }, [valueDerived, characterLimit])
 
   return (
     <div className={styles['textarea-wrapper']} style={wrapperStyling}>
@@ -125,7 +125,12 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props
           </label>
         )}
         {characterLimit && characterCount !== characterLimit && (
-          <span className={clsx(styles.characterCount, characterCount === 0 && styles.error)}>{characterCount}</span>
+          <span
+            data-testid="character-count"
+            className={clsx(styles.characterCount, characterCount === 0 && styles.error)}
+          >
+            {characterCount}
+          </span>
         )}
       </div>
       {inputMessage && <p className={clsx(styles.footer, errorClass)}>{inputMessage}</p>}
