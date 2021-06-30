@@ -7,6 +7,8 @@ import styles from './textarea.module.scss'
 interface Props {
   /** Class to pass to the textarea wrapper */
   className?: string
+  /** Class to textarea wrapper */
+  wrapperClassName?: string
   /** Styles to pass to the textarea element */
   fieldStyling?: CSSProperties
   /** Styles to pass to the wrapper element */
@@ -32,6 +34,7 @@ interface Props {
 const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props>(function TextField(props, ref) {
   const {
     className,
+    wrapperClassName,
     fieldStyling,
     wrapperStyling,
     error = false,
@@ -98,15 +101,28 @@ const Textarea: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props
     }
   }
 
+  const handleWrapperClick = () => {
+    // When character limit wrapper class is clicked, use the forward ref to focus on the textarea
+    if (characterLimit) {
+      forwardedRef?.current?.focus()
+    }
+  }
+
   useEffect(() => {
+    // Determine character count when necessary
     if (characterLimit) {
       setCharacterCount(characterLimit - (valueDerived?.length || 0))
+    }
+
+    // When value derived has no characters, use the forward ref to reset the height
+    if ((!valueDerived || valueDerived.length === 0) && forwardedRef && forwardedRef.current) {
+      forwardedRef.current.style.height = 'initial'
     }
   }, [valueDerived, characterLimit])
 
   return (
-    <div className={styles['textarea-wrapper']} style={wrapperStyling}>
-      <div className={clsx(characterLimit && styles.characterLimit)}>
+    <div className={clsx(styles['textarea-wrapper'], wrapperClassName)} style={wrapperStyling}>
+      <div className={clsx(characterLimit && styles.characterLimit)} onClick={handleWrapperClick}>
         <textarea
           className={clsx(styles.textarea, errorClass, hasValue && styles['has-value'], className)}
           name={name}
