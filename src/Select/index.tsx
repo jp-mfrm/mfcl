@@ -24,7 +24,7 @@ export interface Props {
   /** Override styles to wrapper */
   wrapperClass?: string
   /** Set the value of the input  */
-  value?: HTMLSelectElement
+  value?: string | number | readonly string[]
   /** Make the input uncontrolled with defaultValue */
   defaultValue?: string | number | readonly string[]
   /** You already know what this is for. Why are you looking up the description? */
