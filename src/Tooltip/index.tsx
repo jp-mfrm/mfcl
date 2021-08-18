@@ -23,7 +23,7 @@ export interface Props {
   /** border-color of tooltip container */
   borderColor?: string
   /** adds backdrop to the tooltip */
-  backdrop?: false
+  backdrop?: boolean
   /** sets opacity of backdrop */
   backdropOpacity?: number
   /** Override styles on backdrop */
