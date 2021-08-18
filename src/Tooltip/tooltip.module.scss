@@ -67,3 +67,16 @@
   line-height: 23px;
   padding-top: 10px;
 }
+
+.tooltip-backdrop {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  &.backdrop {
+    background-color: $gray-12;
+    opacity: 0.5;
+  }
+}

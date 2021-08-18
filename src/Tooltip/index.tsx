@@ -7,6 +7,7 @@ import Arrow from './Arrow'
 import TipContainer from './TipContainer'
 
 import styles from './tooltip.module.scss'
+import { Fade } from '..'
 
 export type Position = 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
 
@@ -21,6 +22,16 @@ export interface Props {
   arrowClassName?: string
   /** border-color of tooltip container */
   borderColor?: string
+  /** adds backdrop to the tooltip */
+  backdrop?: false
+  /** sets opacity of backdrop */
+  backdropOpacity?: number
+  /** Override styles on backdrop */
+  backdropClassName?: string
+  /** Duration of backdrop fade */
+  backdropDuration?: number
+  /** explicitly sets z-index of backdrop */
+  backdropZIndex?: number
   /** Override styles to wrapper */
   className?: string
   /** whether or not the x should appear in the header */
@@ -60,6 +71,11 @@ const Tooltip: FunctionComponent<Props> = ({
   arrow,
   arrowClassName,
   borderColor,
+  backdrop = false,
+  backdropOpacity = 0.1,
+  backdropClassName = '',
+  backdropDuration = 50,
+  backdropZIndex = 95,
   children,
   className,
   closeBtn,
@@ -186,6 +202,17 @@ const Tooltip: FunctionComponent<Props> = ({
 
   const tooltipContent = (
     <>
+      {backdrop && isShowing && (
+        <Fade
+          className={clsx(styles['tooltip-backdrop'], isShowing && styles.backdrop, backdropClassName)}
+          style={{ zIndex: zIndex - 1, opacity: backdropOpacity }}
+          onClick={closeToolTip}
+          onKeyDown={handleKeys}
+          duration={backdropDuration}
+          in={isShowing && !!backdrop}
+          opacity={backdropOpacity}
+        />
+      )}
       {arrow && (
         <Arrow
           arrowClassName={arrowClassName}
