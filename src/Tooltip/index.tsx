@@ -3,11 +3,11 @@ import React, { useState, useEffect, ReactNode, FunctionComponent, useRef } from
 import clsx from 'clsx'
 import useDimensions from '../utils/useDimensions'
 import Portal from '../Portal'
+import Fade from '../Fade'
 import Arrow from './Arrow'
 import TipContainer from './TipContainer'
 
 import styles from './tooltip.module.scss'
-import Fade from '../Fade'
 
 export type Position = 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right' | 'right' | 'left'
 
