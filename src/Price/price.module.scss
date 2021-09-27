@@ -1,66 +1,100 @@
 @import '../variables';
 
 .price-wrapper {
-    width: 188px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: #D63426;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
+  align-items: center;
 }
 
 .right {
   text-align: right;
+  align-items: flex-end;
 }
 
-.original-price {
-    font-size: 16px;
-    line-height: 14.4px;
-    font-weight: bold;
-    height: 14px;
-    color: $gray-11;
-    margin-bottom: 0;
-    padding-left: 15px;
+.price {
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
   
-    @media screen and (min-width: $tablet) {
-      padding-left: 0;
-      margin-bottom: 15px;
-    }
-  }
+.price-decimal {
+  height:fit-content;
   
-  .discounted-price {
-    font-size: 16px;
-    line-height: 14.4px;
-    font-weight: bold;
-    height: 18px;
-    color: #e21a23;
-    margin-bottom: 0;
-    padding-left: 15px;
-  
-    @media screen and (min-width: $mobile) {
-      padding: 0;
-    }
+  &-top {
+    margin-bottom: auto;
+    font-size: 10px;
+    line-height: 16px;
   }
 
-  .discount {
-    font-size: 18px;
-    font-weight: 500;
-    color: #e21a23;
+  &-bottom {
+    margin-top: auto;
+    font-size: 10px;
+    line-height: 16px;
   }
+}
+
+.divider {
+  margin-right: 5px;
+}
+
+.range-divider {
+  white-space: pre;
+}
+
+.price-inner {
+  display: flex;
+  flex-direction: row;
+}
+
+.price-cut {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: $gray-11;
   
-  .price-cut {
-    font-size: 14px;
-    padding-left: 15px;
+  .price-integer,
+  .range-divider {
     text-decoration: line-through;
-    margin-top: 0px;
-  
-    @media screen and (min-width: $mobile) {
-      padding: 0;
-    }
+  }
+
+  @media screen and (min-width: $mobile) {
+    padding: 0;
+  }
+
+  &-percent {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: $gray-11;
+  }
+
+  &-value {
+    color: $gray-11;
+  }
+
+  & .price-decimal-bottom {
+    font-size: 5px;
+    line-height: 8px;
+    text-decoration: overline;
+  }
+
+  & .price-decimal-top {
+    font-size: 5px;
+    line-height: 11px;
+    text-decoration: underline;
+  }
 }
 
-.price-cut-percent {
-  display: inline-block;
-  text-decoration: none;
-  font-weight: 500;
-  margin-right: 10px;
+.text {
+  margin-right: 5px;
 }

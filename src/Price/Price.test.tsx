@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import Price from './index'
 
@@ -14,47 +14,42 @@ describe('Price Component', () => {
   it('should render the size prop correctly', () => {
     let size = 'wumbo'
     const { container } = render(<Price price={price} text={size} />)
-    expect(container.querySelector('.original-price')?.textContent).toContain(size)
+    expect(container.querySelector('.text')?.textContent).toContain(size)
   })
 
   it('should render the discounted price', () => {
-    const { container } = render(<Price price={price} discountPrice={[200]} />)
-    expect(container.querySelector('.discounted-price')?.classList).toBeTruthy()
+    const originalPrice = 200
+    const { container } = render(<Price price={price} originalPrice={[originalPrice]} />)
+    expect(container.querySelectorAll('.price-integer')[0].textContent).toBe('$1,500')
   })
 
   it('should render the price', () => {
     const { getByTestId } = render(<Price price={price} />)
-    expect(getByTestId('price-container-prices').querySelector('p')?.classList).toContain('original-price')
+    expect(getByTestId('price-container-prices').querySelector('div')?.classList).toContain('price')
   })
 
   it('should center the content', () => {
     const { container } = render(<Price price={price} center />)
     expect(container.querySelector('.price-wrapper')?.classList).toContain('center')
   })
-
-  it('should render the discount prop correctly', () => {
-    const { getByTestId } = render(<Price price={price} discount />)
-    expect(getByTestId('price-container-prices').querySelector('p')?.classList).toContain('discount')
-  })
-
   it('should render the text prop correctly', () => {
     let text = 'choo choo'
-    const { getByTestId } = render(<Price price={price} text={text} />)
-    expect(getByTestId('price-container-prices').querySelector('p')?.textContent).toContain(text)
+    const { container } = render(<Price price={price} text={text} />)
+    expect(container.querySelector('.text')?.textContent).toContain(text)
   })
 
   it('should render the divider prop correctly', () => {
-    const { getByTestId } = render(<Price price={price} text="text" divider />)
-    expect(getByTestId('price-container-prices').querySelector('p')?.textContent).toContain('|')
+    const { container } = render(<Price price={price} text="text" divider />)
+    expect(container.querySelector('.divider')?.textContent).toContain('|')
   })
 
   it('should render the discounted percentage', () => {
-    const { getByTestId } = render(<Price price={price} discountPrice={[200]} discountPercentage />)
-    expect(getByTestId('price-container-prices').querySelector('p.price-cut')?.textContent).toContain('%')
+    const { container } = render(<Price price={price} originalPrice={[2000]} discountPercentage />)
+    expect(container.querySelector('.price-cut-percent')?.textContent).toContain('%')
   })
 
   it('should render the rightText', () => {
     const { getByTestId } = render(<Price rightText={'/ mo'} price={[20]} />)
-    expect(getByTestId('price-container-prices').querySelector('p')?.textContent).toContain('/ mo')
+    expect(getByTestId('price-container-prices').querySelector('.price')?.textContent).toContain('/ mo')
   })
 })
