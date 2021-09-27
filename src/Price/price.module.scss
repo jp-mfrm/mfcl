@@ -28,15 +28,17 @@
   
 .price-decimal {
   height:fit-content;
-  font-size: 10px;
-  line-height: 16px;
   
   &-top {
     margin-bottom: auto;
+    font-size: 10px;
+    line-height: 16px;
   }
 
   &-bottom {
     margin-top: auto;
+    font-size: 10px;
+    line-height: 16px;
   }
 }
 

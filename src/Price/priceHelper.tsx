@@ -3,9 +3,13 @@ import React from 'react'
 
 import styles from './price.module.scss'
 
-function priceStyle(formattedPrice: string, discount: boolean, decimalsTop: boolean, decimalsBottom: boolean) {
-  const decimals = Boolean(decimalsTop || decimalsBottom)
-
+function priceStyle(
+  formattedPrice: string,
+  discount: boolean,
+  decimals: boolean,
+  decimalsTop: boolean,
+  decimalsBottom: boolean
+) {
   if (formattedPrice) {
     const range = formattedPrice.split(' - ')
     const lowerRange = range[0]
@@ -23,7 +27,7 @@ function priceStyle(formattedPrice: string, discount: boolean, decimalsTop: bool
               decimalsBottom && styles[`price-decimal-bottom`]
             )}
           >
-            {lowerDecimal}
+            {`${!decimalsTop && !decimalsBottom ? '.' : ''}${lowerDecimal}`}
           </div>
         )}
         {upperRange && (
@@ -38,7 +42,7 @@ function priceStyle(formattedPrice: string, discount: boolean, decimalsTop: bool
                   decimalsBottom && styles[`price-decimal-bottom`]
                 )}
               >
-                {upperDecimal}
+                {`${!decimalsTop && !decimalsBottom ? '.' : ''}${upperDecimal}`}
               </div>
             )}
           </>
@@ -50,14 +54,20 @@ function priceStyle(formattedPrice: string, discount: boolean, decimalsTop: bool
   return <></>
 }
 
-function priceFormatter(price: number[], discount = false, decimalsTop = false, decimalsBottom = false) {
-  const decimals = Boolean(decimalsTop || decimalsBottom)
+function priceFormatter(
+  price: number[],
+  discount = false,
+  decimals = false,
+  decimalsTop = false,
+  decimalsBottom = false
+) {
+  const showDecimals = Boolean(decimals || decimalsTop || decimalsBottom)
 
   let p = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-    maximumFractionDigits: decimals ? 2 : 0,
-    minimumFractionDigits: decimals ? 2 : 0
+    maximumFractionDigits: showDecimals ? 2 : 0,
+    minimumFractionDigits: showDecimals ? 2 : 0
   }).format(price[0])
 
   if (price[1]) {
@@ -66,12 +76,12 @@ function priceFormatter(price: number[], discount = false, decimalsTop = false, 
       new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
-        maximumFractionDigits: decimals ? 2 : 0,
-        minimumFractionDigits: decimals ? 2 : 0
+        maximumFractionDigits: showDecimals ? 2 : 0,
+        minimumFractionDigits: showDecimals ? 2 : 0
       }).format(price[1])
   }
 
-  return priceStyle(p, discount, decimalsTop, decimalsBottom)
+  return priceStyle(p, discount, decimals, decimalsTop, decimalsBottom)
 }
 
 export default priceFormatter

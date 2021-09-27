@@ -16,6 +16,8 @@ interface Props {
   center?: boolean
   /** align the text to the right */
   right?: boolean
+  /** Sets whether to show decimals or not */
+  decimals?: boolean
   /** minimizes and aligns the decimals vertically at the top */
   decimalsTop?: boolean
   /** minimizes and aligns the decimals vertically to the bottom */
@@ -35,6 +37,7 @@ const Price: FunctionComponent<Props> = ({
   rightText,
   center = false,
   right = false,
+  decimals = false,
   decimalsTop = false,
   decimalsBottom = false,
   divider = false,
@@ -42,9 +45,11 @@ const Price: FunctionComponent<Props> = ({
   className,
   ...rest
 }) => {
+  const showDecimals = decimals || decimalsTop || decimalsBottom
+
   const formatPrice = useCallback(
     (nums: number[], isDiscount = true) => {
-      if (price) return priceFormatter(nums, isDiscount, decimalsTop, decimalsBottom)
+      if (price) return priceFormatter(nums, isDiscount, showDecimals, decimalsTop, decimalsBottom)
       return null
     },
     [price, originalPrice]
