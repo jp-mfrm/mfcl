@@ -17,7 +17,7 @@ import Price from 'mfcl/Price'
 ## Description
 
 The Price component renders and formats the pricing to USD. The optional props allow for further customization on how
-the Prices render and look.
+the Prices render and look
 
 ## Properties
 
@@ -25,29 +25,46 @@ the Prices render and look.
 
 ## Basic Usage
 
-The Price component requires the Price prop to render.
+The Price component requires the Price prop to render
 
 <Playground>
   <Price price={[3500]} />
+  <Price price={[3500, 5000]} />
 </Playground>
 
-## Discounted Price
+## Alignment
 
-Allows a price markdown below the discount price
+The Price component can be aligned horizontally
 
 <Playground>
-  <Price discountPrice={[1400]} price={[3500]} />
+  <Price price={[3500]} />
+  <Price price={[3500]} center />
+  <Price price={[3500]} right />
 </Playground>
 
-### Optional Props
+## Text
 
-A price can be discounted without the price markdown below it by adding the optional Discount prop. This also works with the Text and Divider prop. The content can also be center aligned by using the Center prop.
+The Price component can have on either side of the price, with or without a divider
 
 <Playground>
-  <Price discount price={[3500]} />
-  <Price text="Queen For" discount price={[3500]} />
-  <Price text="Queen" divider discount price={[3500]} />
-  <Price center text="Queen" divider discountPrice={[1400]} price={[3500]} />
-  <Price right discountPercentage discountPrice={[1400]} price={[3500]} />
-  <Price rightText="/mo" discount price={[38]} />
+  <Price price={[3500]} text="Queen" />
+  <Price price={[3500]} text="Queen" divider />
+  <Price price={[3500]} rightText="/mo" />
+</Playground>
+
+## Discounts
+
+The Price component can be provided another array of prices indicating original pricing before a discount along with the percentage if desired
+
+<Playground>
+  <Price price={[1400, 2000]} originalPrice={[3500, 5000]} discountPercentage />
+</Playground>
+
+## Precision
+
+The Price component can show decimals which can be aligned vertically
+
+<Playground>
+  <Price originalPrice={[3500]} price={[1400, 2000]} decimalsTop />
+  <Price originalPrice={[3500, 5000]} price={[2000]} decimalsBottom />
 </Playground>
