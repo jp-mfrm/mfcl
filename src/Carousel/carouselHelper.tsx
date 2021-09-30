@@ -46,7 +46,10 @@ function getChildrenArr(children: ReactNode, chips?: CarouselChips) {
     })
   } else {
     Children.map(children, (child: ReactNode) => {
-      cloneEls.push(child)
+
+      if (child) {
+        cloneEls.push(child)
+      }
     })
   }
 
