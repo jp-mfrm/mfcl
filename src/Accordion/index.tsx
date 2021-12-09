@@ -19,6 +19,8 @@ type Props = {
   titleClassName?: string
   /** Option to hide preview text of AccordionItem on it's open state */
   hidePreview?: boolean
+  /** enable or disable auto focus of items */
+  autoFocus?: boolean
   /** list of AccordionItems to be rendered */
   items?: AccordionItemProps[]
   /** styles to pass to each section title wrapper */
@@ -40,6 +42,7 @@ const Accordion: FunctionComponent<Props> = ({
   titleClassName,
   items,
   hidePreview = false,
+  autoFocus = true,
   titleStyles = {},
   centerStyles = {},
   width = 'auto',
@@ -141,6 +144,7 @@ const Accordion: FunctionComponent<Props> = ({
                 onOpen={onOpen}
                 onClose={onClose}
                 accordionItemStyle={accordionItemStyle}
+                autoFocus={autoFocus}
                 focused={focused}
                 openIndex={openIndex}
                 setIndex={setIndex}
