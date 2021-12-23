@@ -21,6 +21,8 @@ export type AccordionItemProps = {
   focused?: number
   /** current open index identifier for the accordion */
   openIndex?: number
+  /** Enable or disable auto focus of items */
+  autoFocus?: boolean
   /** sets focus of item */
   setFocus?: Function
   /** sets index of item */
@@ -60,6 +62,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   className,
   titleClassName,
   openIndex,
+  autoFocus,
   setFocus = () => {},
   setIndex = () => {},
   hidePreview = false,
@@ -82,7 +85,7 @@ const AccordionItem: FunctionComponent<AccordionItemProps> = ({
   useEffect(() => {
     if (!firstRender && index === focused) {
       if (labelRef && labelRef.current) {
-        labelRef.current.focus()
+        autoFocus && labelRef.current.focus()
         onFocus()
       }
     }

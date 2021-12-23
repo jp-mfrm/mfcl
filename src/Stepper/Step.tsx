@@ -52,6 +52,7 @@ const Step: FunctionComponent<Props> = ({
         aria-label={"step-"+index}
         tabIndex={selectIndex ? 0 : -1}
         className={clsx(styles.circle, verticalClass)}
+        itemID={"step-" + index}
         style={
           activeStep
             ? { border: `2px solid ${color}` }
