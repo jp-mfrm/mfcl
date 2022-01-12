@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, memo, KeyboardEvent } from 'react'
+import React, {FunctionComponent, ReactNode, memo, KeyboardEvent} from 'react'
 import clsx from 'clsx'
 
 import styles from './stepper.module.scss'
@@ -7,7 +7,8 @@ export interface IStep {
   className?: string
   color?: string
   icon?: ReactNode
-  label?: string | ReactNode
+  label?: string | ReactNode,
+  ariaLabel?: string
 }
 
 interface Props {
@@ -38,19 +39,20 @@ const Step: FunctionComponent<Props> = ({
   theNextActive,
   vertical
 }) => {
-  const { color = '#d63426', icon, label, className } = step
+  const { color = '#d63426', icon, label, ariaLabel, className } = step
   const verticalClass = vertical && styles.vertical
   const currentOrPassedClass = currentOrPassed ? styles.passed : styles['not-passed']
   const activeStepClass = theNextActive && styles['next-active']
+  /* Custom ADA label with fallback to step-1. If ariaLabel is defined but empty, do not include the attribute. */
+  const formattedAriaLabel = ariaLabel === '' ? undefined : (ariaLabel || "step-" + (index + 1))
 
   return (
-    <li className={clsx(styles['progress-step'], verticalClass, currentOrPassedClass, activeStepClass, className)}>
+    <li className={clsx(styles['progress-step'], verticalClass, currentOrPassedClass, activeStepClass, className)} tabIndex={selectIndex ? 0 : -1}>
       <div
         onClick={selectIndex ? () => selectIndex(index) : undefined}
         onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => handleKeyDown(e, index)}
         role="button"
-        aria-label={"step-"+index}
-        tabIndex={selectIndex ? 0 : -1}
+        aria-label={formattedAriaLabel}
         className={clsx(styles.circle, verticalClass)}
         itemID={"step-" + index}
         style={
