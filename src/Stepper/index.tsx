@@ -17,6 +17,7 @@ interface Props {
     color?: string
     icon?: ReactNode
     label?: ReactNode
+    ariaLabel?: string
   }[]
   /** className to be applied to the ul container element */
   className?: string
