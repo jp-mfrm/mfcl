@@ -39,7 +39,7 @@ const Step: FunctionComponent<Props> = ({
   theNextActive,
   vertical
 }) => {
-  const {color = '#d63426', icon, label, ariaLabel, className} = step
+  const { color = '#d63426', icon, label, ariaLabel, className } = step
   const verticalClass = vertical && styles.vertical
   const currentOrPassedClass = currentOrPassed ? styles.passed : styles['not-passed']
   const activeStepClass = theNextActive && styles['next-active']
@@ -57,8 +57,8 @@ const Step: FunctionComponent<Props> = ({
         itemID={"step-" + index}
         style={
           activeStep
-            ? {border: `2px solid ${color}`}
-            : {border: `2px solid ${color}`, cursor: selectIndex ? 'pointer' : ''}
+            ? { border: `2px solid ${color}` }
+            : { border: `2px solid ${color}`, cursor: selectIndex ? 'pointer' : '' }
         }
       >
         {icon}
