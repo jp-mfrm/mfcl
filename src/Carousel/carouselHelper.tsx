@@ -46,7 +46,6 @@ function getChildrenArr(children: ReactNode, chips?: CarouselChips) {
     })
   } else {
     Children.map(children, (child: ReactNode) => {
-
       if (child) {
         cloneEls.push(child)
       }
@@ -404,6 +403,14 @@ export interface CarouselChips {
   [parentRest: string]: any // ...rest property
 }
 
+interface IHandleWhitespaceDimensions {
+  leftPosition: number
+  slideIndex: number
+}
+interface ISlideDimensions {
+  slideIndex: number
+  leftPosition: number
+}
 export interface CarouselSettings {
   autoSlide: boolean
   capturePropagation: string
@@ -466,6 +473,9 @@ export default function carouselHelper(settings: CarouselSettings) {
   const [dynamicWidthArray, setDynamicWidthArray] = useState<number[]>([])
   const [slideStageWidth, setSlideStageWidth] = useState(0)
   const [dynamicIndexLimit, setDynamicIndexLimit] = useState(-1)
+  const [handlingWhitespace, setHandlingWhitespace] = useState(false)
+  const [slidesLeftThreshold, setSlidesLeftThreshold] = useState(0)
+  const [activeIndexThreshold, setActiveIndexThreshold] = useState(0)
 
   // Configure buttons
   const [alignment, setAlignment] = useState([
@@ -541,6 +551,9 @@ export default function carouselHelper(settings: CarouselSettings) {
   const [allowShift, setAllowShift] = useState(true)
   const [rightDisabled, setRightDisabled] = useState(false)
   const [leftDisabled, setLeftDisabled] = useState(false)
+  const [snapshotActiveIndex, setSnapshotActiveIndex] = useState(activeIndex)
+  const [snapshotSlidesLeft, setSnapshotSlidesLeft] = useState(slidesLeft)
+  const [dynamicSlidePercentageArray, setDynamicSlidePercentageArray] = useState<ISlideDimensions[]>([])
 
   const toSlidesPercentage = (pixelVal: number) => {
     let _width
@@ -557,12 +570,73 @@ export default function carouselHelper(settings: CarouselSettings) {
     return percentage
   }
 
-  const exceedsSliderBoundary = (dir: number) => {
-    return (
+  const setSnapshotThresholdDetails = (dynWidthArray: number[]) => {
+    const lastIndex = dynWidthArray.length - 1
+    let thresholdDetected = false
+    for (let activeIndex = 0; activeIndex < lastIndex; activeIndex++) {
+      const dynamicWidthArrayValue = dynWidthArray.slice(activeIndex + 1).reduce((partialSum, a) => partialSum + a, 0)
+      const whitespace = slideStageWidth - dynamicWidthArrayValue
+      const hasWhitespace = whitespace > 0
+
+      if (thresholdDetected) return
+
+      if (hasWhitespace) {
+        thresholdDetected = true
+        let dynamicSnapshotShift = 0
+        let dynamicSlidePercentageArray: ISlideDimensions[] = []
+        let leftPosition = 0
+        const rightPosition = dynWidthArray.reduce((partialSum, currentValue, slideIndex) => {
+          let dynamicShift = getDynamicSlidePercentage(currentValue)
+          leftPosition = partialSum === 0 ? leftPosition : dynamicShift * -1 + leftPosition
+          if (slideIndex === activeIndex) {
+            const adjustedShift = ((slideStageWidth - (dynWidthArray[slideIndex] - slideGap)) / slideStageWidth) * 100
+            dynamicShift = adjustedShift * -1
+            dynamicSnapshotShift = partialSum * -1
+          }
+
+          dynamicSlidePercentageArray = [
+            ...dynamicSlidePercentageArray,
+            {
+              slideIndex,
+              leftPosition
+            }
+          ]
+
+          return dynamicShift + partialSum
+        }, 0)
+
+        setSlidesLeftThreshold(rightPosition * -1)
+        setActiveIndexThreshold(lastIndex)
+        setSnapshotActiveIndex(activeIndex)
+        setSnapshotSlidesLeft(dynamicSnapshotShift)
+        setDynamicSlidePercentageArray(dynamicSlidePercentageArray)
+      }
+    }
+  }
+
+  const exceedsSliderBoundary = (dir: number, action?: string, extraShift: number = 0) => {
+    // If using variable width, non-infinite settings and going right
+    if (variableWidth && !infinite && dir == 1) {
+      setSlidesTransition('')
+
+      let destinationIndex = action === 'drag' ? getSlideShiftDimensions(dir, extraShift)?.indexShift : activeIndex + 1
+
+      const hasWhitespace = destinationIndex > snapshotActiveIndex
+      if (hasWhitespace) {
+        setSlidesTransition('left .5s ease-out')
+        setSlidesLeft(slidesLeftThreshold)
+        setActiveIndex(activeIndexThreshold)
+      }
+
+      setHandlingWhitespace(hasWhitespace)
+      return { detectedWhitespace: hasWhitespace, exceededBoundary: hasWhitespace }
+    }
+
+    const exceededBoundary =
       !infinite &&
       ((dir == -1 && activeIndex === 0) ||
         (dir == 1 && activeIndex >= baseSlideCount - 1 - (slidesShown > 1 ? slidesShown - 1 : 0)))
-    )
+    return { detectedWhitespace: false, exceededBoundary }
   }
 
   const calculateEvenShift = (shiftingRight: boolean, shift: number, numberOfShifts: number) => {
@@ -615,16 +689,34 @@ export default function carouselHelper(settings: CarouselSettings) {
     [hasDynamicWidth, calculateDynamicShift]
   )
 
+  const getHandleWhitespaceDimensions = (action?: string): IHandleWhitespaceDimensions => {
+    if (action === 'drag') {
+      const { leftPosition, slideIndex } = dynamicSlidePercentageArray.reduce((prevSlide, currSlide) => {
+        const { leftPosition } = currSlide
+        const { leftPosition: prevLeftPosition } = prevSlide
+        return Math.abs(leftPosition - slidesLeft) < Math.abs(prevLeftPosition - slidesLeft) ? currSlide : prevSlide
+      })
+      return { leftPosition, slideIndex }
+    }
+
+    // action - control button
+    // Set the destinationIndex to the slide that was shown BEFORE whitespace was detected going rightwards
+    return { leftPosition: snapshotSlidesLeft, slideIndex: snapshotActiveIndex }
+  }
+
   const shiftSlide = (dir: number, action?: string, extraShift: number = 0) => {
     // Check if slide is in the middle of a transition
-    if (slidesTransition) return
+    if (slidesTransition && !handlingWhitespace) return
 
     // Check if slide exceeds beginning/end boundaries by drag or control
-    if (exceedsSliderBoundary(dir) && action !== 'indicator') {
+    const { detectedWhitespace, exceededBoundary } = exceedsSliderBoundary(dir, action, extraShift)
+    if (exceededBoundary && action !== 'indicator') {
       if (action !== 'drag') return
 
-      setSlidesTransition('left .5s ease-out')
-      setSlidesLeft(activeIndex === 0 ? initLeftPos : action ? posInitial : slidesLeft)
+      if (!detectedWhitespace) {
+        setSlidesTransition('left .5s ease-out')
+        setSlidesLeft(activeIndex === 0 ? initLeftPos : action ? posInitial : slidesLeft)
+      }
       return
     }
 
@@ -635,6 +727,7 @@ export default function carouselHelper(settings: CarouselSettings) {
           // dir is the exact index destination
           let slideMultiplier = Math.abs(destinationIndex - activeIndex)
           if (slideMultiplier === 0) return
+          // hasDynamicWidth, infinite not enabled,
           let sliderLeftAdjustment = (activeIndex < destinationIndex ? -1 : 1) * slideShift * slideMultiplier
           setSlidesLeft(slidesLeft + sliderLeftAdjustment)
           setActiveIndex(destinationIndex)
@@ -643,23 +736,34 @@ export default function carouselHelper(settings: CarouselSettings) {
         default:
           if (hasDynamicWidth && !dynamicShiftEnabled) return
 
-          // dir is the direction: left (-1) or right (1)
-          const initPosition = action ? posInitial : slidesLeft
-          if (!action) {
-            setPosInitial(initPosition)
+          if (handlingWhitespace) {
+            const { leftPosition, slideIndex } = getHandleWhitespaceDimensions(action)
+            setSlidesLeft(leftPosition)
+            setActiveIndex(slideIndex)
+            setHandlingWhitespace(false)
+          } else {
+            // dir is the direction: left (-1) or right (1)
+            const initPosition = action ? posInitial : slidesLeft
+            if (!action) {
+              setPosInitial(initPosition)
+            }
+
+            const { extraShiftPercent, indexShift, shiftPercent } = getSlideShiftDimensions(
+              destinationIndex,
+              extraShift
+            )
+            setSlidesLeft(initPosition + shiftPercent + extraShiftPercent)
+            destinationIndex = indexShift
+
+            // Handle destination index overshot
+            if (destinationIndex < -1) {
+              destinationIndex = indicatorsLength + destinationIndex
+            } else if (destinationIndex > indicatorsLength) {
+              destinationIndex = destinationIndex - indicatorsLength
+            }
+            setActiveIndex(destinationIndex)
           }
 
-          const { extraShiftPercent, indexShift, shiftPercent } = getSlideShiftDimensions(destinationIndex, extraShift)
-          setSlidesLeft(initPosition + shiftPercent + extraShiftPercent)
-          destinationIndex = indexShift
-
-          // Handle destination index overshot
-          if (destinationIndex < -1) {
-            destinationIndex = indicatorsLength + destinationIndex
-          } else if (destinationIndex > indicatorsLength) {
-            destinationIndex = destinationIndex - indicatorsLength
-          }
-          setActiveIndex(destinationIndex)
           break
       }
 
@@ -687,7 +791,7 @@ export default function carouselHelper(settings: CarouselSettings) {
       setActiveIndex(baseSlideCount - 1)
     }
 
-    if (activeIndex === baseSlideCount) {
+    if (activeIndex === baseSlideCount && !handlingWhitespace) {
       setSlidesLeft(initLeftPos)
       setActiveIndex(0)
     }
@@ -757,13 +861,14 @@ export default function carouselHelper(settings: CarouselSettings) {
         }
       }
     },
-    [dragActive, posInitial, slidesLeft]
+    [dragActive, posInitial, slidesLeft, handlingWhitespace]
   )
 
   // Event Handler: mouseup
   const handleDragEndHandler = useCallback(
     (event: any) => {
       if (dragActive) {
+        // (B) Fixing variableWidth boundary issue
         let { diff, extraSlides, threshold } = getBoundaryProps()
         if (diff < -threshold) {
           if (!infinite) extraSlides = boundaryCheck(1, extraSlides)
@@ -780,7 +885,7 @@ export default function carouselHelper(settings: CarouselSettings) {
         setDragActive(false)
       }
     },
-    [dragActive, posInitial, slidesLeft, activeIndex, hasDynamicWidth]
+    [dragActive, posInitial, slidesLeft, activeIndex, hasDynamicWidth, handlingWhitespace]
   )
 
   const handleClickViaCapturing = useCallback(
@@ -889,11 +994,10 @@ export default function carouselHelper(settings: CarouselSettings) {
   }
 
   // Configure slider indicators
-  const indicatorsLength = useMemo(() => getNumberOfIndicators(baseSlideCount, slidesShown, infinite), [
-    baseSlideCount,
-    slidesShown,
-    infinite
-  ])
+  const indicatorsLength = useMemo(
+    () => getNumberOfIndicators(baseSlideCount, slidesShown, infinite),
+    [baseSlideCount, slidesShown, infinite]
+  )
   const indicatorRef = useRef<any>(null)
   const indicators = useMemo(
     () => getIndicators(indicatorsLength, baseSlideCount, slidesShown, childrenArr, indicatorStyling, shiftSlide),
@@ -1031,6 +1135,8 @@ export default function carouselHelper(settings: CarouselSettings) {
           setSlideGap(layoutGap)
         }
       }
+
+      setSnapshotThresholdDetails(measurements.dynamic.lengthArray)
     }
 
     window.addEventListener('resize', handleResize)
@@ -1062,6 +1168,7 @@ export default function carouselHelper(settings: CarouselSettings) {
     setSlideShift(measurements.slideShift)
     setSlideMargin(measurements.slideMargin)
     setSlideFlexBasis(measurements.slideFlexBasis)
+    setSnapshotThresholdDetails(measurements.dynamic.lengthArray)
 
     setAriaLive('polite')
   }, [windowWidth])
