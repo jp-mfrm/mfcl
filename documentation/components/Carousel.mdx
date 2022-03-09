@@ -111,6 +111,25 @@ The Responsive prop overrides the provided props of the carousel at different pi
   </Carousel>
 </Playground>
 
+### Whitespace Detection and Adjustment
+
+<Playground>
+  <Carousel ariaLabel="one" controlStyle="legacy" variableWidth layoutGap={5} hideIndicators hideControls>
+    <div
+      style={{
+        backgroundColor: 'rgb(214,52,38)',
+        color: '#fff',
+        width: '330px'
+      }}
+    >
+      Slide 1
+    </div>
+    <div style={{ backgroundColor: ' rgb(253,204,11)', width: '330px' }}>Slide 2</div>
+    <div style={{ backgroundColor: ' rgb(0,204,0)', width: '330px' }}>Slide 3</div>
+    <div style={{ backgroundColor: 'blue', width: '330px' }}>Slide 4</div>
+    <div style={{ backgroundColor: 'orange', width: '330px' }}>Slide 5</div>
+  </Carousel>
+</Playground>
 
 ## Style Variations
 
