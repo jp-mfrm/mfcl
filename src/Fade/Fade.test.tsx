@@ -27,6 +27,6 @@ describe('Fade', () => {
         Yo!
       </Fade>
     )
-    expect(getByTestId('fade').style.opacity).toBe('0')
+    expect(getByTestId('fade').style.opacity).toBe('1')
   })
 })

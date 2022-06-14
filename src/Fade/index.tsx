@@ -80,8 +80,8 @@ const Fade: React.FunctionComponent<Props> = ({
       {(status) => (
         // @ts-ignore
         <Tag
-          ref={innerRef}
-          style={{
+        ref={(el: any) => { el && el.style.setProperty("opacity",`${opacity}`, "important"); innerRef}}
+        style={{
             ...defaultStyle(duration),
             ...transitionStyles(opacity)[status]
           }}
