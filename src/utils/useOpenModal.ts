@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
-
-import isClient from './isClient'
+import { useEffect, useRef } from 'react'
 
 type Props = {
   isOpen: boolean
@@ -8,49 +6,52 @@ type Props = {
   closeBtnRef?: any
 }
 
+const DATA_DIALOG_MARKER_ATTR = 'data-dialog-marker'
+
+const onCloseAction = () => {
+  const dataDialogMarker = document.body.getAttribute(DATA_DIALOG_MARKER_ATTR) 
+  const isFinalMarker = dataDialogMarker === '1'
+  if (isFinalMarker) {
+    document.body.style.overflow = ''
+    document.documentElement.style.overflow = ''
+    document.body.removeAttribute(DATA_DIALOG_MARKER_ATTR)
+  } else {
+    const newMarker = dataDialogMarker === null ? 1 : parseInt(dataDialogMarker) - 1
+    document.body.setAttribute(DATA_DIALOG_MARKER_ATTR, `${newMarker}`)
+  }
+}
+
+const getNewDialogMarker = () => {
+  const dataDialogMarker = document.body.getAttribute(DATA_DIALOG_MARKER_ATTR) 
+  return dataDialogMarker === null ? 1 : parseInt(dataDialogMarker) + 1
+}
+
 const useOpenModal = ({ isOpen, setIsShowing, closeBtnRef }: Props) => {
-  const [isSafari] = useState(() => (isClient ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent) : false))
   const firstUpdate = useRef(true)
 
   useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false
-      return
-    }
-    if (isOpen) {
-      setIsShowing(true)
-      document.body.style.overflow = 'hidden'
-      document.documentElement.style.overflow = 'hidden'
-
-      // safari doesn't respect overflows on body/html. You need to set the position to fixed
-      if (isSafari) {
-        document.body.style.top = `${-window.pageYOffset}px`
-        document.body.style.position = 'fixed'
+    let isSubscribed = true
+    if (isSubscribed) {
+      if (firstUpdate.current) {
+        firstUpdate.current = false
+        return
       }
+      if (isOpen) {
+        setIsShowing(true)
+        document.body.style.overflow = 'hidden'
+        document.documentElement.style.overflow = 'hidden'
+        document.body.setAttribute(DATA_DIALOG_MARKER_ATTR, `${getNewDialogMarker()}`)
 
-      if (closeBtnRef.current !== null) {
-        closeBtnRef.current.focus()
-      }
-    } else {
-      setIsShowing(false)
-      document.body.style.overflow = ''
-      document.documentElement.style.overflow = ''
-      // with a fixed position, the scroll goes to the top.
-      // After setting the top, we grab that value and scroll to it to restore scroll position
-      if (isSafari) {
-        const offsetY = Math.abs(parseInt(document.body.style.top || '0', 10))
-        document.body.style.position = ''
-        document.body.style.top = ''
-        window.scrollTo(0, offsetY || 0)
+        if (closeBtnRef.current !== null) {
+          closeBtnRef.current.focus()
+        }
+      } else {
+        setIsShowing(false)
+        onCloseAction()
       }
     }
     return () => {
-      document.body.style.overflow = ''
-      document.documentElement.style.overflow = ''
-      if (isSafari) {
-        document.body.style.position = ''
-        document.body.style.top = ''
-      }
+      isSubscribed = false
     }
   }, [isOpen])
 }
