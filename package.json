@@ -1,13 +1,13 @@
 {
   "name": "mfcl",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "private": false,
   "description": "React Component Library for UI consistency between repositories",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=16.0.0"
   },
   "scripts": {
     "ship": "npm run build && cd dist && yarn config set registry https://registry.npmjs.org && npm publish && cd ..",
@@ -29,7 +29,9 @@
   "pre-commit": [
     "test"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "sass": "^1.52.3"
+  },
   "peerDependencies": {
     "clsx": "^1.1.0",
     "react": "^16.13.0 || ^17.0.0",
@@ -57,7 +59,6 @@
     "docz": "^2.3.1",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "mattress-ipsum": "^1.0.1",
-    "node-sass": "^4.13.0",
     "plop": "^2.5.3",
     "pre-commit": "^1.2.2",
     "prettier": "^2.0.5",
