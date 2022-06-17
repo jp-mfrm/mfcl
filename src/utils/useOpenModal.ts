@@ -35,6 +35,7 @@ const useOpenModal = ({ isOpen, setIsShowing, closeBtnRef }: Props) => {
       }
     }
     return () => {
+      onCloseAction()
       isSubscribed = false 
     }
   }, [isOpen])
