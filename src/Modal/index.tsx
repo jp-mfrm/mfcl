@@ -53,7 +53,7 @@ interface Props {
 
 const Modal: FunctionComponent<Props> = ({
   backdrop = true,
-  backdropOpacity = 0.1,
+  backdropOpacity = 0.5,
   backdropClassName = '',
   backdropDuration = 50,
   header = '',
