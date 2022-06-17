@@ -6,24 +6,9 @@ type Props = {
   closeBtnRef?: any
 }
 
-const DATA_DIALOG_MARKER_ATTR = 'data-dialog-marker'
-
 const onCloseAction = () => {
-  const dataDialogMarker = document.body.getAttribute(DATA_DIALOG_MARKER_ATTR) 
-  const isFinalMarker = dataDialogMarker === '1'
-  if (isFinalMarker) {
-    document.body.style.overflow = ''
-    document.documentElement.style.overflow = ''
-    document.body.removeAttribute(DATA_DIALOG_MARKER_ATTR)
-  } else {
-    const newMarker = dataDialogMarker === null ? 1 : parseInt(dataDialogMarker) - 1
-    document.body.setAttribute(DATA_DIALOG_MARKER_ATTR, `${newMarker}`)
-  }
-}
-
-const getNewDialogMarker = () => {
-  const dataDialogMarker = document.body.getAttribute(DATA_DIALOG_MARKER_ATTR) 
-  return dataDialogMarker === null ? 1 : parseInt(dataDialogMarker) + 1
+  document.body.style.overflow = ''
+  document.documentElement.style.overflow = ''
 }
 
 const useOpenModal = ({ isOpen, setIsShowing, closeBtnRef }: Props) => {
@@ -40,7 +25,6 @@ const useOpenModal = ({ isOpen, setIsShowing, closeBtnRef }: Props) => {
         setIsShowing(true)
         document.body.style.overflow = 'hidden'
         document.documentElement.style.overflow = 'hidden'
-        document.body.setAttribute(DATA_DIALOG_MARKER_ATTR, `${getNewDialogMarker()}`)
 
         if (closeBtnRef.current !== null) {
           closeBtnRef.current.focus()
@@ -51,7 +35,7 @@ const useOpenModal = ({ isOpen, setIsShowing, closeBtnRef }: Props) => {
       }
     }
     return () => {
-      isSubscribed = false
+      isSubscribed = false 
     }
   }, [isOpen])
 }
