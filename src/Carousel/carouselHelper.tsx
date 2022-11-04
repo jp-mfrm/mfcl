@@ -707,8 +707,8 @@ export default function carouselHelper(settings: CarouselSettings) {
   }
 
   const shiftSlide = (dir: number, action?: string, extraShift: number = 0) => {
-    if (!disableAutoShift){ //disable auto shifting if prop disableAutoShift used
     // Check if slide is in the middle of a transition
+    if (!disableAutoShift){ //disable auto shifting if prop disableAutoShift used
     if (slidesTransition && !handlingWhitespace) return
 
     // Check if slide exceeds beginning/end boundaries by drag or control
@@ -716,17 +716,18 @@ export default function carouselHelper(settings: CarouselSettings) {
     if (exceededBoundary && action !== 'indicator') {
       if (action !== 'drag') return
 
-      if (!detectedWhitespace) {
-        setSlidesTransition('left .5s ease-out')
-        setSlidesLeft(activeIndex === 0 ? initLeftPos : action ? posInitial : slidesLeft)
+
+        if (!detectedWhitespace) { //this makes it so it doesnt go back to beginning -HOWEVER does this also make the boundary not work?
+          setSlidesTransition('left .5s ease-out')
+          setSlidesLeft(activeIndex === 0 ? initLeftPos : action ? posInitial : slidesLeft)
+        }
       }
       return
     }
-  }
 
     let destinationIndex = dir
     if (allowShift) {
-      switch (true) {
+      switch (true) { //need to find in this how to keep the boundary while getting rid of the autoshift
         case action === 'indicator':
           // dir is the exact index destination
           let slideMultiplier = Math.abs(destinationIndex - activeIndex)
