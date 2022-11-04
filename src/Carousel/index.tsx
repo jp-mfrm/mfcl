@@ -48,25 +48,27 @@ interface Props {
   infinite?: boolean
   /** Supply a px margin between slides */
   layoutGap?: number
-  /** Override props at certain breakpoints  
-  
-
-  responsive prop properties:   
+  /** Override props at certain breakpoints
 
 
-    breakpoint: number,  
-    itemsToShow: number,   
-    controlAlignment: string,    
-    hideIndicators: boolean,   
-    hideControls: boolean,  
-    indicatorStyle: string,   
-    layoutGap: number   
-  
+  responsive prop properties:
+
+
+    breakpoint: number,
+    itemsToShow: number,
+    controlAlignment: string,
+    hideIndicators: boolean,
+    hideControls: boolean,
+    indicatorStyle: string,
+    layoutGap: number
+
   */
   responsive?: object[]
   /** Indicate if slides have variable width (sets itemsToShow to 1 and infinite to false) */
   variableWidth?: boolean
   [rest: string]: unknown // ...rest property
+    /** disable auto shifting on drag*/
+    disableAutoShift?: boolean
 }
 
 const Carousel: FunctionComponent<Props> = ({
@@ -91,7 +93,8 @@ const Carousel: FunctionComponent<Props> = ({
   layoutGap = 0,
   infinite = false,
   responsive = [{}],
-  variableWidth = false
+  variableWidth = false,
+  disableAutoShift = false
 }) => {
   const helperSettings: CarouselSettings = {
     autoSlide,
@@ -113,7 +116,8 @@ const Carousel: FunctionComponent<Props> = ({
     layoutGap,
     //@ts-ignore
     responsive,
-    variableWidth
+    variableWidth,
+    disableAutoShift
   }
   const {
     slidesRef,
