@@ -429,6 +429,7 @@ export interface CarouselSettings {
   showHalfSlides: boolean
   infinite: boolean
   layoutGap: number
+  disableAutoShift: boolean
   responsive: {
     breakpoint: number
     itemsToShow: number
@@ -457,7 +458,8 @@ export default function carouselHelper(settings: CarouselSettings) {
     indicatorStyle,
     layoutGap,
     responsive,
-    variableWidth
+    variableWidth,
+    disableAutoShift
   } = settings
 
   let { itemsToShow, infinite, disableEndButtons, showHalfSlides } = settings
@@ -548,7 +550,7 @@ export default function carouselHelper(settings: CarouselSettings) {
   const [posInitial, setPosInitial] = useState(0)
   const [posX1, setPosX1] = useState(0)
   const [activeIndex, setActiveIndex] = useState(0)
-  const [allowShift, setAllowShift] = useState(true)
+  const [allowShift, setAllowShift] = useState(!disableAutoShift)
   const [rightDisabled, setRightDisabled] = useState(false)
   const [leftDisabled, setLeftDisabled] = useState(false)
   const [snapshotActiveIndex, setSnapshotActiveIndex] = useState(activeIndex)
@@ -705,6 +707,7 @@ export default function carouselHelper(settings: CarouselSettings) {
   }
 
   const shiftSlide = (dir: number, action?: string, extraShift: number = 0) => {
+    if (!disableAutoShift){ //disable auto shifting if prop disableAutoShift used
     // Check if slide is in the middle of a transition
     if (slidesTransition && !handlingWhitespace) return
 
@@ -719,6 +722,7 @@ export default function carouselHelper(settings: CarouselSettings) {
       }
       return
     }
+  }
 
     let destinationIndex = dir
     if (allowShift) {
@@ -796,7 +800,12 @@ export default function carouselHelper(settings: CarouselSettings) {
       setActiveIndex(0)
     }
 
-    setAllowShift(true)
+    //disable auto shifting slides is prop disableAutoShift is used
+    if (!disableAutoShift){
+      setAllowShift(true)
+      } else {
+        setAllowShift(false);
+      }
   }
 
   // Event Handler: mousedown
