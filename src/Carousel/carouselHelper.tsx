@@ -429,7 +429,6 @@ export interface CarouselSettings {
   showHalfSlides: boolean
   infinite: boolean
   layoutGap: number
-  disableAutoShift: boolean
   responsive: {
     breakpoint: number
     itemsToShow: number
@@ -440,6 +439,7 @@ export interface CarouselSettings {
     layoutGap: number
   }[]
   variableWidth: boolean
+  disableAutoShift: boolean
 }
 
 export default function carouselHelper(settings: CarouselSettings) {
@@ -707,22 +707,22 @@ export default function carouselHelper(settings: CarouselSettings) {
   }
 
   const shiftSlide = (dir: number, action?: string, extraShift: number = 0) => {
-    if (!disableAutoShift){ //disable auto shifting if prop disableAutoShift used
+    if(!disableAutoShift){
     // Check if slide is in the middle of a transition
-    if (slidesTransition && !handlingWhitespace) return
+      if (slidesTransition && !handlingWhitespace) return
 
-    // Check if slide exceeds beginning/end boundaries by drag or control
-    const { detectedWhitespace, exceededBoundary } = exceedsSliderBoundary(dir, action, extraShift)
-    if (exceededBoundary && action !== 'indicator') {
-      if (action !== 'drag') return
+      // Check if slide exceeds beginning/end boundaries by drag or control
+      const { detectedWhitespace, exceededBoundary } = exceedsSliderBoundary(dir, action, extraShift)
+      if (exceededBoundary && action !== 'indicator') {
+        if (action !== 'drag') return
 
-      if (!detectedWhitespace) {
-        setSlidesTransition('left .5s ease-out')
-        setSlidesLeft(activeIndex === 0 ? initLeftPos : action ? posInitial : slidesLeft)
+        if (!detectedWhitespace) {
+          setSlidesTransition('left .5s ease-out')
+          setSlidesLeft(activeIndex === 0 ? initLeftPos : action ? posInitial : slidesLeft)
+        }
+        return
       }
-      return
     }
-  }
 
     let destinationIndex = dir
     if (allowShift) {
@@ -781,7 +781,59 @@ export default function carouselHelper(settings: CarouselSettings) {
       setAriaLive('off')
       setSlidesTransition('left .3s ease-out')
     }
-    setAllowShift(false)
+
+    //if using disableAutoShift prop- only keeps logic for control buttons not drag
+    //does not have boundary checking- need to use with infinite for now
+    if(disableAutoShift){
+      //enables buttons to work while disableAutoShift
+      switch (true) {
+        case action === 'indicator':
+          // dir is the exact index destination
+          let slideMultiplier = Math.abs(destinationIndex - activeIndex)
+          if (slideMultiplier === 0) return
+          // hasDynamicWidth, infinite not enabled,
+          let sliderLeftAdjustment = (activeIndex < destinationIndex ? -1 : 1) * slideShift * slideMultiplier
+          setSlidesLeft(slidesLeft + sliderLeftAdjustment)
+          setActiveIndex(destinationIndex)
+        break
+      case action !== 'drag' || 'indicator': //connects control buttons
+          if (hasDynamicWidth && !dynamicShiftEnabled) return
+
+          if (handlingWhitespace) {
+            const { leftPosition, slideIndex } = getHandleWhitespaceDimensions(action)
+            setSlidesLeft(leftPosition)
+            setActiveIndex(slideIndex)
+            setHandlingWhitespace(false)
+          } else {
+            // dir is the direction: left (-1) or right (1)
+            const initPosition = action ? posInitial : slidesLeft
+            if (!action) {
+              setPosInitial(initPosition)
+            }
+
+            const { extraShiftPercent, indexShift, shiftPercent } = getSlideShiftDimensions(
+              destinationIndex,
+              extraShift
+            )
+            setSlidesLeft(initPosition + shiftPercent + extraShiftPercent)
+            destinationIndex = indexShift
+
+            // Handle destination index overshot
+            if (destinationIndex < -1) {
+              destinationIndex = indicatorsLength + destinationIndex
+            } else if (destinationIndex > indicatorsLength) {
+              destinationIndex = destinationIndex - indicatorsLength
+            }
+            setActiveIndex(destinationIndex)
+          }
+          break
+        case action === 'drag':
+          default:
+            return
+          break
+      }
+      setSlidesTransition('left .3s ease-out')
+    }
   }
 
   // Event Handler: transitionend
@@ -800,13 +852,12 @@ export default function carouselHelper(settings: CarouselSettings) {
       setActiveIndex(0)
     }
 
-    //disable auto shifting slides is prop disableAutoShift is used
     if (!disableAutoShift){
       setAllowShift(true)
       } else {
         setAllowShift(false);
-      }
   }
+}
 
   // Event Handler: mousedown
   const handleDragStart = (event: any) => {
