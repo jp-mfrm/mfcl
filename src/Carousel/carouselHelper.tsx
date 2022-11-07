@@ -725,6 +725,39 @@ export default function carouselHelper(settings: CarouselSettings) {
     }
 
     let destinationIndex = dir
+
+    const controlButtonLogic = () => {
+      if (hasDynamicWidth && !dynamicShiftEnabled) return
+
+      if (handlingWhitespace) {
+        const { leftPosition, slideIndex } = getHandleWhitespaceDimensions(action)
+        setSlidesLeft(leftPosition)
+        setActiveIndex(slideIndex)
+        setHandlingWhitespace(false)
+      } else {
+        // dir is the direction: left (-1) or right (1)
+        const initPosition = action ? posInitial : slidesLeft
+        if (!action) {
+          setPosInitial(initPosition)
+        }
+
+        const { extraShiftPercent, indexShift, shiftPercent } = getSlideShiftDimensions(
+          destinationIndex,
+          extraShift
+        )
+        setSlidesLeft(initPosition + shiftPercent + extraShiftPercent)
+        destinationIndex = indexShift
+
+        // Handle destination index overshot
+        if (destinationIndex < -1) {
+          destinationIndex = indicatorsLength + destinationIndex
+        } else if (destinationIndex > indicatorsLength) {
+          destinationIndex = destinationIndex - indicatorsLength
+        }
+        setActiveIndex(destinationIndex)
+      }
+    }
+
     if (allowShift) {
       switch (true) {
         case action === 'indicator':
@@ -738,36 +771,7 @@ export default function carouselHelper(settings: CarouselSettings) {
           break
         case action === 'drag':
         default:
-          if (hasDynamicWidth && !dynamicShiftEnabled) return
-
-          if (handlingWhitespace) {
-            const { leftPosition, slideIndex } = getHandleWhitespaceDimensions(action)
-            setSlidesLeft(leftPosition)
-            setActiveIndex(slideIndex)
-            setHandlingWhitespace(false)
-          } else {
-            // dir is the direction: left (-1) or right (1)
-            const initPosition = action ? posInitial : slidesLeft
-            if (!action) {
-              setPosInitial(initPosition)
-            }
-
-            const { extraShiftPercent, indexShift, shiftPercent } = getSlideShiftDimensions(
-              destinationIndex,
-              extraShift
-            )
-            setSlidesLeft(initPosition + shiftPercent + extraShiftPercent)
-            destinationIndex = indexShift
-
-            // Handle destination index overshot
-            if (destinationIndex < -1) {
-              destinationIndex = indicatorsLength + destinationIndex
-            } else if (destinationIndex > indicatorsLength) {
-              destinationIndex = destinationIndex - indicatorsLength
-            }
-            setActiveIndex(destinationIndex)
-          }
-
+          controlButtonLogic();
           break
       }
 
@@ -797,35 +801,7 @@ export default function carouselHelper(settings: CarouselSettings) {
           setActiveIndex(destinationIndex)
         break
       case action !== 'drag' || 'indicator': //connects control buttons
-          if (hasDynamicWidth && !dynamicShiftEnabled) return
-
-          if (handlingWhitespace) {
-            const { leftPosition, slideIndex } = getHandleWhitespaceDimensions(action)
-            setSlidesLeft(leftPosition)
-            setActiveIndex(slideIndex)
-            setHandlingWhitespace(false)
-          } else {
-            // dir is the direction: left (-1) or right (1)
-            const initPosition = action ? posInitial : slidesLeft
-            if (!action) {
-              setPosInitial(initPosition)
-            }
-
-            const { extraShiftPercent, indexShift, shiftPercent } = getSlideShiftDimensions(
-              destinationIndex,
-              extraShift
-            )
-            setSlidesLeft(initPosition + shiftPercent + extraShiftPercent)
-            destinationIndex = indexShift
-
-            // Handle destination index overshot
-            if (destinationIndex < -1) {
-              destinationIndex = indicatorsLength + destinationIndex
-            } else if (destinationIndex > indicatorsLength) {
-              destinationIndex = destinationIndex - indicatorsLength
-            }
-            setActiveIndex(destinationIndex)
-          }
+          controlButtonLogic();
           break
         case action === 'drag':
           default:
