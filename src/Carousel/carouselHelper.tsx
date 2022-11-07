@@ -781,6 +781,7 @@ export default function carouselHelper(settings: CarouselSettings) {
     }
 
     if(disableAutoShift){
+      //enables buttons to work while disableAutoShift
       switch (true) {
         case action === 'indicator':
           // dir is the exact index destination
