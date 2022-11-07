@@ -780,20 +780,23 @@ export default function carouselHelper(settings: CarouselSettings) {
       setSlidesTransition('left .3s ease-out')
     }
 
-    if (disableAutoShift){
-    //THIS MAKES THE BUTTON WORK but messes up on drag
-      const initPosition = action ? posInitial : slidesLeft
-      if (!action) {
-        setPosInitial(initPosition)
-      }
-      const { extraShiftPercent, indexShift, shiftPercent } = getSlideShiftDimensions(
-        destinationIndex,
-        extraShift
-        )
-        setSlidesLeft(initPosition + shiftPercent + extraShiftPercent)
-        setSlidesTransition('left .3s ease-out')
-        setActiveIndex(destinationIndex)
-      }
+    if(disableAutoShift){
+      if (action !== 'drag' || 'indicator'){
+      //THIS MAKES THE BUTTON WORK but messes up on drag
+        const initPosition = action ? posInitial : slidesLeft
+        if (!action) {
+          setPosInitial(initPosition)
+        }
+        const { extraShiftPercent, indexShift, shiftPercent } = getSlideShiftDimensions(
+          destinationIndex,
+          extraShift
+          )
+          setSlidesLeft(initPosition + shiftPercent + extraShiftPercent)
+          destinationIndex = indexShift
+          setActiveIndex(destinationIndex)
+          setSlidesTransition('left .3s ease-out')
+        }
+    }
     // setAllowShift(false)
   }
 
@@ -813,11 +816,11 @@ export default function carouselHelper(settings: CarouselSettings) {
       setActiveIndex(0)
     }
 
-  //   if (!disableAutoShift){
-  //     setAllowShift(true)
-  //     } else {
-  //       setAllowShift(false);
-  // }
+    if (!disableAutoShift){
+      setAllowShift(true)
+      } else {
+        setAllowShift(false);
+  }
 }
 
   // Event Handler: mousedown
