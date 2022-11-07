@@ -429,7 +429,6 @@ export interface CarouselSettings {
   showHalfSlides: boolean
   infinite: boolean
   layoutGap: number
-  disableAutoShift: boolean
   responsive: {
     breakpoint: number
     itemsToShow: number
@@ -440,6 +439,7 @@ export interface CarouselSettings {
     layoutGap: number
   }[]
   variableWidth: boolean
+  disableAutoShift: boolean
 }
 
 export default function carouselHelper(settings: CarouselSettings) {
@@ -707,27 +707,25 @@ export default function carouselHelper(settings: CarouselSettings) {
   }
 
   const shiftSlide = (dir: number, action?: string, extraShift: number = 0) => {
+    if (!disableAutoShift){
     // Check if slide is in the middle of a transition
-    if (!disableAutoShift){ //disable auto shifting if prop disableAutoShift used
-    if (slidesTransition && !handlingWhitespace) return
+      if (slidesTransition && !handlingWhitespace) return
 
-    // Check if slide exceeds beginning/end boundaries by drag or control
-    const { detectedWhitespace, exceededBoundary } = exceedsSliderBoundary(dir, action, extraShift)
-    if (exceededBoundary && action !== 'indicator') {
-      if (action !== 'drag') return
+      // Check if slide exceeds beginning/end boundaries by drag or control
+      const { detectedWhitespace, exceededBoundary } = exceedsSliderBoundary(dir, action, extraShift)
+      if (exceededBoundary && action !== 'indicator') {
+        if (action !== 'drag') return
 
-
-        if (!detectedWhitespace) { //this makes it so it doesnt go back to beginning -HOWEVER does this also make the boundary not work?
+        if (!detectedWhitespace) {
           setSlidesTransition('left .5s ease-out')
           setSlidesLeft(activeIndex === 0 ? initLeftPos : action ? posInitial : slidesLeft)
         }
+        return
       }
-      return
     }
-
     let destinationIndex = dir
     if (allowShift) {
-      switch (true) { //need to find in this how to keep the boundary while getting rid of the autoshift
+      switch (true) {
         case action === 'indicator':
           // dir is the exact index destination
           let slideMultiplier = Math.abs(destinationIndex - activeIndex)
@@ -782,7 +780,7 @@ export default function carouselHelper(settings: CarouselSettings) {
       setAriaLive('off')
       setSlidesTransition('left .3s ease-out')
     }
-    setAllowShift(false)
+    // setAllowShift(false)
   }
 
   // Event Handler: transitionend
@@ -801,13 +799,12 @@ export default function carouselHelper(settings: CarouselSettings) {
       setActiveIndex(0)
     }
 
-    //disable auto shifting slides is prop disableAutoShift is used
     if (!disableAutoShift){
       setAllowShift(true)
       } else {
         setAllowShift(false);
-      }
   }
+}
 
   // Event Handler: mousedown
   const handleDragStart = (event: any) => {
