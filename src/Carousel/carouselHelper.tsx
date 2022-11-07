@@ -781,21 +781,34 @@ export default function carouselHelper(settings: CarouselSettings) {
     }
 
     if(disableAutoShift){
-      if (action !== 'drag' || 'indicator'){
-      //THIS MAKES THE BUTTON WORK but messes up on drag
-        const initPosition = action ? posInitial : slidesLeft
-        if (!action) {
-          setPosInitial(initPosition)
-        }
-        const { extraShiftPercent, indexShift, shiftPercent } = getSlideShiftDimensions(
-          destinationIndex,
-          extraShift
-          )
-          setSlidesLeft(initPosition + shiftPercent + extraShiftPercent)
-          destinationIndex = indexShift
+      switch (true) {
+        case action === 'indicator':
+          // dir is the exact index destination
+          let slideMultiplier = Math.abs(destinationIndex - activeIndex)
+          if (slideMultiplier === 0) return
+          // hasDynamicWidth, infinite not enabled,
+          let sliderLeftAdjustment = (activeIndex < destinationIndex ? -1 : 1) * slideShift * slideMultiplier
+          setSlidesLeft(slidesLeft + sliderLeftAdjustment)
           setActiveIndex(destinationIndex)
-          setSlidesTransition('left .3s ease-out')
-        }
+        break
+      case action !== 'drag' || 'indicator':
+      //THIS MAKES THE BUTTON WORK but messes up on drag
+          const initPosition = action ? posInitial : slidesLeft
+          if (!action) {
+            setPosInitial(initPosition)
+          }
+          const { extraShiftPercent, indexShift, shiftPercent } = getSlideShiftDimensions(
+            destinationIndex,
+            extraShift
+            )
+            setSlidesLeft(initPosition + shiftPercent + extraShiftPercent)
+            destinationIndex = indexShift
+            setActiveIndex(destinationIndex)
+            setSlidesTransition('left .3s ease-out')
+          break
+        case action === 'drag':
+          setActiveIndex(destinationIndex)
+      }
     }
     // setAllowShift(false)
   }
