@@ -706,6 +706,8 @@ export default function carouselHelper(settings: CarouselSettings) {
     return { leftPosition: snapshotSlidesLeft, slideIndex: snapshotActiveIndex }
   }
 
+
+
   const shiftSlide = (dir: number, action?: string, extraShift: number = 0) => {
     if(!disableAutoShift){
     // Check if slide is in the middle of a transition
@@ -724,9 +726,7 @@ export default function carouselHelper(settings: CarouselSettings) {
       }
     }
 
-    let destinationIndex = dir
-
-    const controlButtonLogic = () => {
+    const handleControlButtonSlideShift = () => {
       if (hasDynamicWidth && !dynamicShiftEnabled) return
 
       if (handlingWhitespace) {
@@ -758,6 +758,8 @@ export default function carouselHelper(settings: CarouselSettings) {
       }
     }
 
+    let destinationIndex = dir
+
     if (allowShift) {
       switch (true) {
         case action === 'indicator':
@@ -771,7 +773,7 @@ export default function carouselHelper(settings: CarouselSettings) {
           break
         case action === 'drag':
         default:
-          controlButtonLogic();
+          handleControlButtonSlideShift();
           break
       }
 
@@ -801,7 +803,7 @@ export default function carouselHelper(settings: CarouselSettings) {
           setActiveIndex(destinationIndex)
         break
       case action !== 'drag' || 'indicator': //connects control buttons
-          controlButtonLogic();
+        handleControlButtonSlideShift();
           break
         case action === 'drag':
           default:
