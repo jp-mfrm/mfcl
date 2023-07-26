@@ -1,0 +1,35 @@
+---
+name: Arcade
+menu: Components
+route: /components-arcade
+---
+
+import { Playground, Props } from 'docz'
+import Component from 'react-component-component'
+import { Arcade } from '../../src'
+
+# Arcade
+
+```javascript
+import Arcade from 'mfcl/Arcade'
+```
+
+## Description
+
+The Arcade component allows you to a display a stage and play custom games.
+
+## Properties
+
+<Props of={Arcade} />
+
+## Basic Usage
+
+<Playground>
+  <Arcade jumpKey="5" />
+</Playground>
+
+## Different Modes
+
+<Playground>
+  <Arcade game="player-run" mode="sleep-expert" jumpKey="6" />
+</Playground>
